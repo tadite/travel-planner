@@ -1,4 +1,4 @@
-package nc_edu.travelplanner;
+package edu.nc.travelplanner;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
