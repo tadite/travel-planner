@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Travel Planner Test Page</title>
+</head>
+<body>
+<h3>Enter name</h3>
+<form th:action="@{/}"
+      th:object="${personForm}" method="post">
+    <input id="name" type="text" th:field="*{name}"/>
+    <button id="enter" type="submit">Enter</button>
+</form>
+
+<div th:if="${error}" th:utext="${error}"
+     style="color:red">
+</div>
+</body>
+</html>
