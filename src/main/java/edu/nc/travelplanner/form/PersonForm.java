@@ -9,6 +9,6 @@ public class PersonForm {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name + " and CI is working!";
     }
 }
