@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: travel-planner
+spec:
+  replicas: 2
+  template: 
+    metadata:
+      labels:
+        app: travel-planner
+    spec:
+      containers:
+      - name: travel-planner
+        image: registry.gitlab.com/nc-edu/travel-planner
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+      imagePullSecrets:
+        - name: registry.gitlab.com  
