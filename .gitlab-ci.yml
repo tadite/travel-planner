@@ -22,11 +22,11 @@ maven-build:
 docker-build:
   stage: package
   script:
-  - docker build -t registry.gitlab.com/nc-edu/travel-planner .
-  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
-  - docker push registry.gitlab.com/nc-edu/travel-planner
+    - docker build -t registry.gitlab.com/nc-edu/travel-planner .
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+    - docker push registry.gitlab.com/nc-edu/travel-planner
 
 openshift-deploy:
   stage: deploy
   script:
-  - echo 'Hello world'
+    - echo 'Hello world'
