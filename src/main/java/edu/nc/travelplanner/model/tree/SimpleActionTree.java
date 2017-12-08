@@ -5,6 +5,8 @@ import edu.nc.travelplanner.model.action.ActionArgs;
 import edu.nc.travelplanner.model.action.Jump;
 import edu.nc.travelplanner.model.source.Response;
 
+import java.util.Optional;
+
 public class SimpleActionTree implements ActionTree {
 
     private String name;
@@ -29,13 +31,14 @@ public class SimpleActionTree implements ActionTree {
     public Response executeDecision(ActionArgs args) {
         Response response = action.executeDecision(args);
 
-        Jump jump = action.getJumps()
+        Optional<Jump> jump = action.getJumps()
                 .stream()
                 .filter(jmp -> jmp.canJump(args, response))
-                .findFirst()
-                .get();
+                .findFirst();
 
-        executeJump(jump);
+        if (jump.isPresent())
+            executeJump(jump.get());
+
 
         return response;
     }

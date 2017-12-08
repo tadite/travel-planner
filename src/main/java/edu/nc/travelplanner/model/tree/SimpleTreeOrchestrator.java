@@ -3,11 +3,11 @@ package edu.nc.travelplanner.model.tree;
 import edu.nc.travelplanner.model.action.ActionArgs;
 import edu.nc.travelplanner.model.source.Response;
 
-public class SimpleTreeManager implements TreeManager {
+public class SimpleTreeOrchestrator implements TreeOrchestrator {
 
     ActionTree actionTree;
 
-    public SimpleTreeManager(ActionTree actionTree){
+    public SimpleTreeOrchestrator(ActionTree actionTree){
         this.actionTree = actionTree;
     }
 

@@ -3,17 +3,24 @@ package edu.nc.travelplanner.model.action;
 import edu.nc.travelplanner.model.source.Response;
 import edu.nc.travelplanner.model.source.TextResponse;
 
+import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
-public class DirectInfoAction implements Action {
+public class InfoAction implements Action {
 
     private String name;
-    private List<Jump> jumps;
+    private List<Jump> jumps = new LinkedList<>();
     private String data;
 
-    public DirectInfoAction(String name) {
+    public InfoAction(String name, String data) {
         this.name = name;
+        this.data = data;
+    }
+
+    public void addJump(Jump jump){
+        this.jumps.add(jump);
     }
 
     @Override
@@ -33,7 +40,7 @@ public class DirectInfoAction implements Action {
 
     @Override
     public Response executeDecision(ActionArgs args) {
-        return null;
+        return new TextResponse("OK");
     }
 
     @Override
