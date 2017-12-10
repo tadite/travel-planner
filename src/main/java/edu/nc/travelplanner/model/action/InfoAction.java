@@ -43,8 +43,9 @@ public class InfoAction implements Action {
         return new TextResponse("OK");
     }
 
+    //TODO: in presentation same names as in decision
     @Override
-    public Response executePresentation() {
+    public Response executePresentation(ActionArgs args) {
         return new TextResponse(data);
     }
 }

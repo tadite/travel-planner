@@ -5,6 +5,6 @@ import edu.nc.travelplanner.model.source.Response;
 
 public interface ActionTree {
     String getName();
-    Response executePresentation();
+    Response executePresentation(ActionArgs args);
     Response executeDecision(ActionArgs args);
 }

@@ -9,5 +9,5 @@ public interface Action {
     ActionType getType();
     List<Jump> getJumps();
     Response executeDecision(ActionArgs args);
-    Response executePresentation();
+    Response executePresentation(ActionArgs args);
 }
