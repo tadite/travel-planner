@@ -7,7 +7,6 @@ import org.junit.Test;
 
 public class JacksonTests {
 
-    @Test
     public void canSerializeActionArgs() {
         ActionState state = ActionState.DECISION;
         ActionArgs args = new ActionArgs(state);
