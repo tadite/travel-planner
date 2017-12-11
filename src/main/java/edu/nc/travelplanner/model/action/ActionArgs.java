@@ -11,8 +11,7 @@ public class ActionArgs {
     @JsonProperty("state")
     private ActionState actionState;
 
-    public ActionArgs(ActionState actionState){
-        this.actionState=actionState;
+    public ActionArgs(){
     }
 
     public void addArg(String key, String value){

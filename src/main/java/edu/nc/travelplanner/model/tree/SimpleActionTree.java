@@ -24,6 +24,7 @@ public class SimpleActionTree implements ActionTree {
 
     @Override
     public Response executePresentation(ActionArgs args) {
+
         return action.executePresentation(args);
     }
 

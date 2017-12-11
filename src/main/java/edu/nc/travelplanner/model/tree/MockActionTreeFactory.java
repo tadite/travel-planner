@@ -16,9 +16,9 @@ public class MockActionTreeFactory implements ActionTreeFactory {
 
     {
         List<Jump> jumpList = new LinkedList<>();
-        InfoAction actionHead = new InfoAction("info1-info-node","data-pres-1");
-        InfoAction actionSecond = new InfoAction("info2-info-node","data-pres-2");
-        InfoAction actionThree = new InfoAction("info3-info-node","data-pres-3");
+        InfoAction actionHead = new InfoAction("question1","info1");
+        InfoAction actionSecond = new InfoAction("question2","info2");
+        InfoAction actionThree = new InfoAction("question3","info3");
 
         actionHead.addJump(new DirectJump(actionHead,actionSecond));
         actionSecond.addJump(new DirectJump(actionSecond,actionThree));

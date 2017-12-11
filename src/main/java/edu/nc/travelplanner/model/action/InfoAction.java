@@ -40,12 +40,14 @@ public class InfoAction implements Action {
 
     @Override
     public Response executeDecision(ActionArgs args) {
-        return new TextResponse("OK");
+
+        return new TextResponse("decided");
     }
 
     //TODO: in presentation same names as in decision
     @Override
     public Response executePresentation(ActionArgs args) {
+
         return new TextResponse(data);
     }
 }

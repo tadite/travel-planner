@@ -10,20 +10,18 @@ import org.springframework.web.context.WebApplicationContext;
 
 //@Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 
-@Scope(value="session", proxyMode =ScopedProxyMode.TARGET_CLASS)
+@Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Component
 public class SimpleTreeOrchestrator implements TreeOrchestrator {
 
-    @Autowired
-    private ActionTreeFactory treeFactory;
-
     private ActionTree actionTree;
 
-    public SimpleTreeOrchestrator(){
+    public SimpleTreeOrchestrator(@Autowired ActionTreeFactory treeFactory){
         this.actionTree=treeFactory.createByName("test-tree");
     }
 
     public Response executePresentation(ActionArgs args) {
+
         return actionTree.executePresentation(args);
     }
 
@@ -36,6 +34,6 @@ public class SimpleTreeOrchestrator implements TreeOrchestrator {
         if (args.getActionState()== ActionState.DECISION)
             return executeDecision(args);
         else
-            return executeDecision(args);
+            return executePresentation(args);
     }
 }

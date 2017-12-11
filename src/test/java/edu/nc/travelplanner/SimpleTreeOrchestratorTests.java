@@ -15,7 +15,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class SimpleTreeOrchestratorTests {
-
+/*
     public void canJumpThroughTree(){
         //Array
         List<Jump> jumpList = new LinkedList<>();
@@ -41,5 +41,5 @@ public class SimpleTreeOrchestratorTests {
         Assert.assertEquals("data-pres-1",responsePresentationFirst.getRawData());
         Assert.assertEquals("data-pres-2",responsePresentationSecond.getRawData());
         Assert.assertEquals("data-pres-3",responsePresentationThird.getRawData());
-    }
+    }*/
 }
