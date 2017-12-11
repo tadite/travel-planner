@@ -25,7 +25,6 @@ public class ActionTreeController {
 
     @PostMapping(path = "/action")
     public ResponseEntity<String> execute(@RequestBody ActionArgs actionArgs){
-        //ActionArgs actionArgs = new ActionArgs(state);
 
         return new ResponseEntity<>(orchestrator.execute(actionArgs).getRawData(), HttpStatus.OK) ;
     }
