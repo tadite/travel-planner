@@ -7,10 +7,9 @@ import edu.nc.travelplanner.model.tree.TreeOrchestrator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 
 @RestController
@@ -20,15 +19,33 @@ public class ActionTreeController {
 
     @Autowired
     public ActionTreeController(TreeOrchestrator orchestrator){
+
         this.orchestrator=orchestrator;
     }
 
     @PostMapping(path = "/action")
-    public ResponseEntity<String> execute(@RequestBody ActionArgs actionArgs){
+    public ResponseEntity<String> executePost(@RequestBody Map<String, String> argsMap){
+
+        ActionArgs actionArgs = new ActionArgsBuilder()
+                .addAllArgs(argsMap)
+                .setState(ActionState.DECISION)
+                .build();
 
         return new ResponseEntity<>(orchestrator.execute(actionArgs).getRawData(), HttpStatus.OK) ;
     }
 
+    @GetMapping(path = "/action")
+    public ResponseEntity<String> executeGet(@RequestParam Map<String, String> argsMap){
+
+        ActionArgs actionArgs = new ActionArgsBuilder()
+                .addAllArgs(argsMap)
+                .setState(ActionState.PRESENTATION)
+                .build();
+
+        return new ResponseEntity<>(orchestrator.execute(actionArgs).getRawData(), HttpStatus.OK) ;
+    }
+
+    //For testing purpose
     @GetMapping(path="/get")
     public ActionArgs get(){
         return new ActionArgsBuilder()

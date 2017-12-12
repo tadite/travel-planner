@@ -19,7 +19,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-
+import java.lang.reflect.MalformedParameterizedTypeException;
+import java.util.HashMap;
 
 
 public class ActionTreeControllerTests {
@@ -44,12 +45,12 @@ public class ActionTreeControllerTests {
         ActionTreeController actionTreeController = new ActionTreeController(treeOrchestrator);
 
         //Act
-        ResponseEntity<String> responsePresent1 = actionTreeController.execute(new ActionArgsBuilder().setState(ActionState.PRESENTATION).build());
-        ResponseEntity<String> responsePresent2 = actionTreeController.execute(new ActionArgsBuilder().setState(ActionState.PRESENTATION).build());
-        ResponseEntity<String> responseDecision1 = actionTreeController.execute(new ActionArgsBuilder().setState(ActionState.DECISION).build());
-        ResponseEntity<String> responsePresent3 = actionTreeController.execute(new ActionArgsBuilder().setState(ActionState.PRESENTATION).build());
-        ResponseEntity<String> responseDecision2 = actionTreeController.execute(new ActionArgsBuilder().setState(ActionState.DECISION).build());
-        ResponseEntity<String> responsePresent4 = actionTreeController.execute(new ActionArgsBuilder().setState(ActionState.PRESENTATION).build());
+        ResponseEntity<String> responsePresent1 = actionTreeController.executeGet(new HashMap<>());
+        ResponseEntity<String> responsePresent2 = actionTreeController.executeGet(new HashMap<>());
+        ResponseEntity<String> responseDecision1 = actionTreeController.executePost(new HashMap<>());
+        ResponseEntity<String> responsePresent3 = actionTreeController.executeGet(new HashMap<>());
+        ResponseEntity<String> responseDecision2 = actionTreeController.executePost(new HashMap<>());
+        ResponseEntity<String> responsePresent4 = actionTreeController.executeGet(new HashMap<>());
 
         //Assert
         Assert.assertEquals("info1", responsePresent1.getBody());

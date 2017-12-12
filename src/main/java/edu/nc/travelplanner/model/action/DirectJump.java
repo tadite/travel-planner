@@ -23,6 +23,7 @@ public class DirectJump implements Jump {
 
     @Override
     public boolean canJump(ActionArgs args, Response response) {
+
         return true;
     }
 }

@@ -18,6 +18,10 @@ public class ActionArgs {
         args.put(key, value);
     }
 
+    public void addAllArg(Map<String, String> argsMap){
+        args.putAll(argsMap);
+    }
+
     public String getValue(String key){
         return args.get(key);
     }
