@@ -1,6 +1,7 @@
 package edu.nc.travelplanner.model.tree;
 
 import edu.nc.travelplanner.model.action.*;
+import edu.nc.travelplanner.model.factory.ActionTreeFactory;
 import edu.nc.travelplanner.model.source.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;

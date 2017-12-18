@@ -1,5 +1,7 @@
 package edu.nc.travelplanner.model.action;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 public enum ActionType {
-    DIRECT_INFO
+    INFO
 }

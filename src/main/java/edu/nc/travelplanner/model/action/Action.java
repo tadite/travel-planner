@@ -7,7 +7,6 @@ import java.util.List;
 public interface Action {
     String getName();
     ActionType getType();
-    List<Jump> getJumps();
     Response executeDecision(ActionArgs args);
     Response executePresentation(ActionArgs args);
 }

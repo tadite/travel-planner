@@ -1,0 +1,11 @@
+package edu.nc.travelplanner.model.jump;
+
+import edu.nc.travelplanner.model.action.Action;
+import edu.nc.travelplanner.model.action.ActionArgs;
+import edu.nc.travelplanner.model.source.Response;
+
+public interface Jump {
+    Action getCurrentAction();
+    Action getNextAction();
+    boolean canJump(ActionArgs args, Response response);
+}
