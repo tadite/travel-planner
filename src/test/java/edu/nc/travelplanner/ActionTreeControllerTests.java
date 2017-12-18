@@ -2,8 +2,12 @@ package edu.nc.travelplanner;
 
 import edu.nc.travelplanner.controller.ActionTreeController;
 import edu.nc.travelplanner.model.action.*;
+import edu.nc.travelplanner.model.factory.action.FileActionJsonReader;
+import edu.nc.travelplanner.model.factory.action.JsonActionFactory;
 import edu.nc.travelplanner.model.factory.tree.ActionTreeFactory;
 import edu.nc.travelplanner.model.factory.tree.ActionTreeParseException;
+import edu.nc.travelplanner.model.factory.tree.FileActionTreeJsonReader;
+import edu.nc.travelplanner.model.factory.tree.JsonActionTreeFactory;
 import edu.nc.travelplanner.model.jump.NoConditionJump;
 import edu.nc.travelplanner.model.jump.Jump;
 import edu.nc.travelplanner.model.tree.SimpleActionTree;
@@ -13,6 +17,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.http.ResponseEntity;
 
+import javax.lang.model.util.SimpleElementVisitor6;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,23 +26,24 @@ import java.util.List;
 public class ActionTreeControllerTests {
 
     @Test
-    public void canConsumeArgsAndJumpThroughTree() throws ActionTreeParseException {
+    public void canConsumeArgsAndJumpThroughTreeWithTreeParsedFromJsonFiles() throws ActionTreeParseException {
         //Array
-        InfoAction actionHead = new InfoAction("question1","info1");
-        InfoAction actionSecond = new InfoAction("question2","info2");
-        InfoAction actionThree = new InfoAction("question3","info3");
+        InfoAction action1 = new InfoAction("test-action1","test-data1");
+        InfoAction action2 = new InfoAction("test-action2","test-data2");
+        InfoAction action3 = new InfoAction("test-action3","test-data3");
 
         List<Jump> jumps = new LinkedList<>();
-        jumps.add(new NoConditionJump(actionHead,actionSecond));
-        jumps.add(new NoConditionJump(actionSecond,actionThree));
+        jumps.add(new NoConditionJump(action1,action2));
+        jumps.add(new NoConditionJump(action2,action3));
 
-        SimpleActionTree tree = new SimpleActionTree("test-tree", actionHead);
+        SimpleActionTree tree = new SimpleActionTree("test-tree", action1);
         tree.addAllJumps(jumps);
 
-        ActionTreeFactory mockTreeFactory = Mockito.mock(ActionTreeFactory.class);
-        Mockito.when(mockTreeFactory.createByName("test-tree")).thenReturn(tree);
+        FileActionTreeJsonReader fileActionTreeJsonReader = new FileActionTreeJsonReader();
+        JsonActionFactory jsonActionFactory = new JsonActionFactory(new FileActionJsonReader());
+        JsonActionTreeFactory jsonActionTreeFactory = new JsonActionTreeFactory(fileActionTreeJsonReader, jsonActionFactory);
 
-        SimpleTreeOrchestrator treeOrchestrator = new SimpleTreeOrchestrator(mockTreeFactory);
+        SimpleTreeOrchestrator treeOrchestrator = new SimpleTreeOrchestrator(jsonActionTreeFactory);
 
         ActionTreeController actionTreeController = new ActionTreeController(treeOrchestrator);
 
@@ -50,9 +56,9 @@ public class ActionTreeControllerTests {
         ResponseEntity<String> responsePresent4 = actionTreeController.executeGet(new HashMap<>());
 
         //Assert
-        Assert.assertEquals("info1", responsePresent1.getBody());
-        Assert.assertEquals("info2", responsePresent3.getBody());
-        Assert.assertEquals("info3", responsePresent4.getBody());
+        Assert.assertEquals("test-data1", responsePresent1.getBody());
+        Assert.assertEquals("test-data2", responsePresent3.getBody());
+        Assert.assertEquals("test-data3", responsePresent4.getBody());
 
     }
 }

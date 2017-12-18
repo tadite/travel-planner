@@ -1,0 +1,1 @@
+{"name":"test-tree","headActionName":"test-action-1","jumps":[{"fromActionName":"test-action-1","toActionName":"test-action-2","type":"WITHOUT_CONDITION","params":{"test-key":"test-value"}},{"fromActionName":"test-action-2","toActionName":"test-action-3","type":"WITHOUT_CONDITION","params":{"test-key":"test-value"}}]}

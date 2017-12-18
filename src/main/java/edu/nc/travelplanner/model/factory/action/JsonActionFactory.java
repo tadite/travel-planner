@@ -5,10 +5,12 @@ import edu.nc.travelplanner.model.action.Action;
 import edu.nc.travelplanner.model.action.ActionType;
 import edu.nc.travelplanner.model.action.InfoAction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 import java.util.Map;
 
+@Component
 public class JsonActionFactory implements ActionFactory {
 
     private ActionJsonReader actionJsonReader;

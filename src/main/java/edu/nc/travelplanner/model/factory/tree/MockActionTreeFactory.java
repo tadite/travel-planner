@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 
-@Component
 public class MockActionTreeFactory implements ActionTreeFactory {
 
     private HashMap<String, ActionTree> treeHashMap = new HashMap<>();

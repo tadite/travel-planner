@@ -10,10 +10,12 @@ import edu.nc.travelplanner.model.jump.NoConditionJump;
 import edu.nc.travelplanner.model.tree.ActionTree;
 import edu.nc.travelplanner.model.tree.SimpleActionTree;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 import java.util.*;
 
+@Component
 public class JsonActionTreeFactory implements ActionTreeFactory {
 
     private ActionTreeJsonReader actionTreeJsonReader;
