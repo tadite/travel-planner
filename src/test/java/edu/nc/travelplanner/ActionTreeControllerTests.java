@@ -2,8 +2,9 @@ package edu.nc.travelplanner;
 
 import edu.nc.travelplanner.controller.ActionTreeController;
 import edu.nc.travelplanner.model.action.*;
-import edu.nc.travelplanner.model.factory.ActionTreeFactory;
-import edu.nc.travelplanner.model.jump.DirectJump;
+import edu.nc.travelplanner.model.factory.tree.ActionTreeFactory;
+import edu.nc.travelplanner.model.factory.tree.ActionTreeParseException;
+import edu.nc.travelplanner.model.jump.NoConditionJump;
 import edu.nc.travelplanner.model.jump.Jump;
 import edu.nc.travelplanner.model.tree.SimpleActionTree;
 import edu.nc.travelplanner.model.tree.SimpleTreeOrchestrator;
@@ -20,15 +21,15 @@ import java.util.List;
 public class ActionTreeControllerTests {
 
     @Test
-    public void canConsumeArgsAndJumpThroughTree(){
+    public void canConsumeArgsAndJumpThroughTree() throws ActionTreeParseException {
         //Array
         InfoAction actionHead = new InfoAction("question1","info1");
         InfoAction actionSecond = new InfoAction("question2","info2");
         InfoAction actionThree = new InfoAction("question3","info3");
 
         List<Jump> jumps = new LinkedList<>();
-        jumps.add(new DirectJump(actionHead,actionSecond));
-        jumps.add(new DirectJump(actionSecond,actionThree));
+        jumps.add(new NoConditionJump(actionHead,actionSecond));
+        jumps.add(new NoConditionJump(actionSecond,actionThree));
 
         SimpleActionTree tree = new SimpleActionTree("test-tree", actionHead);
         tree.addAllJumps(jumps);

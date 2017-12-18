@@ -5,15 +5,16 @@ import edu.nc.travelplanner.model.action.ActionArgs;
 import edu.nc.travelplanner.model.jump.Jump;
 import edu.nc.travelplanner.model.source.Response;
 
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class SimpleActionTree implements ActionTree {
 
     private String name;
     private Action currentAction;
     private List<Jump> jumps = new LinkedList<>();
+
+    public SimpleActionTree() {
+    }
 
     public SimpleActionTree(String name, Action headAction) {
         this.name = name;
@@ -56,5 +57,13 @@ public class SimpleActionTree implements ActionTree {
     private void executeJump(Jump jump){
         if (jump!=null)
             currentAction=jump.getNextAction();
+    }
+
+    public Action getCurrentAction() {
+        return currentAction;
+    }
+
+    public List<Jump> getJumps() {
+        return jumps;
     }
 }

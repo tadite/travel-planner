@@ -1,8 +1,7 @@
-package edu.nc.travelplanner.model.factory;
+package edu.nc.travelplanner.model.factory.action;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.nc.travelplanner.model.action.Action;
-import edu.nc.travelplanner.model.action.ActionDto;
 import edu.nc.travelplanner.model.action.ActionType;
 import edu.nc.travelplanner.model.action.InfoAction;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,13 +66,11 @@ public class JsonActionFactory implements ActionFactory {
     }
 
     private Action createActionByType(ActionType type) {
-        Action action = null;
         switch (type) {
             case INFO:
-                action = new InfoAction();
-                break;
+                return new InfoAction();
         }
-        return action;
+        return null;
     }
 
     private void setActionParameters(Class<? extends Action> actionClass, Action action,

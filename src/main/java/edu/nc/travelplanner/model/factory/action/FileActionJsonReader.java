@@ -1,4 +1,4 @@
-package edu.nc.travelplanner.model.factory;
+package edu.nc.travelplanner.model.factory.action;
 
 import org.springframework.stereotype.Component;
 

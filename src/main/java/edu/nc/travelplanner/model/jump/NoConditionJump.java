@@ -4,11 +4,15 @@ import edu.nc.travelplanner.model.action.Action;
 import edu.nc.travelplanner.model.action.ActionArgs;
 import edu.nc.travelplanner.model.source.Response;
 
-public class DirectJump implements Jump {
+public class NoConditionJump implements Jump {
     private Action currentAction;
     private Action nextAction;
+    private JumpType type;
 
-    public DirectJump(Action currentAction, Action nextAction) {
+    public NoConditionJump() {
+    }
+
+    public NoConditionJump(Action currentAction, Action nextAction) {
         this.currentAction = currentAction;
         this.nextAction = nextAction;
     }
@@ -27,5 +31,9 @@ public class DirectJump implements Jump {
     public boolean canJump(ActionArgs args, Response response) {
 
         return true;
+    }
+
+    public JumpType getType() {
+        return type;
     }
 }

@@ -1,4 +1,4 @@
-package edu.nc.travelplanner.model.factory;
+package edu.nc.travelplanner.model.factory.action;
 
 public class ActionParseException extends Exception {
 
@@ -9,14 +9,14 @@ public class ActionParseException extends Exception {
         super(getMessage(actionName));
     }
 
-    private static String getMessage(String actionName) {
-        return "Error in parse "+actionName+" action!";
-    }
-
     public ActionParseException (Throwable cause) {
     }
 
     public ActionParseException (String actionName, Throwable cause) {
         super (getMessage(actionName), cause);
+    }
+
+    private static String getMessage(String actionName) {
+        return "Error in parse "+actionName+" action!";
     }
 }

@@ -1,4 +1,6 @@
-package edu.nc.travelplanner.model.action;
+package edu.nc.travelplanner.model.factory.action;
+
+import edu.nc.travelplanner.model.action.ActionType;
 
 import java.util.Map;
 
