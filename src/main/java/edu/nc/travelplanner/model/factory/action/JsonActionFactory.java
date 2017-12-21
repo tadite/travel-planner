@@ -3,6 +3,7 @@ package edu.nc.travelplanner.model.factory.action;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.nc.travelplanner.model.action.Action;
 import edu.nc.travelplanner.model.action.ActionType;
+import edu.nc.travelplanner.model.action.CheckboxListAction;
 import edu.nc.travelplanner.model.action.InfoAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -71,14 +72,16 @@ public class JsonActionFactory implements ActionFactory {
         switch (type) {
             case INFO:
                 return new InfoAction();
+            case CHECKBOX_LIST:
+                return new CheckboxListAction();
         }
         return null;
     }
 
     private void setActionParameters(Class<? extends Action> actionClass, Action action,
-                                     Map<String, String> parameters)
+                                     Map<String, Object> parameters)
             throws IllegalAccessException, NoSuchFieldException {
-        for (Map.Entry<String,String> entry : parameters.entrySet()){
+        for (Map.Entry<String,Object> entry : parameters.entrySet()){
             Field fieldToSet = actionClass.getDeclaredField(entry.getKey());
             fieldToSet.setAccessible(true);
             fieldToSet.set(action, entry.getValue());

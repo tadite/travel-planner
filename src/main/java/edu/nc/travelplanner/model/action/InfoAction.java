@@ -29,7 +29,6 @@ public class InfoAction implements Action {
 
     @Override
     public Response executeDecision(ActionArgs args) {
-
         return new TextResponse("decided");
     }
 

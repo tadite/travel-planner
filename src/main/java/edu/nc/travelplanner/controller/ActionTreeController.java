@@ -1,5 +1,6 @@
 package edu.nc.travelplanner.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import edu.nc.travelplanner.model.action.ActionArgs;
 import edu.nc.travelplanner.model.action.ActionArgsBuilder;
 import edu.nc.travelplanner.model.action.ActionState;
@@ -31,7 +32,12 @@ public class ActionTreeController {
                 .setState(ActionState.DECISION)
                 .build();
 
-        return new ResponseEntity<>(orchestrator.execute(actionArgs).getRawData(), HttpStatus.OK) ;
+        try {
+            return new ResponseEntity<>(orchestrator.execute(actionArgs).getRawData(), HttpStatus.OK) ;
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
     }
 
     @GetMapping(path = "/action")
@@ -42,7 +48,12 @@ public class ActionTreeController {
                 .setState(ActionState.PRESENTATION)
                 .build();
 
-        return new ResponseEntity<>(orchestrator.execute(actionArgs).getRawData(), HttpStatus.OK) ;
+        try {
+            return new ResponseEntity<>(orchestrator.execute(actionArgs).getRawData(), HttpStatus.OK);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
     }
 
     //For testing purpose

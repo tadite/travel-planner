@@ -8,11 +8,11 @@ public class ActionDto {
 
     private String name;
     private ActionType type;
-    private Map<String, String> parameters;
+    private Map<String, Object> parameters;
 
     public ActionDto(){}
 
-    public ActionDto(String name, ActionType type, Map<String, String> parameters) {
+    public ActionDto(String name, ActionType type, Map<String, Object> parameters) {
         this.name = name;
         this.type = type;
         this.parameters = parameters;
@@ -34,11 +34,11 @@ public class ActionDto {
         this.type = type;
     }
 
-    public Map<String, String> getParameters() {
+    public Map<String, Object> getParameters() {
         return parameters;
     }
 
-    public void setParameters(Map<String, String> parameters) {
+    public void setParameters(Map<String, Object> parameters) {
         this.parameters = parameters;
     }
 }
