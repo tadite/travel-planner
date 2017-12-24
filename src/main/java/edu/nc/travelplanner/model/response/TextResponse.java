@@ -1,4 +1,4 @@
-package edu.nc.travelplanner.model.source;
+package edu.nc.travelplanner.model.response;
 
 public class TextResponse implements Response {
 

@@ -64,26 +64,9 @@ public class JsonActionFactoryTests {
         Assert.assertEquals("value2", checkboxListAction.getOptionsMap().get("key2"));
     }
 
-    public void testJson() throws JsonProcessingException {
-        ActionDto actionDto = new ActionDto();
-        actionDto.setName("test-action");
-        actionDto.setType(ActionType.INFO);
-
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put("test-param1", "test-value1");
-        actionDto.setParameters(parameters);
-
-        ObjectMapper mapper = new ObjectMapper();
-        String actionDtoJson = mapper.writeValueAsString(actionDto);
-
-        return;
-    }
-
-    public void testJsonReaderPath() throws IOException {
-        FileActionJsonReader fileActionJsonReader = new FileActionJsonReader();
-        String actionJson = fileActionJsonReader.getActionJson("test-action");
-
-        Assert.assertEquals("{\"name\":\"test-action\",\"type\":\"INFO\",\"parameters\":{\"data\":\"test-data1\"}}", actionJson);
+    @Test
+    public void canParseInputTextActionFromJson(){
 
     }
+
 }

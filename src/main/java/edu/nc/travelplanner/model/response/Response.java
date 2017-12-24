@@ -1,4 +1,4 @@
-package edu.nc.travelplanner.model.source;
+package edu.nc.travelplanner.model.response;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 

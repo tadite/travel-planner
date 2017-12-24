@@ -2,7 +2,7 @@ package edu.nc.travelplanner.model.tree;
 
 import edu.nc.travelplanner.model.action.ActionArgs;
 import edu.nc.travelplanner.model.jump.Jump;
-import edu.nc.travelplanner.model.source.Response;
+import edu.nc.travelplanner.model.response.Response;
 
 import java.util.Collection;
 

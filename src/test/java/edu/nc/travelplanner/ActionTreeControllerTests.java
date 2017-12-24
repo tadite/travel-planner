@@ -1,50 +1,65 @@
 package edu.nc.travelplanner;
 
+
 import edu.nc.travelplanner.controller.ActionTreeController;
-import edu.nc.travelplanner.model.action.*;
+import edu.nc.travelplanner.model.action.CheckboxListAction;
+import edu.nc.travelplanner.model.action.InfoAction;
 import edu.nc.travelplanner.model.factory.action.FileActionJsonReader;
 import edu.nc.travelplanner.model.factory.action.JsonActionFactory;
 import edu.nc.travelplanner.model.factory.tree.ActionTreeFactory;
 import edu.nc.travelplanner.model.factory.tree.ActionTreeParseException;
 import edu.nc.travelplanner.model.factory.tree.FileActionTreeJsonReader;
 import edu.nc.travelplanner.model.factory.tree.JsonActionTreeFactory;
-import edu.nc.travelplanner.model.jump.NoConditionJump;
 import edu.nc.travelplanner.model.jump.Jump;
+import edu.nc.travelplanner.model.jump.NoConditionJump;
 import edu.nc.travelplanner.model.tree.SimpleActionTree;
 import edu.nc.travelplanner.model.tree.SimpleTreeOrchestrator;
 import org.junit.Assert;
 import org.junit.Test;
-import org.mockito.Mockito;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
-import javax.lang.model.util.SimpleElementVisitor6;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = TravelplannerApplication.class)
+@WebAppConfiguration
 public class ActionTreeControllerTests {
 
-    //removed because gitlab cs cant find json files
-    //@Test
+    @Test
     public void canConsumeArgsAndJumpThroughTreeWithTreeParsedFromJsonFiles() throws ActionTreeParseException {
+
         //Array
         InfoAction action1 = new InfoAction("test-action1","test-data1");
         InfoAction action2 = new InfoAction("test-action2","test-data2");
-        InfoAction action3 = new InfoAction("test-action3","test-data3");
+        CheckboxListAction action3 = new CheckboxListAction();
+        Map<String, String> options = new HashMap<>();
+        options.put("test-key1", "test-val1");
+        options.put("test-key2", "test-val2");
+        action3.setOptionsMap(options);
 
         List<Jump> jumps = new LinkedList<>();
+
         jumps.add(new NoConditionJump(action1,action2));
         jumps.add(new NoConditionJump(action2,action3));
 
         SimpleActionTree tree = new SimpleActionTree("test-tree", action1);
         tree.addAllJumps(jumps);
 
-        FileActionTreeJsonReader fileActionTreeJsonReader = new FileActionTreeJsonReader();
-        JsonActionFactory jsonActionFactory = new JsonActionFactory(new FileActionJsonReader());
-        JsonActionTreeFactory jsonActionTreeFactory = new JsonActionTreeFactory(fileActionTreeJsonReader, jsonActionFactory);
+        //removed because gitlab cs cant find json files
+        ActionTreeFactory mockActionTreeFactory = mock(ActionTreeFactory.class);
+        when(mockActionTreeFactory.createByName("test-tree")).thenReturn(tree);
 
-        SimpleTreeOrchestrator treeOrchestrator = new SimpleTreeOrchestrator(jsonActionTreeFactory);
+        SimpleTreeOrchestrator treeOrchestrator = new SimpleTreeOrchestrator(mockActionTreeFactory);
 
         ActionTreeController actionTreeController = new ActionTreeController(treeOrchestrator);
 
@@ -57,9 +72,9 @@ public class ActionTreeControllerTests {
         ResponseEntity<String> responsePresent4 = actionTreeController.executeGet(new HashMap<>());
 
         //Assert
-        Assert.assertEquals("test-data1", responsePresent1.getBody());
-        Assert.assertEquals("test-data2", responsePresent3.getBody());
-        Assert.assertEquals("test-data3", responsePresent4.getBody());
+        Assert.assertEquals("[{\"id\":\"test-action1_title\",\"data\":\"test-data1\",\"type\":\"TITLE\"}]", responsePresent1.getBody());
+        Assert.assertEquals("[{\"id\":\"test-action2_title\",\"data\":\"test-data2\",\"type\":\"TITLE\"}]", responsePresent3.getBody());
+        Assert.assertEquals("[{\"id\":\"test-key1\",\"data\":\"test-val1\",\"type\":\"CHECKBOX\"},{\"id\":\"test-key2\",\"data\":\"test-val2\",\"type\":\"CHECKBOX\"}]", responsePresent4.getBody());
 
     }
 }

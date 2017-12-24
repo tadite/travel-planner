@@ -3,7 +3,7 @@ package edu.nc.travelplanner.model.tree;
 import edu.nc.travelplanner.model.action.*;
 import edu.nc.travelplanner.model.factory.tree.ActionTreeFactory;
 import edu.nc.travelplanner.model.factory.tree.ActionTreeParseException;
-import edu.nc.travelplanner.model.source.Response;
+import edu.nc.travelplanner.model.response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;

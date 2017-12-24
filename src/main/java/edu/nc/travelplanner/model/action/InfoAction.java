@@ -1,7 +1,8 @@
 package edu.nc.travelplanner.model.action;
 
-import edu.nc.travelplanner.model.source.Response;
-import edu.nc.travelplanner.model.source.TextResponse;
+import edu.nc.travelplanner.model.response.Response;
+import edu.nc.travelplanner.model.response.TextResponse;
+import edu.nc.travelplanner.model.response.ViewResponseBuilder;
 
 public class InfoAction implements Action {
 
@@ -29,13 +30,12 @@ public class InfoAction implements Action {
 
     @Override
     public Response executeDecision(ActionArgs args) {
-        return new TextResponse("decided");
+        return new ViewResponseBuilder().addTitleElement(name+"_title","decided").build();
     }
 
     @Override
     public Response executePresentation(ActionArgs args) {
-
-        return new TextResponse(data);
+        return new ViewResponseBuilder().addTitleElement(name+"_title", data).build();
     }
 
     public void setName(String name) {

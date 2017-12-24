@@ -2,7 +2,7 @@ package edu.nc.travelplanner.model.jump;
 
 import edu.nc.travelplanner.model.action.Action;
 import edu.nc.travelplanner.model.action.ActionArgs;
-import edu.nc.travelplanner.model.source.Response;
+import edu.nc.travelplanner.model.response.Response;
 
 public interface Jump {
     Action getCurrentAction();

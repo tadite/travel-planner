@@ -1,8 +1,8 @@
 package edu.nc.travelplanner.model.action;
 
-import edu.nc.travelplanner.model.source.CheckboxListResponse;
-import edu.nc.travelplanner.model.source.Response;
-import edu.nc.travelplanner.model.source.TextResponse;
+import edu.nc.travelplanner.model.response.CheckboxListResponse;
+import edu.nc.travelplanner.model.response.Response;
+import edu.nc.travelplanner.model.response.ViewResponseBuilder;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +17,10 @@ public class CheckboxListAction implements Action {
         return optionsMap;
     }
 
+    public void setOptionsMap(Map<String, String> optionsMap){
+        this.optionsMap = optionsMap;
+    }
+
     @Override
     public String getName() {
         return name;
@@ -29,11 +33,13 @@ public class CheckboxListAction implements Action {
 
     @Override
     public Response executeDecision(ActionArgs args) {
-        return new TextResponse("decided");
+
+        return new ViewResponseBuilder().addTitleElement(name + "_title" ,"decided").build();
     }
 
     @Override
     public Response executePresentation(ActionArgs args) {
-        return new CheckboxListResponse(optionsMap);
+
+        return new ViewResponseBuilder().addCheckboxes(optionsMap).build();
     }
 }

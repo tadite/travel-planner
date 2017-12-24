@@ -1,8 +1,6 @@
 package edu.nc.travelplanner.model.action;
 
-import edu.nc.travelplanner.model.source.Response;
-
-import java.util.List;
+import edu.nc.travelplanner.model.response.Response;
 
 public interface Action {
     String getName();

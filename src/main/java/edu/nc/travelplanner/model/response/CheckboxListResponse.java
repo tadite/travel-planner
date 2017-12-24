@@ -1,10 +1,9 @@
-package edu.nc.travelplanner.model.source;
+package edu.nc.travelplanner.model.response;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Collection;
 import java.util.Map;
 
 public class CheckboxListResponse implements Response {
