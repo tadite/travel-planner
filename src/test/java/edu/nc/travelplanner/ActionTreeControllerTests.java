@@ -2,14 +2,12 @@ package edu.nc.travelplanner;
 
 
 import edu.nc.travelplanner.controller.ActionTreeController;
-import edu.nc.travelplanner.model.action.CheckboxListAction;
+import edu.nc.travelplanner.model.action.CheckListAction;
+import edu.nc.travelplanner.model.action.DropDownListAction;
 import edu.nc.travelplanner.model.action.InfoAction;
-import edu.nc.travelplanner.model.factory.action.FileActionJsonReader;
-import edu.nc.travelplanner.model.factory.action.JsonActionFactory;
+import edu.nc.travelplanner.model.action.TextInputAction;
 import edu.nc.travelplanner.model.factory.tree.ActionTreeFactory;
 import edu.nc.travelplanner.model.factory.tree.ActionTreeParseException;
-import edu.nc.travelplanner.model.factory.tree.FileActionTreeJsonReader;
-import edu.nc.travelplanner.model.factory.tree.JsonActionTreeFactory;
 import edu.nc.travelplanner.model.jump.Jump;
 import edu.nc.travelplanner.model.jump.NoConditionJump;
 import edu.nc.travelplanner.model.tree.SimpleActionTree;
@@ -36,23 +34,29 @@ import static org.mockito.Mockito.when;
 public class ActionTreeControllerTests {
 
     @Test
-    public void canConsumeArgsAndJumpThroughTreeWithTreeParsedFromJsonFiles() throws ActionTreeParseException {
+    public void canJumpThroughTreeWithCorrectPresent() throws ActionTreeParseException {
 
         //Array
-        InfoAction action1 = new InfoAction("test-action1","test-data1");
-        InfoAction action2 = new InfoAction("test-action2","test-data2");
-        CheckboxListAction action3 = new CheckboxListAction();
-        Map<String, String> options = new HashMap<>();
-        options.put("test-key1", "test-val1");
-        options.put("test-key2", "test-val2");
-        action3.setOptionsMap(options);
+        Map<String, String> checkOptions = new HashMap<>();
+        checkOptions.put("option1-id","option1-title");
+        checkOptions.put("option2-id","option2-title");
+
+        Map<String, String> dropdownOptions = new HashMap<>();
+        dropdownOptions.put("dropdown1-id","dropdown1-title");
+        dropdownOptions.put("dropdown2-id","dropdown2-title");
+
+        InfoAction testAction1 = new InfoAction("testAction1-name", "testAction1-data");
+        CheckListAction testAction2 = new CheckListAction("testAction2-name",checkOptions);
+        TextInputAction testAction3 = new TextInputAction("testAction3-name", "testAction3-startData");
+        DropDownListAction testAction4 = new DropDownListAction("testAction4-name", dropdownOptions);
 
         List<Jump> jumps = new LinkedList<>();
 
-        jumps.add(new NoConditionJump(action1,action2));
-        jumps.add(new NoConditionJump(action2,action3));
+        jumps.add(new NoConditionJump(testAction1,testAction2));
+        jumps.add(new NoConditionJump(testAction2,testAction3));
+        jumps.add(new NoConditionJump(testAction3,testAction4));
 
-        SimpleActionTree tree = new SimpleActionTree("test-tree", action1);
+        SimpleActionTree tree = new SimpleActionTree("test-tree", testAction1);
         tree.addAllJumps(jumps);
 
         //removed because gitlab cs cant find json files
@@ -64,17 +68,21 @@ public class ActionTreeControllerTests {
         ActionTreeController actionTreeController = new ActionTreeController(treeOrchestrator);
 
         //Act
-        ResponseEntity<String> responsePresent1 = actionTreeController.executeGet(new HashMap<>());
-        ResponseEntity<String> responsePresent2 = actionTreeController.executeGet(new HashMap<>());
-        ResponseEntity<String> responseDecision1 = actionTreeController.executePost(new HashMap<>());
-        ResponseEntity<String> responsePresent3 = actionTreeController.executeGet(new HashMap<>());
-        ResponseEntity<String> responseDecision2 = actionTreeController.executePost(new HashMap<>());
-        ResponseEntity<String> responsePresent4 = actionTreeController.executeGet(new HashMap<>());
-
+        ResponseEntity<String> testAction1Present = actionTreeController.executeGet(new HashMap<>());
+        ResponseEntity<String> testAction1Decision = actionTreeController.executePost(new HashMap<>());
+        ResponseEntity<String> testAction2Present = actionTreeController.executeGet(new HashMap<>());
+        ResponseEntity<String> testAction2Decision = actionTreeController.executePost(new HashMap<String, String>(){{put("option1-id", "true"); }});
+        ResponseEntity<String> testAction3Present = actionTreeController.executeGet(new HashMap<>());
+        ResponseEntity<String> testAction3Decision = actionTreeController.executePost(new HashMap<String, String>(){{put("testAction3-name-textbox", "testAction3-newData"); }});
+        ResponseEntity<String> testAction4Present = actionTreeController.executeGet(new HashMap<>());
+        ResponseEntity<String> testAction4Decision = actionTreeController.executePost(new HashMap<String, String>(){{put("dropdown1-id", "true"); }});
         //Assert
-        Assert.assertEquals("[{\"id\":\"test-action1_title\",\"data\":\"test-data1\",\"type\":\"TITLE\"}]", responsePresent1.getBody());
-        Assert.assertEquals("[{\"id\":\"test-action2_title\",\"data\":\"test-data2\",\"type\":\"TITLE\"}]", responsePresent3.getBody());
-        Assert.assertEquals("[{\"id\":\"test-key1\",\"data\":\"test-val1\",\"type\":\"CHECKBOX\"},{\"id\":\"test-key2\",\"data\":\"test-val2\",\"type\":\"CHECKBOX\"}]", responsePresent4.getBody());
+
+        //TODO: pick results
+        Assert.assertEquals("[{\"id\":\"testAction1-name-title\",\"data\":\"testAction1-data\",\"type\":\"title\"}]", testAction1Present.getBody());
+        Assert.assertEquals("[{\"id\":\"option1-id\",\"data\":\"option1-title\",\"type\":\"checkbox\"},{\"id\":\"option2-id\",\"data\":\"option2-title\",\"type\":\"checkbox\"}]", testAction2Present.getBody());
+        Assert.assertEquals("[{\"id\":\"testAction3-name-textbox\",\"data\":\"testAction3-startData\",\"type\":\"text_input\"}]", testAction3Present.getBody());
+        Assert.assertEquals("[{\"id\":\"testAction4-name-dropdown-list\",\"type\":\"dropdown_list\",\"data\":{\"dropdown2-id\":\"dropdown2-title\",\"dropdown1-id\":\"dropdown1-title\"}}]", testAction4Present.getBody());
 
     }
 }

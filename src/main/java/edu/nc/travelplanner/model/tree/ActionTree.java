@@ -5,6 +5,7 @@ import edu.nc.travelplanner.model.jump.Jump;
 import edu.nc.travelplanner.model.response.Response;
 
 import java.util.Collection;
+import java.util.Map;
 
 public interface ActionTree {
     String getName();
@@ -12,4 +13,5 @@ public interface ActionTree {
     void addJump(Jump jump);
     Response executePresentation(ActionArgs args);
     Response executeDecision(ActionArgs args);
+    Map<String, Object> getPickResults();
 }

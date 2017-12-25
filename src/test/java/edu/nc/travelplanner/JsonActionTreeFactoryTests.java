@@ -26,7 +26,6 @@ import java.util.Map;
 
 public class JsonActionTreeFactoryTests {
 
-
     @Test
     public void canParseActionTreeFromJson() throws IOException, ActionParseException, ActionTreeParseException {
         //Array
@@ -58,27 +57,6 @@ public class JsonActionTreeFactoryTests {
         Assert.assertEquals(testAction2, jumps.get(0).getNextAction());
         Assert.assertEquals(testAction2, jumps.get(1).getCurrentAction());
         Assert.assertEquals(testAction3, jumps.get(1).getNextAction());
-    }
-
-    public void testJson() throws JsonProcessingException {
-        ActionTreeDto actionTreeDto = new ActionTreeDto();
-
-        actionTreeDto.setName("test-tree");
-        actionTreeDto.setHeadActionName("test-action-1");
-
-        List<JumpDto> jumpDtos = new LinkedList<>();
-        Map<String, String> paramsMap = new HashMap<>();
-        paramsMap.put("test-key", "test-value");
-
-        jumpDtos.add(new JumpDto("test-action-1", "test-action-2", JumpType.WITHOUT_CONDITION, paramsMap));
-        jumpDtos.add(new JumpDto("test-action-2", "test-action-3", JumpType.WITHOUT_CONDITION, paramsMap));
-
-        actionTreeDto.setJumps(jumpDtos);
-
-        ObjectMapper mapper = new ObjectMapper();
-        String actionDtoJson = mapper.writeValueAsString(actionTreeDto);
-
-        return;
     }
 
 }

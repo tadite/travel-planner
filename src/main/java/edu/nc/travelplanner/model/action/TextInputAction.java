@@ -2,24 +2,23 @@ package edu.nc.travelplanner.model.action;
 
 import edu.nc.travelplanner.model.response.EmptyResponse;
 import edu.nc.travelplanner.model.response.Response;
-import edu.nc.travelplanner.model.response.TextResponse;
 import edu.nc.travelplanner.model.response.ViewResponseBuilder;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
-public class InfoAction implements Action {
+public class TextInputAction implements Action{
 
     private String name;
     private String data;
-    private ActionType type = ActionType.INFO;
+    private ActionType type = ActionType.TEXT_INPUT;
 
-    public InfoAction() {
+    public TextInputAction() {
     }
 
-    public InfoAction(String name, String data) {
+    public TextInputAction(String name, String data) {
         this.name = name;
-        this.data = data;
+        this.data=data;
     }
 
     @Override
@@ -39,16 +38,20 @@ public class InfoAction implements Action {
 
     @Override
     public Response executePresentation(ActionArgs args) {
-        return new ViewResponseBuilder().addTitleElement(name+"-title", data).build();
+        return new ViewResponseBuilder().addTextbox(getTextboxElementName(), data).build();
     }
 
     @Override
     public String getResult(Map<String, String> decisionArgs) {
+        Optional<Map.Entry<String, String>> first = decisionArgs.entrySet().stream()
+                .filter((key) -> key.getKey().equalsIgnoreCase(getTextboxElementName())).findFirst();
+        if (first.isPresent())
+            return first.get().getValue();
         return null;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    private String getTextboxElementName(){
+        return name+"-textbox";
     }
 
     public String getData() {

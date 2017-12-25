@@ -1,10 +1,7 @@
 package edu.nc.travelplanner.model.factory.action;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.nc.travelplanner.model.action.Action;
-import edu.nc.travelplanner.model.action.ActionType;
-import edu.nc.travelplanner.model.action.CheckboxListAction;
-import edu.nc.travelplanner.model.action.InfoAction;
+import edu.nc.travelplanner.model.action.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -72,8 +69,12 @@ public class JsonActionFactory implements ActionFactory {
         switch (type) {
             case INFO:
                 return new InfoAction();
-            case CHECKBOX_LIST:
-                return new CheckboxListAction();
+            case CHECKLIST:
+                return new CheckListAction();
+            case TEXT_INPUT:
+                return new TextInputAction();
+            case DROPDOWN_INPUT:
+                return new DropDownListAction();
         }
         return null;
     }

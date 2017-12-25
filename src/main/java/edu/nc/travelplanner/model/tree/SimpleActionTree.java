@@ -13,6 +13,8 @@ public class SimpleActionTree implements ActionTree {
     private Action currentAction;
     private List<Jump> jumps = new LinkedList<>();
 
+    private Map<String, Object> pickResult = new HashMap<>();
+
     public SimpleActionTree() {
     }
 
@@ -44,6 +46,10 @@ public class SimpleActionTree implements ActionTree {
 
     @Override
     public Response executeDecision(ActionArgs args) {
+        Object result = currentAction.getResult(args.getArgs());
+        if (result!=null)
+            pickResult.put(currentAction.getName(), result);
+
         Response response = currentAction.executeDecision(args);
 
         this.jumps.stream()
@@ -52,6 +58,11 @@ public class SimpleActionTree implements ActionTree {
                 .ifPresent(this::executeJump);
 
         return response;
+    }
+
+    @Override
+    public Map<String, Object> getPickResults() {
+        return pickResult;
     }
 
     private void executeJump(Jump jump){

@@ -2,25 +2,15 @@ package edu.nc.travelplanner.model.action;
 
 import edu.nc.travelplanner.model.response.EmptyResponse;
 import edu.nc.travelplanner.model.response.Response;
-import edu.nc.travelplanner.model.response.TextResponse;
 import edu.nc.travelplanner.model.response.ViewResponseBuilder;
 
-import java.util.HashMap;
 import java.util.Map;
 
-public class InfoAction implements Action {
+public class DateIntervalInputAction implements Action {
 
     private String name;
     private String data;
-    private ActionType type = ActionType.INFO;
-
-    public InfoAction() {
-    }
-
-    public InfoAction(String name, String data) {
-        this.name = name;
-        this.data = data;
-    }
+    private ActionType type = ActionType.TEXT_INPUT;
 
     @Override
     public String getName() {
@@ -39,23 +29,11 @@ public class InfoAction implements Action {
 
     @Override
     public Response executePresentation(ActionArgs args) {
-        return new ViewResponseBuilder().addTitleElement(name+"-title", data).build();
+        return new ViewResponseBuilder().addDatePicker(name+"-start-date-picker", data).addDatePicker(name+"-end-date-picker", data).build();
     }
 
     @Override
     public String getResult(Map<String, String> decisionArgs) {
         return null;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getData() {
-        return data;
-    }
-
-    public void setData(String data) {
-        this.data = data;
     }
 }
