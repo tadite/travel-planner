@@ -28,9 +28,9 @@ import java.util.Map;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = TravelplannerApplication.class)
-@WebAppConfiguration
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(classes = TravelplannerApplication.class)
+//@WebAppConfiguration
 public class ActionTreeControllerTests {
 
     //GITLAB CI CANT RUN TEST
