@@ -14,7 +14,14 @@ public enum ActionType {
     @JsonProperty("dropdown_input")
     DROPDOWN_INPUT,
     @JsonProperty("date_interval_input")
-    DATE_INTERVAL_INPUT
+    DATE_INTERVAL_INPUT,
+    @JsonProperty("checklist_integration")
+    CHECKLIST_INTEGRATION,
+    @JsonProperty("info_integration")
+    INFO_INTEGRATION,
+    @JsonProperty("dropdown_integration")
+    DROPDOWN_INTEGRATION
+
 
 
 }

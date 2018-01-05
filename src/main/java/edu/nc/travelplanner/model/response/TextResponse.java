@@ -12,4 +12,9 @@ public class TextResponse implements Response {
     public String getRawData() {
         return text;
     }
+
+    @Override
+    public void setRawData(String rawData) {
+        this.text=rawData;
+    }
 }

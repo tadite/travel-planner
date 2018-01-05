@@ -1,5 +1,8 @@
-package edu.nc.travelplanner.model.action;
+package edu.nc.travelplanner.model.action.constant;
 
+import edu.nc.travelplanner.model.action.Action;
+import edu.nc.travelplanner.model.action.ActionArgs;
+import edu.nc.travelplanner.model.action.ActionType;
 import edu.nc.travelplanner.model.response.EmptyResponse;
 import edu.nc.travelplanner.model.response.Response;
 import edu.nc.travelplanner.model.response.ViewResponseBuilder;
@@ -7,7 +10,7 @@ import edu.nc.travelplanner.model.response.ViewResponseBuilder;
 import java.util.Map;
 import java.util.Optional;
 
-public class TextInputAction implements Action{
+public class TextInputAction implements Action {
 
     private String name;
     private String data;

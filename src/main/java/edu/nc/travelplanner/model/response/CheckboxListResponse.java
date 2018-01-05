@@ -2,6 +2,7 @@ package edu.nc.travelplanner.model.response;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Map;
@@ -18,7 +19,17 @@ public class CheckboxListResponse implements Response {
     }
 
     @Override
-    public String getRawData() throws JsonProcessingException {
-        return objectMapper.writeValueAsString(optionsMap);
+    public String getRawData() {
+        try {
+            return objectMapper.writeValueAsString(optionsMap);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public void setRawData(String rawData) {
+
     }
 }

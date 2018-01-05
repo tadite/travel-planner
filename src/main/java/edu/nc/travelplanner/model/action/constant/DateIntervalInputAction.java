@@ -1,5 +1,9 @@
-package edu.nc.travelplanner.model.action;
+package edu.nc.travelplanner.model.action.constant;
 
+import edu.nc.travelplanner.model.action.Action;
+import edu.nc.travelplanner.model.action.ActionArgs;
+import edu.nc.travelplanner.model.action.ActionType;
+import edu.nc.travelplanner.model.action.DateInterval;
 import edu.nc.travelplanner.model.response.EmptyResponse;
 import edu.nc.travelplanner.model.response.Response;
 import edu.nc.travelplanner.model.response.ViewResponseBuilder;
@@ -46,13 +50,17 @@ public class DateIntervalInputAction implements Action {
     }
 
     @Override
-    public DateInterval getResult(Map<String, String> decisionArgs) throws ParseException {
+    public DateInterval getResult(Map<String, String> decisionArgs) {
         if (decisionArgs.containsKey(getEndDatePickerName()) && decisionArgs.containsKey(getStartDatePickerName()))
         {
             String string = "January 2, 2010";
             DateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
-            return new DateInterval(format.parse(decisionArgs.get(getStartDatePickerName())),
-                    format.parse(decisionArgs.get(getEndDatePickerName())));
+            try {
+                return new DateInterval(format.parse(decisionArgs.get(getStartDatePickerName())),
+                        format.parse(decisionArgs.get(getEndDatePickerName())));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
         return null;
     }

@@ -2,10 +2,10 @@ package edu.nc.travelplanner;
 
 
 import edu.nc.travelplanner.controller.ActionTreeController;
-import edu.nc.travelplanner.model.action.CheckListAction;
-import edu.nc.travelplanner.model.action.DropDownListAction;
-import edu.nc.travelplanner.model.action.InfoAction;
-import edu.nc.travelplanner.model.action.TextInputAction;
+import edu.nc.travelplanner.model.action.constant.CheckListAction;
+import edu.nc.travelplanner.model.action.constant.DropDownListAction;
+import edu.nc.travelplanner.model.action.constant.InfoAction;
+import edu.nc.travelplanner.model.action.constant.TextInputAction;
 import edu.nc.travelplanner.model.factory.tree.ActionTreeFactory;
 import edu.nc.travelplanner.model.factory.tree.ActionTreeParseException;
 import edu.nc.travelplanner.model.jump.Jump;
@@ -13,12 +13,7 @@ import edu.nc.travelplanner.model.jump.NoConditionJump;
 import edu.nc.travelplanner.model.tree.SimpleActionTree;
 import edu.nc.travelplanner.model.tree.SimpleTreeOrchestrator;
 import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.HashMap;
 import java.util.LinkedList;

@@ -1,5 +1,8 @@
-package edu.nc.travelplanner.model.action;
+package edu.nc.travelplanner.model.action.constant;
 
+import edu.nc.travelplanner.model.action.Action;
+import edu.nc.travelplanner.model.action.ActionArgs;
+import edu.nc.travelplanner.model.action.ActionType;
 import edu.nc.travelplanner.model.response.EmptyResponse;
 import edu.nc.travelplanner.model.response.Response;
 import edu.nc.travelplanner.model.response.ViewResponseBuilder;

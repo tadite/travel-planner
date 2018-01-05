@@ -14,9 +14,19 @@ public class ViewResponse implements Response{
     private List<ViewElement> elements = new LinkedList<>();
 
     @Override
-    public String getRawData() throws JsonProcessingException {
+    public String getRawData() {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(elements);
+        try {
+            return objectMapper.writeValueAsString(elements);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public void setRawData(String rawData) {
+
     }
 
     public void addElement(ViewElement element){

@@ -2,6 +2,7 @@ package edu.nc.travelplanner.model.factory.action;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.nc.travelplanner.model.action.*;
+import edu.nc.travelplanner.model.action.constant.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -75,6 +76,8 @@ public class JsonActionFactory implements ActionFactory {
                 return new TextInputAction();
             case DROPDOWN_INPUT:
                 return new DropDownListAction();
+            case DATE_INTERVAL_INPUT:
+                return new DateIntervalInputAction();
         }
         return null;
     }

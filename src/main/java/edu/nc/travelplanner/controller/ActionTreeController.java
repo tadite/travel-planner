@@ -32,12 +32,7 @@ public class ActionTreeController {
                 .setState(ActionState.DECISION)
                 .build();
 
-        try {
-            return new ResponseEntity<>(orchestrator.execute(actionArgs).getRawData(), HttpStatus.OK) ;
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
+        return new ResponseEntity<>(orchestrator.execute(actionArgs).getRawData(), HttpStatus.OK) ;
     }
 
     @GetMapping(path = "/action")
@@ -48,12 +43,7 @@ public class ActionTreeController {
                 .setState(ActionState.PRESENTATION)
                 .build();
 
-        try {
-            return new ResponseEntity<>(orchestrator.execute(actionArgs).getRawData(), HttpStatus.OK);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
+        return new ResponseEntity<>(orchestrator.execute(actionArgs).getRawData(), HttpStatus.OK);
     }
 
     //For testing purpose

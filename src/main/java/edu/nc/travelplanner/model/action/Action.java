@@ -11,5 +11,5 @@ public interface Action {
     ActionType getType();
     Response executeDecision(ActionArgs args);
     Response executePresentation(ActionArgs args);
-    Object getResult(Map<String, String> decisionArgs) throws ParseException;
+    Object getResult(Map<String, String> decisionArgs);
 }

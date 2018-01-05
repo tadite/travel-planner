@@ -5,4 +5,9 @@ public class EmptyResponse implements Response {
     public String getRawData() {
         return "";
     }
+
+    @Override
+    public void setRawData(String rawData) {
+
+    }
 }

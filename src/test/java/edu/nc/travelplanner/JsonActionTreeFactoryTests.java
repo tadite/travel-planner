@@ -1,28 +1,18 @@
 package edu.nc.travelplanner;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.nc.travelplanner.model.action.Action;
-import edu.nc.travelplanner.model.action.ActionType;
-import edu.nc.travelplanner.model.action.InfoAction;
-import edu.nc.travelplanner.model.factory.action.ActionDto;
+import edu.nc.travelplanner.model.action.constant.InfoAction;
 import edu.nc.travelplanner.model.factory.action.ActionFactory;
-import edu.nc.travelplanner.model.factory.action.ActionJsonReader;
 import edu.nc.travelplanner.model.factory.action.ActionParseException;
 import edu.nc.travelplanner.model.factory.tree.*;
 import edu.nc.travelplanner.model.jump.Jump;
-import edu.nc.travelplanner.model.jump.JumpType;
-import edu.nc.travelplanner.model.tree.ActionTree;
 import edu.nc.travelplanner.model.tree.SimpleActionTree;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 public class JsonActionTreeFactoryTests {
 
