@@ -5,13 +5,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.nc.travelplanner.model.response.Response;
-import jdk.internal.org.objectweb.asm.tree.analysis.Value;
 
 import java.io.IOException;
-import java.security.Key;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ListToMapJsonResponseFilter implements ResponseFilter {
