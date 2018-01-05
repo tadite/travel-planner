@@ -12,7 +12,9 @@ import edu.nc.travelplanner.model.jump.Jump;
 import edu.nc.travelplanner.model.jump.NoConditionJump;
 import edu.nc.travelplanner.model.tree.SimpleActionTree;
 import edu.nc.travelplanner.model.tree.SimpleTreeOrchestrator;
+import org.json.JSONException;
 import org.junit.Assert;
+import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.http.ResponseEntity;
 
 import java.util.HashMap;
@@ -30,7 +32,7 @@ public class ActionTreeControllerTests {
 
     //GITLAB CI CANT RUN TEST
     //@Test
-    public void canJumpThroughTreeWithCorrectPresent() throws ActionTreeParseException {
+    public void canJumpThroughTreeWithCorrectPresent() throws ActionTreeParseException, JSONException {
 
         //Array
         Map<String, String> checkOptions = new HashMap<>();
@@ -75,10 +77,11 @@ public class ActionTreeControllerTests {
         //Assert
 
         //TODO: pick results
-        Assert.assertEquals("[{\"id\":\"testAction1-name-title\",\"data\":\"testAction1-data\",\"type\":\"title\"}]", testAction1Present.getBody());
-        Assert.assertEquals("[{\"id\":\"option1-id\",\"data\":\"option1-title\",\"type\":\"checkbox\"},{\"id\":\"option2-id\",\"data\":\"option2-title\",\"type\":\"checkbox\"}]", testAction2Present.getBody());
-        Assert.assertEquals("[{\"id\":\"testAction3-name-textbox\",\"data\":\"testAction3-startData\",\"type\":\"text_input\"}]", testAction3Present.getBody());
-        Assert.assertEquals("[{\"id\":\"testAction4-name-dropdown-list\",\"type\":\"dropdown_list\",\"data\":{\"dropdown2-id\":\"dropdown2-title\",\"dropdown1-id\":\"dropdown1-title\"}}]", testAction4Present.getBody());
+        //        JSONAssert.assertEquals(actionResponseExpected, actionResponse, false);
+        JSONAssert.assertEquals("[{\"id\":\"testAction1-name-title\",\"data\":\"testAction1-data\",\"type\":\"title\"}]", testAction1Present.getBody(), false);
+        JSONAssert.assertEquals("[{\"id\":\"option1-id\",\"data\":\"option1-title\",\"type\":\"checkbox\"},{\"id\":\"option2-id\",\"data\":\"option2-title\",\"type\":\"checkbox\"}]", testAction2Present.getBody(), false);
+        JSONAssert.assertEquals("[{\"id\":\"testAction3-name-textbox\",\"data\":\"testAction3-startData\",\"type\":\"text_input\"}]", testAction3Present.getBody(), false);
+        JSONAssert.assertEquals("[{\"id\":\"testAction4-name-dropdown-list\",\"type\":\"dropdown_list\",\"data\":{\"dropdown2-id\":\"dropdown2-title\",\"dropdown1-id\":\"dropdown1-title\"}}]", testAction4Present.getBody(), false);
 
     }
 }

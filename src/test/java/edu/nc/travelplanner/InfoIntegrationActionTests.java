@@ -11,8 +11,10 @@ import edu.nc.travelplanner.model.source.filter.JsonPathResponseFilter;
 import edu.nc.travelplanner.model.source.filter.ListToMapJsonResponseFilter;
 import edu.nc.travelplanner.model.source.filter.ResponseFilter;
 import edu.nc.travelplanner.model.source.filter.SubstringResponseFilter;
+import org.json.JSONException;
 import org.junit.Assert;
 import org.junit.Test;
+import org.skyscreamer.jsonassert.JSONAssert;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -25,7 +27,7 @@ import static org.mockito.Mockito.when;
 public class InfoIntegrationActionTests {
 
     @Test
-    public void canExecutePresentation() throws IOException {
+    public void canExecutePresentation() throws IOException, JSONException {
         //Array
         String currencyResponse = "{\n" +
                 "\"timestamp\": 1515142420,\n" +
@@ -60,6 +62,6 @@ public class InfoIntegrationActionTests {
         //Assert
         String actionResponse = response.getRawData();
 
-        Assert.assertEquals(actionResponseExpected, actionResponse);
+        JSONAssert.assertEquals(actionResponseExpected, actionResponse, false);
     }
 }

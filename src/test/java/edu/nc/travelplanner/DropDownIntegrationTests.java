@@ -10,8 +10,10 @@ import edu.nc.travelplanner.model.source.factory.SenderFactory;
 import edu.nc.travelplanner.model.source.filter.JsonPathResponseFilter;
 import edu.nc.travelplanner.model.source.filter.ListToMapJsonResponseFilter;
 import edu.nc.travelplanner.model.source.filter.ResponseFilter;
+import org.json.JSONException;
 import org.junit.Assert;
 import org.junit.Test;
+import org.skyscreamer.jsonassert.JSONAssert;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -25,7 +27,7 @@ public class DropDownIntegrationTests {
 
 
     @Test
-    public void canExecutePresentation() throws IOException {
+    public void canExecutePresentation() throws IOException, JSONException {
         //Array
         String vkCountriesResponse = "{\"response\":[{\"cid\":19,\"title\":\"Австралия\"},{\"cid\":20,\"title\":\"Австрия\"}]}";
         String actionResponseExpected = "[{\"id\":\"testAction1-name-dropdown-list\",\"type\":\"dropdown_list\",\"data\":{\"19\":\"Австралия\",\"20\":\"Австрия\"}}]";
@@ -52,6 +54,6 @@ public class DropDownIntegrationTests {
         //Assert
         String actionResponse = response.getRawData();
 
-        Assert.assertEquals(actionResponseExpected, actionResponse);
+        JSONAssert.assertEquals(actionResponseExpected, actionResponse, false);
     }
 }

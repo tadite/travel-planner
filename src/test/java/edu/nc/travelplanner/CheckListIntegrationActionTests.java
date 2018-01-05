@@ -12,9 +12,11 @@ import edu.nc.travelplanner.model.source.filter.JsonPathResponseFilter;
 import edu.nc.travelplanner.model.source.filter.ListToMapJsonResponseFilter;
 import edu.nc.travelplanner.model.source.filter.RegexpReplaceAllResponseFilter;
 import edu.nc.travelplanner.model.source.filter.ResponseFilter;
+import org.json.JSONException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -33,7 +35,7 @@ import static org.mockito.Mockito.when;
 public class CheckListIntegrationActionTests {
 
     @Test
-    public void canExecutePresentation() throws IOException {
+    public void canExecutePresentation() throws IOException, JSONException {
         //Array
         String vkCountriesResponse = "{\"response\":[{\"cid\":19,\"title\":\"Австралия\"},{\"cid\":20,\"title\":\"Австрия\"}]}";
         String actionResponseExpected = "[{\"id\":\"19\",\"data\":\"Австралия\",\"type\":\"checkbox\"},{\"id\":\"20\",\"data\":\"Австрия\",\"type\":\"checkbox\"}]";
@@ -60,6 +62,6 @@ public class CheckListIntegrationActionTests {
         //Assert
         String actionResponse = response.getRawData();
 
-        Assert.assertEquals(actionResponseExpected, actionResponse);
+        JSONAssert.assertEquals(actionResponseExpected, actionResponse, false);
     }
 }
