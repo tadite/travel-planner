@@ -1,7 +1,9 @@
 package edu.nc.travelplanner.model.factory.action;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import edu.nc.travelplanner.model.action.ActionType;
 
+import javax.xml.crypto.Data;
 import java.util.Map;
 
 public class ActionDto {
@@ -9,6 +11,8 @@ public class ActionDto {
     private String name;
     private ActionType type;
     private Map<String, Object> parameters;
+    @JsonProperty("dataProducer")
+    private String dataProducerName;
 
     public ActionDto(){}
 
@@ -16,6 +20,13 @@ public class ActionDto {
         this.name = name;
         this.type = type;
         this.parameters = parameters;
+    }
+
+    public ActionDto(String name, ActionType type, Map<String, Object> parameters, String dataProducerName) {
+        this.name = name;
+        this.type = type;
+        this.parameters = parameters;
+        this.dataProducerName = dataProducerName;
     }
 
     public String getName() {
@@ -40,5 +51,13 @@ public class ActionDto {
 
     public void setParameters(Map<String, Object> parameters) {
         this.parameters = parameters;
+    }
+
+    public String getDataProducerName() {
+        return dataProducerName;
+    }
+
+    public void setDataProducerName(String dataProducerName) {
+        this.dataProducerName = dataProducerName;
     }
 }

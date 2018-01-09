@@ -1,4 +1,4 @@
-package edu.nc.travelplanner.model.source.factory;
+package edu.nc.travelplanner.model.factory.dataproducer;
 
 import edu.nc.travelplanner.model.source.Sender;
 import edu.nc.travelplanner.model.source.SourceType;

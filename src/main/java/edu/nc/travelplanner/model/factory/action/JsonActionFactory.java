@@ -3,6 +3,10 @@ package edu.nc.travelplanner.model.factory.action;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.nc.travelplanner.model.action.*;
 import edu.nc.travelplanner.model.action.constant.*;
+import edu.nc.travelplanner.model.factory.EnumMapper;
+import edu.nc.travelplanner.model.factory.dataproducer.DataProducerFactory;
+import edu.nc.travelplanner.model.factory.dataproducer.DataProducerParseException;
+import edu.nc.travelplanner.model.source.dataproducer.DataProducer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,10 +17,16 @@ import java.util.Map;
 public class JsonActionFactory implements ActionFactory {
 
     private ActionJsonReader actionJsonReader;
+    private EnumMapper enumMapper;
+    private DataProducerFactory dataProducerFactory;
 
-    public JsonActionFactory(@Autowired ActionJsonReader actionJsonReader) {
+    public JsonActionFactory(@Autowired ActionJsonReader actionJsonReader,
+                             @Autowired EnumMapper enumMapper,
+                             @Autowired DataProducerFactory dataProducerFactory) {
 
         this.actionJsonReader = actionJsonReader;
+        this.enumMapper = enumMapper;
+        this.dataProducerFactory = dataProducerFactory;
     }
 
     @Override
@@ -35,7 +45,7 @@ public class JsonActionFactory implements ActionFactory {
     }
 
     private Action createActionFromDto(ActionDto actionDto)
-            throws NoSuchFieldException, IllegalAccessException {
+            throws NoSuchFieldException, IllegalAccessException, DataProducerParseException {
         Action action = createActionByType(actionDto.getType());
 
         setFieldsByReflection(actionDto, action);
@@ -44,12 +54,25 @@ public class JsonActionFactory implements ActionFactory {
     }
 
     private void setFieldsByReflection(ActionDto actionDto, Action action)
-            throws NoSuchFieldException, IllegalAccessException {
+            throws NoSuchFieldException, IllegalAccessException, DataProducerParseException {
         Class<? extends Action> actionClass = action.getClass();
 
         setActionName(actionClass, action, actionDto.getName());
         setActionType(actionClass, action, actionDto.getType());
         setActionParameters(actionClass ,action, actionDto.getParameters());
+
+        setDataProducerByFactory(actionClass ,action, actionDto.getDataProducerName());
+    }
+
+    private void setDataProducerByFactory(Class<? extends Action> actionClass, Action action, String dataProducerName) throws DataProducerParseException, NoSuchFieldException, IllegalAccessException {
+        if (dataProducerName==null || dataProducerName.isEmpty())
+            return;
+
+        DataProducer dataProducer = dataProducerFactory.createDataProducer(dataProducerName);
+
+        Field fieldToSet = actionClass.getDeclaredField("dataProducer");
+        fieldToSet.setAccessible(true);
+        fieldToSet.set(action, dataProducer);
     }
 
     private void setActionType(Class<? extends Action> actionClass, Action action, ActionType type)
@@ -67,24 +90,15 @@ public class JsonActionFactory implements ActionFactory {
     }
 
     private Action createActionByType(ActionType type) {
-        switch (type) {
-            case INFO:
-                return new InfoAction();
-            case CHECKLIST:
-                return new CheckListAction();
-            case TEXT_INPUT:
-                return new TextInputAction();
-            case DROPDOWN_INPUT:
-                return new DropDownListAction();
-            case DATE_INTERVAL_INPUT:
-                return new DateIntervalInputAction();
-        }
-        return null;
+        return enumMapper.create(type);
     }
 
     private void setActionParameters(Class<? extends Action> actionClass, Action action,
                                      Map<String, Object> parameters)
             throws IllegalAccessException, NoSuchFieldException {
+        if (parameters ==null || parameters.isEmpty())
+            return;
+
         for (Map.Entry<String,Object> entry : parameters.entrySet()){
             Field fieldToSet = actionClass.getDeclaredField(entry.getKey());
             fieldToSet.setAccessible(true);

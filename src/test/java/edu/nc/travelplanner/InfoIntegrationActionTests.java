@@ -1,18 +1,15 @@
 package edu.nc.travelplanner;
 
 import edu.nc.travelplanner.model.action.ActionArgs;
-import edu.nc.travelplanner.model.action.source.CheckListIntegrationAction;
 import edu.nc.travelplanner.model.action.source.InfoIntegrationAction;
 import edu.nc.travelplanner.model.response.Response;
 import edu.nc.travelplanner.model.response.TextResponse;
 import edu.nc.travelplanner.model.source.*;
-import edu.nc.travelplanner.model.source.factory.SenderFactory;
+import edu.nc.travelplanner.model.factory.dataproducer.SenderFactory;
+import edu.nc.travelplanner.model.source.dataproducer.DefaultDataProducer;
 import edu.nc.travelplanner.model.source.filter.JsonPathResponseFilter;
-import edu.nc.travelplanner.model.source.filter.ListToMapJsonResponseFilter;
 import edu.nc.travelplanner.model.source.filter.ResponseFilter;
-import edu.nc.travelplanner.model.source.filter.SubstringResponseFilter;
 import org.json.JSONException;
-import org.junit.Assert;
 import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
@@ -44,15 +41,12 @@ public class InfoIntegrationActionTests {
         HttpSender mockHttpSender = mock(HttpSender.class);
         when(mockHttpSender.send(any(HttpSource.class))).thenReturn(new TextResponse(currencyResponse));
 
-        SenderFactory mockSenderFactory = mock(SenderFactory.class);
-        when(mockSenderFactory.createSender(SourceType.HTTP)).thenReturn(mockHttpSender);
-
         Source mockSource = new HttpSource("currencies", "", "");
 
         List<ResponseFilter> responseFilters = new LinkedList<>();
         responseFilters.add(new JsonPathResponseFilter("$.quotes.USDEUR"));
 
-        DefaultDataProducer dataProducer = new DefaultDataProducer(mockSenderFactory, mockSource, responseFilters);
+        DefaultDataProducer dataProducer = new DefaultDataProducer(mockHttpSender, mockSource, responseFilters );
 
         InfoIntegrationAction infoIntegrationAction = new InfoIntegrationAction("testAction1-name", dataProducer);
 

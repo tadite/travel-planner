@@ -4,6 +4,10 @@ public class HttpSource implements Source{
     private String name;
     private String description;
     private String url;
+    private SourceType type = SourceType.HTTP;
+
+    public HttpSource() {
+    }
 
     public HttpSource(String name, String description, String url) {
         this.name = name;
@@ -25,6 +29,6 @@ public class HttpSource implements Source{
 
     @Override
     public SourceType getType() {
-        return SourceType.HTTP;
+        return type;
     }
 }

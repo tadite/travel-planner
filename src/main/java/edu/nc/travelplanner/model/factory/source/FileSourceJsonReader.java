@@ -1,4 +1,4 @@
-package edu.nc.travelplanner.model.factory.action;
+package edu.nc.travelplanner.model.factory.source;
 
 import edu.nc.travelplanner.model.factory.PathMapper;
 import edu.nc.travelplanner.model.factory.PathUtil;
@@ -10,17 +10,17 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 @Component
-public class FileActionJsonReader implements ActionJsonReader {
+public class FileSourceJsonReader implements SourceJsonReader {
 
     @Autowired
     private PathMapper pathMapper;
 
     @Override
-    public String getActionJson(String name) throws IOException {
+    public String getSourceJson(String name) throws IOException {
         return new String(Files.readAllBytes(Paths.get(getPathToJson(name))));
     }
 
     private String getPathToJson(String name) {
-        return PathUtil.getPathInUserDir(pathMapper.getActionPath(), name, pathMapper.getExtension());
+        return PathUtil.getPathInUserDir(pathMapper.getSourcePath(), name, pathMapper.getExtension());
     }
 }

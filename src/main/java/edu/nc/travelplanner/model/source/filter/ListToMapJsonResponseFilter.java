@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.nc.travelplanner.model.response.Response;
+import edu.nc.travelplanner.model.source.FilterType;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -14,6 +15,8 @@ public class ListToMapJsonResponseFilter implements ResponseFilter {
 
     private String keyName;
     private String valueName;
+
+    private FilterType type = FilterType.JSON_PATH;
 
     ObjectMapper mapper = new ObjectMapper();
 
@@ -44,5 +47,17 @@ public class ListToMapJsonResponseFilter implements ResponseFilter {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public FilterType getType() {
+        return type;
+    }
+
+    public String getKeyName() {
+        return keyName;
+    }
+
+    public String getValueName() {
+        return valueName;
     }
 }

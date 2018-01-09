@@ -6,6 +6,9 @@ public class SubstringResponseFilter implements ResponseFilter{
     String firstIndexStr;
     String lastIndexStr;
 
+    public SubstringResponseFilter() {
+    }
+
     public SubstringResponseFilter(String firstIndexStr, String lastIndexStr) {
         this.firstIndexStr = firstIndexStr;
         this.lastIndexStr = lastIndexStr;

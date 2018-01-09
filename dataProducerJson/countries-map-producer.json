@@ -1,0 +1,1 @@
+{"name":"countries-map-producer","filters":[{"type":"json_path","parameters":{"expression":"$.response[*]"}},{"type":"list_to_map","parameters":{"valueName":"title","keyName":"cid"}}],"source":"vk-getCountries-all"}

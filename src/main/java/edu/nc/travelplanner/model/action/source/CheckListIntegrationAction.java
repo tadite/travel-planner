@@ -7,11 +7,10 @@ import edu.nc.travelplanner.model.action.IntegrationAction;
 import edu.nc.travelplanner.model.response.EmptyResponse;
 import edu.nc.travelplanner.model.response.Response;
 import edu.nc.travelplanner.model.response.ViewResponseBuilder;
-import edu.nc.travelplanner.model.source.DataProducer;
-import edu.nc.travelplanner.model.source.factory.DataProducerParseException;
+import edu.nc.travelplanner.model.source.dataproducer.DataProducer;
+import edu.nc.travelplanner.model.factory.dataproducer.DataProducerParseException;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -79,5 +78,9 @@ public class CheckListIntegrationAction implements IntegrationAction {
             return pickedValues;
         }
         return null;
+    }
+
+    public DataProducer getDataProducer() {
+        return dataProducer;
     }
 }

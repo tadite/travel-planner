@@ -6,6 +6,9 @@ public class RegexpReplaceAllResponseFilter implements ResponseFilter {
     private String regex;
     private String replacement;
 
+    public RegexpReplaceAllResponseFilter() {
+    }
+
     public RegexpReplaceAllResponseFilter(String regex, String replacement) {
         this.regex = regex;
         this.replacement = replacement;

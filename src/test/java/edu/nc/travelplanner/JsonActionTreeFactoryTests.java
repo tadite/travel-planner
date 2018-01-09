@@ -2,6 +2,7 @@ package edu.nc.travelplanner;
 
 import edu.nc.travelplanner.model.action.Action;
 import edu.nc.travelplanner.model.action.constant.InfoAction;
+import edu.nc.travelplanner.model.factory.DefaultEnumMapper;
 import edu.nc.travelplanner.model.factory.action.ActionFactory;
 import edu.nc.travelplanner.model.factory.action.ActionParseException;
 import edu.nc.travelplanner.model.factory.tree.*;
@@ -20,7 +21,7 @@ public class JsonActionTreeFactoryTests {
     public void canParseActionTreeFromJson() throws IOException, ActionParseException, ActionTreeParseException {
         //Array
         String testActionName = "test-tree";
-        String actionTreeJson = "{\"name\":\"test-tree\",\"headActionName\":\"test-action-1\",\"jumps\":[{\"fromActionName\":\"test-action-1\",\"toActionName\":\"test-action-2\",\"type\":\"WITHOUT_CONDITION\",\"params\":{\"test-key\":\"test-value\"}},{\"fromActionName\":\"test-action-2\",\"toActionName\":\"test-action-3\",\"type\":\"WITHOUT_CONDITION\",\"params\":{\"test-key\":\"test-value\"}}]}";
+        String actionTreeJson = "{\"name\":\"test-tree\",\"headActionName\":\"test-action-1\",\"jumps\":[{\"fromActionName\":\"test-action-1\",\"toActionName\":\"test-action-2\",\"type\":\"without-condition\",\"params\":{\"test-key\":\"test-value\"}},{\"fromActionName\":\"test-action-2\",\"toActionName\":\"test-action-3\",\"type\":\"without-condition\",\"params\":{\"test-key\":\"test-value\"}}]}";
 
         ActionTreeJsonReader mockActionJsonReader = Mockito.mock(ActionTreeJsonReader.class);
         Mockito.when(mockActionJsonReader.getActionTreeJson(testActionName)).thenReturn(actionTreeJson);
@@ -34,7 +35,7 @@ public class JsonActionTreeFactoryTests {
         Mockito.when(mockActionFactory.createAction("test-action-2")).thenReturn(testAction2);
         Mockito.when(mockActionFactory.createAction("test-action-3")).thenReturn(testAction3);
 
-        JsonActionTreeFactory jsonActionTreeFactory = new JsonActionTreeFactory(mockActionJsonReader, mockActionFactory);
+        JsonActionTreeFactory jsonActionTreeFactory = new JsonActionTreeFactory(mockActionJsonReader, mockActionFactory, new DefaultEnumMapper());
 
         //Act
         SimpleActionTree testActionTree = (SimpleActionTree)jsonActionTreeFactory.createByName(testActionName);

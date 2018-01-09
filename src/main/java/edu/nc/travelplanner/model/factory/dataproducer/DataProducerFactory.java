@@ -1,6 +1,6 @@
-package edu.nc.travelplanner.model.source.factory;
+package edu.nc.travelplanner.model.factory.dataproducer;
 
-import edu.nc.travelplanner.model.source.DataProducer;
+import edu.nc.travelplanner.model.source.dataproducer.DataProducer;
 
 public interface DataProducerFactory {
     DataProducer createDataProducer(String name) throws DataProducerParseException;

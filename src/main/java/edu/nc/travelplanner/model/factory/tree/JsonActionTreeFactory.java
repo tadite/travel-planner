@@ -2,6 +2,7 @@ package edu.nc.travelplanner.model.factory.tree;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.nc.travelplanner.model.action.Action;
+import edu.nc.travelplanner.model.factory.EnumMapper;
 import edu.nc.travelplanner.model.factory.action.ActionFactory;
 import edu.nc.travelplanner.model.factory.action.ActionParseException;
 import edu.nc.travelplanner.model.jump.Jump;
@@ -20,10 +21,14 @@ public class JsonActionTreeFactory implements ActionTreeFactory {
 
     private ActionTreeJsonReader actionTreeJsonReader;
     private ActionFactory actionFactory;
+    private EnumMapper enumMapper;
 
-    public JsonActionTreeFactory(@Autowired ActionTreeJsonReader actionTreeJsonReader, @Autowired ActionFactory actionFactory) {
+    public JsonActionTreeFactory(@Autowired ActionTreeJsonReader actionTreeJsonReader,
+                                 @Autowired ActionFactory actionFactory,
+                                 @Autowired EnumMapper enumMapper) {
         this.actionTreeJsonReader = actionTreeJsonReader;
         this.actionFactory = actionFactory;
+        this.enumMapper = enumMapper;
     }
 
     @Override
@@ -127,12 +132,7 @@ public class JsonActionTreeFactory implements ActionTreeFactory {
     }
 
     private Jump createJumpByType(JumpType type) {
-        switch (type) {
-            case WITHOUT_CONDITION:
-                return new NoConditionJump();
-        }
-
-        return null;
+        return enumMapper.create(type);
     }
 
     private Map<String, Action> createActionMapFromJsonJumps(ActionTreeDto actionTreeDto)

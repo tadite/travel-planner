@@ -1,6 +1,8 @@
 package edu.nc.travelplanner.model.factory.tree;
 
+import edu.nc.travelplanner.model.factory.PathMapper;
 import edu.nc.travelplanner.model.factory.PathUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -10,8 +12,8 @@ import java.nio.file.Paths;
 @Component
 public class FileActionTreeJsonReader implements ActionTreeJsonReader {
 
-    private final String pathToActions = "\\treeJson\\";
-    private final String actionFileExtension = ".json";
+    @Autowired
+    private PathMapper pathMapper;
 
     @Override
     public String getActionTreeJson(String name) throws IOException {
@@ -19,6 +21,6 @@ public class FileActionTreeJsonReader implements ActionTreeJsonReader {
     }
 
     private String getPathToJson(String name) {
-        return PathUtil.getPathInUserDir(pathToActions, name, actionFileExtension);
+        return PathUtil.getPathInUserDir(pathMapper.getTreePath(), name, pathMapper.getExtension());
     }
 }

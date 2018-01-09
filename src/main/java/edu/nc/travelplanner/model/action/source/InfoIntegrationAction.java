@@ -6,10 +6,9 @@ import edu.nc.travelplanner.model.action.IntegrationAction;
 import edu.nc.travelplanner.model.response.EmptyResponse;
 import edu.nc.travelplanner.model.response.Response;
 import edu.nc.travelplanner.model.response.ViewResponseBuilder;
-import edu.nc.travelplanner.model.source.DataProducer;
-import edu.nc.travelplanner.model.source.factory.DataProducerParseException;
+import edu.nc.travelplanner.model.source.dataproducer.DataProducer;
+import edu.nc.travelplanner.model.factory.dataproducer.DataProducerParseException;
 
-import java.io.IOException;
 import java.util.Map;
 
 public class InfoIntegrationAction implements IntegrationAction {
