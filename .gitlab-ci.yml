@@ -39,6 +39,8 @@ openshift-deploy:
         else
           echo "oc bin from cache"
         fi
+        
+    - cp -v oc/oc "$target/usr/local/bin/oc"
     - oc version
     - oc login $OPENSHIFT_SERVER —token=$OPENSHIFT_TOKEN —insecure-skip-tls-verify=true
     - oc project $OPENSHIFT_REVIEW_PROJECT
