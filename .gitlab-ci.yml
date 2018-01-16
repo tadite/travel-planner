@@ -29,6 +29,15 @@ docker-build:
 openshift-deploy:
   stage: deploy
   script:
+    - |
+        if [ ! -f "oc/oc" ] ; then
+          curl -O -L https://github.com/openshift/origin/releases/download/v3.6.0/openshift-origin-client-tools-v3.6.0-c4dd4cf-linux-64bit.tar.gz;
+          tar -xf openshift-origin-client-tools*.tar.gz;
+          mkdir -pv oc
+          cp -v openshift-origin-client-tools-v3.6.0-c4dd4cf-linux-64bit/oc oc/
+        else
+          echo "oc bin from cache"
+        fi
     - oc version
     - oc login $OPENSHIFT_SERVER —token=$OPENSHIFT_TOKEN —insecure-skip-tls-verify=true
     - oc project $OPENSHIFT_REVIEW_PROJECT
