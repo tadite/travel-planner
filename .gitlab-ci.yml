@@ -34,8 +34,7 @@ openshift-deploy:
           apk add --update curl && rm -rf /var/cache/apk/*
           curl -O -L https://github.com/openshift/origin/releases/download/v3.6.0/openshift-origin-client-tools-v3.6.0-c4dd4cf-linux-64bit.tar.gz;
           tar -xf openshift-origin-client-tools*.tar.gz;
-          mkdir -pv oc
-          cp -v openshift-origin-client-tools-v3.6.0-c4dd4cf-linux-64bit/oc oc/
+          mv openshift-origin-client-tools-v3.6.0-c4dd4cf-linux-64bit/oc /usr/bin/
         else
           echo "oc bin from cache"
         fi
