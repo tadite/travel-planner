@@ -29,4 +29,10 @@ docker-build:
 openshift-deploy:
   stage: deploy
   script:
-    - echo 'Hello world'
+    - oc version
+    - oc login $OPENSHIFT_SERVER —token=$OPENSHIFT_TOKEN —insecure-skip-tls-verify=true
+    - oc project $OPENSHIFT_REVIEW_PROJECT
+    - oc delete all -l app=$CI_COMMIT_REF_SLUG -n $OPENSHIFT_REVIEW_PROJECT
+    - oc delete pvc -l app=$CI_COMMIT_REF_SLUG -n $OPENSHIFT_REVIEW_PROJECT
+    - export DOCKER_TAG="${CI_COMMIT_REF_SLUG}_latest"
+    - oc new-app -n $OPENSHIFT_REVIEW_PROJECT -f openshift/template.yml -p APPLICATION_NAME=$CI_COMMIT_REF_SLUG -p DOCKER_IMAGE_TAG=$DOCKER_TAG
