@@ -29,19 +29,9 @@ docker-build:
 openshift-deploy:
   stage: deploy
   script:
-   # - |
-   #     if [ ! -f "oc/oc" ] ; then
-   #       apk add --update curl && rm -rf /var/cache/apk/*
-   #       curl -L https://github.com/openshift/origin/releases/download/v1.4.1/openshift-origin-client-tools-v1.4.1-3f9807a-linux-64bit.tar.gz | \
-   #     tar zx && mv openshift-origin-client-tools-v1.4.1+3f9807a-linux-64bit/oc /usr/bin/ && \
-   # oc version
-   #
-   #     else
-   #       echo "oc bin from cache"
-   #     fi
-    - curl -L https://github.com/openshift/origin/releases/download/v1.4.1/openshift-origin-client-tools-v1.4.1-3f9807a-linux-64bit.tar.gz | \
-    tar zx && mv openshift-origin-client-tools-v1.4.1+3f9807a-linux-64bit/oc /usr/bin/ && \
-    oc version
+    - curl -L  https://github.com/openshift/origin/releases/download/v1.3.2/openshift-origin-client-tools-v1.3.2-ac1d579-linux-64bit.tar.gz | tar -xz
+    - sudo cp openshift-origin-client-tools-*/oc /usr/local/bin/.
+    - oc version
     - oc login $OPENSHIFT_SERVER —token=$OPENSHIFT_TOKEN —insecure-skip-tls-verify=true
     - oc project $OPENSHIFT_REVIEW_PROJECT
     - oc delete all -l app=$CI_COMMIT_REF_SLUG -n $OPENSHIFT_REVIEW_PROJECT
