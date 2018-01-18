@@ -39,8 +39,7 @@ k8s-deploy:
     - oc delete pvc -l app=$APP
     - oc delete all --all
     - oc delete all --selector app=$APP
-    - oc delete secret registry
-    - oc delete secret app
+    - oc delete secrets --all
     - oc secrets new-dockercfg registry --docker-server=registry.gitlab.com --docker-username=$GITLAB_USER --docker-password=$GITLAB_PASS --docker-email=$GITLAB_EMAIL
     - oc secrets new-dockercfg app --docker-server=gitlab.com --docker-username=$GITLAB_USER --docker-password=$GITLAB_PASS --docker-email=$GITLAB_EMAIL
     - oc secrets add serviceaccount/default secrets/registry --for=pull
