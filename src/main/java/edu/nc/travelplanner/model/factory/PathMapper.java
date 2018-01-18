@@ -10,16 +10,16 @@ public class PathMapper {
     }
 
     public String getActionPath() {
-        return "\\actionJson\\";
+        return "json/action/";
     }
 
     public String getTreePath() {
-        return "\\treeJson\\";
+        return "json/tree/";
     }
 
     public String getSourcePath() {
-        return "\\sourceJson\\";
+        return "json/source/";
     }
 
-    public String getDataProducePath() { return "\\dataProducerJson\\"; }
+    public String getDataProducePath() { return "json/dataProducer/"; }
 }
