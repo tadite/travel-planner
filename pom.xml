@@ -6,7 +6,7 @@
 	<groupId>edu.nc</groupId>
 	<artifactId>travelplanner</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 
 	<name>travelplanner</name>
 	<description>Travel Planner</description>
