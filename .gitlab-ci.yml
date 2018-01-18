@@ -5,8 +5,8 @@ services:
 variables:
   DOCKER_DRIVER: overlay
   SPRING_PROFILES_ACTIVE: gitlab-ci
-  APP: $CI_PROJECT_NAME
-  PROJ_NAME: $CI_PROJECT_NAME-proj
+  APP: $CI_PROJECT_NAME-app
+  PROJ_NAME: $CI_PROJECT_NAME
 
 stages:
   - build
@@ -24,9 +24,9 @@ maven-build:
 docker-build:
   stage: package
   script:
-  - docker build -t registry.gitlab.com/tadite/test-openshift .
+  - docker build -t registry.gitlab.com/nc-edu/travel-planner .
   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
-  - docker push registry.gitlab.com/tadite/test-openshift
+  - docker push registry.gitlab.com/nc-edu/travel-planner
 
 k8s-deploy:
   image: ayufan/openshift-cli
@@ -42,7 +42,7 @@ k8s-deploy:
     - oc secrets new-dockercfg app --docker-server=gitlab.com --docker-username=$GITLAB_USER --docker-password=$GITLAB_PASS --docker-email=$GITLAB_EMAIL
     - oc secrets add serviceaccount/default secrets/registry --for=pull
     - oc secrets add serviceaccount/default secrets/app --for=pull
-    - oc get services $APP 2> /dev/null || oc new-app --name=$APP --docker-image="registry.gitlab.com/tadite/test-openshift:latest"
+    - oc get services $APP 2> /dev/null || oc new-app --name=$APP --docker-image="registry.gitlab.com/nc-edu/travel-planner:latest"
     - oc get routes $APP 2> /dev/null || oc expose dc/$APP --port=8080
     - oc create route edge nc --service=$APP
     - oc get routes
