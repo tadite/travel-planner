@@ -1,0 +1,22 @@
+<div class="login-page">
+    <div class="form">    
+      <form class="register-form" [@visibilityChanged]='reg_state'>
+        <input type="text" placeholder="Имя" />
+     <!--   <input type="text" placeholder="Имя" [(ngModel)]="user.firstName"/>-->
+        <input type="text" placeholder="Фамилия"/>
+        <input type="password" placeholder="Пароль" />
+        <input type="text" placeholder="E-mail" />
+        <!--<button (click)="submit(user)" [routerLink]="['/user']" routerLinkActive="active">зарегистрироваться</button>-->
+        <button [routerLink]="['/user']" routerLinkActive="active">зарегистрироваться</button>
+        <p class="message">Уже зарегистрированы? <a (click)="animateMe()" >Войти</a></p>
+      </form>
+
+      <form class="login-form" [@visibilityChanged]='login_state'>
+        <input type="text" placeholder="Имя пользователя" />
+        <input type="password" placeholder="Пароль" />
+        <button [routerLink]="['/user']" routerLinkActive="active">войти</button>
+        <p class="message">Не зарегистрированы? <a (click)="animateMe()" >Создать аккаунт</a></p>
+      </form>            
+    </div>
+    <div class="background-image" style="background-image : url('http://upload.akusherstvo.ru/image1458493.jpg')">   
+  </div>
