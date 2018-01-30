@@ -1,22 +1,39 @@
 <div class="login-page">
     <div class="form">    
-      <form class="register-form" [@visibilityChanged]='reg_state'>
-        <input type="text" placeholder="Имя" />
-     <!--   <input type="text" placeholder="Имя" [(ngModel)]="user.firstName"/>-->
-        <input type="text" placeholder="Фамилия"/>
-        <input type="password" placeholder="Пароль" />
-        <input type="text" placeholder="E-mail" />
-        <!--<button (click)="submit(user)" [routerLink]="['/user']" routerLinkActive="active">зарегистрироваться</button>-->
-        <button [routerLink]="['/user']" routerLinkActive="active">зарегистрироваться</button>
+      <form class="register-form" [@visibilityChanged]='reg_state'>      
+        <input type="text" placeholder="Имя" [(ngModel)]="user.firstName" #firstName="ngModel" name="firstName" required/>
+        <div [hidden]="firstName.valid || firstName.untouched" class="alert alert-danger">
+          Не указано имя
+        </div>
+        <input type="text" placeholder="Фамилия" [(ngModel)]="user.lastName" #lastName="ngModel" name="lastName" required/>
+        <div [hidden]="lastName.valid || lastName.untouched" class="alert alert-danger">
+          Не указана фамилия
+        </div>
+        <input type="password" placeholder="Пароль" [(ngModel)]="user.password" #password="ngModel" name="password" required pattern="[0-9a-zA-Z!@#$%^*]{5,}"/>
+       <div [hidden]="password.valid || password.untouched" class="alert alert-danger">
+          Пароль должен содержать не менее 5 символов
+         </div>
+        <input type="email" placeholder="E-mail" [(ngModel)]="user.eMail" #eMail="ngModel" name="eMail"  required email/>    
+        <div [hidden]="eMail.valid || eMail.untouched" class="alert alert-danger">
+          Некорректный E-mail
+         </div>    
+      <button (click)="submit(user)" [routerLink]="['/questions']" routerLinkActive="active">зарегистрироваться</button>         
         <p class="message">Уже зарегистрированы? <a (click)="animateMe()" >Войти</a></p>
       </form>
 
       <form class="login-form" [@visibilityChanged]='login_state'>
-        <input type="text" placeholder="Имя пользователя" />
-        <input type="password" placeholder="Пароль" />
-        <button [routerLink]="['/user']" routerLinkActive="active">войти</button>
+        <input type="email" placeholder="E-mail" [(ngModel)]="user.eMail" #eMail="ngModel" name="eMail"  required email/>        
+        <input type="password" placeholder="Пароль" [(ngModel)]="user.password" #password="ngModel" name="password" required />       
+        <button [routerLink]="['/questions']" routerLinkActive="active">войти</button>
         <p class="message">Не зарегистрированы? <a (click)="animateMe()" >Создать аккаунт</a></p>
       </form>            
     </div>
-    <div class="background-image" style="background-image : url('http://upload.akusherstvo.ru/image1458493.jpg')">   
+    <div class="background-image" style="background-image : url('http://upload.akusherstvo.ru/image1458493.jpg')"></div>   
+      <div *ngIf="done">
+        <div>Получено от сервера:</div>
+        <div>Имя: {{receivedUser.firstName}}</div>
+        <div>Фамилия: {{receivedUser.lastName}}</div>
+        <div>Пароль: {{receivedUser.password}}</div>
+        <div>E-mail: {{receivedUser.eMail}}</div>
+    </div>
   </div>

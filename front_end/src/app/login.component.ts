@@ -1,22 +1,7 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { trigger, state, style, transition, animate, keyframes, query, stagger } from '@angular/animations';
-//import { HttpService} from './http.service';
-
-export class User{
-    firstName: string;
-    lastName: string;
-    eMail: string;    
-    password: string;
-   
-    constructor(firstName: string, lastName: string, eMail: string, password: string) {  
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.eMail = eMail;
-        this.password = password;        
-    }
-
-
-}
+import { HttpService } from './http.service';
+import { User } from './user';
 
 @Component({
     selector: 'login-app',
@@ -28,15 +13,9 @@ export class User{
             state('hidden', style({ opacity: 0, display: 'none' })),
             transition('shown => hidden', animate('300ms')),
             transition('hidden => shown', animate('300ms')),
-          ])
-     
-        /*
-        $('.message a').click(function(){
-            $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
-         });*/    
-    
-     
-    ]
+          ])     
+    ],
+    providers: [HttpService]
 })
 export class LoginComponent { 
     reg_state: string = 'hidden';
@@ -47,14 +26,14 @@ export class LoginComponent {
         this.login_state = (this.login_state === 'shown' ? 'hidden' : 'shown')
     }
 
-  /*  userName: string;
+    userName: string;
     password: string;
     firstName: string;
     lastName: string;
     eMail: string;
 
-    user: User = new User(this.firstName, this.lastName, this.eMail, this.password);    
-    receivedUser: User; // полученный пользователь
+    user: User = new User(this.firstName, this.lastName, this.eMail, this.password);
+    receivedUser: User; 
     done: boolean = false;
 
     constructor(private httpService: HttpService){}
@@ -65,5 +44,5 @@ export class LoginComponent {
                     (data: User) => {this.receivedUser=data; this.done=true;},
                     error => console.log(error)
                 );
-    }*/
+    }
 }

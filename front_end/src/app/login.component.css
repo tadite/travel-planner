@@ -102,3 +102,5 @@
     z-index:-2;
   }
 
+  input.ng-touched.ng-invalid {border:solid rgb(219, 49, 49) 2px; border-width: 0.7px; }
+  /*input.ng-touched.ng-valid {border:solid rgb(40, 167, 114) 2px; border-width: 1px;  border-radius: 8px;}*/

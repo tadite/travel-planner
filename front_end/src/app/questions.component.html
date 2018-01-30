@@ -1,0 +1,38 @@
+<div class="page-header">
+    <h1 align="center"> Планировщик путешествий </h1>
+</div>
+<div class="panel">
+    <div class="form-group">  
+        <div align="center" class="form-inline">           
+        <form class="q1-form" [@visibilityChanged]='q1_state'>      
+            <p>Вы уже знаете, каким будет Ваше будущее путешествие?</p>     
+            <button class="btn" style="width:120x; height:50px" [routerLink]="['./notepad']" routerLinkActive="active">Да </button>             
+            <button class="btn" style="width:120x; height:50px" (click)="nextQuestion()">Нет</button>                                              
+            <br>
+       </form>
+       <form class="q2-form" [@visibilityChanged]='q2_state'>
+            <p>Пример вопроса с CheckBox</p>  
+            <input name="C2" type="checkbox" value="ON">Вариант 1<br>
+            <input CHECKED name="C1" type="checkbox" value="ON">Вариант 2<br>
+            <input CHECKED name="C3" type="checkbox" value="ON">Вариант 3<br>
+            <button class="btn" (click)="nextQuestion()">Ответить</button><br>                                            
+        </form>
+        <form class="q3-form" [@visibilityChanged]='q3_state'>
+            <p>Пример вопроса с RadioButton</p>  
+            <input CHECKED name="R" type="radio" value="V1">Вариант 1<br>
+            <input name="R" type="radio" value="V2">Вариант 2<br>
+            <input name="R" type="radio" value="V3">Вариант 3<br>
+            <button class="btn" (click)="nextQuestion()">Ответить</button><br> 
+        </form> 
+        <form class="q4-form" [@visibilityChanged]='q4_state'>
+            <p>Пример вопроса с Drop-Down Menu</p>  
+            <select name="D1" size="1">
+                <option selected value="Вариант 1">Вариант 1 </option>
+                <option value="Вариант 2">Вариант 2 </option>
+                <option value="Вариант 3">Вариант 3 </option> 
+                <button class="btn" (click)="nextQuestion()">Ответить</button><br>                
+            </select>
+        </form>                
+        </div>
+    </div>
+</div>
