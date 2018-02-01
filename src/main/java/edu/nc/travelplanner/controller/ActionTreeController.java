@@ -8,8 +8,10 @@ import edu.nc.travelplanner.model.tree.TreeOrchestrator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -46,13 +48,19 @@ public class ActionTreeController {
         return new ResponseEntity<>(orchestrator.execute(actionArgs).getRawData(), HttpStatus.OK);
     }
 
-    //For testing purpose
-    @GetMapping(path="/get")
-    public ActionArgs get(){
-        return new ActionArgsBuilder()
-                .setState(ActionState.PRESENTATION)
-                .addArg("key", "value")
-                .build();
+    @Autowired
+    JdbcTemplate jdbcTemplate;
+
+    private String getPostgresTestString(String sql) {
+        List<Map<String, Object>> maps = jdbcTemplate.queryForList(sql);
+        StringBuilder stringBuilder = new StringBuilder();
+        maps.forEach(map -> map.forEach((s, o) -> stringBuilder.append(s+" : "+ o.toString()+"; ")));
+        return stringBuilder.toString();
+    }
+
+    @GetMapping(path="/test")
+    public String get(){
+        return getPostgresTestString("SELECT * FROM APP_USER");
     }
 
 }

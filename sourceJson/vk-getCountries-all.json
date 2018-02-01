@@ -1,1 +1,0 @@
-{"name":"vk-getCountries-all","type":"http","parameters":{"url":"https://api.vk.com/method/database.getCountries?need_all=1", "description":" getCountries default"}}
