@@ -47,6 +47,7 @@ k8s-deploy:
     - oc secrets add serviceaccount/default secrets/registry --for=pull
     - oc secrets add serviceaccount/default secrets/app --for=pull
     - oc get services $DB 2> /dev/null || oc new-app --name=$DB -e POSTGRESQL_USER=$POSTGRESQL_USER,POSTGRESQL_PASSWORD=$POSTGRESQL_PASSWORD,POSTGRESQL_DATABASE=$POSTGRESQL_DATABASE registry.access.redhat.com/rhscl/postgresql-95-rhel7
+    - oc rollout latest --wait
     - oc get services $APP 2> /dev/null || oc new-app --name=$APP --docker-image="registry.gitlab.com/nc-edu/travel-planner:app"
     - oc create route edge nc --service=$APP
     - oc get routes
