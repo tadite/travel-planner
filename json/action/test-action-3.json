@@ -1,1 +1,1 @@
-{"name":"test-action3","type":"info","parameters":{"data":"test-data3"}}
+{"name":"test-action3","type":"text_input","parameters":{"data":"test-data1"}}
