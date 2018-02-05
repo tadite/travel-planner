@@ -9,7 +9,7 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE type_of_residence
-  OWNER TO postgres;
+  OWNER TO admin;
 
 
 CREATE TABLE IF NOT EXISTS type_of_rest
@@ -23,7 +23,7 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE type_of_rest
-  OWNER TO postgres;
+  OWNER TO admin;
   
   
  CREATE TABLE IF NOT EXISTS category
@@ -37,7 +37,7 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE category
-  OWNER TO postgres;
+  OWNER TO admin;
 
 
 CREATE TABLE IF NOT EXISTS country
@@ -51,7 +51,7 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE country
-  OWNER TO postgres;
+  OWNER TO admin;
 
 
 CREATE TABLE IF NOT EXISTS city
@@ -68,7 +68,7 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE city
-  OWNER TO postgres;
+  OWNER TO admin;
 
 
 CREATE TABLE IF NOT EXISTS option
@@ -81,7 +81,7 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE option
-  OWNER TO postgres;
+  OWNER TO admin;
 
 
 CREATE TABLE IF NOT EXISTS client
@@ -109,7 +109,7 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE client
-  OWNER TO postgres;
+  OWNER TO admin;
 
 
 CREATE TABLE IF NOT EXISTS social_network
@@ -126,7 +126,7 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE social_network
-  OWNER TO postgres;
+  OWNER TO admin;
 
 
 
@@ -143,7 +143,7 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE travel
-  OWNER TO postgres;
+  OWNER TO admin;
 
 
 
@@ -166,7 +166,7 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE option_for_travel
-  OWNER TO postgres;
+  OWNER TO admin;
 
 
 CREATE TABLE IF NOT EXISTS place_of_residence
@@ -194,7 +194,7 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE place_of_residence
-  OWNER TO postgres;
+  OWNER TO admin;
 
 CREATE TABLE IF NOT EXISTS travel_for_client
 (
@@ -214,7 +214,7 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE travel_for_client
-  OWNER TO postgres;
+  OWNER TO admin;
 
 
 
@@ -235,7 +235,7 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE type_of_movement
-  OWNER TO postgres;
+  OWNER TO admin;
 
 
 CREATE TABLE IF NOT EXISTS check_point
@@ -266,7 +266,7 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE check_point
-  OWNER TO postgres;
+  OWNER TO admin;
 
 
 CREATE TABLE IF NOT EXISTS excursion
@@ -293,4 +293,4 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE excursion
-  OWNER TO postgres;
+  OWNER TO admin;
