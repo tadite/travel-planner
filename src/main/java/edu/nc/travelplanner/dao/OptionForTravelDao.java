@@ -42,4 +42,14 @@ public class OptionForTravelDao {
     public List<OptionForTravel> getAllOptionForTravels() {
         return getSession().createQuery("from OptionForTravel").list();
     }
+
+    @Transactional
+    public OptionForTravel getOptionForTravelById (Long id) {
+
+        List<OptionForTravel> list = getSession().createQuery("FROM OptionForTravel c WHERE c.id= :Id").setParameter("Id",id).list();
+        if(!list.isEmpty()) {
+            return  list.get(0);
+        }
+        return null;
+    }
 }

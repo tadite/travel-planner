@@ -37,8 +37,8 @@ public class PlaceOfResidence {
     @Column(name = "cost_per_day")
     private String costPerDay;
 
- //   @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "placeOfResidence")
- //   private Set<CheckPoint> checkPoints = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "placeOfResidence")
+    private Set<CheckPoint> checkPoints = new HashSet<>();
 
     public long getPlaceOfResidenceId() {
         return placeOfResidenceId;
@@ -104,7 +104,19 @@ public class PlaceOfResidence {
         this.costPerDay  = costPerDay;
     }
 
- /*   public void setCheckPoints(Set<CheckPoint> checkPoints) {
+    public void setCheckPoints(Set<CheckPoint> checkPoints) {
         this.checkPoints = checkPoints;
-    }*/
+    }
+
+    public void addCheckPoint(CheckPoint checkPoint) {
+        this.checkPoints.add(checkPoint);
+    }
+
+    public void removeCheckPoint(CheckPoint checkPoint) {
+        checkPoints.remove(checkPoint);
+    }
+
+    public Set<CheckPoint> getCheckPoints() {
+        return checkPoints;
+    }
 }

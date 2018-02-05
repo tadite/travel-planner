@@ -28,14 +28,12 @@ public class OptionForTravelController{
     @Autowired
     private OptionDao optionDao;
 
-
-
     @RequestMapping(value = "/delete")
     @ResponseBody
+    @Transactional
     public String delete(long id) {
         try {
-            OptionForTravel optionForTravel = new OptionForTravel();
-            optionForTravel.setOptionForTravelId(id);
+            OptionForTravel optionForTravel  = optionForTravelDao.getOptionForTravelById(id);
             optionForTravelDao.delete(optionForTravel);
         } catch (Exception ex) {
             return ex.getMessage();
@@ -45,6 +43,7 @@ public class OptionForTravelController{
 
     @RequestMapping(value = "/save")
     @ResponseBody
+    @Transactional
     public String create(Long travel_id, Long option_id, String description) {
         try {
             OptionForTravel optionForTravel = new OptionForTravel();
@@ -62,6 +61,8 @@ public class OptionForTravelController{
             }
 
             optionForTravelDao.saveOptionForTravel(optionForTravel);
+            travel.addOptionForTravel(optionForTravel);
+            option.addOptionForTravel(optionForTravel);
         } catch (Exception ex) {
             return ex.getMessage();
         }
@@ -80,7 +81,7 @@ public class OptionForTravelController{
                 result += "{ \"option_for_travel_id:\" " + o.getOptionForTravelId()
                         +", \"travel_id\": " + o.getTravel().getTravelId()
                         + ", \"option_id\": " + o.getOption().getOptionId()
-                        + ", \"description\":" + o.getDescription() +"},";
+                        + ", \"description\":" + o.getDescription() +"}";
             }
             result += "]";
             return result;
@@ -89,5 +90,4 @@ public class OptionForTravelController{
             return e.toString();
         }
     }
-
 }

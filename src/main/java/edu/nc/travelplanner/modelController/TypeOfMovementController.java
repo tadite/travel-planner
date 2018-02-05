@@ -4,8 +4,10 @@ package edu.nc.travelplanner.modelController;
 import java.util.List;
 
 import edu.nc.travelplanner.dao.CategoryDao;
+import edu.nc.travelplanner.dao.CheckPointDao;
 import edu.nc.travelplanner.dao.TypeOfMovementDao;
 import edu.nc.travelplanner.table.Category;
+import edu.nc.travelplanner.table.CheckPoint;
 import edu.nc.travelplanner.table.TypeOfMovement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,12 +25,20 @@ public class TypeOfMovementController  {
     @Autowired
     private CategoryDao  categoryDao;
 
+    @Autowired
+    private CheckPointDao checkPointDao;
+
+
     @RequestMapping(value = "/delete")
     @ResponseBody
+    @Transactional
     public String delete(long id) {
         try {
-            TypeOfMovement typeOfMovement = new TypeOfMovement();
-            typeOfMovement.setTypeOfMovementId(id);
+            TypeOfMovement typeOfMovement = typeOfMovementDao.getTypeOfMovementById(id);
+            if (typeOfMovement.getCheckPoints().size() > 0)
+                for(CheckPoint c: typeOfMovement.getCheckPoints())
+                    checkPointDao.delete(c);
+
             typeOfMovementDao.delete(typeOfMovement);
         } catch (Exception ex) {
             return ex.getMessage();
@@ -38,6 +48,7 @@ public class TypeOfMovementController  {
 
     @RequestMapping(value = "/save")
     @ResponseBody
+    @Transactional
     public String create(String duration,Integer numberOfPeople,Long category_id,String description,String cost) {
         try {
             TypeOfMovement typeOfMovement = new TypeOfMovement();
@@ -53,6 +64,7 @@ public class TypeOfMovementController  {
             }
 
             typeOfMovementDao.saveTypeOfMovement(typeOfMovement);
+            category.addTypeOfMovement(typeOfMovement);
         } catch (Exception ex) {
             return ex.getMessage();
         }
@@ -72,7 +84,7 @@ public class TypeOfMovementController  {
                         + ", \" numberOfPeople\": " + t.getNumberOfPeople()
                         +", \"category_id\": " + t.getCategory().getCategoryId()
                         + ", \"description\": " + t.getDescription()
-                        + ", \"cost\":" + t.getCost() +"},";
+                        + ", \"cost\":" + t.getCost() +"}";
             }
             result += "]";
             return result;

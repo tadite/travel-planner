@@ -2,10 +2,8 @@ package edu.nc.travelplanner.modelController;
 
 import java.util.List;
 
-import edu.nc.travelplanner.dao.CityDao;
-import edu.nc.travelplanner.dao.CountryDao;
-import edu.nc.travelplanner.table.City;
-import edu.nc.travelplanner.table.Country;
+import edu.nc.travelplanner.dao.*;
+import edu.nc.travelplanner.table.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,12 +19,33 @@ public class CityController {
     @Autowired
     private CountryDao countryDao;
 
+    @Autowired
+    private ExcursionDao excursionDao;
+
+    @Autowired
+    private PlaceOfResidenceDao placeOfResidenceDao;
+
+    @Autowired
+    private ClientDao clientDao;
+
     @RequestMapping(value = "/delete")
     @ResponseBody
+    @Transactional
     public String delete(long id) {
         try {
-            City city = new City();
-            city.setCityId(id);
+            City city = cityDao.getCityById(id);
+            if (city.getExcursions().size() > 0)
+                for(Excursion e: city.getExcursions())
+                    excursionDao.delete(e);
+
+            if (city.getPlaceOfResidences().size() > 0)
+                for(PlaceOfResidence p: city.getPlaceOfResidences())
+                    placeOfResidenceDao.delete(p);
+
+            if (city.getClients().size() > 0)
+                for(Client c: city.getClients())
+                    clientDao.delete(c);
+
             cityDao.delete(city);
         } catch (Exception ex) {
             return ex.getMessage();
@@ -36,6 +55,7 @@ public class CityController {
 
     @RequestMapping(value = "/save")
     @ResponseBody
+    @Transactional
     public String create(String name, Long country_id) {
         try {
 
@@ -48,6 +68,7 @@ public class CityController {
             }
 
             cityDao.saveCity(city);
+            country.addCity(city);
 
         } catch (Exception ex) {
             return ex.getMessage();
@@ -67,7 +88,7 @@ public class CityController {
 
                 result +=  "{ \"city_id:\" " + c.getCityId()
                         +  ", \"name\": " + c.getName()
-                        + ", \"country_id\": " + c.getCountry().getCountryId()  + "},";
+                        + ", \"country_id\": " + c.getCountry().getCountryId()  + "}";
             }
             result += "]";
             return result;

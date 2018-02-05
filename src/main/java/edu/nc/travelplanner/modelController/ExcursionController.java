@@ -8,7 +8,6 @@ import edu.nc.travelplanner.dao.CityDao;
 import edu.nc.travelplanner.dao.ExcursionDao;
 import edu.nc.travelplanner.table.CheckPoint;
 import edu.nc.travelplanner.table.City;
-import edu.nc.travelplanner.table.Country;
 import edu.nc.travelplanner.table.Excursion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,10 +30,10 @@ public class ExcursionController {
 
     @RequestMapping(value = "/delete")
     @ResponseBody
+    @Transactional
     public String delete(long id) {
         try {
-            Excursion excursion = new Excursion();
-            excursion.setExcursionId(id);
+            Excursion excursion = excursionDao.getExcursionById(id);
             excursionDao.delete(excursion);
         } catch (Exception ex) {
             return ex.getMessage();
@@ -44,6 +43,7 @@ public class ExcursionController {
 
     @RequestMapping(value = "/save")
     @ResponseBody
+    @Transactional
     public String create(String name, Long city_id, String duration, Long checkPoint_id, String cost) {
         try {
             Excursion excursion = new Excursion();
@@ -64,23 +64,15 @@ public class ExcursionController {
             }
 
             excursionDao.saveExcursion(excursion);
+
+            city.addExcursion(excursion);
+            excursion.getCountry().addExcursion(excursion);
+            checkPoint.addExcursion(excursion);
         } catch (Exception ex) {
             return ex.getMessage();
         }
         return "Excursion succesfully saved!";
     }
-/*
-    @RequestMapping(value = "/allExcursions")
-    @ResponseBody
-    @Transactional
-    public List<Excursion> getAllExcursions() {
-        try {
-
-            return excursionDao.getAllExcursions();
-        } catch (Exception ex) {
-            return null;
-        }
-    }*/
 
     @RequestMapping(value = "/allExcursions")
     @ResponseBody
@@ -92,12 +84,12 @@ public class ExcursionController {
             for(Excursion ex:excursions){
 
                 result += "{ \"excursion_id:\" " + ex.getExcursionId()
-                            + ", \"name\": " + ex.getName()
-                            +", \"city_id\": " + ex.getCity().getCityId()
-                            + ", \"country_id\": " + ex.getCity().getCountry().getCountryId()
-                            + ", \"duration\": " + ex.getDuration()
-                            + ", \"check_point_id\": " + ex.getCheckPoint().getCheckPointId()
-                            + ", \"cost\":" + ex.getCost() +"},";
+                        + ", \"name\": " + ex.getName()
+                        +", \"city_id\": " + ex.getCity().getCityId()
+                        + ", \"country_id\": " + ex.getCity().getCountry().getCountryId()
+                        + ", \"duration\": " + ex.getDuration()
+                        + ", \"check_point_id\": " + ex.getCheckPoint().getCheckPointId()
+                        + ", \"cost\":" + ex.getCost() +"}";
             }
             result += "]";
             return result;

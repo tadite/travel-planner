@@ -19,8 +19,8 @@ public class TypeOfRest {
     @Column(name = "description")
     private String description;
 
- //   @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "typeOfRest")
- //   private Set<CheckPoint> checkPoints = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "typeOfRest")
+    private Set<CheckPoint> checkPoints = new HashSet<>();
 
     public long getTypeOfRestId() {
         return typeOfRestId;
@@ -46,7 +46,19 @@ public class TypeOfRest {
         this.description  = description;
     }
 
-  /*  public void setCheckPoints(Set<CheckPoint> checkPoints) {
+    public void setCheckPoints(Set<CheckPoint> checkPoints) {
         this.checkPoints = checkPoints;
-    }*/
+    }
+
+    public void addCheckPoint(CheckPoint checkPoint) {
+        this.checkPoints.add(checkPoint);
+    }
+
+    public void removeCheckPoint(CheckPoint checkPoint) {
+        checkPoints.remove(checkPoint);
+    }
+
+    public Set<CheckPoint> getCheckPoints() {
+        return checkPoints;
+    }
 }

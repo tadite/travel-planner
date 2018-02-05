@@ -41,5 +41,15 @@ public class ExcursionDao {
     public List<Excursion> getAllExcursions() {
         return getSession().createQuery("from Excursion").list();
     }
+
+    @Transactional
+    public Excursion getExcursionById (Long id) {
+
+        List<Excursion> list = getSession().createQuery("FROM Excursion c WHERE c.id= :Id").setParameter("Id",id).list();
+        if(!list.isEmpty()) {
+            return  list.get(0);
+        }
+        return null;
+    }
 }
 

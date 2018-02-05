@@ -19,8 +19,8 @@ public class TypeOfResidence {
     @Column(name = "description")
     private String description;
 
-  //  @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "typeOfResidence")
-  //  private Set<PlaceOfResidence> placeOfResidences = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "typeOfResidence")
+    private Set<PlaceOfResidence> placeOfResidences = new HashSet<>();
 
     public long getTypeOfResidenceId() {
         return typeOfResidenceId;
@@ -46,7 +46,19 @@ public class TypeOfResidence {
         this.description  = description;
     }
 
-   /* public void setPlaceOfResidences(Set<PlaceOfResidence> placeOfResidences) {
+    public void setPlaceOfResidences(Set<PlaceOfResidence> placeOfResidences) {
         this.placeOfResidences = placeOfResidences;
-    }*/
+    }
+
+    public void addPlaceOfResidence(PlaceOfResidence placeOfResidence) {
+        this.placeOfResidences.add(placeOfResidence);
+    }
+
+    public void removePlaceOfResidence(PlaceOfResidence placeOfResidence) {
+        placeOfResidences.remove(placeOfResidence);
+    }
+
+    public Set<PlaceOfResidence> getPlaceOfResidences() {
+        return placeOfResidences;
+    }
 }

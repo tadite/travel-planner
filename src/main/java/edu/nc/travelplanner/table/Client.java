@@ -45,11 +45,11 @@ public class Client {
     @Column(name = "is_blocked")
     private Boolean isBlocked;
 
- //   @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "client")
- //   private Set<SocialNetwork> socialNetworks = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "client")
+    private Set<SocialNetwork> socialNetworks = new HashSet<>();
 
-  //  @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "client")
-  //  private Set<TravelForClient> travelForClients = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "client")
+    private Set<TravelForClient> travelForClients = new HashSet<>();
 
     public long getClientId() {
         return clientId;
@@ -139,13 +139,39 @@ public class Client {
         this.isBlocked  = isBlocked;
     }
 
-/*
     public void setSocialNetworks(Set<SocialNetwork> socialNetworks) {
         this.socialNetworks = socialNetworks;
     }
 
     public void setTravelForClients(Set<TravelForClient> travelForClients) {
         this.travelForClients = travelForClients;
-    }*/
+    }
 
+    public void addSocialNetwork(SocialNetwork socialNetwork) {
+        this.socialNetworks.add(socialNetwork);
+    }
+
+    public void removeSocialNetwork(SocialNetwork socialNetwork) {
+        socialNetworks.remove(socialNetwork);
+    }
+
+    public void addTravelForClient(TravelForClient travelForClient) {
+        this.travelForClients.add(travelForClient);
+    }
+
+    public void removeTravelForClient(TravelForClient travelForClient) {
+        travelForClients.remove(travelForClient);
+    }
+
+    public Set<SocialNetwork> getSocialNetworks() {
+        return socialNetworks;
+    }
+
+    public Boolean getBlocked() {
+        return isBlocked;
+    }
+
+    public Set<TravelForClient> getTravelForClients() {
+        return travelForClients;
+    }
 }

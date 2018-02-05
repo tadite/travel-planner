@@ -19,14 +19,14 @@ public class City {
     @JoinColumn(name = "country_id")
     private Country country;
 
-  //  @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "city")
-  //  private Set<Excursion> excursions = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "city")
+    private Set<Excursion> excursions = new HashSet<>();
 
-  //  @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "city")
-  //  private Set<PlaceOfResidence> placeOfResidences = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "city")
+    private Set<PlaceOfResidence> placeOfResidences = new HashSet<>();
 
-  //  @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "city")
-  //  private Set<Client> clients = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "city")
+    private Set<Client> clients = new HashSet<>();
 
     public long getCityId() {
         return cityId;
@@ -52,17 +52,6 @@ public class City {
         this.country  = country;
     }
 
-    public String toString(){
-        return "City Id: " + this.cityId+" name: " + this.name +" country id: " + this.country.getCountryId();
-    }
-
-    public boolean equals(City c){
-        if (this.cityId == c.getCityId())
-                return true;
-        return false;
-
-    }
-/*
     public void setExcursions(Set<Excursion> excursions) {
         this.excursions = excursions;
     }
@@ -73,5 +62,41 @@ public class City {
 
     public void setClients(Set<Client> clients) {
         this.clients = clients;
-    }*/
+    }
+
+    public void addExcursion(Excursion excursion) {
+        this.excursions.add(excursion);
+    }
+
+    public void removeExcursion(Excursion excursion) {
+        excursions.remove(excursion);
+    }
+
+    public void addPlaceOfResidence(PlaceOfResidence placeOfResidence) {
+        this.placeOfResidences.add(placeOfResidence);
+    }
+
+    public void removePlaceOfResidence(PlaceOfResidence placeOfResidence) {
+        placeOfResidences.remove(placeOfResidence);
+    }
+
+    public void addClient(Client client) {
+        this.clients.add(client);
+    }
+
+    public void removeClient(Client client) {
+        clients.remove(client);
+    }
+
+    public Set<Excursion> getExcursions() {
+        return excursions;
+    }
+
+    public Set<PlaceOfResidence> getPlaceOfResidences() {
+        return placeOfResidences;
+    }
+
+    public Set<Client> getClients() {
+        return clients;
+    }
 }
