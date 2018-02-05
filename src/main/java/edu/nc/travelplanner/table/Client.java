@@ -1,12 +1,18 @@
 package edu.nc.travelplanner.table;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "client")
-public class Client {
+public class Client implements UserDetails {
 
     @Id
     @Column(name = "client_id")
@@ -23,7 +29,7 @@ public class Client {
     private String email;
 
     @Column(name = "age")
-    private Integer  age;
+    private Integer age;
 
     @Column(name = "login")
     private String login;
@@ -99,8 +105,41 @@ public class Client {
         this.login  = login;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(role));
+        authorities.add(new SimpleGrantedAuthority(role));
+        return authorities;
+    }
+
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return login;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return !isBlocked;
     }
 
     public void setPassword(String password) {

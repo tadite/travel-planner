@@ -1,4 +1,4 @@
-CREATE TABLE category
+CREATE TABLE IF NOT EXISTS category
 (
   category_id bigserial NOT NULL,
   name character varying(255),
@@ -12,7 +12,7 @@ ALTER TABLE category
   OWNER TO admin;
 
 
-CREATE TABLE check_point
+CREATE TABLE IF NOT EXISTS check_point
 (
   check_point_id bigserial NOT NULL,
   cost character varying(255),
@@ -42,7 +42,7 @@ WITH (
 ALTER TABLE check_point
   OWNER TO admin;
 
-CREATE TABLE city
+CREATE TABLE IF NOT EXISTS city
 (
   city_id bigserial NOT NULL,
   name character varying(255),
@@ -59,7 +59,7 @@ ALTER TABLE city
   OWNER TO admin;
 
 
-CREATE TABLE client
+CREATE TABLE IF NOT EXISTS client
 (
   client_id bigserial NOT NULL,
   age integer,
@@ -88,7 +88,7 @@ ALTER TABLE client
 
 
 
-CREATE TABLE country
+CREATE TABLE IF NOT EXISTS country
 (
   country_id bigserial NOT NULL,
   name character varying(255),
@@ -102,7 +102,7 @@ ALTER TABLE country
   OWNER TO admin;
 
 
-CREATE TABLE excursion
+CREATE TABLE IF NOT EXISTS excursion
 (
   excursion_id bigserial NOT NULL,
   cost character varying(255),
@@ -129,7 +129,7 @@ ALTER TABLE excursion
   OWNER TO admin;
 
 
-CREATE TABLE option
+CREATE TABLE IF NOT EXISTS option
 (
   option_id bigserial NOT NULL,
   name character varying(255),
@@ -142,7 +142,7 @@ ALTER TABLE option
   OWNER TO admin;
 
 
-CREATE TABLE option_for_travel
+CREATE TABLE IF NOT EXISTS option_for_travel
 (
   option_for_travel_id bigserial NOT NULL,
   description character varying(255),
@@ -163,7 +163,7 @@ ALTER TABLE option_for_travel
   OWNER TO admin;
 
 
-CREATE TABLE place_of_residence
+CREATE TABLE IF NOT EXISTS place_of_residence
 (
   place_of_residence_id bigserial NOT NULL,
   climate character varying(255),
@@ -192,7 +192,7 @@ ALTER TABLE place_of_residence
 
 
 
-CREATE TABLE social_network
+CREATE TABLE IF NOT EXISTS social_network
 (
   social_network_id bigserial NOT NULL,
   name character varying(255),
@@ -210,7 +210,7 @@ ALTER TABLE social_network
 
 
 
-CREATE TABLE travel
+CREATE TABLE IF NOT EXISTS travel
 (
   travel_id bigserial NOT NULL,
   cost character varying(255),
@@ -227,7 +227,7 @@ ALTER TABLE travel
 
 
 
-CREATE TABLE travel_for_client
+CREATE TABLE IF NOT EXISTS travel_for_client
 (
   travel_for_client_id bigserial NOT NULL,
   description character varying(255),
@@ -249,7 +249,7 @@ ALTER TABLE travel_for_client
 
 
 
-CREATE TABLE type_of_movement
+CREATE TABLE IF NOT EXISTS type_of_movement
 (
   type_of_movement_id bigserial NOT NULL,
   cost character varying(255),
@@ -270,7 +270,7 @@ ALTER TABLE type_of_movement
 
 
 
-CREATE TABLE type_of_residence
+CREATE TABLE IF NOT EXISTS type_of_residence
 (
   type_of_residence_id bigserial NOT NULL,
   description character varying(255),
@@ -284,7 +284,7 @@ ALTER TABLE type_of_residence
   OWNER TO admin;
 
 
-CREATE TABLE type_of_rest
+CREATE TABLE IF NOT EXISTS type_of_rest
 (
   type_of_rest_id bigserial NOT NULL,
   description character varying(255),

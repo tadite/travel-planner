@@ -51,4 +51,13 @@ public class ClientDao {
         }
         return null;
     }
+
+    @Transactional
+    public Client getClientByLogin (String login) {
+        List<Client> list = getSession().createQuery("FROM Client c WHERE c.login= :Login").setParameter("Login",login).list();
+        if(!list.isEmpty()) {
+            return  list.get(0);
+        }
+        return null;
+    }
 }
