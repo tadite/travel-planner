@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Transactional
 public class CategoryDao {
+
     @Autowired
     private SessionFactory sessionFactory;
 

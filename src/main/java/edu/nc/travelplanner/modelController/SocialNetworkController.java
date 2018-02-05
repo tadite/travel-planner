@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value = "/social_network")
 public class SocialNetworkController {
+
     @Autowired
     private SocialNetworkDao socialNetworkDao;
 

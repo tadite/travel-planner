@@ -13,6 +13,7 @@ import java.util.List;
 @Repository
 @Transactional
 public class SocialNetworkDao {
+
     @Autowired
     private SessionFactory sessionFactory;
 

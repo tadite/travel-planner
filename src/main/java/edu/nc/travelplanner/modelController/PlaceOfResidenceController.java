@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value = "/place_of_residence")
 public class PlaceOfResidenceController {
+
     @Autowired
     private PlaceOfResidenceDao placeOfResidenceDao;
 

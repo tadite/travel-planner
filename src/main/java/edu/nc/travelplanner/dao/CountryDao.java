@@ -12,6 +12,7 @@ import java.util.List;
 @Repository
 @Transactional
 public class CountryDao {
+
     @Autowired
     private SessionFactory sessionFactory;
 

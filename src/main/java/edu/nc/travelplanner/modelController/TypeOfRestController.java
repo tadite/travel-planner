@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value = "/type_of_rest")
 public class TypeOfRestController {
+
     @Autowired
     private TypeOfRestDao typeOfRestDao;
 

@@ -5,7 +5,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "social_network")
 public class SocialNetwork {
-
     @Id
     @Column(name = "social_network_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -7,7 +7,6 @@ import java.util.Set;
 @Entity
 @Table(name = "check_point")
 public class CheckPoint {
-
     @Id
     @Column(name = "check_point_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

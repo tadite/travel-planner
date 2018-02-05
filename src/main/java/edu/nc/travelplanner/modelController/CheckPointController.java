@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value = "/check_point")
 public class CheckPointController {
+
     @Autowired
     private CheckPointDao checkPointDao;
 

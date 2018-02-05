@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(value = "/category")
 @Transactional
 public class CategoryController {
+
     @Autowired
     private CategoryDao categoryDao;
 

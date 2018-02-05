@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value = "/option")
 public class OptionController {
+
     @Autowired
     private OptionDao optionDao;
 

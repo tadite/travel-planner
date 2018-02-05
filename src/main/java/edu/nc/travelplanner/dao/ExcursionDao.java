@@ -12,6 +12,7 @@ import java.util.List;
 @Repository
 @Transactional
 public class ExcursionDao {
+
     @Autowired
     private SessionFactory sessionFactory;
 

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value = "/excursion")
 public class ExcursionController {
+
     @Autowired
     private ExcursionDao excursionDao;
 

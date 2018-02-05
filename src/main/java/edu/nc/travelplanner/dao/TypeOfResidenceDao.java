@@ -13,6 +13,7 @@ import java.util.List;
 @Repository
 @Transactional
 public class TypeOfResidenceDao {
+
     @Autowired
     private SessionFactory sessionFactory;
 

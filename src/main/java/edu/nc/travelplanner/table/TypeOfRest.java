@@ -7,7 +7,6 @@ import java.util.Set;
 @Entity
 @Table(name = "type_of_rest")
 public class TypeOfRest {
-
     @Id
     @Column(name = "type_of_rest_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

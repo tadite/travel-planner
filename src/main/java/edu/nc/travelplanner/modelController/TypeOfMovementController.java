@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value = "type_of_movement")
 public class TypeOfMovementController  {
+
     @Autowired
     private TypeOfMovementDao typeOfMovementDao;
 

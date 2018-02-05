@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value = "/option_for_travel")
 public class OptionForTravelController{
+
     @Autowired
     private OptionForTravelDao optionForTravelDao;
 

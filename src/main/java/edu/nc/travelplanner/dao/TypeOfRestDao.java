@@ -12,6 +12,7 @@ import java.util.List;
 @Repository
 @Transactional
 public class TypeOfRestDao {
+
     @Autowired
     private SessionFactory sessionFactory;
 

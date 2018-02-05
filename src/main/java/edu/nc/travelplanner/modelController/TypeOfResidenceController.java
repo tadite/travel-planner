@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value = "/type_of_residence")
 public class TypeOfResidenceController {
+
     @Autowired
     private TypeOfResidenceDao typeOfResidenceDao;
 

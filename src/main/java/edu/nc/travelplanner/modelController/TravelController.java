@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value = "/travel")
 public class TravelController {
+
     @Autowired
     private TravelDao travelDao;
 

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value = "/city")
 public class CityController {
+
     @Autowired
     private CityDao cityDao;
 
