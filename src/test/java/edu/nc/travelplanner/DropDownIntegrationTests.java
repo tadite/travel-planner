@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 public class DropDownIntegrationTests {
 
 
-    @Test
+    //@Test
     public void canExecutePresentation() throws IOException, JSONException {
         //Array
         String vkCountriesResponse = "{\"response\":[{\"cid\":19,\"title\":\"Австралия\"},{\"cid\":20,\"title\":\"Австрия\"}]}";

@@ -27,7 +27,7 @@ import static org.mockito.Mockito.when;
 //@WebAppConfiguration
 public class CheckListIntegrationActionTests {
 
-    @Test
+    //@Test
     public void canExecutePresentation() throws IOException, JSONException {
         //Array
 

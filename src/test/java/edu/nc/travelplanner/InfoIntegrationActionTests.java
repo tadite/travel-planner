@@ -23,7 +23,7 @@ import static org.mockito.Mockito.when;
 
 public class InfoIntegrationActionTests {
 
-    @Test
+    //@Test
     public void canExecutePresentation() throws IOException, JSONException {
         //Array
         String currencyResponse = "{\n" +
