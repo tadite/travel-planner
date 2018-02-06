@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { trigger, state, style, transition, animate, keyframes, query, stagger } from '@angular/animations';
 import { HttpService } from './http.service';
+import { Question } from './question';
+import {HttpClientModule, HttpClient} from '@angular/common/http';
+import { Console } from '@angular/core/src/console';
 
 @Component({
     selector: 'questions-app',
@@ -10,28 +13,65 @@ import { HttpService } from './http.service';
         trigger('visibilityChanged', [
             state('shown' , style({ opacity: 1, display: 'inline' })),
             state('hidden', style({ opacity: 0, display: 'none' })),
-            transition('shown => hidden', animate('300ms')),
-            transition('hidden => shown', animate('300ms')),
+            transition('shown => hidden', animate('15ms')),
+            transition('hidden => shown', animate('15ms')),
           ])     
     ],
-    providers: [HttpService]
+    providers: [HttpClient]
+  // providers: [HttpService]
 })
 
-export class QuestionsComponent { 
-    q1_state: string = 'shown';
-    q2_state: string = 'hidden';
-    q3_state: string = 'hidden';
-    q4_state: string = 'hidden';
+export class QuestionsComponent implements OnInit
+{     
+   
     
-    nextQuestion() {
+    states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
+    current_question: number = 0;
 
-        if (this.q1_state === 'shown' ) this.q1_state = 'hidden';
-        if (this.q2_state === 'hidden' ) this.q2_state = 'shown';
-        if (this.q2_state === 'shown' ) this.q2_state = 'hidden';
-        if (this.q3_state === 'hidden' ) this.q3_state = 'shown';
-        if (this.q3_state === 'shown' ) this.q3_state = 'hidden';
-        if (this.q4_state === 'hidden' ) this.q4_state = 'shown';
-        if (this.q4_state === 'shown' ) this.q4_state = 'hidden';
+    nextQuestion() {
+        this.states[this.current_question] = 'hidden';
+        this.current_question++;
+        this.states[this.current_question] = 'shown';
     }
 
+   // questions: string = '[{"id":"1", "data": "Выберите страну", "type": "label"}, {"id": "5", "data": "Россия", "type": "checkbox"}, {"id": "3","data": "Франция", "type": "checkbox"}, {"id": "6","data": "Китай", "type": "checkbox"}]';
+   //questions: string;
+    questions: any;
+    questionData : Question[];
+    jsonData : JSON;
+    url: string = 'http://localhost:8090/action';
+
+
+    constructor(private http: HttpClient){
+   // constructor(private httpService: HttpService){
+      //  this.getJSONFromServer();
+        console.log(this.questions);
+        this.getData(this.questions);
+    }
+
+    ngOnInit(){
+         this.http.get(this.url).subscribe(data => {
+            console.log('TEST toString' + data.toString); 
+            this.questions = data; 
+            console.log('TEST2 toString' + this.questions.toString);             
+        });        
+    }
+
+   public getJSONFromServer(){
+        /* this.httpClient.get('http://localhost:8090/action').subscribe((data) => 
+         {
+             this.questions = data; 
+             console.log('TEST ' + this.questions.toString());
+             console.log('TEST2 ' + data.toString());
+            });*/
+       
+       //  this.questions = this.httpClient.get('http://localhost:8090/action').subscribe();
+       
+      
+        
+    }
+
+    public getData(data: string) {        
+        this.questionData = JSON.parse(data);       
+    }
 }

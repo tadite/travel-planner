@@ -3,6 +3,7 @@ import { trigger, state, style, transition, animate, keyframes, query, stagger }
 import { HttpService } from './http.service';
 import { User } from './user';
 
+
 @Component({
     selector: 'login-app',
     templateUrl: './login.component.html',

@@ -12,7 +12,7 @@ import { Component } from '@angular/core';
            <br>
         </div>
     </div>
-    <div class="background-image" style="background-image : url('http://upload.akusherstvo.ru/image1458482.jpg')">   
+    <div class="background-image" style="background-image : url('http://upload.akusherstvo.ru/image1458482.jpg')"> </div>
 </div>`,
 styles: [`.background-image{
     position: absolute;
