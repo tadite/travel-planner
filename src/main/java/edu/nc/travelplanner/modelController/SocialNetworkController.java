@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value = "/social_network")
 public class SocialNetworkController {
+
     @Autowired
     private SocialNetworkDao socialNetworkDao;
 
@@ -24,9 +25,10 @@ public class SocialNetworkController {
 
     @RequestMapping(value = "/delete")
     @ResponseBody
+    @Transactional
     public String delete(long id) {
         try {
-            SocialNetwork socialNetwork = new SocialNetwork();
+            SocialNetwork socialNetwork = socialNetworkDao.getSocialNetworkById(id);
             socialNetwork.setSocialNetworkId(id);
             socialNetworkDao.delete(socialNetwork);
         } catch (Exception ex) {
@@ -37,6 +39,7 @@ public class SocialNetworkController {
 
     @RequestMapping(value = "/save")
     @ResponseBody
+    @Transactional
     public String create(String name,Long client_id) {
         try {
             SocialNetwork socialNetwork = new SocialNetwork();
@@ -48,12 +51,14 @@ public class SocialNetworkController {
                 socialNetwork.setClient(client);
             }
 
+            client.addSocialNetwork(socialNetwork);
             socialNetworkDao.saveSocialNetwork(socialNetwork);
         } catch (Exception ex) {
             return ex.getMessage();
         }
         return "SocialNetwork succesfully saved!";
     }
+
     @RequestMapping(value = "/allSocialNetworks")
     @ResponseBody
     @Transactional
@@ -65,7 +70,7 @@ public class SocialNetworkController {
 
                 result += "{ \"social_network_id:\" " + s.getSocialNetworkId()
                         + ", \"name\": " + s.getName()
-                        +", \"client_id\": " + s.getClient().getClientId() +"},";
+                        +", \"client_id\": " + s.getClient().getClientId() +"}";
             }
             result += "]";
             return result;
@@ -74,5 +79,4 @@ public class SocialNetworkController {
             return e.toString();
         }
     }
-
 }

@@ -7,7 +7,6 @@ import java.util.Set;
 @Entity
 @Table(name = "check_point")
 public class CheckPoint {
-
     @Id
     @Column(name = "check_point_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,8 +37,8 @@ public class CheckPoint {
     @JoinColumn(name = "place_of_residence_id")
     private PlaceOfResidence placeOfResidence;
 
-  //  @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "checkPoint")
-  //  private Set<Excursion> excursions = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "checkPoint")
+    private Set<Excursion> excursions = new HashSet<>();
 
     public long getCheckPointId() {
         return checkPointId;
@@ -109,7 +108,19 @@ public class CheckPoint {
         return "Check Point id: " + this.checkPointId + " travel: " +this.travel+" numberOfDays: "+ this.numberOfDays+" cost: " + this.cost+" description: " + this.description +" typeOfRest id: " +typeOfRest.getTypeOfRestId()+" typeOfMovement id: " + typeOfMovement.getTypeOfMovementId()+ " placeOfResidence id: " + placeOfResidence.getPlaceOfResidenceId();
     }
 
- //   public void setExcursions(Set<Excursion> excursions) {
-    //    this.excursions = excursions;
-   // }
+    public void setExcursions(Set<Excursion> excursions) {
+        this.excursions = excursions;
+    }
+
+    public void addExcursion(Excursion excursion) {
+        this.excursions.add(excursion);
+    }
+
+    public void removeExcursion(Excursion excursion) {
+        excursions.remove(excursion);
+    }
+
+    public Set<Excursion> getExcursions() {
+        return excursions;
+    }
 }

@@ -12,6 +12,7 @@ import java.util.List;
 @Repository
 @Transactional
 public class OptionDao {
+
     @Autowired
     private SessionFactory sessionFactory;
 

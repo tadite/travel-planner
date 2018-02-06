@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value = "/check_point")
 public class CheckPointController {
+
     @Autowired
     private CheckPointDao checkPointDao;
 
@@ -29,12 +30,19 @@ public class CheckPointController {
     @Autowired
     private PlaceOfResidenceDao placeOfResidenceDao;
 
+    @Autowired
+    private ExcursionDao excursionDao;
+
     @RequestMapping(value = "/delete")
     @ResponseBody
+    @Transactional
     public String delete(long id) {
         try {
-            CheckPoint checkPoint = new CheckPoint();
-            checkPoint.setCheckPointId(id);
+            CheckPoint checkPoint = checkPointDao.getCheckPointById(id);
+            if (checkPoint.getExcursions().size() > 0)
+                for(Excursion e: checkPoint.getExcursions())
+                    excursionDao.delete(e);
+
             checkPointDao.delete(checkPoint);
         } catch (Exception ex) {
             return ex.getMessage();
@@ -44,6 +52,7 @@ public class CheckPointController {
 
     @RequestMapping(value = "/save")
     @ResponseBody
+    @Transactional
     public String create(Long travel_id, Integer numberOfDays, String cost, String description, Long  typeOfRest_id, Long typeOfMovement_id, Long placeOfResidence_id) {
         try {
 
@@ -73,7 +82,13 @@ public class CheckPointController {
                 checkPoint.setPlaceOfResidence(placeOfResidence);
             }
 
+            travel.addCheckPoint(checkPoint);
+            typeOfRest.addCheckPoint(checkPoint);
+            typeOfMovement.addCheckPoint(checkPoint);
+            placeOfResidence.addCheckPoint(checkPoint);
+
             checkPointDao.saveCheckPoint(checkPoint);
+
         } catch (Exception ex) {
             return ex.getMessage();
         }
@@ -95,7 +110,7 @@ public class CheckPointController {
                                 +  ", \"description\": " + cp.getDescription()
                                 +  ", \"typeOfRest_id\": " + cp.getTypeOfRest().getTypeOfRestId()
                                 +  ", \"typeOfMovement_id\": " + cp.getTypeOfMovement().getTypeOfMovementId()
-                                + ", \"placeOfResidence_id\": " + cp.getPlaceOfResidence().getPlaceOfResidenceId()  + "},";
+                                + ", \"placeOfResidence_id\": " + cp.getPlaceOfResidence().getPlaceOfResidenceId()  + "}";
             }
             result += "]";
             return result;

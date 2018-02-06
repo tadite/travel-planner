@@ -7,7 +7,6 @@ import java.util.Set;
 @Entity
 @Table(name = "travel")
 public class Travel {
-
     @Id
     @Column(name = "travel_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,14 +24,14 @@ public class Travel {
     @Column(name = "cost")
     private String cost;
 
-  //  @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "travel")
-  //  private Set<TravelForClient> travelForClients = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "travel")
+    private Set<TravelForClient> travelForClients = new HashSet<>();
 
- //   @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "travel")
-  //  private Set<CheckPoint> checkPoints = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "travel")
+    private Set<CheckPoint> checkPoints = new HashSet<>();
 
- //   @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "travel")
- //   private Set<OptionForTravel> optionForTravels = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "travel")
+    private Set<OptionForTravel> optionForTravels = new HashSet<>();
 
     public long getTravelId() {
         return travelId;
@@ -74,7 +73,7 @@ public class Travel {
         this.cost  = cost;
     }
 
-  /*  public void setTravelForClients(Set<TravelForClient> travelForClients) {
+    public void setTravelForClients(Set<TravelForClient> travelForClients) {
         this.travelForClients = travelForClients;
     }
 
@@ -84,5 +83,41 @@ public class Travel {
 
     public void setOptionForTravels(Set<OptionForTravel> optionForTravels) {
         this.optionForTravels = optionForTravels;
-    }*/
+    }
+
+    public void addCheckPoint(CheckPoint checkPoint) {
+        this.checkPoints.add(checkPoint);
+    }
+
+    public void removeCheckPoint(CheckPoint checkPoint) {
+        checkPoints.remove(checkPoint);
+    }
+
+    public void addOptionForTravel(OptionForTravel optionForTravel) {
+        this.optionForTravels.add(optionForTravel);
+    }
+
+    public void removeOptionForTravel(OptionForTravel optionForTravel) {
+        optionForTravels.remove(optionForTravel);
+    }
+
+    public void addTravelForClient(TravelForClient travelForClient) {
+        this.travelForClients.add(travelForClient);
+    }
+
+    public void removeTravelForClient(TravelForClient travelForClient) {
+        travelForClients.remove(travelForClient);
+    }
+
+    public Set<TravelForClient> getTravelForClients() {
+        return travelForClients;
+    }
+
+    public Set<CheckPoint> getCheckPoints() {
+        return checkPoints;
+    }
+
+    public Set<OptionForTravel> getOptionForTravels() {
+        return optionForTravels;
+    }
 }

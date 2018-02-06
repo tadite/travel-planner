@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value = "/travel_for_client")
 public class TravelForClientController {
+
     @Autowired
     private TravelForClientDao travelForClientDao;
 
@@ -30,10 +31,10 @@ public class TravelForClientController {
 
     @RequestMapping(value = "/delete")
     @ResponseBody
+    @Transactional
     public String delete(long id) {
         try {
-            TravelForClient travelForClient = new TravelForClient();
-            travelForClient.setTravelForClientId(id);
+            TravelForClient travelForClient = travelForClientDao.getTravelForClientById(id);
             travelForClientDao.delete(travelForClient);
         } catch (Exception ex) {
             return ex.getMessage();
@@ -43,6 +44,7 @@ public class TravelForClientController {
 
     @RequestMapping(value = "/save")
     @ResponseBody
+    @Transactional
     public String create(Long client_id,Long travel_id,String description) {
         try {
             TravelForClient travelForClient = new TravelForClient();
@@ -60,6 +62,9 @@ public class TravelForClientController {
             }
 
             travelForClientDao.saveTravelForClient(travelForClient);
+
+            client.addTravelForClient(travelForClient);
+            travel.addTravelForClient(travelForClient);
         } catch (Exception ex) {
             return ex.getMessage();
         }
@@ -77,7 +82,7 @@ public class TravelForClientController {
                 result += "{ \"travel_for_client_id:\" " + t.getTravelForClientId()
                         +", \"client_id\": " + t.getClient().getClientId()
                         +", \"travel_id\": " + t.getTravel().getTravelId()
-                        + ", \"description\":" + t.getDescription() +"},";
+                        + ", \"description\":" + t.getDescription() +"}";
             }
             result += "]";
             return result;

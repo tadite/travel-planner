@@ -30,17 +30,20 @@ public class CheckPointDao {
 
     }
 
+
     @Transactional
     public boolean delete(CheckPoint checkPoint) {
         getSession().delete(checkPoint);
         return true;
     }
 
+
     @Transactional
     @SuppressWarnings("unchecked")
     public List<CheckPoint> getAllCheckPoints() {
         return getSession().createQuery("from CheckPoint").list();
     }
+
 
     @Transactional
     public CheckPoint getCheckPointById (Long id) {

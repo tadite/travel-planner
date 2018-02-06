@@ -7,7 +7,6 @@ import java.util.Set;
 @Entity
 @Table(name = "category")
 public class Category {
-
     @Id
     @Column(name = "category_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,8 +15,8 @@ public class Category {
     @Column(name = "name")
     private String name;
 
-  //  @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "category")
-  //  private Set<TypeOfMovement> typeOfMovements = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "category")
+    private Set<TypeOfMovement> typeOfMovements = new HashSet<>();
 
     public long getCategoryId() {
         return categoryId;
@@ -35,7 +34,19 @@ public class Category {
         this.name  = name;
     }
 
-  //  public void setTypeOfMovements(Set<TypeOfMovement> typeOfMovements) {
-   //     this.typeOfMovements = typeOfMovements;
-   // }
+    public void setTypeOfMovements(Set<TypeOfMovement> typeOfMovements) {
+        this.typeOfMovements = typeOfMovements;
+    }
+
+    public void addTypeOfMovement(TypeOfMovement typeOfMovement) {
+        this.typeOfMovements.add(typeOfMovement);
+    }
+
+    public void removeTypeOfMovement(TypeOfMovement typeOfMovement) {
+        typeOfMovements.remove(typeOfMovement);
+    }
+
+    public Set<TypeOfMovement> getTypeOfMovements() {
+        return typeOfMovements;
+    }
 }

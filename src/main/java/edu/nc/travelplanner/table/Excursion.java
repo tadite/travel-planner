@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "excursion")
 public class Excursion {
-
     @Id
     @Column(name = "excursion_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

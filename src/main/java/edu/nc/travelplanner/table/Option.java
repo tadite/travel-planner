@@ -15,8 +15,8 @@ public class Option {
     @Column(name = "name")
     private String name;
 
- //   @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "option")
- //   private Set<OptionForTravel> optionForTravels = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "option")
+    private Set<OptionForTravel> optionForTravels = new HashSet<>();
 
     public long getOptionId() {
         return optionId;
@@ -34,7 +34,20 @@ public class Option {
         this.name  = name;
     }
 
-  //  public void setOptionForTravels(Set<OptionForTravel> optionForTravels) {
-   //     this.optionForTravels = optionForTravels;
-  //  }
+    public void setOptionForTravels(Set<OptionForTravel> optionForTravels) {
+        this.optionForTravels = optionForTravels;
+    }
+
+    public void addOptionForTravel(OptionForTravel optionForTravel) {
+        this.optionForTravels.add(optionForTravel);
+    }
+
+    public void removeOptionForTravel(OptionForTravel optionForTravel) {
+        optionForTravels.remove(optionForTravel);
+    }
+
+    public Set<OptionForTravel> getOptionForTravels() {
+        return optionForTravels;
+    }
+
 }

@@ -4,9 +4,9 @@ import java.util.List;
 
 import edu.nc.travelplanner.dao.CityDao;
 import edu.nc.travelplanner.dao.ClientDao;
-import edu.nc.travelplanner.table.City;
-import edu.nc.travelplanner.table.Client;
-import edu.nc.travelplanner.table.Country;
+import edu.nc.travelplanner.dao.SocialNetworkDao;
+import edu.nc.travelplanner.dao.TravelForClientDao;
+import edu.nc.travelplanner.table.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,18 +17,33 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value = "/client")
 public class ClientController {
+
     @Autowired
     private ClientDao clientDao;
 
     @Autowired
     private CityDao cityDao;
 
+    @Autowired
+    private SocialNetworkDao socialNetworkDao;
+
+    @Autowired
+    private TravelForClientDao travelForClientDao;
+
     @RequestMapping(value = "/delete")
     @ResponseBody
+    @Transactional
     public String delete(long id) {
         try {
-            Client client = new Client();
-            client.setClientId(id);
+            Client client = clientDao.getClientById(id);
+            if (client.getSocialNetworks().size() > 0)
+                for(SocialNetwork s: client.getSocialNetworks())
+                    socialNetworkDao.delete(s);
+
+            if (client.getTravelForClients().size() > 0)
+                for(TravelForClient t: client.getTravelForClients())
+                    travelForClientDao.delete(t);
+
             clientDao.delete(client);
         } catch (Exception ex) {
             return ex.getMessage();
@@ -38,6 +53,7 @@ public class ClientController {
 
     @RequestMapping(value = "/save")
     @ResponseBody
+    @Transactional
     public String create(String firstName, String lastName, String email, Integer  age, String login, String password, Long city_id, String role, Boolean isBlocked){
         try {
             Client client = new Client();
@@ -58,6 +74,8 @@ public class ClientController {
                 client.setCountry(city.getCountry());
             }
 
+            city.addClient(client);
+            client.getCountry().addClient(client);
             clientDao.saveClient(client);
         } catch (Exception ex) {
             return ex.getMessage();
@@ -81,10 +99,10 @@ public class ClientController {
                         +  ", \"login\": " + c.getLogin()
                         +  ", \"password\": " + c.getPassword()
                         +  ", \"city_id\": " + c.getCity().getCityId()
-                        + ", \"country_id\": " + c.getCountry().getCountryId()
+                        +  ", \"country_id\": " + c.getCountry().getCountryId()
                         +  ", \"role\": " + c.getRole()
                         +  ", \"isBlocked\": " + c.getIsBlocked()
-                        + "},";
+                        + "}";
 
             }
             result += "]";

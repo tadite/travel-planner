@@ -13,6 +13,7 @@ import java.util.List;
 @Repository
 @Transactional
 public class SocialNetworkDao {
+
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -41,5 +42,15 @@ public class SocialNetworkDao {
     @SuppressWarnings("unchecked")
     public List<SocialNetwork> getAllSocialNetworks() {
         return getSession().createQuery("from SocialNetwork").list();
+    }
+
+    @Transactional
+    public SocialNetwork getSocialNetworkById (Long id) {
+
+        List<SocialNetwork> list = getSession().createQuery("FROM SocialNetwork c WHERE c.id= :Id").setParameter("Id",id).list();
+        if(!list.isEmpty()) {
+            return  list.get(0);
+        }
+        return null;
     }
 }

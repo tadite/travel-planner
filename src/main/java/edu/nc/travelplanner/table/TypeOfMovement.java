@@ -7,7 +7,6 @@ import java.util.Set;
 @Entity
 @Table(name = "type_of_movement")
 public class TypeOfMovement {
-
     @Id
     @Column(name = "type_of_movement_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,8 +28,8 @@ public class TypeOfMovement {
     @Column(name = "cost")
     private String cost;
 
-//    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "typeOfMovement")
- //   private Set<CheckPoint> checkPoints = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "typeOfMovement")
+    private Set<CheckPoint> checkPoints = new HashSet<>();
 
     public long getTypeOfMovementId() {
         return typeOfMovementId;
@@ -80,7 +79,19 @@ public class TypeOfMovement {
         this.cost  = cost;
     }
 
-  //  public void setCheckPoints(Set<CheckPoint> checkPoints) {
-  //      this.checkPoints = checkPoints;
-   // }
+    public void setCheckPoints(Set<CheckPoint> checkPoints) {
+        this.checkPoints = checkPoints;
+    }
+
+    public void addCheckPoint(CheckPoint checkPoint) {
+        this.checkPoints.add(checkPoint);
+    }
+
+    public void removeCheckPoint(CheckPoint checkPoint) {
+        checkPoints.remove(checkPoint);
+    }
+
+    public Set<CheckPoint> getCheckPoints() {
+        return checkPoints;
+    }
 }

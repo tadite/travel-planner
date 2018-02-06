@@ -13,6 +13,7 @@ import java.util.List;
 @Repository
 @Transactional
 public class TravelForClientDao {
+
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -41,5 +42,15 @@ public class TravelForClientDao {
     @SuppressWarnings("unchecked")
     public List<TravelForClient> getAllTravelForClients() {
         return getSession().createQuery("from TravelForClient").list();
+    }
+
+    @Transactional
+    public TravelForClient getTravelForClientById (Long id) {
+
+        List<TravelForClient> list = getSession().createQuery("FROM TravelForClient c WHERE c.id= :Id").setParameter("Id",id).list();
+        if(!list.isEmpty()) {
+            return  list.get(0);
+        }
+        return null;
     }
 }
