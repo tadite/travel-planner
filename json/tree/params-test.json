@@ -1,0 +1,1 @@
+{"name":"params-tree","headActionName":"dropdownlist-countries-action","jumps":[{"fromActionName":"dropdownlist-countries-action","toActionName":"checklist-citiesByCountryId-action","type":"without-condition","params":{"test-key":"test-value"}}]}

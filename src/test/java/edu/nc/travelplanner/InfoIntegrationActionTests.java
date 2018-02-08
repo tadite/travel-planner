@@ -5,15 +5,14 @@ import edu.nc.travelplanner.model.action.source.InfoIntegrationAction;
 import edu.nc.travelplanner.model.response.Response;
 import edu.nc.travelplanner.model.response.TextResponse;
 import edu.nc.travelplanner.model.source.*;
-import edu.nc.travelplanner.model.factory.dataproducer.SenderFactory;
 import edu.nc.travelplanner.model.source.dataproducer.DefaultDataProducer;
 import edu.nc.travelplanner.model.source.filter.JsonPathResponseFilter;
 import edu.nc.travelplanner.model.source.filter.ResponseFilter;
 import org.json.JSONException;
-import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -41,7 +40,7 @@ public class InfoIntegrationActionTests {
         HttpSender mockHttpSender = mock(HttpSender.class);
         when(mockHttpSender.send(any(HttpSource.class))).thenReturn(new TextResponse(currencyResponse));
 
-        Source mockSource = new HttpSource("currencies", "", "");
+        Source mockSource = new HttpSource("currencies", "", "", new LinkedList<>());
 
         List<ResponseFilter> responseFilters = new LinkedList<>();
         responseFilters.add(new JsonPathResponseFilter("$.quotes.USDEUR"));
@@ -51,7 +50,7 @@ public class InfoIntegrationActionTests {
         InfoIntegrationAction infoIntegrationAction = new InfoIntegrationAction("testAction1-name", dataProducer);
 
         //Act
-        Response response = infoIntegrationAction.executePresentation(new ActionArgs());
+        Response response = infoIntegrationAction.executePresentation(new ActionArgs(), new LinkedList<>());
 
         //Assert
         String actionResponse = response.getRawData();

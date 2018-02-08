@@ -3,6 +3,7 @@ package edu.nc.travelplanner.model.action.constant;
 import edu.nc.travelplanner.model.action.Action;
 import edu.nc.travelplanner.model.action.ActionArgs;
 import edu.nc.travelplanner.model.action.ActionType;
+import edu.nc.travelplanner.model.action.PickResult;
 import edu.nc.travelplanner.model.response.EmptyResponse;
 import edu.nc.travelplanner.model.response.Response;
 import edu.nc.travelplanner.model.response.ViewResponseBuilder;
@@ -48,13 +49,13 @@ public class CheckListAction implements Action {
     }
 
     @Override
-    public Response executeDecision(ActionArgs args) {
+    public Response executeDecision(ActionArgs args, List<PickResult> pickResults) {
 
         return new EmptyResponse();
     }
 
     @Override
-    public Response executePresentation(ActionArgs args) {
+    public Response executePresentation(ActionArgs args, List<PickResult> pickResults) {
 
         return new ViewResponseBuilder().addCheckboxes(optionsMap).build();
     }

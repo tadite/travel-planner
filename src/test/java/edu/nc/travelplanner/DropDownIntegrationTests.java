@@ -5,16 +5,15 @@ import edu.nc.travelplanner.model.action.source.DropDownListIntegrationAction;
 import edu.nc.travelplanner.model.response.Response;
 import edu.nc.travelplanner.model.response.TextResponse;
 import edu.nc.travelplanner.model.source.*;
-import edu.nc.travelplanner.model.factory.dataproducer.SenderFactory;
 import edu.nc.travelplanner.model.source.dataproducer.DefaultDataProducer;
 import edu.nc.travelplanner.model.source.filter.JsonPathResponseFilter;
 import edu.nc.travelplanner.model.source.filter.ListToMapJsonResponseFilter;
 import edu.nc.travelplanner.model.source.filter.ResponseFilter;
 import org.json.JSONException;
-import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -34,7 +33,7 @@ public class DropDownIntegrationTests {
         HttpSender mockHttpSender = mock(HttpSender.class);
         when(mockHttpSender.send(any(HttpSource.class))).thenReturn(new TextResponse(vkCountriesResponse));
 
-        Source mockSource = new HttpSource("vk-countries", "", "");
+        Source mockSource = new HttpSource("vk-countries", "", "", new LinkedList<>());
 
         List<ResponseFilter> responseFilters = new LinkedList<>();
         responseFilters.add(new JsonPathResponseFilter("$.response[*]"));
@@ -45,7 +44,7 @@ public class DropDownIntegrationTests {
         DropDownListIntegrationAction dropDownListIntegrationAction = new DropDownListIntegrationAction("testAction1-name", dataProducer);
 
         //Act
-        Response response = dropDownListIntegrationAction.executePresentation(new ActionArgs());
+        Response response = dropDownListIntegrationAction.executePresentation(new ActionArgs(), new LinkedList<>());
 
         //Assert
         String actionResponse = response.getRawData();

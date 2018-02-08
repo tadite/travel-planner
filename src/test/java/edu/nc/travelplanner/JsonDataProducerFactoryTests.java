@@ -20,6 +20,8 @@ import edu.nc.travelplanner.model.source.filter.ListToMapJsonResponseFilter;
 import edu.nc.travelplanner.model.source.filter.ResponseFilter;
 import org.junit.Assert;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -29,9 +31,10 @@ import java.util.Map;
 
 import static org.mockito.Mockito.*;
 
+
 public class JsonDataProducerFactoryTests {
 
-    @Test
+    //@Test
     public void canParseDataProducerFromJson() throws IOException, DataProducerParseException {
         //Array
         String sourceName = "test-source";
@@ -85,32 +88,4 @@ public class JsonDataProducerFactoryTests {
         Assert.assertEquals(listToMapFilterType, listToMapJsonResponseFilter.getType());
     }
 
-    @Test
-    public void test() throws JsonProcessingException {
-
-        List<ResponseFilter> responseFilters = new LinkedList<>();
-        responseFilters.add(new JsonPathResponseFilter("$.response[*]"));
-        responseFilters.add(new ListToMapJsonResponseFilter("cid", "title"));
-
-        List<ResponseFilterDto> responseFilterDtos = new LinkedList<>();
-        responseFilterDtos.add(new ResponseFilterDto(FilterType.JSON_PATH,
-                new HashMap<String, Object>(){{
-                    put("type", "list_to_map");
-                    put("expression", "$.response[*]");
-        }}));
-        responseFilterDtos.add(new ResponseFilterDto(FilterType.LIST_TO_MAP,
-                new HashMap<String, Object>(){{
-                    put("type", "list_to_map");
-                    put("keyName","test-keyName");
-                    put("valueName","test-valueName");}}));
-
-        DataProducerDto producerDto = new DataProducerDto();
-        producerDto.setName("test-dataproducer");
-        producerDto.setSourceName("test-source");
-        producerDto.setFilters(responseFilterDtos);
-
-        ObjectMapper mapper = new ObjectMapper();
-
-        System.out.println(mapper.writeValueAsString(producerDto));
-    }
 }

@@ -2,6 +2,7 @@ package edu.nc.travelplanner.model.tree;
 
 import edu.nc.travelplanner.model.action.Action;
 import edu.nc.travelplanner.model.action.ActionArgs;
+import edu.nc.travelplanner.model.action.PickResult;
 import edu.nc.travelplanner.model.jump.Jump;
 import edu.nc.travelplanner.model.response.Response;
 
@@ -13,7 +14,7 @@ public class SimpleActionTree implements ActionTree {
     private Action currentAction;
     private List<Jump> jumps = new LinkedList<>();
 
-    private Map<String, Object> pickResult = new HashMap<>();
+    private List<PickResult> pickResults = new LinkedList<>();
 
     public SimpleActionTree() {
     }
@@ -41,16 +42,16 @@ public class SimpleActionTree implements ActionTree {
     @Override
     public Response executePresentation(ActionArgs args) {
 
-        return currentAction.executePresentation(args);
+        return currentAction.executePresentation(args, pickResults);
     }
 
     @Override
     public Response executeDecision(ActionArgs args) {
         Object result = currentAction.getResult(args.getArgs());
         if (result!=null)
-            pickResult.put(currentAction.getName(), result);
+            pickResults.add(new PickResult(currentAction.getName(), result));
 
-        Response response = currentAction.executeDecision(args);
+        Response response = currentAction.executeDecision(args, pickResults);
 
         this.jumps.stream()
                 .filter(jmp -> jmp.getCurrentAction()==this.currentAction && jmp.canJump(args, response))
@@ -61,8 +62,8 @@ public class SimpleActionTree implements ActionTree {
     }
 
     @Override
-    public Map<String, Object> getPickResults() {
-        return pickResult;
+    public List<PickResult> getPickResults() {
+        return pickResults;
     }
 
     private void executeJump(Jump jump){

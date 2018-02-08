@@ -20,7 +20,7 @@ public class HttpSender implements Sender {
     @Override
     public Response send(Source source) throws IOException {
 
-        URL obj = new URL(source.getUrl());
+        URL obj = new URL(source.getUrlWithParameterValues());
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
         con.setRequestMethod("GET");

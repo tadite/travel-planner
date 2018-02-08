@@ -1,9 +1,6 @@
 package edu.nc.travelplanner.model.action.constant;
 
-import edu.nc.travelplanner.model.action.Action;
-import edu.nc.travelplanner.model.action.ActionArgs;
-import edu.nc.travelplanner.model.action.ActionType;
-import edu.nc.travelplanner.model.action.DateInterval;
+import edu.nc.travelplanner.model.action.*;
 import edu.nc.travelplanner.model.response.EmptyResponse;
 import edu.nc.travelplanner.model.response.Response;
 import edu.nc.travelplanner.model.response.ViewResponseBuilder;
@@ -11,7 +8,7 @@ import edu.nc.travelplanner.model.response.ViewResponseBuilder;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -32,12 +29,12 @@ public class DateIntervalInputAction implements Action {
     }
 
     @Override
-    public Response executeDecision(ActionArgs args) {
+    public Response executeDecision(ActionArgs args, List<PickResult> pickResults) {
         return new EmptyResponse();
     }
 
     @Override
-    public Response executePresentation(ActionArgs args) {
+    public Response executePresentation(ActionArgs args, List<PickResult> pickResults) {
         return new ViewResponseBuilder().addDatePicker(getStartDatePickerName(), data).addDatePicker(getEndDatePickerName(), data).build();
     }
 

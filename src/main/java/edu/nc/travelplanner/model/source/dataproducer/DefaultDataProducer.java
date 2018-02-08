@@ -1,22 +1,25 @@
 package edu.nc.travelplanner.model.source.dataproducer;
 
+import edu.nc.travelplanner.model.action.PickResult;
 import edu.nc.travelplanner.model.response.Response;
 import edu.nc.travelplanner.model.factory.dataproducer.DataProducerParseException;
-import edu.nc.travelplanner.model.factory.dataproducer.SenderFactory;
+import edu.nc.travelplanner.model.source.parametermapper.ParameterMapper;
 import edu.nc.travelplanner.model.source.Sender;
 import edu.nc.travelplanner.model.source.Source;
 import edu.nc.travelplanner.model.source.filter.ResponseFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class DefaultDataProducer implements DataProducer{
 
     private String name;
     private Source source;
     private List<ResponseFilter> responseFilters = new LinkedList<>();
+    private List<ParameterMapper> parameterMappers = new LinkedList<>();
 
     private Sender sender;
 
@@ -39,8 +42,10 @@ public class DefaultDataProducer implements DataProducer{
     }
 
     @Override
-    public Response send() throws DataProducerParseException {
+    public Response send(List<PickResult> pickResults) throws DataProducerParseException {
         try {
+            mapParameters(pickResults);
+
             Response response = getSender().send(source);
 
             for (ResponseFilter filter : responseFilters){
@@ -51,6 +56,16 @@ public class DefaultDataProducer implements DataProducer{
 
         } catch (IOException e) {
             throw new DataProducerParseException(e);
+        }
+    }
+
+    private void mapParameters(List<PickResult> pickResults) {
+        for (PickResult pickResult : pickResults) {
+            for (ParameterMapper parameterMapper : parameterMappers) {
+                String newKey = parameterMapper.map(pickResult.getKey());
+                if (newKey!=null)
+                    source.addParameterValue(newKey,pickResult.getValue().toString());
+            }
         }
     }
 
@@ -68,5 +83,9 @@ public class DefaultDataProducer implements DataProducer{
 
     public void addResponseFilter(ResponseFilter responseFilter){
         this.responseFilters.add(responseFilter);
+    }
+
+    public void addParameterMapper(ParameterMapper parameterMapper){
+        this.parameterMappers.add(parameterMapper);
     }
 }

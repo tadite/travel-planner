@@ -3,10 +3,12 @@ package edu.nc.travelplanner.model.action.constant;
 import edu.nc.travelplanner.model.action.Action;
 import edu.nc.travelplanner.model.action.ActionArgs;
 import edu.nc.travelplanner.model.action.ActionType;
+import edu.nc.travelplanner.model.action.PickResult;
 import edu.nc.travelplanner.model.response.EmptyResponse;
 import edu.nc.travelplanner.model.response.Response;
 import edu.nc.travelplanner.model.response.ViewResponseBuilder;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -35,12 +37,12 @@ public class TextInputAction implements Action {
     }
 
     @Override
-    public Response executeDecision(ActionArgs args) {
+    public Response executeDecision(ActionArgs args, List<PickResult> pickResults) {
         return new EmptyResponse();
     }
 
     @Override
-    public Response executePresentation(ActionArgs args) {
+    public Response executePresentation(ActionArgs args, List<PickResult> pickResults) {
         return new ViewResponseBuilder().addTextbox(getTextboxElementName(), data).build();
     }
 

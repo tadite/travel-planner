@@ -9,6 +9,8 @@ import edu.nc.travelplanner.model.source.Source;
 import edu.nc.travelplanner.model.source.SourceType;
 import edu.nc.travelplanner.model.source.dataproducer.DataProducer;
 import edu.nc.travelplanner.model.source.dataproducer.DefaultDataProducer;
+import edu.nc.travelplanner.model.source.parametermapper.ParameterMapper;
+import edu.nc.travelplanner.model.source.parametermapper.PickResultParameterMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -55,8 +57,15 @@ public class JsonDataProducerFactory implements DataProducerFactory {
         setSimpleFieldsByReflection(producerClass, producerDto, producer);
         setSourceAndSenderByFactory(producerClass, producerDto, producer);
         setFiltersByFactory(producerDto, producer);
+        setMappersByFactory(producerDto, producer);
 
         return producer;
+    }
+
+    private void setMappersByFactory(DataProducerDto producerDto, DefaultDataProducer producer) {
+        for (ParameterMapperDto mapperDto : producerDto.getParameterMappers()) {
+            producer.addParameterMapper(new PickResultParameterMapper(mapperDto.getFromKey(), mapperDto.getToKey()));
+        }
     }
 
     private void setSenderBySource(Class<? extends DefaultDataProducer> producerClass, SourceType sourceType, DefaultDataProducer producer) throws NoSuchFieldException, IllegalAccessException {

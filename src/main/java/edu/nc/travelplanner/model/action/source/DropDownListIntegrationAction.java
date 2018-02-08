@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.nc.travelplanner.model.action.ActionArgs;
 import edu.nc.travelplanner.model.action.ActionType;
 import edu.nc.travelplanner.model.action.IntegrationAction;
+import edu.nc.travelplanner.model.action.PickResult;
 import edu.nc.travelplanner.model.response.EmptyResponse;
 import edu.nc.travelplanner.model.response.Response;
 import edu.nc.travelplanner.model.response.ViewResponseBuilder;
@@ -12,6 +13,7 @@ import edu.nc.travelplanner.model.factory.dataproducer.DataProducerParseExceptio
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -48,15 +50,15 @@ public class DropDownListIntegrationAction implements IntegrationAction {
     }
 
     @Override
-    public Response executeDecision(ActionArgs args) {
+    public Response executeDecision(ActionArgs args, List<PickResult> pickResults) {
         return new EmptyResponse();
     }
 
     @Override
-    public Response executePresentation(ActionArgs args) {
+    public Response executePresentation(ActionArgs args, List<PickResult> pickResults) {
 
         try {
-            Response response = dataProducer.send();
+            Response response = dataProducer.send(pickResults);
             saveOptionsMap(response);
             return new ViewResponseBuilder().addDropdownList(getDropdownElementName(), optionsMap).build();
         } catch (DataProducerParseException e) {

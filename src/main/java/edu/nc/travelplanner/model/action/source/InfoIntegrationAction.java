@@ -3,12 +3,14 @@ package edu.nc.travelplanner.model.action.source;
 import edu.nc.travelplanner.model.action.ActionArgs;
 import edu.nc.travelplanner.model.action.ActionType;
 import edu.nc.travelplanner.model.action.IntegrationAction;
+import edu.nc.travelplanner.model.action.PickResult;
 import edu.nc.travelplanner.model.response.EmptyResponse;
 import edu.nc.travelplanner.model.response.Response;
 import edu.nc.travelplanner.model.response.ViewResponseBuilder;
 import edu.nc.travelplanner.model.source.dataproducer.DataProducer;
 import edu.nc.travelplanner.model.factory.dataproducer.DataProducerParseException;
 
+import java.util.List;
 import java.util.Map;
 
 public class InfoIntegrationAction implements IntegrationAction {
@@ -38,16 +40,16 @@ public class InfoIntegrationAction implements IntegrationAction {
     }
 
     @Override
-    public Response executeDecision(ActionArgs args) {
+    public Response executeDecision(ActionArgs args, List<PickResult> pickResults) {
 
         return new EmptyResponse();
     }
 
     @Override
-    public Response executePresentation(ActionArgs args) {
+    public Response executePresentation(ActionArgs args, List<PickResult> pickResults) {
 
         try {
-            Response response = dataProducer.send();
+            Response response = dataProducer.send(pickResults);
             return new ViewResponseBuilder().addTitleElement(getTitleId(), response.getRawData()).build();
         } catch (DataProducerParseException e) {
             e.printStackTrace();

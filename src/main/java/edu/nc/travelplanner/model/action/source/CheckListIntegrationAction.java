@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.nc.travelplanner.model.action.ActionArgs;
 import edu.nc.travelplanner.model.action.ActionType;
 import edu.nc.travelplanner.model.action.IntegrationAction;
+import edu.nc.travelplanner.model.action.PickResult;
 import edu.nc.travelplanner.model.response.EmptyResponse;
 import edu.nc.travelplanner.model.response.Response;
 import edu.nc.travelplanner.model.response.ViewResponseBuilder;
@@ -42,16 +43,16 @@ public class CheckListIntegrationAction implements IntegrationAction {
     }
 
     @Override
-    public Response executeDecision(ActionArgs args) {
+    public Response executeDecision(ActionArgs args, List<PickResult> pickResults) {
 
         return new EmptyResponse();
     }
 
     @Override
-    public Response executePresentation(ActionArgs args) {
+    public Response executePresentation(ActionArgs args, List<PickResult> pickResults) {
 
         try {
-            Response response = dataProducer.send();
+            Response response = dataProducer.send(pickResults);
             saveOptionsMap(response);
             return new ViewResponseBuilder().addCheckboxes(optionsMap).build();
         } catch (DataProducerParseException e) {
