@@ -17,11 +17,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-//@Configuration
-//@EnableWebSecurity
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebConfig /*extends WebSecurityConfigurerAdapter */{
-/*
+@Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+public class WebConfig extends WebSecurityConfigurerAdapter {
+
     @Autowired
     private JwtAuthenticationEntryPoint unauthorizedHandler;
 
@@ -43,8 +43,8 @@ public class WebConfig /*extends WebSecurityConfigurerAdapter */{
     @Bean
     public JwtAuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
         return new JwtAuthenticationTokenFilter();
-    }*/
-/*
+    }
+
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
@@ -53,13 +53,13 @@ public class WebConfig /*extends WebSecurityConfigurerAdapter */{
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
                 .antMatchers(
-                        HttpMethod.GET,*/
-               //         "/",
-               //         "/**/*.html",
-               //         "/**/*.{png,jpg,jpeg,svg.ico}",
-               //         "/**/*.css",
-               //         "/**/*.js"
-              /*  ).permitAll()
+                        HttpMethod.GET,
+                        "/",
+                        "/**/*.html",
+                        "/**/*.{png,jpg,jpeg,svg.ico}",
+                        "/**/*.css",
+                        "/**/*.js"
+                ).permitAll()
                 .antMatchers("/api/auth/**").permitAll()
                 .anyRequest().authenticated();
 
@@ -67,5 +67,5 @@ public class WebConfig /*extends WebSecurityConfigurerAdapter */{
                 .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
 
         httpSecurity.headers().cacheControl();
-    }*/
+    }
 }
