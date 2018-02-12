@@ -1,1 +1,1 @@
-{"name":"vk-getCitiesByCountryId","type":"http","parameters":{"url":"https://api.vk.com/method/database.getCities", "params":["country_id"], "description":"getCitiesByCountryId default"}}
+{"name":"vk-getCitiesByCountryId","type":"http","parameters":{"description":"getCitiesByCountryId default 1","params":["country_id"],"url":"https://api.vk.com/method/database.getCities"}}

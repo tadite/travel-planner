@@ -12,8 +12,12 @@ import java.nio.file.Paths;
 @Component
 public class FileSourceJsonReader implements SourceJsonReader {
 
-    @Autowired
     private PathMapper pathMapper;
+
+    @Autowired
+    public FileSourceJsonReader(PathMapper pathMapper) {
+        this.pathMapper = pathMapper;
+    }
 
     @Override
     public String getSourceJson(String name) throws IOException {
