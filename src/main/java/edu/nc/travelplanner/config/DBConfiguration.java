@@ -14,8 +14,8 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 
-@Configuration
-@EnableTransactionManagement
+//@Configuration
+//@EnableTransactionManagement
 public class DBConfiguration {
     @Value("${db.driver}")
     private String DRIVER;
