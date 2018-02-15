@@ -2,7 +2,9 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <base href="/" />
+    <!-- <base href="/" /> -->
+    <script>document.write('<base href="' + document.location + '" />');</script>
+    <!--  -->
     <title>Travel Planner</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -10,8 +12,7 @@
 </head>
 <body>
     <TravelPlanner-app>Загрузка...</TravelPlanner-app>
-    <script src="public/polyfills.js"></script>
-   <!-- <script src="/Scripts/jquery-3.1.0.min.js"></script>    -->
+    <script src="public/polyfills.js"></script>  
     <script src="public/app.js"></script>
 </body>
 </html>

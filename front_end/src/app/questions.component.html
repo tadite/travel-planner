@@ -6,15 +6,19 @@
         <div align="center" class="form-inline">           
         <form class="q1-form" [@visibilityChanged]=states[0]>      
             <p>Вы уже знаете, каким будет Ваше будущее путешествие?</p>     
-            <button class="btn" style="width:120x; height:50px" [routerLink]="['./notepad']" routerLinkActive="active">Да </button>             
+            <button class="btn" style="width:120x; height:50px" routerLink="./notepad" routerLinkActive="active">Да </button>             
             <button class="btn" style="width:120x; height:50px" (click)="nextQuestion()">Нет</button>                                              
             <br>
        </form>
        <form class="q2-form" [@visibilityChanged]=states[1]>    
-           <p>{{questionData[0].data}}</p>
-            <input name="C2" type="checkbox" value="ON">{{questionData[1].data}}<br>
-            <input CHECKED name="C1" type="checkbox" value="ON">{{questionData[2].data}}<br>
-            <input CHECKED name="C3" type="checkbox" value="ON">{{questionData[3].data}}<br>
+           <!-- <p>{{getValue('id')}}</p> -->
+            <input name="C2" type="checkbox" value="ON">
+             <!-- {{questionData['data'] }}<br> -->
+             {{questionData?.data }}<br>
+            <input CHECKED name="C1" type="checkbox" value="ON">
+            <!-- {{questionData[2].data}}<br> -->
+            <input CHECKED name="C3" type="checkbox" value="ON">
+            <!-- {{questionData[3].data}}<br> -->
             <button class="btn" (click)="nextQuestion()">Ответить</button><br>                                            
         </form>
         <form class="q3-form" [@visibilityChanged]=states[2]>

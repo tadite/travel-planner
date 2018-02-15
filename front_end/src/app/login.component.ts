@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { trigger, state, style, transition, animate, keyframes, query, stagger } from '@angular/animations';
 import { HttpService } from './http.service';
+import { AuthService } from './auth.service';
 import { User } from './user';
-
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'login-app',
@@ -16,7 +17,7 @@ import { User } from './user';
             transition('hidden => shown', animate('300ms')),
           ])     
     ],
-    providers: [HttpService]
+    providers: [AuthService]
 })
 export class LoginComponent { 
     reg_state: string = 'hidden';
@@ -26,24 +27,26 @@ export class LoginComponent {
         this.reg_state = (this.reg_state === 'shown' ? 'hidden' : 'shown');
         this.login_state = (this.login_state === 'shown' ? 'hidden' : 'shown')
     }
-
-    userName: string;
-    password: string;
-    firstName: string;
-    lastName: string;
+    
+    password: string;    
+    login: string;
     eMail: string;
 
-    user: User = new User(this.firstName, this.lastName, this.eMail, this.password);
-    receivedUser: User; 
-    done: boolean = false;
-
-    constructor(private httpService: HttpService){}
+    user: User = new User(this.login, this.eMail, this.password);
+   
+    userExists: boolean = false;
+    constructor(private authService: AuthService, private router: Router){}
     
     submit(user: User){
-        this.httpService.postData(user)
-                .subscribe(
-                    (data: User) => {this.receivedUser=data; this.done=true;},
-                    error => console.log(error)
-                );
+        this.authService.login(user)
+                .subscribe(                   
+                   data => {                     
+                        this.router.navigate(['/questions']);                                           
+                   },
+                   error => {
+                   if (error.status === 409) {
+                         this.userExists = true;
+                    }
+                });
     }
 }

@@ -17,8 +17,8 @@ import { Console } from '@angular/core/src/console';
             transition('hidden => shown', animate('15ms')),
           ])     
     ],
-    providers: [HttpClient]
-  // providers: [HttpService]
+  //  providers: [HttpClient]
+   providers: [HttpService]
 })
 
 export class QuestionsComponent implements OnInit
@@ -36,42 +36,21 @@ export class QuestionsComponent implements OnInit
 
    // questions: string = '[{"id":"1", "data": "Выберите страну", "type": "label"}, {"id": "5", "data": "Россия", "type": "checkbox"}, {"id": "3","data": "Франция", "type": "checkbox"}, {"id": "6","data": "Китай", "type": "checkbox"}]';
    //questions: string;
-    questions: any;
-    questionData : Question[];
-    jsonData : JSON;
-    url: string = 'http://localhost:8090/action';
-
-
-    constructor(private http: HttpClient){
-   // constructor(private httpService: HttpService){
-      //  this.getJSONFromServer();
-        console.log(this.questions);
-        this.getData(this.questions);
-    }
-
+    //questions: any;
+    questionData : Question;
+    
+    url: string = 'http://localhost:8090/action';    
+  
+    constructor(private http: HttpService) {}
+    
     ngOnInit(){
-         this.http.get(this.url).subscribe(data => {
-            console.log('TEST toString' + data.toString); 
-            this.questions = data; 
-            console.log('TEST2 toString' + this.questions.toString);             
-        });        
-    }
-
-   public getJSONFromServer(){
-        /* this.httpClient.get('http://localhost:8090/action').subscribe((data) => 
-         {
-             this.questions = data; 
-             console.log('TEST ' + this.questions.toString());
-             console.log('TEST2 ' + data.toString());
-            });*/
-       
-       //  this.questions = this.httpClient.get('http://localhost:8090/action').subscribe();
-       
-      
-        
-    }
-
-    public getData(data: string) {        
-        this.questionData = JSON.parse(data);       
-    }
+        this.http.get(this.url).subscribe(value => {
+            this.questionData = value;
+            console.log('value id ' + value['id']); 
+            console.log('value data ' + value['data']); 
+            console.log('questionsData (data) ' + this.questionData['data']);           
+        },
+        error => { console.log(error); }
+    )
+    }  
 }

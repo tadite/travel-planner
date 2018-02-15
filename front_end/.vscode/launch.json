@@ -4,13 +4,13 @@
     // Для получения дополнительной информации посетите: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Launch Chrome against localhost",
+            "name": "Launch Chrome",
             "url": "http://localhost:8081",
-            "webRoot": "${workspaceFolder}/src",           
+            "sourceMaps": true,
+            "webRoot": "${workspaceFolder}"
         },
         {
             "name": "Launch index.html (disable sourcemaps)",

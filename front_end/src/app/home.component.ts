@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 <div class="">
     <div align="center" class="form-inline">           
         <div class="form-group">           
-             <button class="btn btn-lg center-block" [routerLink]="['./login']" routerLinkActive="active">Попробовать планировщик!</button>                                     
+             <button class="btn btn-lg center-block" routerLink="./login" routerLinkActive="active">Попробовать планировщик!</button>                                     
            <br>
         </div>
     </div>

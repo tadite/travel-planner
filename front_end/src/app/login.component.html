@@ -1,30 +1,33 @@
 <div class="login-page">
     <div class="form">    
       <form class="register-form" name="register-form" novalidate [@visibilityChanged]='reg_state' method="post">      
-        <input type="text" placeholder="Имя" [(ngModel)]="user.firstName" #firstName="ngModel" name="firstName" required/>
-        <div [hidden]="firstName.valid || firstName.untouched" class="alert alert-danger">
-          Не указано имя
-        </div>
-        <input type="text" placeholder="Фамилия" [(ngModel)]="user.lastName" #lastName="ngModel" name="lastName" required/>
-        <div [hidden]="lastName.valid || lastName.untouched" class="alert alert-danger">
-          Не указана фамилия
-        </div>
+        <input type="text" placeholder="Логин" [(ngModel)]="user.login" #login="ngModel" name="login" required/>
+        <div [hidden]="login.valid || login.untouched" class="alert alert-danger" style="font-size: small">
+          Не указан логин
+        </div> 
+        <div [hidden]="userExists == false" class="alert alert-danger" style="font-size: small">
+          Пользователь с таким логином уже существует
+         </div>       
         <input type="password" placeholder="Пароль" [(ngModel)]="user.password" #password="ngModel" name="password" required pattern="[0-9a-zA-Z!@#$%^*]{5,}"/>
-       <div [hidden]="password.valid || password.untouched" class="alert alert-danger">
+       <div [hidden]="password.valid || password.untouched" class="alert alert-danger" style="font-size: small">
           Пароль должен содержать не менее 5 символов
          </div>
         <input type="email" placeholder="E-mail" [(ngModel)]="user.eMail" #eMail="ngModel" name="eMail" required email/>    
-        <div [hidden]="eMail.valid || eMail.untouched" class="alert alert-danger">
+        <div [hidden]="eMail.valid || eMail.untouched" class="alert alert-danger" style="font-size: small">
           Некорректный E-mail
-         </div>    
-      <button [disabled]="firstName.invalid || lastName.invalid || password.invalid || eMail.invalid" (click)="submit(user)" [routerLink]="['/questions']" routerLinkActive="active">зарегистрироваться</button>         
+         </div>   
+         <div [hidden]="userExists == false" class="alert alert-danger" style="font-size: small">
+          Пользователь с таким e-mail уже существует
+         </div>
+
+      <button [disabled]="login.invalid  || password.invalid || eMail.invalid" (click)="submit(user)" routerLinkActive="active">зарегистрироваться</button>         
         <p class="message">Уже зарегистрированы? <a (click)="animateMe()" >Войти</a></p>
       </form>
 
       <form class="login-form" name="login-form" novalidate [@visibilityChanged]='login_state' method="post">
-        <input type="email" placeholder="E-mail" [(ngModel)]="user.eMail" #eMail="ngModel" name="eMail"  required email/>        
+        <input type="login" placeholder="Логин" [(ngModel)]="user.login" #login="ngModel" name="login"  required/>        
         <input type="password" placeholder="Пароль" [(ngModel)]="user.password" #password="ngModel" name="password" required />       
-        <button [disabled]="eMail.invalid || password.invalid" [routerLink]="['/questions']" routerLinkActive="active">войти</button>
+        <button [disabled]="login.invalid || password.invalid" routerLink="/questions" routerLinkActive="active">войти</button>
         <p class="message">Не зарегистрированы? <a (click)="animateMe()" >Создать аккаунт</a></p>
       </form>            
     </div>
