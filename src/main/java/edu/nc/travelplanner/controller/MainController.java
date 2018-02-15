@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-@Controller
+//@Controller
 public class MainController {
 
     private String error;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    /*@RequestMapping(value = "/", method = RequestMethod.GET)
     public String helloPage(Model model){
 
         PersonForm personForm = new PersonForm();
@@ -34,5 +34,5 @@ public class MainController {
         error = "name field empty";
         model.addAttribute("error", error);
         return "base";
-    }
+    }*/
 }
