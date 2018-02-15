@@ -1,1 +1,1 @@
-{"name":"vk-getCountries-all","type":"http","parameters":{"url":"https://api.vk.com/method/database.getCountries?need_all=1", "params":[],  "description":" getCountries default"}}
+{"name":"vk-getCountries-all","type":"http","parameters":{"url":"https://nc-service-bus.a3c1.starter-us-west-1.openshiftapps.com/endpoint/vk-get-countries", "params":[],  "description":" getCountries default"}}

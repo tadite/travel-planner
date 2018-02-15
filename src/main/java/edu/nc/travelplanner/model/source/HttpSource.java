@@ -36,6 +36,9 @@ public class HttpSource implements Source{
 
     @Override
     public String getUrlWithParameterValues() {
+        if (paramValuesMap.size()==0)
+            return url;
+
         String outputUrl = url;
 
         String paramsString = Joiner.on("&").withKeyValueSeparator("=").join(paramValuesMap.entrySet()
