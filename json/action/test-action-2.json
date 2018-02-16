@@ -1,1 +1,1 @@
-{"name":"test-action2","type":"checklist","parameters":{"optionsMap":{"key1":"value1","key2":"value2"}}}
+{"name":"test-action2","viewName":"Выберите страну для путешествия2","type":"checklist","parameters":{"optionsMap":{"key1":"value1","key2":"value2"}}}

@@ -15,6 +15,8 @@ import edu.nc.travelplanner.model.tree.SimpleTreeOrchestrator;
 import org.json.JSONException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.mockito.internal.matchers.Any;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
@@ -60,7 +62,7 @@ public class ActionTreeControllerTests {
 
         //removed because gitlab cs cant find json files
         ActionTreeFactory mockActionTreeFactory = mock(ActionTreeFactory.class);
-        when(mockActionTreeFactory.createByName("params-tree")).thenReturn(tree);
+        when(mockActionTreeFactory.createByName(Mockito.anyString())).thenReturn(tree);
 
         SimpleTreeOrchestrator treeOrchestrator = new SimpleTreeOrchestrator(mockActionTreeFactory);
 

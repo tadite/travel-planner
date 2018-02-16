@@ -18,7 +18,7 @@ public class SimpleTreeOrchestrator implements TreeOrchestrator {
 
     public SimpleTreeOrchestrator(@Autowired ActionTreeFactory treeFactory){
         try {
-            this.actionTree=treeFactory.createByName("params-tree");
+            this.actionTree=treeFactory.createByName("test-tree");
         } catch (ActionTreeParseException e) {
             e.printStackTrace();
         }
