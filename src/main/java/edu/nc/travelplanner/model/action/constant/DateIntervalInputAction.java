@@ -15,12 +15,18 @@ import java.util.Map;
 public class DateIntervalInputAction implements Action {
 
     private String name;
+    private String viewName;
     private String data;
     private ActionType type = ActionType.TEXT_INPUT;
 
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String getViewName() {
+        return viewName;
     }
 
     @Override
@@ -35,7 +41,7 @@ public class DateIntervalInputAction implements Action {
 
     @Override
     public Response executePresentation(ActionArgs args, List<PickResult> pickResults) {
-        return new ViewResponseBuilder().addDatePicker(getStartDatePickerName(), data).addDatePicker(getEndDatePickerName(), data).build();
+        return new ViewResponseBuilder().addTitleElement("question", viewName).addDatePicker(getStartDatePickerName(), data).addDatePicker(getEndDatePickerName(), data).build();
     }
 
     private String getEndDatePickerName() {

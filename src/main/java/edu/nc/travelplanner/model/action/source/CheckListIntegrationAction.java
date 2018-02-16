@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 public class CheckListIntegrationAction implements IntegrationAction {
 
     private String name;
+    private String viewName;
     private ActionType type = ActionType.CHECKLIST_INTEGRATION;
     private Map<String, String> optionsMap = new HashMap<>();
     private DataProducer dataProducer;
@@ -27,9 +28,15 @@ public class CheckListIntegrationAction implements IntegrationAction {
     public CheckListIntegrationAction() {
     }
 
-    public CheckListIntegrationAction(String name, DataProducer dataProducer) {
+    public CheckListIntegrationAction(String name, String viewName, DataProducer dataProducer) {
         this.name=name;
+        this.viewName = viewName;
         this.dataProducer = dataProducer;
+    }
+
+    @Override
+    public String getViewName() {
+        return viewName;
     }
 
     @Override
@@ -54,7 +61,7 @@ public class CheckListIntegrationAction implements IntegrationAction {
         try {
             Response response = dataProducer.send(pickResults);
             saveOptionsMap(response);
-            return new ViewResponseBuilder().addCheckboxes(optionsMap).build();
+            return new ViewResponseBuilder().addTitleElement("question", viewName).addCheckboxes(optionsMap).build();
         } catch (DataProducerParseException e) {
             e.printStackTrace();
         } catch (IOException e) {

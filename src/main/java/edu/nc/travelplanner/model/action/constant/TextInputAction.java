@@ -15,20 +15,27 @@ import java.util.Optional;
 public class TextInputAction implements Action {
 
     private String name;
+    private String viewName;
     private String data;
     private ActionType type = ActionType.TEXT_INPUT;
 
     public TextInputAction() {
     }
 
-    public TextInputAction(String name, String data) {
+    public TextInputAction(String name, String viewName, String data) {
         this.name = name;
+        this.viewName = viewName;
         this.data=data;
     }
 
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String getViewName() {
+        return viewName;
     }
 
     @Override
@@ -43,7 +50,7 @@ public class TextInputAction implements Action {
 
     @Override
     public Response executePresentation(ActionArgs args, List<PickResult> pickResults) {
-        return new ViewResponseBuilder().addTextbox(getTextboxElementName(), data).build();
+        return new ViewResponseBuilder().addTitleElement("question", viewName).addTextbox(getTextboxElementName(), data).build();
     }
 
     @Override

@@ -16,17 +16,23 @@ import java.util.Map;
 public class InfoIntegrationAction implements IntegrationAction {
 
     private String name;
+    private String viewName;
     private ActionType type = ActionType.INFO_INTEGRATION;
-    private String data;
 
     private DataProducer dataProducer;
 
     public InfoIntegrationAction() {
     }
 
-    public InfoIntegrationAction(String name, DataProducer dataProducer) {
+    public InfoIntegrationAction(String name, String viewName, DataProducer dataProducer) {
         this.name = name;
+        this.viewName = viewName;
         this.dataProducer = dataProducer;
+    }
+
+    @Override
+    public String getViewName() {
+        return viewName;
     }
 
     @Override
@@ -50,7 +56,7 @@ public class InfoIntegrationAction implements IntegrationAction {
 
         try {
             Response response = dataProducer.send(pickResults);
-            return new ViewResponseBuilder().addTitleElement(getTitleId(), response.getRawData()).build();
+            return new ViewResponseBuilder().addTitleElement("question", viewName).addTitleElement(getTitleId(), response.getRawData()).build();
         } catch (DataProducerParseException e) {
             e.printStackTrace();
         }

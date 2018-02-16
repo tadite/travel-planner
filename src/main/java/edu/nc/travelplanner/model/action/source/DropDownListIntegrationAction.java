@@ -20,6 +20,7 @@ import java.util.Optional;
 public class DropDownListIntegrationAction implements IntegrationAction {
 
     private String name;
+    private String viewName;
     private ActionType type = ActionType.DROPDOWN_INTEGRATION;
     private Map<String, String> optionsMap = new HashMap<>();
 
@@ -30,9 +31,15 @@ public class DropDownListIntegrationAction implements IntegrationAction {
     public DropDownListIntegrationAction() {
     }
 
-    public DropDownListIntegrationAction(String name, DataProducer dataProducer) {
+    public DropDownListIntegrationAction(String name, String viewName, DataProducer dataProducer) {
         this.name=name;
+        this.viewName = viewName;
         this.dataProducer = dataProducer;
+    }
+
+    @Override
+    public String getViewName() {
+        return viewName;
     }
 
     @Override
@@ -60,7 +67,7 @@ public class DropDownListIntegrationAction implements IntegrationAction {
         try {
             Response response = dataProducer.send(pickResults);
             saveOptionsMap(response);
-            return new ViewResponseBuilder().addDropdownList(getDropdownElementName(), optionsMap).build();
+            return new ViewResponseBuilder().addTitleElement("question", viewName).addDropdownList(getDropdownElementName(), optionsMap).build();
         } catch (DataProducerParseException e) {
             e.printStackTrace();
         } catch (IOException e) {

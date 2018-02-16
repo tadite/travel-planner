@@ -47,7 +47,7 @@ public class InfoIntegrationActionTests {
 
         DefaultDataProducer dataProducer = new DefaultDataProducer(mockHttpSender, mockSource, responseFilters );
 
-        InfoIntegrationAction infoIntegrationAction = new InfoIntegrationAction("testAction1-name", dataProducer);
+        InfoIntegrationAction infoIntegrationAction = new InfoIntegrationAction("testAction1-name","testAction1-viewName", dataProducer);
 
         //Act
         Response response = infoIntegrationAction.executePresentation(new ActionArgs(), new LinkedList<>());

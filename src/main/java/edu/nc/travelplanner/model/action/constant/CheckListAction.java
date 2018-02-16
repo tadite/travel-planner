@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 public class CheckListAction implements Action {
 
     private String name;
+    private String viewName;
     private ActionType type = ActionType.CHECKLIST;
     private Map<String, String> optionsMap = new HashMap<>();
 
@@ -25,8 +26,9 @@ public class CheckListAction implements Action {
         this.name = name;
     }
 
-    public CheckListAction(String name, Map<String, String> optionsMap) {
+    public CheckListAction(String name, String viewName, Map<String, String> optionsMap) {
         this.name = name;
+        this.viewName=viewName;
         this.optionsMap=optionsMap;
     }
 
@@ -37,6 +39,11 @@ public class CheckListAction implements Action {
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String getViewName() {
+        return viewName;
     }
 
     @Override
@@ -57,7 +64,7 @@ public class CheckListAction implements Action {
     @Override
     public Response executePresentation(ActionArgs args, List<PickResult> pickResults) {
 
-        return new ViewResponseBuilder().addCheckboxes(optionsMap).build();
+        return new ViewResponseBuilder().addTitleElement("question", viewName).addCheckboxes(optionsMap).build();
     }
 
     @Override

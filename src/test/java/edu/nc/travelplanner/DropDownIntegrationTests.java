@@ -41,7 +41,7 @@ public class DropDownIntegrationTests {
 
         DefaultDataProducer dataProducer = new DefaultDataProducer(mockHttpSender, mockSource, responseFilters);
 
-        DropDownListIntegrationAction dropDownListIntegrationAction = new DropDownListIntegrationAction("testAction1-name", dataProducer);
+        DropDownListIntegrationAction dropDownListIntegrationAction = new DropDownListIntegrationAction("testAction1-name","testAction1-viewName", dataProducer);
 
         //Act
         Response response = dropDownListIntegrationAction.executePresentation(new ActionArgs(), new LinkedList<>());

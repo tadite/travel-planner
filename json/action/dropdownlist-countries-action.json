@@ -1,1 +1,1 @@
-{"name":"dropdownlist-countries-action", "type":"dropdown_integration", "dataProducer": "countries-map-producer"}
+{"name":"dropdownlist-countries-action", "viewName":"Выберите страну для путешествия", "type":"dropdown_integration", "dataProducer": "countries-map-producer"}

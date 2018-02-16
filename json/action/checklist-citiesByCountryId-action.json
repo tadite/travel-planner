@@ -1,1 +1,1 @@
-{"name":"checklist-citiesByCountryId-action", "type":"checklist_integration", "dataProducer": "cities-by-countryId-producer"}
+{"name":"checklist-citiesByCountryId-action", "viewName":"Выберите город", "type":"checklist_integration", "dataProducer": "cities-by-countryId-producer"}

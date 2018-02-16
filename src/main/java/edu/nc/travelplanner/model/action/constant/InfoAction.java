@@ -14,14 +14,16 @@ import java.util.Map;
 public class InfoAction implements Action {
 
     private String name;
+    private String viewName;
     private String data;
     private ActionType type = ActionType.INFO;
 
     public InfoAction() {
     }
 
-    public InfoAction(String name, String data) {
+    public InfoAction(String name, String viewName, String data) {
         this.name = name;
+        this.viewName = viewName;
         this.data = data;
     }
 
@@ -30,6 +32,10 @@ public class InfoAction implements Action {
         return name;
     }
 
+    @Override
+    public String getViewName() {
+        return viewName;
+    }
     @Override
     public ActionType getType() {
         return type;
@@ -42,7 +48,7 @@ public class InfoAction implements Action {
 
     @Override
     public Response executePresentation(ActionArgs args, List<PickResult> pickResults) {
-        return new ViewResponseBuilder().addTitleElement(name+"-title", data).build();
+        return new ViewResponseBuilder().addTitleElement("question", viewName).addTitleElement(name+"-title", data).build();
     }
 
     @Override

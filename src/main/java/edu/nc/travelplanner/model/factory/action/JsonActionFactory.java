@@ -58,6 +58,7 @@ public class JsonActionFactory implements ActionFactory {
         Class<? extends Action> actionClass = action.getClass();
 
         setActionName(actionClass, action, actionDto.getName());
+        setActionViewName(actionClass, action, actionDto.getViewName());
         setActionType(actionClass, action, actionDto.getType());
         setActionParameters(actionClass ,action, actionDto.getParameters());
 
@@ -87,6 +88,13 @@ public class JsonActionFactory implements ActionFactory {
         Field fieldToSet = actionClass.getDeclaredField("name");
         fieldToSet.setAccessible(true);
         fieldToSet.set(action, name);
+    }
+
+    private void setActionViewName(Class<? extends Action> actionClass, Action action, String viewName)
+            throws NoSuchFieldException, IllegalAccessException {
+        Field fieldToSet = actionClass.getDeclaredField("viewName");
+        fieldToSet.setAccessible(true);
+        fieldToSet.set(action, viewName);
     }
 
     private Action createActionByType(ActionType type) {

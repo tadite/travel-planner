@@ -17,7 +17,7 @@ public class ViewResponse implements Response{
     public String getRawData() {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            return objectMapper.writeValueAsString(elements.get(0));
+            return objectMapper.writeValueAsString(elements);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

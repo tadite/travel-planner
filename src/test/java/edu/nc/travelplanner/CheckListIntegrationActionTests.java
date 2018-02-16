@@ -44,7 +44,7 @@ public class CheckListIntegrationActionTests {
 
         DefaultDataProducer dataProducer = new DefaultDataProducer(mockHttpSender, mockSource, responseFilters);
 
-        CheckListIntegrationAction checkListIntegrationAction = new CheckListIntegrationAction("testAction1-name", dataProducer);
+        CheckListIntegrationAction checkListIntegrationAction = new CheckListIntegrationAction("testAction1-name","testAction1-viewName", dataProducer);
 
         //Act
         Response response = checkListIntegrationAction.executePresentation(new ActionArgs(), new LinkedList<>());

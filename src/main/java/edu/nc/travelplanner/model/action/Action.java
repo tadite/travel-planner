@@ -7,6 +7,7 @@ import java.util.Map;
 
 public interface Action {
     String getName();
+    String getViewName();
     ActionType getType();
     Response executeDecision(ActionArgs args, List<PickResult> pickResult);
     Response executePresentation(ActionArgs args, List<PickResult> pickResult);

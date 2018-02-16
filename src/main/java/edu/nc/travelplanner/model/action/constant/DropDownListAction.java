@@ -16,20 +16,27 @@ import java.util.Optional;
 public class DropDownListAction implements Action {
 
     private String name;
+    private String viewName;
     private ActionType type = ActionType.CHECKLIST;
     private Map<String, String> optionsMap = new HashMap<>();
 
     public DropDownListAction() {
     }
 
-    public DropDownListAction(String name, Map<String, String> optionsMap) {
+    public DropDownListAction(String name, String viewName, Map<String, String> optionsMap) {
         this.name = name;
+        this.viewName = viewName;
         this.optionsMap=optionsMap;
     }
 
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String getViewName() {
+        return viewName;
     }
 
     @Override
@@ -48,7 +55,7 @@ public class DropDownListAction implements Action {
 
     @Override
     public Response executePresentation(ActionArgs args, List<PickResult> pickResults) {
-        return new ViewResponseBuilder().addDropdownList(getDropdownElementName(), optionsMap).build();
+        return new ViewResponseBuilder().addTitleElement("question", viewName).addDropdownList(getDropdownElementName(), optionsMap).build();
     }
 
     @Override
