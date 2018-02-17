@@ -5,6 +5,7 @@ import edu.nc.travelplanner.model.factory.tree.ActionTreeFactory;
 import edu.nc.travelplanner.model.factory.tree.ActionTreeParseException;
 import edu.nc.travelplanner.model.response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
@@ -16,9 +17,12 @@ public class SimpleTreeOrchestrator implements TreeOrchestrator {
 
     private ActionTree actionTree;
 
+    @Value( "${travelplanner.maintree}" )
+    private String treeName;
+
     public SimpleTreeOrchestrator(@Autowired ActionTreeFactory treeFactory){
         try {
-            this.actionTree=treeFactory.createByName("test-tree");
+            this.actionTree=treeFactory.createByName(treeName);
         } catch (ActionTreeParseException e) {
             e.printStackTrace();
         }

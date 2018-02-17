@@ -8,10 +8,8 @@ import edu.nc.travelplanner.model.response.EmptyResponse;
 import edu.nc.travelplanner.model.response.Response;
 import edu.nc.travelplanner.model.response.ViewResponseBuilder;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class DropDownListAction implements Action {
 
@@ -55,15 +53,16 @@ public class DropDownListAction implements Action {
 
     @Override
     public Response executePresentation(ActionArgs args, List<PickResult> pickResults) {
-        return new ViewResponseBuilder().addTitleElement("question", viewName).addDropdownList(getDropdownElementName(), optionsMap).build();
+        return new ViewResponseBuilder().addTitleElement("question", viewName).addDropdownList(name, optionsMap).build();
     }
 
     @Override
     public String getResult(Map<String, String> decisionArgs) {
         Optional<Map.Entry<String, String>> first = decisionArgs.entrySet().stream()
-                .filter((entry) -> optionsMap.containsKey(entry.getKey())).findFirst();
+                .filter((entry) -> optionsMap.containsKey(entry.getKey().substring(entry.getKey().lastIndexOf('.') + 1))).findFirst();
+
         if (first.isPresent())
-            return first.get().getKey();
+            return first.get().getKey().substring(first.get().getKey().lastIndexOf('.') + 1);
         return null;
     }
 

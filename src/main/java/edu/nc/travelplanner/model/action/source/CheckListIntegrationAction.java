@@ -69,7 +69,7 @@ public class CheckListIntegrationAction implements IntegrationAction {
         }
         return null;
     }
-
+    //TODO: new id generation getResults
     private void saveOptionsMap(Response response) throws IOException {
         optionsMap = objectMapper.readValue(response.getRawData(), Map.class);
 

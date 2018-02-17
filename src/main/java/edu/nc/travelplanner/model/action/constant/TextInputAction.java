@@ -50,13 +50,13 @@ public class TextInputAction implements Action {
 
     @Override
     public Response executePresentation(ActionArgs args, List<PickResult> pickResults) {
-        return new ViewResponseBuilder().addTitleElement("question", viewName).addTextbox(getTextboxElementName(), data).build();
+        return new ViewResponseBuilder().addTitleElement("question", viewName).addTextbox(name, data).build();
     }
 
     @Override
     public String getResult(Map<String, String> decisionArgs) {
         Optional<Map.Entry<String, String>> first = decisionArgs.entrySet().stream()
-                .filter((key) -> key.getKey().equalsIgnoreCase(getTextboxElementName())).findFirst();
+                .filter((key) -> key.getKey().endsWith(name)).findFirst();
         if (first.isPresent())
             return first.get().getValue();
         return null;

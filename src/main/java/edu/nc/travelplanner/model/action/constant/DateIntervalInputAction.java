@@ -41,7 +41,7 @@ public class DateIntervalInputAction implements Action {
 
     @Override
     public Response executePresentation(ActionArgs args, List<PickResult> pickResults) {
-        return new ViewResponseBuilder().addTitleElement("question", viewName).addDatePicker(getStartDatePickerName(), data).addDatePicker(getEndDatePickerName(), data).build();
+        return new ViewResponseBuilder().addTitleElement("question", viewName).addDatePicker(name, data).addDatePicker(name, data).build();
     }
 
     private String getEndDatePickerName() {
@@ -54,6 +54,8 @@ public class DateIntervalInputAction implements Action {
 
     @Override
     public DateInterval getResult(Map<String, String> decisionArgs) {
+        decisionArgs.entrySet().stream()
+                .anyMatch((key) -> key.getKey().startsWith(name));
         if (decisionArgs.containsKey(getEndDatePickerName()) && decisionArgs.containsKey(getStartDatePickerName()))
         {
             String string = "January 2, 2010";
