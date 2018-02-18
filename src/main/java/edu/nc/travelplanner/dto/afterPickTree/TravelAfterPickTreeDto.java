@@ -8,6 +8,9 @@ public class TravelAfterPickTreeDto {
     private String travelName;
     private String travelDescription;
 
+    public TravelAfterPickTreeDto() {
+    }
+
     public TravelAfterPickTreeDto(CheckpointAfterPickTreeDto from, List<CheckpointAfterPickTreeDto> checkpoints, String travelName, String travelDescription) {
         this.from = from;
         this.checkpoints = checkpoints;

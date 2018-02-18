@@ -16,6 +16,8 @@ public class SimpleActionTree implements ActionTree {
 
     private List<PickResult> pickResults = new LinkedList<>();
 
+    private boolean currentActionExecuted = false;
+
     public SimpleActionTree() {
     }
 
@@ -47,6 +49,7 @@ public class SimpleActionTree implements ActionTree {
 
     @Override
     public Response executeDecision(ActionArgs args) {
+        currentActionExecuted=true;
         Object result = currentAction.getResult(args.getArgs());
         if (result!=null)
             pickResults.add(new PickResult(currentAction.getName(), result));
@@ -66,9 +69,18 @@ public class SimpleActionTree implements ActionTree {
         return pickResults;
     }
 
+    @Override
+    public Boolean isEnded() {
+
+        return currentActionExecuted && !jumps.stream().anyMatch(jmp -> jmp.getCurrentAction()==currentAction);
+    }
+
     private void executeJump(Jump jump){
-        if (jump!=null)
+        if (jump!=null){
             currentAction=jump.getNextAction();
+            currentActionExecuted=false;
+
+        }
     }
 
     public Action getCurrentAction() {

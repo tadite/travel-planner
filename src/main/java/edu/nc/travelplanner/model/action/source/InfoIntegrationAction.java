@@ -1,5 +1,6 @@
 package edu.nc.travelplanner.model.action.source;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import edu.nc.travelplanner.model.action.ActionArgs;
 import edu.nc.travelplanner.model.action.ActionType;
 import edu.nc.travelplanner.model.action.IntegrationAction;

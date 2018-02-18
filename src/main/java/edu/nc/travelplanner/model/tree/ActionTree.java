@@ -16,4 +16,5 @@ public interface ActionTree {
     Response executePresentation(ActionArgs args);
     Response executeDecision(ActionArgs args);
     List<PickResult> getPickResults();
+    Boolean isEnded();
 }
