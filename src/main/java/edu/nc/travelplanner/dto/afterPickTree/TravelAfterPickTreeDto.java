@@ -3,7 +3,7 @@ package edu.nc.travelplanner.dto.afterPickTree;
 import java.util.List;
 
 public class TravelAfterPickTreeDto {
-    private CheckpointAfterPickTreeDto from;
+    private CheckpointAfterPickTreeDto from = new CheckpointAfterPickTreeDto();
     private List<CheckpointAfterPickTreeDto> checkpoints;
     private String travelName;
     private String travelDescription;

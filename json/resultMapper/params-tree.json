@@ -1,1 +1,1 @@
-{"from.cityId":"test-action1", "from.countryId":"test-action1"}
+{"map":[{"from":"dropdownlist-countries-action", "to":"from.countryId", "type":""}, {"from":"checklist-citiesByCountryId-action", "to":"from.cityId", "type":"list-first"}]}

@@ -7,12 +7,26 @@ import edu.nc.travelplanner.model.action.constant.CheckListAction;
 import edu.nc.travelplanner.model.action.constant.DropDownListAction;
 import edu.nc.travelplanner.model.action.constant.InfoAction;
 import edu.nc.travelplanner.model.action.constant.TextInputAction;
+import edu.nc.travelplanner.model.action.source.CheckListIntegrationAction;
+import edu.nc.travelplanner.model.factory.DefaultEnumMapper;
+import edu.nc.travelplanner.model.factory.PathMapper;
+import edu.nc.travelplanner.model.factory.action.FileActionJsonReader;
+import edu.nc.travelplanner.model.factory.action.JsonActionFactory;
+import edu.nc.travelplanner.model.factory.dataproducer.DefaultSenderFactory;
+import edu.nc.travelplanner.model.factory.dataproducer.FileDataProducerJsonReader;
+import edu.nc.travelplanner.model.factory.dataproducer.JsonDataProducerFactory;
+import edu.nc.travelplanner.model.factory.filter.DefaultResponseFilterFactory;
+import edu.nc.travelplanner.model.factory.source.FileSourceJsonReader;
+import edu.nc.travelplanner.model.factory.source.JsonSourceFactory;
 import edu.nc.travelplanner.model.factory.tree.ActionTreeFactory;
 import edu.nc.travelplanner.model.factory.tree.ActionTreeParseException;
+import edu.nc.travelplanner.model.factory.tree.FileActionTreeJsonReader;
+import edu.nc.travelplanner.model.factory.tree.JsonActionTreeFactory;
 import edu.nc.travelplanner.model.jump.Jump;
 import edu.nc.travelplanner.model.jump.NoConditionJump;
 import edu.nc.travelplanner.model.resultsMapper.FromJsonResultsMapper;
 import edu.nc.travelplanner.model.resultsMapper.ResultsMapperReader;
+import edu.nc.travelplanner.model.tree.ActionTree;
 import edu.nc.travelplanner.model.tree.SimpleActionTree;
 import edu.nc.travelplanner.model.tree.SimpleTreeOrchestrator;
 import org.json.JSONException;
@@ -69,10 +83,10 @@ public class ActionTreeControllerTests {
         when(mockActionTreeFactory.createByName(Mockito.anyString())).thenReturn(tree);
 
         ResultsMapperReader mockResultsMapperReader = mock(ResultsMapperReader.class);
-        when(mockResultsMapperReader.read(Mockito.anyString())).thenReturn(new FromJsonResultsMapper(new HashMap<String, String>(){{
+        /*when(mockResultsMapperReader.read(Mockito.anyString())).thenReturn(new FromJsonResultsMapper(new HashMap<String, String>(){{
             put("from.cityId","testAction4-name");
             put("from.countryId","testAction4-name");
-        }}));
+        }}));*/
 
         SimpleTreeOrchestrator treeOrchestrator = new SimpleTreeOrchestrator(mockActionTreeFactory, mockResultsMapperReader);
 
@@ -110,5 +124,41 @@ public class ActionTreeControllerTests {
         [{"id":"question","data":"testAction3-viewName","type":"title"},{"id":"testAction3-name-textbox","data":"testAction3-startData","type":"text_input"}]
         [{"id":"question","data":"testAction4-viewName","type":"title"},{"id":"testAction4-name-dropdown-list","type":"dropdown_list","data":{"dropdown2-id":"dropdown2-title","dropdown1-id":"dropdown1-title"}}]
          */
+    }
+
+   // @Test
+    public void canTest() throws ActionTreeParseException, JSONException, IOException {
+        //Array
+        JsonActionTreeFactory jsonActionTreeFactory = new JsonActionTreeFactory(
+                new FileActionTreeJsonReader(new PathMapper()),
+                new JsonActionFactory(new FileActionJsonReader(new PathMapper()),
+                        new DefaultEnumMapper(),
+                        new JsonDataProducerFactory(new DefaultResponseFilterFactory(new DefaultEnumMapper()),
+                                new FileDataProducerJsonReader(new PathMapper()),
+                                new JsonSourceFactory(new FileSourceJsonReader(new PathMapper()),
+                                        new DefaultEnumMapper()),
+                                new DefaultSenderFactory(new DefaultEnumMapper()))),
+                new DefaultEnumMapper());
+
+        ActionTree paramsTree = jsonActionTreeFactory.createByName("params-tree");
+
+        ActionTreeFactory mockActionTreeFactory = mock(ActionTreeFactory.class);
+        when(mockActionTreeFactory.createByName(Mockito.anyString())).thenReturn(paramsTree);
+
+        ResultsMapperReader mockResultsMapperReader = mock(ResultsMapperReader.class);
+      /*  when(mockResultsMapperReader.read(Mockito.anyString())).thenReturn(new FromJsonResultsMapper(new HashMap<String, String>(){{
+            put("from.cityId","testAction4-name");
+            put("from.countryId","testAction4-name");
+        }}));*/
+
+        SimpleTreeOrchestrator treeOrchestrator = new SimpleTreeOrchestrator(mockActionTreeFactory, mockResultsMapperReader);
+
+        ActionTreeController actionTreeController = new ActionTreeController(treeOrchestrator);
+
+        ResponseEntity<String> testAction1Present = actionTreeController.executeGet(new HashMap<>());
+        ResponseEntity<String> testAction1Decision = actionTreeController.executePost(new HashMap<String, String>(){{put("dropdownlist1.1", "true"); }});
+        ResponseEntity<String> testAction2Present = actionTreeController.executeGet(new HashMap<>());
+        ResponseEntity<String> testAction2Decision = actionTreeController.executePost(new HashMap<String, String>(){{put("block1.checkbox7.2", "true"); }});
+        ResponseEntity<String> testAction3Present = actionTreeController.executeGet(new HashMap<>());
     }
 }

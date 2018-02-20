@@ -28,33 +28,41 @@ public class SimpleTreeOrchestrator implements TreeOrchestrator {
     ResultsMapperReader resultsMapperReader;
 
     private TravelAfterPickTreeDto travelAfterPickTreeDto;
+    private ActionTreeFactory treeFactory;
 
     public SimpleTreeOrchestrator(@Autowired ActionTreeFactory treeFactory, @Autowired ResultsMapperReader resultsMapperReader){
-        try {
-            this.resultsMapperReader=resultsMapperReader;
-            this.actionTree=treeFactory.createByName(treeName);
-        } catch (ActionTreeParseException e) {
-            e.printStackTrace();
+        this.treeFactory = treeFactory;
+        this.resultsMapperReader=resultsMapperReader;
+    }
+
+    private ActionTree getActionTree(){
+        if (actionTree==null) {
+            try {
+                this.actionTree=treeFactory.createByName(treeName);
+            } catch (ActionTreeParseException e) {
+                e.printStackTrace();
+            }
         }
+        return actionTree;
     }
 
     public Response executePresentation(ActionArgs args) {
 
-        return actionTree.executePresentation(args);
+        return getActionTree().executePresentation(args);
     }
 
     public Response executeDecision(ActionArgs args) {
-        return actionTree.executeDecision(args);
+        return getActionTree().executeDecision(args);
     }
 
     @Override
     public Response execute(ActionArgs args) {
         if (travelAfterPickTreeDto!=null)
             return new TravelResultResponse(travelAfterPickTreeDto);
-        else if (actionTree.isEnded())
+        else if (getActionTree().isEnded())
         {
             try {
-                travelAfterPickTreeDto = resultsMapperReader.read(treeName).map(actionTree.getPickResults());
+                travelAfterPickTreeDto = resultsMapperReader.read(treeName).map(getActionTree().getPickResults());
             } catch (IOException e) {
                 e.printStackTrace();
             }

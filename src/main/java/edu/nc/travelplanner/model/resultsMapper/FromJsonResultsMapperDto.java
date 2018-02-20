@@ -1,15 +1,16 @@
 package edu.nc.travelplanner.model.resultsMapper;
 
+import java.util.List;
 import java.util.Map;
 
 public class FromJsonResultsMapperDto {
-    private Map<String, String> map;
+    private List<MapNode> map;
 
-    public Map<String, String> getMap() {
+    public List<MapNode> getMap() {
         return map;
     }
 
-    public void setMap(Map<String, String> map) {
+    public void setMap(List<MapNode> map) {
         this.map = map;
     }
 }

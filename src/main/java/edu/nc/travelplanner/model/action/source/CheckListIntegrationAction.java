@@ -77,12 +77,12 @@ public class CheckListIntegrationAction implements IntegrationAction {
 
     @Override
     public Object getResult(Map<String, String> decisionArgs) {
-        Set<Map.Entry<String,String>> results = new HashSet<>(decisionArgs.entrySet().stream()
-                .filter((entry) -> optionsMap.containsKey(entry.getKey())).collect(Collectors.toSet()));
+        Set<Map.Entry<String,String>> results = new HashSet<> (decisionArgs.entrySet().stream()
+                .filter((entry) -> optionsMap.containsKey(entry.getKey().substring(entry.getKey().lastIndexOf('.')+1))).collect(Collectors.toSet()));
 
         if (!results.isEmpty()){
-            Set<String> pickedValues = new HashSet<>();
-            results.iterator().forEachRemaining(entry -> pickedValues.add(entry.getKey()));
+            List<String> pickedValues = new LinkedList<>();
+            results.iterator().forEachRemaining(entry -> pickedValues.add(entry.getKey().substring(entry.getKey().lastIndexOf('.')+1)));
             return pickedValues;
         }
         return null;

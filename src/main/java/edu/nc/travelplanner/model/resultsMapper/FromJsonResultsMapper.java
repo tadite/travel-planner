@@ -3,18 +3,22 @@ package edu.nc.travelplanner.model.resultsMapper;
 import edu.nc.travelplanner.dto.afterPickTree.CheckpointAfterPickTreeDto;
 import edu.nc.travelplanner.dto.afterPickTree.TravelAfterPickTreeDto;
 import edu.nc.travelplanner.model.action.PickResult;
-import edu.nc.travelplanner.table.Travel;
-import org.springframework.beans.factory.annotation.Value;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class FromJsonResultsMapper implements ResultsMapper {
 
-    private Map<String, String> paramsToMap;
+    private List<MapNode> mapNodes;
+    private final List<String> travelParams =new LinkedList<String>(){{
+        push("from.cityId");
+        push("from.countryId");
+    }};
 
-    public FromJsonResultsMapper(Map<String, String> paramsToMap) {
-        this.paramsToMap = paramsToMap;
+    public FromJsonResultsMapper(List<MapNode> mapNodes) {
+        this.mapNodes = mapNodes;
     }
 
     @Override
@@ -22,18 +26,38 @@ public class FromJsonResultsMapper implements ResultsMapper {
         TravelAfterPickTreeDto travelAfterPickTreeDto = new TravelAfterPickTreeDto();
 
         CheckpointAfterPickTreeDto from = new CheckpointAfterPickTreeDto();
-        if (paramsToMap.containsKey("from.cityId"))
-            pickResults.stream()
-                .filter(
-                        pickResult -> pickResult.getKey().equals(paramsToMap.get("from.cityId"))
-                ).findFirst().ifPresent(pickResult -> from.setCityId(Long.valueOf(pickResult.getValue().toString())));
-        if (paramsToMap.containsKey("from.countryId"))
-            pickResults.stream()
-                    .filter(
-                            pickResult -> pickResult.getKey().equals(paramsToMap.get("from.countryId"))
-                    ).findFirst().ifPresent(pickResult -> from.setCountryId(Long.valueOf(pickResult.getValue().toString())));
-        travelAfterPickTreeDto.setFrom(from);
+
+        for (MapNode node : mapNodes) {
+            if (!travelParams.contains(node.getTo()))
+                continue;
+
+            Optional<PickResult> pickOptional = pickResults.stream()
+                    .filter(pick -> pick.getKey().equals(node.getFrom()))
+                    .findFirst();
+
+            if (pickOptional.isPresent()){
+                PickResult pick = pickOptional.get();
+                setTravelDtoParam(travelAfterPickTreeDto, pick, node);
+            }
+        }
 
         return travelAfterPickTreeDto;
+    }
+
+    private void setTravelDtoParam(TravelAfterPickTreeDto travelDto, PickResult pick, MapNode node){
+        if (node.getTo().equals("from.cityId"))
+                travelDto.getFrom().setCityId(Long.valueOf((String)getPickValue(pick,node)));
+        else if (node.getTo().equals("from.countryId"))
+            travelDto.getFrom().setCountryId(Long.valueOf((String)getPickValue(pick,node)));
+
+    }
+
+    private Object getPickValue(PickResult pick, MapNode node){
+        switch (node.getType()){
+            case "list-first":
+                return ((List<String>)pick.getValue()).get(0);
+            default:
+                return pick.getValue();
+        }
     }
 }

@@ -12,8 +12,12 @@ import java.nio.file.Paths;
 @Component
 public class FileActionJsonReader implements ActionJsonReader {
 
-    @Autowired
     private PathMapper pathMapper;
+
+    @Autowired
+    public FileActionJsonReader(PathMapper pathMapper) {
+        this.pathMapper = pathMapper;
+    }
 
     @Override
     public String getActionJson(String name) throws IOException {

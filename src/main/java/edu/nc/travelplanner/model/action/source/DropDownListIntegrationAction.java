@@ -84,9 +84,10 @@ public class DropDownListIntegrationAction implements IntegrationAction {
     @Override
     public String getResult(Map<String, String> decisionArgs) {
         Optional<Map.Entry<String, String>> first = decisionArgs.entrySet().stream()
-                .filter((entry) -> optionsMap.containsKey(entry.getKey())).findFirst();
+                .filter((entry) -> optionsMap.containsKey(entry.getKey().substring(entry.getKey().lastIndexOf('.') + 1))).findFirst();
+
         if (first.isPresent())
-            return first.get().getKey();
+            return first.get().getKey().substring(first.get().getKey().lastIndexOf('.') + 1);
         return null;
     }
 

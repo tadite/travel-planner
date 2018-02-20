@@ -12,8 +12,12 @@ import java.nio.file.Paths;
 @Component
 public class FileDataProducerJsonReader implements DataProducerJsonReader {
 
-    @Autowired
     private PathMapper pathMapper;
+
+    @Autowired
+    public FileDataProducerJsonReader(PathMapper pathMapper) {
+        this.pathMapper = pathMapper;
+    }
 
     private String getPathToJson(String name) {
         return PathUtil.getPathInUserDir(pathMapper.getDataProducePath(), name, pathMapper.getExtension());
