@@ -1,0 +1,35 @@
+<div class="login-page">
+    <div class="form">    
+      <form class="register-form" name="register-form" novalidate [@visibilityChanged]='reg_state' method="post">      
+        <input type="text" placeholder="Логин" [(ngModel)]="user.login" #regLogin="ngModel" name="regLogin" required/>
+        <div [hidden]="regLogin.valid || regLogin.untouched" class="alert alert-danger" style="font-size: small">
+          Не указан логин
+        </div>              
+        <input type="password" placeholder="Пароль" [(ngModel)]="user.password" #regPassword="ngModel" name="regPassword" required pattern="[0-9a-zA-Z!@#$%^*]{5,}"/>
+       <div [hidden]="regPassword.valid || regPassword.untouched" class="alert alert-danger" style="font-size: small">
+          Пароль должен содержать не менее 5 символов
+         </div>
+        <input type="email" placeholder="E-mail" [(ngModel)]="user.eMail" #regEmail="ngModel" name="regEmail" required email/>    
+        <div [hidden]="regEmail.valid || regEmail.untouched" class="alert alert-danger" style="font-size: small">
+          Некорректный E-mail
+         </div>   
+         <div [hidden]="userExists == false" class="alert alert-danger" style="font-size: small">
+          Пользователь с таким логином или e-mail уже существует
+         </div>
+      <button [disabled]="regLogin.invalid  || regPassword.invalid || regEmail.invalid" (click)="signup(user)" routerLinkActive="active">зарегистрироваться</button>         
+        <p class="message">Уже зарегистрированы? <a (click)="animateMe()">Войти</a></p>
+      </form>
+
+      <form class="login-form" name="login-form" novalidate [@visibilityChanged]='login_state' method="post">
+        <input type="login" placeholder="Логин" [(ngModel)]="user.login" #logLogin="ngModel" name="logLogin"  required/>        
+        <input type="password" placeholder="Пароль" [(ngModel)]="user.password" #logPassword="ngModel" name="logPassword" required />       
+        <div [hidden]="loginError == false" class="alert alert-danger" style="font-size: small">
+         Неверный ввод пароля или логина
+         </div>
+        <button [disabled]="logLogin.invalid || logPassword.invalid" (click)="signin(user)" routerLinkActive="active">войти</button>
+        <p class="message">Не зарегистрированы? <a (click)="animateMe()">Создать аккаунт</a></p>
+      </form>            
+    </div>
+   <div class="background-image" style="background-image : url('http://upload.akusherstvo.ru/image1458493.jpg')"></div>      
+   
+  </div>
