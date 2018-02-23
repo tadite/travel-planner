@@ -23,4 +23,6 @@ dist/
 nbdist/
 .nb-gradle/
 
-front_end/node_modules
+front_end/node_modules/
+front_end/.vs/
+front_end/.vscode/

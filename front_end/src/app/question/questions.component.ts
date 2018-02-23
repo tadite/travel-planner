@@ -12,8 +12,8 @@ import {NgForm} from '@angular/forms';
 
 @Component({
     selector: 'questions-app',
-    template: `
-    <div *ngIf="!isArray(questions);else elseBlock">{{questions}}</div>    
+    template: ` 
+    <div>  
     <form #f="ngForm" #elseBlock (ngSubmit)="onSubmit(f)" novalidate>
         <div *ngFor="let question of questions"
             [ngSwitch]="question.type"> 
@@ -32,10 +32,10 @@ import {NgForm} from '@angular/forms';
         <p *ngSwitchDefault> 
             {{question}}
         </p>
-
         </div>
         <input type="submit" (click)="onSubmit()" value="Далее">
-    </form>`,
+    </form>
+    </div> `,
     styleUrls: ['./questions.component.css'],
     animations: [
         trigger('visibilityChanged', [
@@ -72,13 +72,8 @@ export class QuestionsComponent implements OnInit
         
     }
 
-    isArray(obj : any) {
-        console.log(Array.isArray(obj));
-        return Array.isArray(obj);
-    }
-
-    toJsonString(){
-
+    isEndOfTree(obj : any) {      
+        return typeof(obj.countryId) !== 'undefined';
     }
     
     ngOnInit(){
