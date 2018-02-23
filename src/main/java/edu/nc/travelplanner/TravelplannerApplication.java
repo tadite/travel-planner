@@ -3,6 +3,10 @@ package edu.nc.travelplanner;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vk.api.sdk.client.TransportClient;
+import com.vk.api.sdk.client.VkApiClient;
+import com.vk.api.sdk.client.actors.ServiceActor;
+import com.vk.api.sdk.httpclient.HttpTransportClient;
 import edu.nc.travelplanner.modelController.ExcursionController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -43,6 +47,18 @@ public class TravelplannerApplication {
 		mapper.configure(MapperFeature.DEFAULT_VIEW_INCLUSION, true);
 
 		return mapper;
+	}
+
+	@Bean
+	public VkApiClient vkApiClient(){
+		TransportClient transportClient = new HttpTransportClient();
+		VkApiClient vk = new VkApiClient(transportClient);
+		return vk;
+	}
+
+	@Bean
+	public ServiceActor serviceActor(){
+		return new ServiceActor(6289227, "29b41daf29b41daf29b41dafdb29ebeae4229b429b41daf739d55936c18ba3a66ffcb52");
 	}
 
 	public static void main(String[] args) {

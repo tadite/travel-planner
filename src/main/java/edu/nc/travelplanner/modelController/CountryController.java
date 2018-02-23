@@ -35,7 +35,7 @@ public class CountryController {
     @RequestMapping(value = "/delete")
     @ResponseBody
     @Transactional
-    public String delete(long id) {
+    public String delete(Integer id) {
         try {
             Country country = countryDao.getCountryById(id);
             if (country.getExcursions().size() > 0)

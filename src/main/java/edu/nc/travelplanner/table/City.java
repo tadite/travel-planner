@@ -6,9 +6,10 @@ import java.util.Set;
 @Entity
 @Table(name = "city")
 public class City {
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "city_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long cityId;
 
     @Column(name = "name")

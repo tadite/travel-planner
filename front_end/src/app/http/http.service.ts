@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpResponse, HttpParams} from '@angular/common/http';
 import {User} from '../user/user';
 import { Observable } from 'rxjs/Observable';
 import{Question} from '../question/question';
@@ -8,6 +8,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class HttpService{
   
+    [x: string]: any;
     constructor(private httpClient: HttpClient){ } 
 
     public get(url: string): Observable<any>{
@@ -22,5 +23,9 @@ export class HttpService{
                 return Observable.throw(error);
 
             }) as any;*/;
+    }
+
+    public postObs(url: string, body: any) : Observable<any>{
+        return this.httpClient.post(url, JSON.stringify(body), {headers:{'Content-Type': 'application/json'}});
     }
 }

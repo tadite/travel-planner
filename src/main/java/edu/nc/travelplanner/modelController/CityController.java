@@ -57,7 +57,7 @@ public class CityController {
     @RequestMapping(value = "/save")
     @ResponseBody
     @Transactional
-    public String create(String name, Long country_id) {
+    public String create(String name, Integer country_id) {
         try {
 
             City city = new City();

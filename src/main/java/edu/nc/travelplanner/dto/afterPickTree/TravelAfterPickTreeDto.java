@@ -7,6 +7,7 @@ public class TravelAfterPickTreeDto {
     private List<CheckpointAfterPickTreeDto> checkpoints;
     private String travelName;
     private String travelDescription;
+    private Long clientId;
 
     public TravelAfterPickTreeDto() {
     }
@@ -48,5 +49,13 @@ public class TravelAfterPickTreeDto {
 
     public void setTravelDescription(String travelDescription) {
         this.travelDescription = travelDescription;
+    }
+
+    public Long getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(Long clientId) {
+        this.clientId = clientId;
     }
 }

@@ -1,14 +1,14 @@
 package edu.nc.travelplanner.dto.afterPickTree;
 
 public class CheckpointAfterPickTreeDto {
-    private Long countryId;
+    private Integer countryId;
     private Long cityId;
 
-    public Long getCountryId() {
+    public Integer getCountryId() {
         return countryId;
     }
 
-    public void setCountryId(Long countryId) {
+    public void setCountryId(Integer countryId) {
         this.countryId = countryId;
     }
 

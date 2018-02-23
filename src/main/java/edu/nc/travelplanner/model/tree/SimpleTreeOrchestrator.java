@@ -1,5 +1,7 @@
 package edu.nc.travelplanner.model.tree;
 
+import edu.nc.travelplanner.config.AuthenticationFacade;
+import edu.nc.travelplanner.dao.ClientDao;
 import edu.nc.travelplanner.dto.afterPickTree.TravelAfterPickTreeDto;
 import edu.nc.travelplanner.model.action.*;
 import edu.nc.travelplanner.model.factory.tree.ActionTreeFactory;
@@ -7,6 +9,7 @@ import edu.nc.travelplanner.model.factory.tree.ActionTreeParseException;
 import edu.nc.travelplanner.model.response.Response;
 import edu.nc.travelplanner.model.response.TravelResultResponse;
 import edu.nc.travelplanner.model.resultsMapper.ResultsMapperReader;
+import edu.nc.travelplanner.service.travel.TravelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -19,6 +22,15 @@ import java.io.IOException;
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Component
 public class SimpleTreeOrchestrator implements TreeOrchestrator {
+
+    @Autowired
+    AuthenticationFacade authenticationFacade;
+
+    @Autowired
+    ClientDao clientDao;
+
+    @Autowired
+    TravelService travelService;
 
     private ActionTree actionTree;
 
@@ -66,6 +78,7 @@ public class SimpleTreeOrchestrator implements TreeOrchestrator {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+           // saveTravelToDb(travelAfterPickTreeDto);
             return new TravelResultResponse(travelAfterPickTreeDto);
         }
 
@@ -73,6 +86,12 @@ public class SimpleTreeOrchestrator implements TreeOrchestrator {
             return executeDecision(args);
         else
             return executePresentation(args);
+    }
+
+    private void saveTravelToDb(TravelAfterPickTreeDto travelAfterPickTreeDto) {
+        travelAfterPickTreeDto.setClientId(clientDao.getClientByLogin(authenticationFacade.getAuthentication().getName()).getClientId());
+
+        travelService.saveTravelAfterPick(travelAfterPickTreeDto);
     }
 
 

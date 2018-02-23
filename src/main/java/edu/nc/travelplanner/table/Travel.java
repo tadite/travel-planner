@@ -2,6 +2,8 @@ package edu.nc.travelplanner.table;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,7 +30,7 @@ public class Travel {
     private Set<TravelForClient> travelForClients = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "travel")
-    private Set<CheckPoint> checkPoints = new HashSet<>();
+    private List<CheckPoint> checkPoints = new LinkedList<>();
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "travel")
     private Set<OptionForTravel> optionForTravels = new HashSet<>();
@@ -77,7 +79,7 @@ public class Travel {
         this.travelForClients = travelForClients;
     }
 
-    public void setCheckPoints(Set<CheckPoint> checkPoints) {
+    public void setCheckPoints(List<CheckPoint> checkPoints) {
         this.checkPoints = checkPoints;
     }
 
@@ -113,7 +115,7 @@ public class Travel {
         return travelForClients;
     }
 
-    public Set<CheckPoint> getCheckPoints() {
+    public List<CheckPoint> getCheckPoints() {
         return checkPoints;
     }
 

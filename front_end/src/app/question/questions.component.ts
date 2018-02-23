@@ -7,11 +7,35 @@ import { Console } from '@angular/core/src/console';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
+import {NgForm} from '@angular/forms';
 
 
 @Component({
     selector: 'questions-app',
-    templateUrl: './questions.component.html',
+    template: `
+    <div *ngIf="!isArray(questions);else elseBlock">{{questions}}</div>    
+    <form #f="ngForm" #elseBlock (ngSubmit)="onSubmit(f)" novalidate>
+        <div *ngFor="let question of questions"
+            [ngSwitch]="question.type"> 
+    
+        <p *ngSwitchCase="'title'">
+            {{question.data}}<br>
+        </p>
+        <p *ngSwitchCase="'dropdown_list'">
+            <select name="{{question.id}}" ngModel>
+               <option value="{{key}}" *ngFor="let key of objectKeys(question.data)">{{question.data[key]}}</option>
+            </select><br>
+        </p>
+        <p *ngSwitchCase="'checkbox'"> 
+            <input type="checkbox" (change)="putCheckId(question.id)"/>{{question.data}}
+        </p>
+        <p *ngSwitchDefault> 
+            {{question}}
+        </p>
+
+        </div>
+        <input type="submit" (click)="onSubmit()" value="Далее">
+    </form>`,
     styleUrls: ['./questions.component.css'],
     animations: [
         trigger('visibilityChanged', [
@@ -28,38 +52,80 @@ import { AuthService } from '../auth/auth.service';
 export class QuestionsComponent implements OnInit
 {      
     
-    states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
+    /*states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
     current_question: number = 0;
 
     nextQuestion() {
         this.states[this.current_question] = 'hidden';
         this.current_question++;
         this.states[this.current_question] = 'shown';
+    }*/
+
+    //questions: any[] = [{"id":"title1.question","data":"Выберите город","type":"title"},{"id":"block1.checkbox1.1959511","data":"Liepāja","type":"checkbox"},{"id":"block1.checkbox2.1921996","data":"Rēzekne","type":"checkbox"},{"id":"block1.checkbox3.1713629","data":"Daugavpils","type":"checkbox"},{"id":"block1.checkbox4.1715161","data":"Ogre","type":"checkbox"},{"id":"block1.checkbox5.1909043","data":"Ventspils","type":"checkbox"},{"id":"block1.checkbox6.1925340","data":"Rīga","type":"checkbox"},{"id":"block1.checkbox7.1801712","data":"Jelgava","type":"checkbox"},{"id":"block1.checkbox8.1953391","data":"Jūrmala","type":"checkbox"},{"id":"block1.checkbox9.1905282","data":"Valmiera","type":"checkbox"},{"id":"block1.checkbox10.1907193","data":"Cēsis","type":"checkbox"}]
+    questions: any;
+    objectKeys = Object.keys;
+    checks: {};
+      
+    actionUrl: string = '/action';    
+    
+    constructor(private http: HttpService, private cookieService: CookieService, private router: Router, private authService: AuthService) {
+        
     }
 
-   // questions: string = '[{"id":"1", "data": "Выберите страну", "type": "label"}, {"id": "5", "data": "Россия", "type": "checkbox"}, {"id": "3","data": "Франция", "type": "checkbox"}, {"id": "6","data": "Китай", "type": "checkbox"}]';
-   //questions: string;
-    //questions: any;
-    questionData : Question[];
-    
-    //url: string = 'http://localhost:8090/action';    
-    url: string = '/action';    
-    
-    constructor(private http: HttpService, private cookieService: CookieService, private router: Router, private authService: AuthService) {}
+    isArray(obj : any) {
+        console.log(Array.isArray(obj));
+        return Array.isArray(obj);
+    }
+
+    toJsonString(){
+
+    }
     
     ngOnInit(){
-        this.http.get(this.url).subscribe(value => {
-            this.questionData = value;
-            console.log('value id ' + value['id']); 
-            console.log('value data ' + value['data']); 
-            console.log('questionsData (data) ' + this.questionData['data']);
-          
+        this.getNextActionView();
+    }
+
+    onSubmit(f: NgForm) {
+        var map = {};
+        var tempForm = f.value;
+        for(var key in tempForm){
+            map[tempForm[key]]= key;
+        }
+        for(var key in this.checks){
+            if (key!=null)
+                map[key]= this.checks[key];
+        }
+              
+        console.log(map);   
+        var self = this;
+        this.http.postObs(this.actionUrl, map).subscribe(result => {
+            this.checks={};
+            self.getNextActionView();
+        },
+        error => {console.log(error);}
+        );
+
+    }
+
+    getNextActionView(){
+        this.http.get(this.actionUrl).subscribe(value => {
+            this.questions = value;
+            console.log(this.questions);        
         },
         error => { }
-    );
+        );
+    }
+
+    putCheckId(id: any){
+        if (this.checks[id]=='checked')
+            this.checks[id]=null;
+        else
+            this.checks[id]='checked';
+        console.log(this.checks); 
     }
 
     logout(){
         this.authService.logout();
     }
+
 }

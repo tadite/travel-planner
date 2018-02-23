@@ -60,4 +60,6 @@ public class TypeOfResidence {
     public Set<PlaceOfResidence> getPlaceOfResidences() {
         return placeOfResidences;
     }
+
+    public static long FROM_PLACE_ID = 1;
 }

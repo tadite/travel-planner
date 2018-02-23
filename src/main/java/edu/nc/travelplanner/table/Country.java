@@ -7,10 +7,11 @@ import java.util.Set;
 @Entity
 @Table(name = "country")
 public class Country {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "country_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long countryId;
+    private Integer countryId;
 
     @Column(name = "name")
     private String name;
@@ -27,11 +28,11 @@ public class Country {
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "country")
     private Set<Client> clients = new HashSet<>();
 
-    public long getCountryId() {
+    public Integer getCountryId() {
         return countryId;
     }
 
-    public void setCountryId (long countryId) {
+    public void setCountryId (Integer countryId) {
         this.countryId  = countryId;
     }
 

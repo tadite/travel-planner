@@ -22,13 +22,19 @@ public class CountryDao {
 
     @Transactional
     public String saveCountry (Country country) {
-        Long isSuccess = (Long)getSession().save(country);
-        if(isSuccess >= 1){
-            return "Success";
-        }else{
+        try {
+            Long isSuccess = (Long) getSession().save(country);
+            if (isSuccess >= 1) {
+                return "Success";
+            } else {
+                return "Error while Saving Country";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
             return "Error while Saving Country";
         }
-
     }
 
     @Transactional
@@ -54,7 +60,7 @@ public class CountryDao {
     }
 
     @Transactional
-    public Country getCountryById (Long id) {
+    public Country getCountryById (Integer id) {
 
         List<Country> list = getSession().createQuery("FROM Country c WHERE c.id= :Id").setParameter("Id",id).list();
         if(!list.isEmpty()) {
