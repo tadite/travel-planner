@@ -78,7 +78,7 @@ public class SimpleTreeOrchestrator implements TreeOrchestrator {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-           // saveTravelToDb(travelAfterPickTreeDto);
+            saveTravelToDb(travelAfterPickTreeDto);
             return new TravelResultResponse(travelAfterPickTreeDto);
         }
 

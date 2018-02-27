@@ -8,7 +8,6 @@ import java.util.Set;
 public class City {
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "city_id")
     private long cityId;
 
@@ -19,6 +18,9 @@ public class City {
     @JoinColumn(name = "country_id")
     private Country country;
 
+    @Column(name = "country_id", insertable = false, updatable = false)
+    private Integer countryId;
+
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "city")
     private Set<Excursion> excursions = new HashSet<>();
 
@@ -27,6 +29,14 @@ public class City {
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "city")
     private Set<Client> clients = new HashSet<>();
+
+    public Integer getCountryId() {
+        return countryId;
+    }
+
+    public void setCountryId(Integer countryId) {
+        this.countryId = countryId;
+    }
 
     public long getCityId() {
         return cityId;

@@ -22,17 +22,16 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-/*@RunWith(SpringRunner.class)
+@RunWith(SpringRunner.class)
 @SpringBootTest
 @Import(TravelplannerApplication.class)
-@EnableTransactionManagement*/
 public class TravelServiceTests {
 
-    //@Autowired
+    @Autowired
     TravelService travelService;
 
 
-    //@Test
+    @Test
     public void canSave() throws ClientException, ApiException {
         travelService.saveTravelAfterPick(new TravelAfterPickTreeDto(){{
             setFrom(new CheckpointAfterPickTreeDto(){{

@@ -9,6 +9,7 @@ import java.util.Map;
 public class ActionApiDto {
 
     private String name;
+    private String viewName;
     private ActionType type;
     private Map<String, Object> parameters;
     @JsonProperty("dataProducer")
@@ -30,6 +31,7 @@ public class ActionApiDto {
             actionApiDto.setName(actionDto.getName());
             actionApiDto.setParameters(actionDto.getParameters());
             actionApiDto.setType(actionDto.getType());
+            actionApiDto.setViewName(actionDto.getViewName());
         }
         catch (Exception ex)
         {
@@ -45,12 +47,21 @@ public class ActionApiDto {
             actionDto.setName(this.getName());
             actionDto.setParameters(this.getParameters());
             actionDto.setType(this.getType());
+            actionDto.setViewName(this.getViewName());
         }
         catch (Exception ex)
         {
             ex.printStackTrace();
         }
         return actionDto;
+    }
+
+    public String getViewName() {
+        return viewName;
+    }
+
+    public void setViewName(String viewName) {
+        this.viewName = viewName;
     }
 
     public String getName() {

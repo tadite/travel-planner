@@ -27,6 +27,8 @@ public class TravelService {
     TypeOfResidenceDao typeOfResidenceDao;
     @Autowired
     ClientDao clientDao;
+    @Autowired
+    CheckPointDao checkPointDao;
 
     public void saveTravelAfterPick(TravelAfterPickTreeDto pickDto){
         try {
@@ -43,10 +45,11 @@ public class TravelService {
     private void saveTravelUserLink(TravelAfterPickTreeDto pickDto, Travel travel) {
         Client client =clientDao.getClientById(pickDto.getClientId());
         if (client!=null){
-            travel.addTravelForClient(new TravelForClient(){{
-                setClient(client);
-                setTravel(travel);
-            }});
+            TravelForClient travelForClient = new TravelForClient();
+            travelForClient.setClient(client);
+            travelForClient.setTravel(travel);
+
+            travel.addTravelForClient(travelForClient);
         }
     }
 
@@ -69,12 +72,20 @@ public class TravelService {
         Country countryById = saveAndGetCountry(pickDto);
         City cityById = saveAndGetCity(pickDto, countryById);
 
-        PlaceOfResidence placeOfResidence = new PlaceOfResidence() {{
-            setCity(cityById);
-            setCountry(countryById);
-            setTypeOfResidence(typeOfResidenceDao.getTypeOfResidenceById(TypeOfResidence.FROM_PLACE_ID));
-        }};
+        PlaceOfResidence placeOfResidence = new PlaceOfResidence();
+        placeOfResidence.setCity(cityById);
+        placeOfResidence.setCountry(countryById);
+        typeOfResidenceDao.saveTypeOfResidence(new TypeOfResidence());
+
+        TypeOfResidence typeOfResidenceById = typeOfResidenceDao.getTypeOfResidenceById(TypeOfResidence.FROM_PLACE_ID);
+        placeOfResidence.setTypeOfResidence(typeOfResidenceById);
+
         fromCheckPoint.setPlaceOfResidence(placeOfResidence);
+
+        placeOfResidenceDao.savePlaceOfResidence(placeOfResidence);
+        checkPointDao.saveCheckPoint(fromCheckPoint);
+
+
         return fromCheckPoint;
     }
 
@@ -82,13 +93,15 @@ public class TravelService {
         Long cityId = pickDto.getFrom().getCityId();
         City cityById = cityDao.getCityById(cityId);
         if (cityById==null){
-            cityById = new City(){{
-                setCityId(cityId);
-                setCountry(countryById);
-                setName(vkGeoNamesProvider.getCityNameById(cityId.intValue()));
-            }};
+            cityById = new City();
+            cityById.setCityId(cityId);
+            cityById.setCountryId(countryById.getCountryId());
+            cityById.setName(vkGeoNamesProvider.getCityNameById(cityId.intValue()));
+
             cityDao.saveCity(cityById);
         }
+
+        pickDto.getFrom().setCityName(cityById.getName());
         return cityById;
     }
 
@@ -96,13 +109,14 @@ public class TravelService {
         Integer countryId = pickDto.getFrom().getCountryId();
         Country countryById = countryDao.getCountryById(countryId);
         if (countryById==null){
-            countryById = new Country(){{
-                setCountryId(countryId);
-                setName(vkGeoNamesProvider.getCountryNameById(countryId));
-            }};
+            countryById = new Country();
+            countryById.setCountryId(countryId);
+            countryById.setName(vkGeoNamesProvider.getCountryNameById(countryId));
+
             countryDao.saveCountry(countryById);
         }
 
+        pickDto.getFrom().setCountryName(countryById.getName());
         return countryById;
     }
 }

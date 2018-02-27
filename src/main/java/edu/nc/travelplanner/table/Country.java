@@ -9,7 +9,6 @@ import java.util.Set;
 public class Country {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "country_id")
     private Integer countryId;
 
