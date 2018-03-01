@@ -1,0 +1,56 @@
+<div class="row" style=" margin-top: 10px; margin-left: 30px; margin-right: 50px">
+
+    <div class="col-xs-3 col-md-3"  style= " height:100%;margin-top: 80px">
+        <ul class="list-group list-unstyled">
+            <a class="list-group-item"style="margin-top: 10px"><li><span class="glyphicon glyphicon-picture" style="cursor: pointer;"></span><span style="cursor: pointer"> Просмотр путешествий</span></li></a>
+            <a class="list-group-item"><li><span class="glyphicon glyphicon-user" style="cursor: pointer"></span><span style="cursor: pointer"> Просмотр профилей</span></li></a>
+
+            <a [routerLink]="['/config']" class="list-group-item"><li><span class="glyphicon glyphicon-dashboard" style="cursor: pointer"></span><span style="cursor: pointer"> Дерево конфигурации</span></li></a>
+        </ul>
+    </div>
+
+    <div class="col-xs-9 col-md-9" style= " margin-top: 80px">
+        <div class="row">
+            <div class="example-container mat-elevation-z8">
+                <mat-table #table [dataSource]="dataSource">
+
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="position">
+                        <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="name">
+                        <mat-header-cell *matHeaderCellDef> Название </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+                    </ng-container>
+
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="weight">
+                        <mat-header-cell *matHeaderCellDef> Дата создания </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.date}} </mat-cell>
+                    </ng-container>
+
+                    <!-- Symbol Column -->
+                    <ng-container matColumnDef="symbol">
+                        <mat-header-cell *matHeaderCellDef> Автор </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.autor}} </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
+
+                <mat-paginator #paginator
+                               [pageSize]="10"
+                               [pageSizeOptions]="[5, 10, 20]"
+                               [showFirstLastButtons]="true">
+                </mat-paginator>
+            </div>
+        </div>
+    </div>
+
+    <div class="background-image" style="background-image : url('http://upload.akusherstvo.ru/image1458482.jpg')"> </div>
+</div>
+
