@@ -36,7 +36,7 @@ module.exports = {
                 test: /\.css$/,
                 include: path.resolve(__dirname,'src/app'),
                 loader: 'raw-loader'
-              }
+            }
        ]
    },
    plugins: [

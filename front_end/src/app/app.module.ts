@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { LoadingModule} from 'ngx-loading';
 
 import { AppComponent }   from './app.component';
 import { LoginComponent }   from './login/login.component';
@@ -27,7 +28,7 @@ const appRoutes: Routes =[
 ];
 
 @NgModule({
-    imports:      [ BrowserModule, RouterModule.forRoot(appRoutes, { useHash: true }), FormsModule, BrowserAnimationsModule, HttpClientModule, NgbModule.forRoot()],
+    imports:      [ BrowserModule, RouterModule.forRoot(appRoutes, { useHash: true }), FormsModule, BrowserAnimationsModule, HttpClientModule, NgbModule.forRoot(), LoadingModule],
     declarations: [ AppComponent, HomeComponent, LoginComponent, UserComponent, NotFoundComponent, QuestionsComponent], 
    providers: [
     {
