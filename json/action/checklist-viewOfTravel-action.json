@@ -1,0 +1,11 @@
+{
+  "name": "checklist-viewOfTravel-action",
+  "viewName": "Выберите вид путешествия",
+  "type": "checklist",
+  "parameters": {
+    "optionsMap": {
+      "key1": "Спортивное",
+      "key2": "Экскурсионное"
+    }
+  }
+}

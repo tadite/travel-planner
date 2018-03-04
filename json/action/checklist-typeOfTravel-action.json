@@ -1,0 +1,12 @@
+{
+  "name": "checklist-typeOfTravel-action",
+  "viewName": "Выберите тип путешествия",
+  "type": "checklist",
+  "parameters": {
+    "optionsMap": {
+      "key1": "Отели",
+      "key2": "Гостиницы",
+      "key3": "Хостелы"
+    }
+  }
+}

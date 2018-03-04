@@ -1,0 +1,111 @@
+{
+  "name": "tree",
+  "headActionName": "dropdownlist-doYouKnowYourFullTravel-action",
+  "jumps": [
+
+    {
+      "fromActionName": "dropdownlist-doYouKnowYourFullTravel-action",
+      "toActionName": "dropdownlist-departure-country-action",
+      "type": "without-condition",
+      "params": {
+        "test-key": "test-value"
+      }
+    },
+    {
+      "fromActionName": "dropdownlist-departure-country-action",
+      "toActionName": "dropdownlist-departure-city-action",
+      "type": "without-condition",
+      "params": {
+        "test-key": "test-value"
+      }
+    },
+    {
+      "fromActionName": "dropdownlist-departure-city-action",
+      "toActionName": "textinput-numberOfPersons-action",
+      "type": "without-condition",
+      "params": {
+        "test-key": "test-value"
+      }
+    },
+    {
+      "fromActionName": "textinput-numberOfPersons-action",
+      "toActionName": "dateIntervalInput-travelPeriod-action",
+      "type": "without-condition",
+      "params": {
+        "test-key": "test-value"
+      }
+    },
+    {
+      "fromActionName": "dateIntervalInput-travelPeriod-action",
+      "toActionName": "dropdownlist-countries-action",
+      "type": "without-condition",
+      "params": {
+        "test-key": "test-value"
+      }
+    },
+    {
+      "fromActionName": "dropdownlist-countries-action",
+      "toActionName": "checklist-citiesByCountryId-action",
+      "type": "without-condition",
+      "params": {
+        "test-key": "test-value"
+      }
+    },
+    {
+      "fromActionName": "checklist-citiesByCountryId-action",
+      "toActionName": "dropdownlist-budget-action",
+      "type": "without-condition",
+      "params": {
+        "test-key": "test-value"
+      }
+    },
+    {
+      "fromActionName": "dropdownlist-budget-action",
+      "toActionName": "checklist-typeOfTravel-action",
+      "type": "without-condition",
+      "params": {
+        "test-key": "test-value"
+      }
+    },
+    {
+      "fromActionName": "checklist-typeOfTravel-action",
+      "toActionName": "dropdownlist-typeOfMovement-action",
+      "type": "without-condition",
+      "params": {
+        "test-key": "test-value"
+      }
+    },
+    {
+      "fromActionName": "dropdownlist-typeOfMovement-action",
+      "toActionName": "checklist-viewOfTravel-action",
+      "type": "without-condition",
+      "params": {
+        "test-key": "test-value"
+      }
+    },
+    {
+      "fromActionName": "checklist-viewOfTravel-action",
+      "toActionName": "dropdownlist-kindOfActivity-action",
+      "type": "without-condition",
+      "params": {
+        "test-key": "test-value"
+      }
+    },
+    {
+      "fromActionName": "dropdownlist-kindOfActivity-action",
+      "toActionName": "dropdownlist-typeOfExcursion-action",
+      "type": "without-condition",
+      "params": {
+        "test-key": "test-value"
+      }
+    },
+    {
+      "fromActionName": "dropdownlist-typeOfExcursion-action",
+      "toActionName": "checklist-option-action",
+      "type": "without-condition",
+      "params": {
+        "test-key": "test-value"
+      }
+    }
+  ]
+}

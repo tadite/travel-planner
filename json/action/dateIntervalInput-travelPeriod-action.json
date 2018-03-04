@@ -1,0 +1,4 @@
+{"name":"dateIntervalInput-travelPeriod-action",
+  "viewName":"Выберите период вашей поездки",
+  "type":"date_interval_input",
+  "parameters":{"data":" "}}

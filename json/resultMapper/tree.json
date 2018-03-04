@@ -1,0 +1,74 @@
+{
+  "map": [
+    {
+      "from": "dropdownlist-doYouKnowYourFullTravel-action",
+      "to": "",
+      "type": ""
+    },
+    {
+      "from": "dropdownlist-departure-country-action",
+      "to": "from.departureCountryId",
+      "type": ""
+    },
+    {
+      "from": "dropdownlist-departure-city-action",
+      "to": "from.departureCityId",
+      "type": ""
+    },
+    {
+      "from": "textinput-numberOfPersons-action",
+      "to": "from.numberOfPersons",
+      "type": ""
+    },
+    {
+      "from": "dateIntervalInput-travelPeriod-action",
+      "to": "from.travelPeriod",
+      "type": ""
+    },
+    {
+      "from": "dropdownlist-countries-action",
+      "to": "from.countryId",
+      "type": ""
+    },
+    {
+      "from": "checklist-citiesByCountryId-action",
+      "to": "from.cityId",
+      "type": "list-first"
+    },
+    {
+      "from": "dropdownlist-budget-action",
+      "to": "from.budget",
+      "type": ""
+    },
+    {
+      "from": "checklist-typeOfTravel-action",
+      "to": "from.typeOfTravelId",
+      "type": "list-first"
+    },
+    {
+      "from": "dropdownlist-typeOfMovement-action",
+      "to": "from.typeOfMovement",
+      "type": ""
+    },
+    {
+      "from": "checklist-viewOfTravel-action",
+      "to": "from.viewOfTravel",
+      "type": "list-first"
+    },
+    {
+      "from": "dropdownlist-kindOfActivity-action",
+      "to": "from.kindOfActivity",
+      "type": ""
+    },
+    {
+      "from": "dropdownlist-typeOfExcursion-action",
+      "to": "from.typeOfExcursion",
+      "type": ""
+    },
+    {
+      "from": "checklist-option-action",
+      "to": "from.optionId",
+      "type": "list-first"
+    }
+  ]
+}
