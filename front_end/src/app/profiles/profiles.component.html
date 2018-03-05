@@ -1,0 +1,77 @@
+<div class="page-header">
+    <img class="img" src="http://upload.akusherstvo.ru/image1482617.jpg">
+    <div class="title">ПЛАНИРОВЩИК ПУТЕШЕСТВИЙ</div>
+    <nav class="fixed-nav-bar">
+        <ul id="navbar">
+            <li><a>{{login}} <span class="glyphicon glyphicon-menu-down"></span></a>
+                <ul>
+                    <hr>
+                    <li><a (click)="logout()"><span class="glyphicon glyphicon-log-out"></span> Выйти</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<div class="row" style=" margin-top: 10px; margin-left: 30px; margin-right: 50px">
+
+    <div class="col-xs-3 col-md-3"  style= "background: rgba(255, 255, 255, .5); height:100%;margin-top: 20px">
+        <ul class="list-group list-unstyled" >
+            <a [routerLink]="['/admin']" class="list-group-item"style="background: rgba(255, 255, 255, .5);margin-top: 10px"><li><span class="glyphicon glyphicon-picture" style="cursor: pointer;"></span><span style="cursor: pointer"> Просмотр путешествий</span></li></a>
+            <a class="list-group-item"style="background: rgba(255, 255, 255, .5)"><li><span class="glyphicon glyphicon-user" style="cursor: pointer"></span><span style="cursor: pointer"> Просмотр профилей</span></li></a>
+
+            <a [routerLink]="['/config']" class="list-group-item"style="background: rgba(255, 255, 255, .5)"><li><span class="glyphicon glyphicon-dashboard" style="cursor: pointer"></span><span style="cursor: pointer"> Дерево конфигурации</span></li></a>
+        </ul>
+    </div>
+
+    <div class="col-xs-9 col-md-9" style= "  margin-top: 20px">
+        <div class="row">
+            <div class="example-container mat-elevation-z8">
+                <mat-table #table [dataSource]="dataSource">
+
+                    <ng-container matColumnDef="clientId">
+                        <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.clientId}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="userName">
+                        <mat-header-cell *matHeaderCellDef> Логин </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.userName}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="firstName">
+                        <mat-header-cell *matHeaderCellDef> Имя </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.firstName}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="lastName">
+                        <mat-header-cell *matHeaderCellDef> Фамилия </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.lastName}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="email">
+                        <mat-header-cell *matHeaderCellDef> E-mail </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="age">
+                        <mat-header-cell *matHeaderCellDef> Возраст</mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.age}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="countryName">
+                        <mat-header-cell *matHeaderCellDef> Страна </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.countryName}} </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="background-image" style="background-image : url('http://upload.akusherstvo.ru/image1458482.jpg')"> </div>
+</div>
+
