@@ -1,11 +1,27 @@
+<div class="page-header">
+    <img class="img" src="http://upload.akusherstvo.ru/image1482617.jpg">
+    <div class="title">ПЛАНИРОВЩИК ПУТЕШЕСТВИЙ</div>
+    <nav class="fixed-nav-bar">
+        <ul id="navbar">
+            <li><a>{{login}} <span class="glyphicon glyphicon-menu-down"></span></a>
+                <ul>
+                    <hr>
+                    <li><a (click)="logout()"><span class="glyphicon glyphicon-log-out"></span> Выйти</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</div>
+
 <div class="row" style=" margin-top: 10px; margin-left: 30px; margin-right: 50px">
 
-    <div class="col-xs-3 col-md-3"  style="  height:100%;margin-top: 100px">
+    <div class="col-xs-3 col-md-3"  style="  height:100%;margin-top: 100px; background: rgba(255, 255, 255, .5)">
         <ul class="list-group list-unstyled">
-            <a class="list-group-item" style=" margin-top: 10px" ><li><span class="glyphicon glyphicon-plus" style="cursor: pointer;"></span><span style="cursor: pointer"> Добавить</span></li></a>
-            <a class="list-group-item"><li><span class="glyphicon glyphicon-edit" style="cursor: pointer"></span><span style="cursor: pointer"> Редактировать</span></li></a>
-
-            <a class="list-group-item"><li><span class="glyphicon glyphicon-trash" style="cursor: pointer"></span><span style="cursor: pointer"> Удалить</span></li></a>
+            <a class="list-group-item" style="background: rgba(255, 255, 255, .5); margin-top: 10px" ><li><span class="glyphicon glyphicon-plus" style="cursor: pointer;"></span><span style="cursor: pointer"> Добавить</span></li></a>
+            <a class="list-group-item"style="background: rgba(255, 255, 255, .5)"><li><span class="glyphicon glyphicon-edit" style="cursor: pointer"></span><span style="cursor: pointer"> Редактировать</span></li></a>
+            <a class="list-group-item"style="background: rgba(255, 255, 255, .5)"><li><span class="glyphicon glyphicon-trash" style="cursor: pointer"></span><span style="cursor: pointer"> Удалить</span></li></a>
+            <hr>
+            <a [routerLink]="['/admin']" class="list-group-item"style="background: rgba(255, 255, 255, .5)"><li><span class="glyphicon glyphicon-home" style="cursor: pointer"></span><span style="cursor: pointer"> Назад</span></li></a>
         </ul>
     </div>
 
@@ -13,23 +29,23 @@
         <div class="row">
             <ul class="list-group list-unstyled">
     <div class="col-xs-2 col-md-2" style="  height:10%;margin-top: 10px;margin-left: 20px">
-        <div class="list-group-item"style=" margin-top: 10px;margin-bottom: 10px" ><li><span  style="cursor: pointer;"></span><span style="cursor: pointer"> Тип элемента</span></li>
+        <div class="list-group-item"style=" background: rgba(255, 255, 255, .5); margin-top: 10px;margin-bottom: 10px" ><li><span  style="cursor: pointer;"></span><span style="cursor: pointer"> Тип элемента</span></li>
         </div>
     </div>
     <div class="col-xs-2 col-md-2" style="  height:10%;margin-top: 10px">
-        <div class="list-group-item" style=" margin-top: 10px;margin-bottom: 10px" ><li><span style="cursor: pointer;"></span><span style="cursor: pointer"> Тип элемента</span></li>
+        <div class="list-group-item" style="background: rgba(255, 255, 255, .5); margin-top: 10px;margin-bottom: 10px" ><li><span style="cursor: pointer;"></span><span style="cursor: pointer"> Тип элемента</span></li>
         </div>
     </div>
     <div class="col-xs-2 col-md-2" style="  height:10%;margin-top: 10px">
-        <div class="list-group-item" style=" margin-top: 10px;margin-bottom: 10px" ><li><span style="cursor: pointer;"></span><span style="cursor: pointer"> Тип элемента</span></li>
+        <div class="list-group-item" style="background: rgba(255, 255, 255, .5); margin-top: 10px;margin-bottom: 10px" ><li><span style="cursor: pointer;"></span><span style="cursor: pointer"> Тип элемента</span></li>
         </div>
     </div>
     <div class="col-xs-2 col-md-2" style="  height:10%;margin-top: 10px">
-        <div class="list-group-item" style=" margin-top: 10px;margin-bottom: 10px" ><li><span  style="cursor: pointer;"></span><span style="cursor: pointer"> Тип элемента</span></li>
+        <div class="list-group-item" style=" background: rgba(255, 255, 255, .5);margin-top: 10px;margin-bottom: 10px" ><li><span  style="cursor: pointer;"></span><span style="cursor: pointer"> Тип элемента</span></li>
         </div>
     </div>
     <div class="col-xs-2 col-md-2" style="  height:10%;margin-top: 10px">
-        <div class="list-group-item" style=" margin-top: 10px;margin-bottom: 10px" ><li><span  style="cursor: pointer;"></span><span style="cursor: pointer"> Тип элемента</span></li>
+        <div class="list-group-item" style=" background: rgba(255, 255, 255, .5);margin-top: 10px;margin-bottom: 10px" ><li><span  style="cursor: pointer;"></span><span style="cursor: pointer"> Тип элемента</span></li>
         </div>
     </div>
             </ul>
