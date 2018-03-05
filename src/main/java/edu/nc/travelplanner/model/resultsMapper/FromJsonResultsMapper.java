@@ -60,7 +60,7 @@ public class FromJsonResultsMapper implements ResultsMapper {
             travelDto.getFrom().setCityId(Long.valueOf((String)getPickValue(pick,node)));
         if (node.getTo().equals("from.optionId"))
             travelDto.getFrom().setOptionId(Integer.valueOf((String)getPickValue(pick,node)));
-        if (node.getTo().equals("from.from.typeOfTravelId"))
+        if (node.getTo().equals("from.typeOfTravelId"))
             travelDto.getFrom().setTypeOfTravelId(Integer.valueOf((String)getPickValue(pick,node)));
         if (node.getTo().equals("from.viewOfTravel"))
             travelDto.getFrom().setViewOfTravel((String)getPickValue(pick,node));
