@@ -1,0 +1,12 @@
+{
+  "name": "dropdownlist-kindOfActivity-action",
+  "viewName": "Веберите вид деятельности",
+  "type": "dropdown_input",
+  "parameters": {
+    "optionsMap": {
+      "key1": "Горнолыжный спорт",
+      "key2": "Пешеходный туризм",
+      "key3": "Экстремальный спорт"
+    }
+  }
+}

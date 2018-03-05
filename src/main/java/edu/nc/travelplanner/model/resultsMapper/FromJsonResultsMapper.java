@@ -15,6 +15,17 @@ public class FromJsonResultsMapper implements ResultsMapper {
     private final List<String> travelParams =new LinkedList<String>(){{
         push("from.cityId");
         push("from.countryId");
+        push("from.optionId");
+        push("from.typeOfTravelId");
+        push("from.viewOfTravel");
+        push("from.travelPeriod");
+        push("from.budget");
+        push("from.departureCityId");
+        push("from.departureCountryId");
+        push("from.kindOfActivity");
+        push("from.typeOfExcursion");
+        push("from.typeOfMovement");
+        push("from.numberOfPersons");
     }};
 
     public FromJsonResultsMapper(List<MapNode> mapNodes) {
@@ -46,7 +57,29 @@ public class FromJsonResultsMapper implements ResultsMapper {
 
     private void setTravelDtoParam(TravelAfterPickTreeDto travelDto, PickResult pick, MapNode node){
         if (node.getTo().equals("from.cityId"))
-                travelDto.getFrom().setCityId(Long.valueOf((String)getPickValue(pick,node)));
+            travelDto.getFrom().setCityId(Long.valueOf((String)getPickValue(pick,node)));
+        if (node.getTo().equals("from.optionId"))
+            travelDto.getFrom().setOptionId(Integer.valueOf((String)getPickValue(pick,node)));
+        if (node.getTo().equals("from.from.typeOfTravelId"))
+            travelDto.getFrom().setTypeOfTravelId(Integer.valueOf((String)getPickValue(pick,node)));
+        if (node.getTo().equals("from.viewOfTravel"))
+            travelDto.getFrom().setViewOfTravel((String)getPickValue(pick,node));
+        if (node.getTo().equals("from.travelPeriod"))
+            travelDto.getFrom().setTravelPeriod((String)getPickValue(pick,node));
+        if (node.getTo().equals("from.budget"))
+            travelDto.getFrom().setBudget((String)getPickValue(pick,node));
+        if (node.getTo().equals("from.departureCityId"))
+            travelDto.getFrom().setDepartureCityId(Long.valueOf((String)getPickValue(pick,node)));
+        if (node.getTo().equals("from.departureCountryId"))
+            travelDto.getFrom().setDepartureCountryId(Integer.valueOf((String)getPickValue(pick,node)));
+        if (node.getTo().equals("from.kindOfActivity"))
+            travelDto.getFrom().setKindOfActivity((String)getPickValue(pick,node));
+        if (node.getTo().equals("from.typeOfExcursion"))
+            travelDto.getFrom().setTypeOfExcursion((String)getPickValue(pick,node));
+        if (node.getTo().equals("from.typeOfMovement"))
+            travelDto.getFrom().setTypeOfMovement((String)getPickValue(pick,node));
+        if (node.getTo().equals("from.numberOfPersons"))
+            travelDto.getFrom().setNumberOfPerson(Integer.valueOf((String)getPickValue(pick,node)));
         else if (node.getTo().equals("from.countryId"))
             travelDto.getFrom().setCountryId(Integer.valueOf((String)getPickValue(pick,node)));
 

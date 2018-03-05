@@ -1,0 +1,13 @@
+{
+  "name": "dropdownlist-typeOfMovement-action",
+  "viewName": "Каким образом вы хотите добраться до места проживания",
+  "type": "dropdown_input",
+  "parameters": {
+    "optionsMap": {
+      "key1": "Самостоятельно",
+      "key2": "Поезд",
+      "key3": "Самолет",
+      "key4": "Автобус"
+    }
+  }
+}

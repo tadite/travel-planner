@@ -22,8 +22,8 @@ public class ClientDao {
 
     @Transactional
     public String saveClient(Client client) {
-        Long isSuccess = (Long)getSession().save(client);
-        if(isSuccess >= 1){
+        getSession().saveOrUpdate(client);
+        if(2 >= 1){
             return "Success";
         }else{
             return "Error while Saving Client";
@@ -61,4 +61,6 @@ public class ClientDao {
         }
         return null;
     }
+
+
 }

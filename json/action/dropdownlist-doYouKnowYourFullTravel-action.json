@@ -1,0 +1,11 @@
+{
+  "name": "dropdownlist-doYouKnowYourFullTravel-action",
+  "viewName": "Вы знаете, каким будет Ваше будущее путешествие",
+  "type": "dropdown_input",
+  "parameters": {
+    "optionsMap": {
+      "key1": "Да",
+      "key2": "Нет"
+    }
+  }
+}
