@@ -8,6 +8,7 @@ import edu.nc.travelplanner.model.action.source.DropDownListIntegrationAction;
 import edu.nc.travelplanner.model.action.source.InfoIntegrationAction;
 import edu.nc.travelplanner.model.jump.Jump;
 import edu.nc.travelplanner.model.jump.JumpType;
+import edu.nc.travelplanner.model.jump.LogicConditionOnPickResultJump;
 import edu.nc.travelplanner.model.jump.NoConditionJump;
 import edu.nc.travelplanner.model.source.*;
 import edu.nc.travelplanner.model.source.filter.*;
@@ -22,6 +23,7 @@ public class DefaultEnumMapper implements EnumMapper {
 
     private Map<JumpType, Supplier<Jump>> jumpCreationMap = new HashMap<JumpType, Supplier<Jump>>(){{
         put(JumpType.WITHOUT_CONDITION, NoConditionJump::new);
+        put(JumpType.LOGIC_CONDITION_ON_PICK_RESULT, LogicConditionOnPickResultJump::new);
     }};
 
     private Map<ActionType, Supplier<Action>> actionCreationMap = new HashMap<ActionType, Supplier<Action>>(){{

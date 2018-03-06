@@ -1,1 +1,14 @@
-{"map":[{"from":"dropdownlist-countries-action", "to":"from.countryId", "type":""}, {"from":"checklist-citiesByCountryId-action", "to":"from.cityId", "type":"list-first"}]}
+{
+  "map": [
+    {
+      "from": "dropdownlist-countries-action",
+      "to": "from.countryId",
+      "type": ""
+    },
+    {
+      "from": "checklist-citiesByCountryId-action",
+      "to": "from.cityId",
+      "type": "list-first"
+    }
+  ]
+}

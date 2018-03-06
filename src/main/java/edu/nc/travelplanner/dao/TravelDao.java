@@ -39,6 +39,16 @@ public class TravelDao {
     }
 
     @Transactional
+    public Travel deleteById(Long id) {
+        Travel travelById = getTravelById(id);
+        if (travelById!=null){
+            getSession().delete(travelById);
+            return travelById;
+        }
+        return null;
+    }
+
+    @Transactional
     @SuppressWarnings("unchecked")
     public List<Travel> getAllTravels() {
         return getSession().createQuery("from Travel").list();

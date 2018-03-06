@@ -1,1 +1,25 @@
-{"name":"cities-by-countryId-producer","filters":[{"type":"json_path","parameters":{"expression":"$"}},{"type":"list_to_map","parameters":{"valueName":"title","keyName":"cid"}}],"mappers":[{"from":"dropdownlist-countries-action","to":"country_id"}],"source":"vk-getCitiesByCountryId"}
+{
+  "name": "cities-by-countryId-producer",
+  "filters": [
+    {
+      "type": "json_path",
+      "parameters": {
+        "expression": "$"
+      }
+    },
+    {
+      "type": "list_to_map",
+      "parameters": {
+        "valueName": "title",
+        "keyName": "cid"
+      }
+    }
+  ],
+  "mappers": [
+    {
+      "from": "dropdownlist-countries-action",
+      "to": "country_id"
+    }
+  ],
+  "source": "vk-getCitiesByCountryId"
+}

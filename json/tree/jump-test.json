@@ -1,0 +1,39 @@
+{
+  "name": "jump-test",
+  "headActionName": "dropdownlist-doYouKnowYourFullTravel-action",
+  "jumps": [
+    {
+      "fromActionName": "dropdownlist-doYouKnowYourFullTravel-action",
+      "toActionName": "test-action-2",
+      "type": "logic-condition-on-pick-result",
+      "params": {
+        "conditionType": "=s",
+        "pickResultName": "dropdownlist1.dropdownlist-doYouKnowYourFullTravel-action",
+        "pickResultCheck": "value",
+        "conditionValue": "dropdownlist1.key1"
+      }
+    },
+    {
+      "fromActionName": "dropdownlist-doYouKnowYourFullTravel-action",
+      "toActionName": "test-condition-jump-1",
+      "type": "logic-condition-on-pick-result",
+      "params": {
+        "conditionType": "=s",
+        "pickResultName": "dropdownlist1.dropdownlist-doYouKnowYourFullTravel-action",
+        "pickResultCheck": "value",
+        "conditionValue": "dropdownlist1.key2"
+      }
+    },
+    {
+      "fromActionName": "test-condition-jump-1",
+      "toActionName": "dropdownlist-doYouKnowYourFullTravel-action",
+      "type": "logic-condition-on-pick-result",
+      "params": {
+        "conditionType": "=s",
+        "pickResultName": "dropdownlist1.test-condition-jump-1",
+        "pickResultCheck": "value",
+        "conditionValue": "dropdownlist1.key1"
+      }
+    }
+  ]
+}

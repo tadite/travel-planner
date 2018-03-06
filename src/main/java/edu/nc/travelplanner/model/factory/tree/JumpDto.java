@@ -9,12 +9,12 @@ public class JumpDto {
     private String fromActionName;
     private String toActionName;
     private JumpType type;
-    private Map<String, String> params;
+    private Map<String, Object> params;
 
     public JumpDto() {
     }
 
-    public JumpDto(String fromActionName, String toActionName, JumpType type, Map<String, String> params) {
+    public JumpDto(String fromActionName, String toActionName, JumpType type, Map<String, Object> params) {
         this.fromActionName = fromActionName;
         this.toActionName = toActionName;
         this.type = type;
@@ -45,11 +45,11 @@ public class JumpDto {
         this.fromActionName = fromActionName;
     }
 
-    public Map<String, String> getParams() {
+    public Map<String, Object> getParams() {
         return params;
     }
 
-    public void setParams(Map<String, String> params) {
+    public void setParams(Map<String, Object> params) {
         this.params = params;
     }
 }

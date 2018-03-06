@@ -1,1 +1,8 @@
-{"name":"test-action3","viewName":"Выберите страну для путешествия3","type":"text_input","parameters":{"data":"test-data1"}}
+{
+  "name": "test-action3",
+  "viewName": "Выберите страну для путешествия3",
+  "type": "text_input",
+  "parameters": {
+    "data": "test-data1"
+  }
+}

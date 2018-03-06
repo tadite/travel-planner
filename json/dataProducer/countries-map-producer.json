@@ -1,1 +1,20 @@
-{"name":"countries-map-producer","filters":[{"type":"json_path","parameters":{"expression":"$"}},{"type":"list_to_map","parameters":{"valueName":"title","keyName":"cid"}}],"source":"vk-getCountries-all", "mappers":[]}
+{
+  "name": "countries-map-producer",
+  "filters": [
+    {
+      "type": "json_path",
+      "parameters": {
+        "expression": "$"
+      }
+    },
+    {
+      "type": "list_to_map",
+      "parameters": {
+        "valueName": "title",
+        "keyName": "cid"
+      }
+    }
+  ],
+  "source": "vk-getCountries-all",
+  "mappers": []
+}

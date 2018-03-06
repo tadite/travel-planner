@@ -1,6 +1,7 @@
 package edu.nc.travelplanner.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import edu.nc.travelplanner.exception.CustomParseException;
 import edu.nc.travelplanner.model.action.ActionArgs;
 import edu.nc.travelplanner.model.action.ActionArgsBuilder;
 import edu.nc.travelplanner.model.action.ActionState;
@@ -27,25 +28,36 @@ public class ActionTreeController {
     }
 
     @PostMapping(path = "/action")
-    public ResponseEntity<String> executePost(@RequestBody Map<String, String> argsMap){
+    public ResponseEntity<String> executePost(@RequestBody Map<String, String> argsMap) {
 
         ActionArgs actionArgs = new ActionArgsBuilder()
                 .addAllArgs(argsMap)
                 .setState(ActionState.DECISION)
                 .build();
 
-        return new ResponseEntity<>(orchestrator.execute(actionArgs).getRawData(), HttpStatus.OK) ;
+        try {
+            return new ResponseEntity<>(orchestrator.execute(actionArgs).getRawData(), HttpStatus.OK) ;
+        } catch (CustomParseException e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     @GetMapping(path = "/action")
-    public ResponseEntity<String> executeGet(@RequestParam Map<String, String> argsMap){
+    public ResponseEntity<String> executeGet(@RequestParam Map<String, String> argsMap) {
 
         ActionArgs actionArgs = new ActionArgsBuilder()
                 .addAllArgs(argsMap)
                 .setState(ActionState.PRESENTATION)
                 .build();
 
-        return new ResponseEntity<>(orchestrator.execute(actionArgs).getRawData(), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(orchestrator.execute(actionArgs).getRawData(), HttpStatus.OK);
+        } catch (CustomParseException e) {
+            e.printStackTrace();
+        }
+
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     @Autowired

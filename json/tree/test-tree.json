@@ -1,1 +1,30 @@
-{"name":"test-tree","headActionName":"test-action-1","jumps":[{"fromActionName":"test-action-1","toActionName":"test-action-2","type":"without-condition","params":{"test-key":"test-value"}},{"fromActionName":"test-action-2","toActionName":"test-action-3","type":"without-condition","params":{"test-key":"test-value"}},{"fromActionName":"test-action-3","toActionName":"test-action-4","type":"without-condition","params":{"test-key":"test-value"}}]}
+{
+  "name": "test-tree",
+  "headActionName": "test-action-1",
+  "jumps": [
+    {
+      "fromActionName": "test-action-1",
+      "toActionName": "test-action-2",
+      "type": "without-condition",
+      "params": {
+        "test-key": "test-value"
+      }
+    },
+    {
+      "fromActionName": "test-action-2",
+      "toActionName": "test-action-3",
+      "type": "without-condition",
+      "params": {
+        "test-key": "test-value"
+      }
+    },
+    {
+      "fromActionName": "test-action-3",
+      "toActionName": "test-action-4",
+      "type": "without-condition",
+      "params": {
+        "test-key": "test-value"
+      }
+    }
+  ]
+}
