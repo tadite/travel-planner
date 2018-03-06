@@ -23,7 +23,7 @@
     {
       "from": "dateIntervalInput-travelPeriod-action",
       "to": "from.travelPeriod",
-      "type": ""
+      "type": "list-first"
     },
     {
       "from": "dropdownlist-countries-action",
