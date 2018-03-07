@@ -38,12 +38,18 @@ public class Client implements UserDetails {
     private String password;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "city_id")
+    @JoinColumn(name = "city_id", insertable=false, updatable=false)
     private City city;
 
+    @Column(name = "city_id")
+    private Long cityId;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "country_id")
+    @JoinColumn(name = "country_id", insertable=false, updatable=false)
     private Country country;
+
+    @Column(name = "country_id")
+    private Integer countryId;
 
     @Column(name = "role")
     private String role;
@@ -212,5 +218,21 @@ public class Client implements UserDetails {
 
     public Set<TravelForClient> getTravelForClients() {
         return travelForClients;
+    }
+
+    public Long getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(Long cityId) {
+        this.cityId = cityId;
+    }
+
+    public Integer getCountryId() {
+        return countryId;
+    }
+
+    public void setCountryId(Integer countryId) {
+        this.countryId = countryId;
     }
 }
