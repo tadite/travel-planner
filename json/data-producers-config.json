@@ -1,4 +1,6 @@
 {
-  "vk-all-countries": "countries-map-producer",
-  "vk-cities-by-countryid-and-query": "cities-by-countryId-and-query-producer"
+  "all-countries": "countries-map-producer",
+  "cities-by-countryid-and-query": "cities-by-countryId-and-query-producer",
+  "cityName-by-cityId": "cityName-by-cityId",
+  "countryName-by-countryId": "countryName-by-countryId"
 }

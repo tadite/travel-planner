@@ -16,6 +16,7 @@ import edu.nc.travelplanner.model.factory.source.FileSourceJsonReader;
 import edu.nc.travelplanner.model.factory.source.JsonSourceFactory;
 import edu.nc.travelplanner.model.main.DataProducerConfig;
 import edu.nc.travelplanner.model.main.DataProducerManager;
+import edu.nc.travelplanner.model.source.dataproducer.DataProducer;
 import edu.nc.travelplanner.service.travel.TravelSaveService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,26 +33,11 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.Map;
 
 public class TravelServiceTests {
 
-    DataProducerManager dataProducerManager = new DataProducerManager(
-            new JsonDataProducerFactory(new DefaultResponseFilterFactory(new DefaultEnumMapper()),
-                    new FileDataProducerJsonReader(new PathMapper()),
-                    new JsonSourceFactory(new FileSourceJsonReader(new PathMapper()),
-                            new DefaultEnumMapper()),new DefaultSenderFactory(new DefaultEnumMapper())),
-            new DataProducerConfig(new PathMapper(), new ObjectMapper()),
-            new ObjectMapper());
 
-    public TravelServiceTests() throws IOException {
-    }
-
-    @Test
-    public void test() throws DataProducerParseException, IOException {
-        Map<String, String> cities = dataProducerManager.getAllCitiesByCountryIdAndQuery(Long.valueOf(1), "Vorone");
-        Map<String, String> countries = dataProducerManager.getAllCountriesMap();
-        return;
-    }
 }

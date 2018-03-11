@@ -13,18 +13,10 @@ import java.util.Map;
 
 @Component
 public class DataProducerConfig {
-
-    @Autowired
-    ObjectMapper objectMapper;
-
-    public DataProducerConfig(PathMapper pathMapper, ObjectMapper objectMapper) throws IOException {
-        this.objectMapper = objectMapper;
-        map = objectMapper.readValue(new File(PathUtil.getPathInUserDir(pathMapper.getResultMapperConfigPath())), HashMap.class);
-    }
-
     private final Map<String, String> map;
 
-    public DataProducerConfig(@Autowired PathMapper pathMapper) throws IOException {
+    @Autowired
+    public DataProducerConfig(ObjectMapper objectMapper, PathMapper pathMapper) throws IOException {
         map = objectMapper.readValue(new File(PathUtil.getPathInUserDir(pathMapper.getResultMapperConfigPath())), HashMap.class);
     }
 
@@ -33,10 +25,18 @@ public class DataProducerConfig {
     }
 
     public String getAllCountriesDataProducerName(){
-        return map.get("vk-all-countries");
+        return map.get("all-countries");
     }
 
     public String getCitiesByCountryIdAndQueryName(){
-        return map.get("vk-cities-by-countryid-and-query");
+        return map.get("cities-by-countryid-and-query");
+    }
+
+    public String getCityNameByCityId(){
+        return map.get("cityName-by-cityId");
+    }
+
+    public String getCountryNameByCountryId(){
+        return map.get("countryName-by-countryId");
     }
 }

@@ -1,0 +1,25 @@
+{
+  "name": "cityName-by-cityId",
+  "filters": [
+    {
+      "type": "json_path",
+      "parameters": {
+        "expression": "response..name"
+      }
+    },
+    {
+      "type": "regexp_replace",
+      "parameters": {
+        "regex": "([\\[]|[\"]|[\\]])",
+        "replacement":""
+      }
+    }
+  ],
+  "mappers": [
+    {
+      "from": "city_id",
+      "to": "city_ids"
+    }
+  ],
+  "source": "vk-getCityNameById"
+}

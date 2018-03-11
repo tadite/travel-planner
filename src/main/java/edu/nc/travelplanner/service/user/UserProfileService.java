@@ -5,6 +5,7 @@ import com.vk.api.sdk.exceptions.ClientException;
 import edu.nc.travelplanner.dao.ClientDao;
 import edu.nc.travelplanner.dao.CountryDao;
 import edu.nc.travelplanner.dto.profile.UserProfileDto;
+import edu.nc.travelplanner.model.factory.dataproducer.DataProducerParseException;
 import edu.nc.travelplanner.service.travel.GeoNamesDbFiller;
 import edu.nc.travelplanner.table.City;
 import edu.nc.travelplanner.table.Client;
@@ -65,6 +66,8 @@ public class UserProfileService {
         } catch (ClientException e) {
             e.printStackTrace();
         } catch (ApiException e) {
+            e.printStackTrace();
+        } catch (DataProducerParseException e) {
             e.printStackTrace();
         }
 

@@ -1,0 +1,25 @@
+{
+  "name": "countryName-by-countryId",
+  "filters": [
+    {
+      "type": "json_path",
+      "parameters": {
+        "expression": "response..name"
+      }
+    },
+    {
+      "type": "regexp_replace",
+      "parameters": {
+        "regex": "([\\[]|[\"]|[\\]])",
+        "replacement":""
+      }
+    }
+  ],
+  "mappers": [
+    {
+      "from": "country_id",
+      "to": "country_ids"
+    }
+  ],
+  "source": "vk-getCountryNameById"
+}

@@ -4,6 +4,7 @@ import com.vk.api.sdk.exceptions.ApiException;
 import com.vk.api.sdk.exceptions.ClientException;
 import edu.nc.travelplanner.dao.CityDao;
 import edu.nc.travelplanner.dao.CountryDao;
+import edu.nc.travelplanner.model.factory.dataproducer.DataProducerParseException;
 import edu.nc.travelplanner.table.City;
 import edu.nc.travelplanner.table.Country;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class VkGeoNamesDbFiller implements GeoNamesDbFiller {
     CityDao cityDao;
 
     @Override
-    public Country addOrGetCountryToDb(Integer countryId) throws ClientException, ApiException {
+    public Country addOrGetCountryToDb(Integer countryId) throws ClientException, ApiException, DataProducerParseException {
         if (countryId==null)
             return null;
 
@@ -40,7 +41,7 @@ public class VkGeoNamesDbFiller implements GeoNamesDbFiller {
     }
 
     @Override
-    public City addOrGetCityToDb(Long cityId, Integer countryId) throws ClientException, ApiException {
+    public City addOrGetCityToDb(Long cityId, Integer countryId) throws DataProducerParseException {
         if (countryId==null || cityId==null)
             return null;
 

@@ -74,6 +74,7 @@ public class TravelplannerApplication {
 
 	@Bean
 	public ServiceActor serviceActor(){
+
 		return new ServiceActor(6289227, "29b41daf29b41daf29b41dafdb29ebeae4229b429b41daf739d55936c18ba3a66ffcb52");
 	}
 

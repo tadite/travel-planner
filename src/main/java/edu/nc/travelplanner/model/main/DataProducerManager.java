@@ -24,27 +24,32 @@ public class DataProducerManager {
     @Autowired
     ObjectMapper objectMapper;
 
-    public DataProducerManager() {
-    }
-
-    public DataProducerManager(DataProducerFactory dataProducerFactory, DataProducerConfig dataProducerConfig, ObjectMapper objectMapper) {
-        this.dataProducerFactory = dataProducerFactory;
-        this.dataProducerConfig = dataProducerConfig;
-        this.objectMapper=objectMapper;
-    }
-
-    public Map<String, String> getAllCountriesMap() throws DataProducerParseException, IOException {
+    public Map<Integer, String> getAllCountriesMap() throws DataProducerParseException, IOException {
         return objectMapper.readValue(dataProducerFactory
                 .createDataProducer(
                         dataProducerConfig.getAllCountriesDataProducerName()).send(new ArrayList<>()).getRawData(), HashMap.class);
     }
 
-    public Map<String, String> getAllCitiesByCountryIdAndQuery(Long countryId, String query) throws DataProducerParseException, IOException {
+    public Map<Integer, String> getAllCitiesByCountryIdAndQuery(Integer countryId, String query) throws DataProducerParseException, IOException {
         return objectMapper.readValue(dataProducerFactory
                 .createDataProducer(dataProducerConfig.getCitiesByCountryIdAndQueryName())
-                .send(new ArrayList<PickResult>(){{
+                .send(new ArrayList<PickResult>() {{
                     this.add(new PickResult("country_id", countryId));
                     this.add(new PickResult("query", query));
                 }}).getRawData(), HashMap.class);
+    }
+
+    public String getCityNameById(Integer id) throws DataProducerParseException {
+        return dataProducerFactory
+                .createDataProducer(dataProducerConfig.getCityNameByCityId()).send(new ArrayList<PickResult>() {{
+            this.add(new PickResult("city_id", id));
+        }}).getRawData();
+    }
+
+    public String getCountryNameById(Integer id) throws DataProducerParseException {
+        return dataProducerFactory
+                .createDataProducer(dataProducerConfig.getCountryNameByCountryId()).send(new ArrayList<PickResult>() {{
+            this.add(new PickResult("country_id", id));
+        }}).getRawData();
     }
 }
