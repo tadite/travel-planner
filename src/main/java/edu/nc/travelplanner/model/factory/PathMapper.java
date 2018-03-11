@@ -24,4 +24,6 @@ public class PathMapper {
     public String getDataProducePath() { return "/json/dataProducer/"; }
 
     public String getResultMapperPath() { return "/json/resultMapper/"; }
+
+    public String getResultMapperConfigPath() { return "/json/data-producers-config.json"; }
 }

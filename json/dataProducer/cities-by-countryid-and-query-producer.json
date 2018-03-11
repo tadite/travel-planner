@@ -1,0 +1,29 @@
+{
+  "name": "cities-by-countryId-and-query-producer",
+  "filters": [
+    {
+      "type": "json_path",
+      "parameters": {
+        "expression": "$"
+      }
+    },
+    {
+      "type": "list_to_map",
+      "parameters": {
+        "valueName": "title",
+        "keyName": "cid"
+      }
+    }
+  ],
+  "mappers": [
+    {
+      "from": "country_id",
+      "to": "country_id"
+    },
+    {
+      "from": "query",
+      "to": "q"
+    }
+  ],
+  "source": "vk-getCitiesByCountryId"
+}

@@ -1,0 +1,4 @@
+{
+  "vk-all-countries": "countries-map-producer",
+  "vk-cities-by-countryid-and-query": "cities-by-countryId-and-query-producer"
+}
