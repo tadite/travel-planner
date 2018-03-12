@@ -1,12 +1,12 @@
 {
   "name": "dropdownlist-budget-action",
-  "viewName": "Выберите бюджет путешествия",
+  "viewName": "Choose your budget level",
   "type": "dropdown_input",
   "parameters": {
     "optionsMap": {
-      "1": "Эконом",
-      "2": "Медиум",
-      "3": "Премиум"
+      "1": "Economy",
+      "2": "Medium",
+      "3": "Premium"
     }
   }
 }

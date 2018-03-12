@@ -1,6 +1,6 @@
 {
   "name": "dropdownlist-countries-action",
-  "viewName": "Выберите страну для путешествия",
+  "viewName": "Choose the country for the travel",
   "type": "dropdown_integration",
   "dataProducer": "countries-map-producer"
 }

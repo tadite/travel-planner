@@ -114,7 +114,7 @@ public class JsonActionTreeFactory implements ActionTreeFactory {
                                      Map<String, Object> parameters)
             throws IllegalAccessException, NoSuchFieldException {
         if (parameters ==null || parameters.isEmpty())
-            return;
+            return; 
 
         for (Map.Entry<String,Object> entry : parameters.entrySet()){
             Field fieldToSet = jumpClass.getDeclaredField(entry.getKey());

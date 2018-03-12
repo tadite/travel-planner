@@ -1,0 +1,45 @@
+{
+  "name": "find-hotels-producer",
+  "filters": [
+    {
+      "type": "json_path",
+      "parameters": {
+        "expression": "$"
+      }
+    },
+    {
+      "type": "list_to_map",
+      "parameters": {
+        "valueName": "title",
+        "keyName": "cid"
+      }
+    }
+  ],
+  "mappers": [
+  {
+    "from": "checklist-citiesByCountryId-action",
+    "to": "location"
+  },
+  {
+    "from": "",
+    "to": "checkIn"
+  },
+  {
+    "from": "",
+    "to": "checkOut"
+  },
+  {
+    "from": "",
+    "to": "lang"
+  },
+  {
+    "from": "",
+    "to": "currency"
+  },
+  {
+    "from": "textinput-numberOfPersons-action",
+    "to": "adults"
+  }
+],
+  "source": "hotellook-find-hotels"
+}

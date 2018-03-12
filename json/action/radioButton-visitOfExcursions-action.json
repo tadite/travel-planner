@@ -1,0 +1,11 @@
+{
+  "name": "radioButton-visitOfExcursions-action",
+  "viewName": "Do You want to go to excursions?",
+  "type": "dropdown_input",
+  "parameters": {
+    "optionsMap": {
+      "1": "Yes",
+      "2": "No"
+    }
+  }
+}
