@@ -1,8 +1,10 @@
 package edu.nc.travelplanner.model.source.filter;
 
 import edu.nc.travelplanner.model.response.Response;
+import edu.nc.travelplanner.model.source.FilterType;
 
 public class RegexpReplaceAllResponseFilter implements ResponseFilter {
+    private FilterType type = FilterType.REGEXP_REPLACE;
     private String regex;
     private String replacement;
 

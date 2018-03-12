@@ -7,6 +7,8 @@ import {MatTableModule} from '@angular/material/table';
 import { HttpService } from '../http/http.service';
 import { AuthService} from "../auth/auth.service";
 import { CookieService } from 'ngx-cookie-service';
+import 'rxjs/add/operator/map';
+
 
 
 @Component({
@@ -18,11 +20,15 @@ import { CookieService } from 'ngx-cookie-service';
 })
 
 export class ProfilesComponent implements OnInit{
-    displayedColumns = ['clientId', 'userName', 'firstName', 'lastName', 'email', 'age', 'countryName'];
-    dataSource = new MatTableDataSource<Element>(ELEMENT_DATA);
+    displayedColumns = ['clientId', 'login', 'firstName', 'lastName', 'email', 'age', 'countryName', 'isBlocked'];
+
     login: string;
     profilesUrl: string = '/api/manage/user';
-    Element: any;
+    blocProfilesUrl: string = '/api/manage/user/block/';
+    //Element: any;
+    ELEMENT_DATA: Element[];
+    dataSource: any;
+
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     constructor(private http: HttpService, private cookieService: CookieService, private router: Router, private authService: AuthService) {
@@ -31,15 +37,10 @@ export class ProfilesComponent implements OnInit{
 
     ngOnInit(){
         this.login = this.getLogin();
-       // this.getProfiles();
-    }
+        this.getProfiles();
 
-    /**
-     * Set the paginator after the view init since this component will
-     * be able to query its view for the initialized paginator.
-     */
-    ngAfterViewInit() {
-        this.dataSource.paginator = this.paginator;
+     // this.dataSource.paginator = this.paginator;
+
     }
 
     logout(){
@@ -50,12 +51,27 @@ export class ProfilesComponent implements OnInit{
         return this.authService.getLogin();
     }
 
+
     getProfiles(){
         this.http.get(this.profilesUrl).subscribe(value => {
-                this.Element = value;
-
+           this.ELEMENT_DATA=value;
+                console.log(value);
+                console.log(this.ELEMENT_DATA);
+                this.dataSource = new MatTableDataSource<Element>(this.ELEMENT_DATA);
+                console.log(this.dataSource);
+                this.dataSource.paginator = this.paginator;
             },
-            error => { }
+            error => {console.log(error); }
+        );
+    }
+
+    blocUser(element: Element) {
+        this.http.postObs(this.blocProfilesUrl, element.clientId).subscribe(result => {
+                element.isBlocked = !element.isBlocked;
+            },
+            error => {
+                console.log(error);
+            }
         );
     }
 
@@ -64,15 +80,16 @@ export class ProfilesComponent implements OnInit{
 export interface Element {
 
     clientId: number;
-    userName: string;
+    login: string;
     firstName: string;
     lastName: string;
     email: string;
     age: number;
     countryName: string;
+    isBlocked: boolean;
 }
 
-const ELEMENT_DATA: Element[] = [
+/*const ELEMENT_DATA: Element[] = [
     {clientId: 1, userName: 'Иван', firstName: 'Иван', lastName: 'Иванов', email: 'ivan@mail.ru', age: 20, countryName: 'Россия'},
     {clientId: 2, userName: 'Иван', firstName: 'Иван', lastName: 'Иванов', email: 'ivan@mail.ru', age: 20, countryName: 'Россия'},
     {clientId: 3, userName: 'Иван', firstName: 'Иван', lastName: 'Иванов', email: 'ivan@mail.ru', age: 20, countryName: 'Россия'},
@@ -87,5 +104,5 @@ const ELEMENT_DATA: Element[] = [
     {clientId: 12, userName: 'Иван', firstName: 'Иван', lastName: 'Иванов', email: 'ivan@mail.ru', age: 20, countryName: 'Россия'},
 
 ];
-
+*/
 

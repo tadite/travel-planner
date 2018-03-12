@@ -34,9 +34,9 @@
                         <mat-cell *matCellDef="let element"> {{element.clientId}} </mat-cell>
                     </ng-container>
 
-                    <ng-container matColumnDef="userName">
+                    <ng-container matColumnDef="login">
                         <mat-header-cell *matHeaderCellDef> Логин </mat-header-cell>
-                        <mat-cell *matCellDef="let element"> {{element.userName}} </mat-cell>
+                        <mat-cell *matCellDef="let element"> {{element.login}} </mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="firstName">
@@ -62,6 +62,18 @@
                     <ng-container matColumnDef="countryName">
                         <mat-header-cell *matHeaderCellDef> Страна </mat-header-cell>
                         <mat-cell *matCellDef="let element"> {{element.countryName}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="isBlocked">
+                        <mat-header-cell *matHeaderCellDef> Изменить статус </mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            <p *ngIf="element.isBlocked">
+                            <button class="btn btn-default" (click)="blocUser(element)">Блок</button>
+                            </p>
+                            <p *ngIf="!element.isBlocked">
+                                <button class="btn btn-default" (click)="blocUser(element)">Разблок</button>
+                            </p>{{element.isBlocked}}
+                            </mat-cell>
                     </ng-container>
 
                     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

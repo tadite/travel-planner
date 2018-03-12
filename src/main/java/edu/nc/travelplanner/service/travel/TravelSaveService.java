@@ -5,6 +5,7 @@ import com.vk.api.sdk.exceptions.ClientException;
 import edu.nc.travelplanner.dao.*;
 import edu.nc.travelplanner.dto.afterPickTree.CheckpointAfterPickTreeDto;
 import edu.nc.travelplanner.dto.afterPickTree.TravelAfterPickTreeDto;
+import edu.nc.travelplanner.model.factory.dataproducer.DataProducerParseException;
 import edu.nc.travelplanner.table.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -37,7 +38,7 @@ public class TravelSaveService {
 
             //set User
             saveTravelUserLink(pickDto, travel);
-        } catch (ClientException | ApiException e) {
+        } catch (ClientException | ApiException | DataProducerParseException e) {
             e.printStackTrace();
         }
     }
@@ -53,7 +54,7 @@ public class TravelSaveService {
         }
     }
 
-    private Travel mapTravelAfterPickToTravel(TravelAfterPickTreeDto pickDto) throws ClientException, ApiException {
+    private Travel mapTravelAfterPickToTravel(TravelAfterPickTreeDto pickDto) throws ClientException, ApiException, DataProducerParseException {
         Travel travel = new Travel();
 
         //from CheckPoint
@@ -66,7 +67,7 @@ public class TravelSaveService {
         return travel;
     }
 
-    private CheckPoint saveAndGetFromCheckPoint(TravelAfterPickTreeDto pickDto) throws ClientException, ApiException {
+    private CheckPoint saveAndGetFromCheckPoint(TravelAfterPickTreeDto pickDto) throws ClientException, ApiException, DataProducerParseException {
         CheckPoint fromCheckPoint = new CheckPoint();
 
         Country countryById = saveAndGetCountry(pickDto);
@@ -89,7 +90,7 @@ public class TravelSaveService {
         return fromCheckPoint;
     }
 
-    private City saveAndGetCity(TravelAfterPickTreeDto pickDto, Country countryById) throws ClientException, ApiException {
+    private City saveAndGetCity(TravelAfterPickTreeDto pickDto, Country countryById) throws DataProducerParseException {
         Long cityId = pickDto.getFrom().getCityId();
         City cityById = cityDao.getCityById(cityId);
         if (cityById==null){
@@ -105,7 +106,7 @@ public class TravelSaveService {
         return cityById;
     }
 
-    private Country saveAndGetCountry(TravelAfterPickTreeDto pickDto) throws ClientException, ApiException {
+    private Country saveAndGetCountry(TravelAfterPickTreeDto pickDto) throws ClientException, ApiException, DataProducerParseException {
         Integer countryId = pickDto.getFrom().getCountryId();
         Country countryById = countryDao.getCountryById(countryId);
         if (countryById==null){

@@ -11,16 +11,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
-    @Bean
-    private PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Autowired
     ClientDao clientDao;
 
     public Client save(Client client) {
-        client.setPassword(passwordEncoder().encode(client.getPassword()));
+        client.setPassword(passwordEncoder.encode(client.getPassword()));
         String result = clientDao.saveClient(client);
         if (result.equals("Success"))
             return clientDao.getClientByLogin(client.getLogin());

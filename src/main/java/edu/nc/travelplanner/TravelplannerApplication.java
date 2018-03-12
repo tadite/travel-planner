@@ -28,6 +28,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.event.EventListener;
 import org.springframework.orm.jpa.vendor.HibernateJpaSessionFactoryBean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.context.ContextLoader;
 
 import javax.annotation.PostConstruct;
@@ -41,6 +43,11 @@ import javax.persistence.EntityManagerFactory;
 public class TravelplannerApplication {
 
 	private EntityManagerFactory entityManagerFactory;
+
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
 	@Bean
 	public HibernateJpaSessionFactoryBean sessionFactory(EntityManagerFactory emf) {
@@ -67,6 +74,7 @@ public class TravelplannerApplication {
 
 	@Bean
 	public ServiceActor serviceActor(){
+
 		return new ServiceActor(6289227, "29b41daf29b41daf29b41dafdb29ebeae4229b429b41daf739d55936c18ba3a66ffcb52");
 	}
 

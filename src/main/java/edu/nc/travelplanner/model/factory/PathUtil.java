@@ -14,4 +14,8 @@ public class PathUtil {
 
         return builder.toString();
     }
+
+    public static String getPathInUserDir(String path){
+        return getPathInUserDir(path, "","");
+    }
 }
