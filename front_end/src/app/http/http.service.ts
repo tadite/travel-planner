@@ -4,6 +4,7 @@ import {User} from '../user/user';
 import { Observable } from 'rxjs/Observable';
 import{Question} from '../question/question';
 import 'rxjs/add/operator/map';
+import {Element} from '../profiles/profiles.component';
   
 @Injectable()
 export class HttpService{
@@ -24,6 +25,7 @@ export class HttpService{
 
             }) as any;*/;
     }
+
 
     public postObs(url: string, body: any) : Observable<any>{
         return this.httpClient.post(url, JSON.stringify(body), {headers:{'Content-Type': 'application/json'}});
