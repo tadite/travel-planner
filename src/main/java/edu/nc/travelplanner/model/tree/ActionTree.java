@@ -1,5 +1,6 @@
 package edu.nc.travelplanner.model.tree;
 
+import edu.nc.travelplanner.exception.CustomParseException;
 import edu.nc.travelplanner.model.action.ActionArgs;
 import edu.nc.travelplanner.model.action.PickResult;
 import edu.nc.travelplanner.model.jump.Jump;

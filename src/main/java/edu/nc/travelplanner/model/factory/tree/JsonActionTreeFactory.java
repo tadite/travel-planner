@@ -105,8 +105,22 @@ public class JsonActionTreeFactory implements ActionTreeFactory {
         setJumpType(jumpClass, jump, jumpDto.getType());
         setJumpCurrentAction(jumpClass, jump, actionMap.get(jumpDto.getFromActionName()));
         setJumpNextAction(jumpClass, jump, actionMap.get(jumpDto.getToActionName()));
+        setJumpParameters(jumpClass, jump, jumpDto.getParams());
 
         return jump;
+    }
+
+    private void setJumpParameters(Class<? extends Jump> jumpClass, Jump jump,
+                                     Map<String, Object> parameters)
+            throws IllegalAccessException, NoSuchFieldException {
+        if (parameters ==null || parameters.isEmpty())
+            return;
+
+        for (Map.Entry<String,Object> entry : parameters.entrySet()){
+            Field fieldToSet = jumpClass.getDeclaredField(entry.getKey());
+            fieldToSet.setAccessible(true);
+            fieldToSet.set(jump, entry.getValue());
+        }
     }
 
     private void setJumpNextAction(Class<? extends Jump> jumpClass, Jump jump, Action action)

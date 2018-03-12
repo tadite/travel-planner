@@ -2,7 +2,6 @@
   "name": "tree",
   "headActionName": "dropdownlist-doYouKnowYourFullTravel-action",
   "jumps": [
-
     {
       "fromActionName": "dropdownlist-doYouKnowYourFullTravel-action",
       "toActionName": "dropdownlist-departure-country-action",

@@ -1,1 +1,6 @@
-{"name":"checklist-countries-action", "viewName":"Выберите страну для путешествия", "type":"checklist_integration", "dataProducer": "countries-map-producer"}
+{
+  "name": "checklist-countries-action",
+  "viewName": "Выберите страну для путешествия",
+  "type": "checklist_integration",
+  "dataProducer": "countries-map-producer"
+}

@@ -1,0 +1,11 @@
+{
+  "name": "test-condition-jump-1",
+  "viewName": "Вернуться к началу?",
+  "type": "dropdown_input",
+  "parameters": {
+    "optionsMap": {
+      "key1": "Да",
+      "key2": "Нет"
+    }
+  }
+}

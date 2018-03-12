@@ -1,1 +1,12 @@
-{"name":"vk-getCitiesByCountryId","type":"http","parameters":{"description":"getCitiesByCountryId default 1","params":["country_id"],"url":"https://nc-service-bus.a3c1.starter-us-west-1.openshiftapps.com/endpoint/vk-get-cities-by-country"}}
+{
+  "name": "vk-getCitiesByCountryId",
+  "type": "http",
+  "parameters": {
+    "description": "getCitiesByCountryId default 1",
+    "params": [
+      "country_id",
+      "q"
+    ],
+    "url": "https://nc-service-bus.a3c1.starter-us-west-1.openshiftapps.com/endpoint/vk-get-cities-by-country"
+  }
+}

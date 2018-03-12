@@ -35,6 +35,18 @@ public class Travel {
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "travel")
     private Set<OptionForTravel> optionForTravels = new HashSet<>();
 
+    public CheckPoint getFromCheckPoint(){
+        if (checkPoints.isEmpty())
+            return null;
+        return checkPoints.get(0);
+    }
+
+    public CheckPoint getToCheckPoint(){
+        if (checkPoints.isEmpty())
+            return null;
+        return checkPoints.get(checkPoints.size() - 1);
+    }
+
     public long getTravelId() {
         return travelId;
     }

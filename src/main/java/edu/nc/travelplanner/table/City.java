@@ -9,16 +9,16 @@ public class City {
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "city_id")
-    private long cityId;
+    private Long cityId;
 
     @Column(name = "name")
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "country_id")
+    @JoinColumn(name = "country_id", insertable=false, updatable=false)
     private Country country;
 
-    @Column(name = "country_id", insertable = false, updatable = false)
+    @Column(name = "country_id")
     private Integer countryId;
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "city")
@@ -38,11 +38,11 @@ public class City {
         this.countryId = countryId;
     }
 
-    public long getCityId() {
+    public Long getCityId() {
         return cityId;
     }
 
-    public void setCityId(long cityId) {
+    public void setCityId(Long cityId) {
         this.cityId  = cityId;
     }
 
