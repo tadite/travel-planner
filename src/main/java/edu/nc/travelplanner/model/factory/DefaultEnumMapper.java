@@ -29,6 +29,7 @@ public class DefaultEnumMapper implements EnumMapper {
     private Map<ActionType, Supplier<Action>> actionCreationMap = new HashMap<ActionType, Supplier<Action>>(){{
         put(ActionType.INFO, InfoAction::new);
         put(ActionType.CHECKLIST, CheckListAction::new);
+        put(ActionType.RADIOLIST, RadioListAction::new);
         put(ActionType.TEXT_INPUT, TextInputAction::new);
         put(ActionType.DROPDOWN_INPUT, DropDownListAction::new);
         put(ActionType.DATE_INTERVAL_INPUT, DateIntervalInputAction::new);

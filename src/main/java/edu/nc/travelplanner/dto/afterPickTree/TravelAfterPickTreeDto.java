@@ -1,10 +1,11 @@
 package edu.nc.travelplanner.dto.afterPickTree;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class TravelAfterPickTreeDto {
     private CheckpointAfterPickTreeDto from = new CheckpointAfterPickTreeDto();
-    private List<CheckpointAfterPickTreeDto> checkpoints;
+    private List<CheckpointAfterPickTreeDto> checkpoints = new LinkedList<>();
     private String travelName;
     private String travelDescription;
     private Long clientId;

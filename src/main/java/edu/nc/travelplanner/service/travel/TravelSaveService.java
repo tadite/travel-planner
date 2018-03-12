@@ -34,10 +34,10 @@ public class TravelSaveService {
     public void saveTravelAfterPick(TravelAfterPickTreeDto pickDto){
         try {
             Travel travel = mapTravelAfterPickToTravel(pickDto);
+            saveTravelUserLink(pickDto, travel);
             travelDao.saveTravel(travel);
 
             //set User
-            saveTravelUserLink(pickDto, travel);
         } catch (ClientException | ApiException | DataProducerParseException e) {
             e.printStackTrace();
         }
@@ -63,6 +63,8 @@ public class TravelSaveService {
             CheckPoint fromCheckPoint = saveAndGetFromCheckPoint(pickDto);
             travel.addCheckPoint(fromCheckPoint);
         }
+        //name
+        travel.setName(pickDto.getTravelName());
 
         return travel;
     }

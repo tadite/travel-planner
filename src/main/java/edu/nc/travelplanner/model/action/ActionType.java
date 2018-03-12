@@ -20,8 +20,12 @@ public enum ActionType {
     @JsonProperty("info_integration")
     INFO_INTEGRATION,
     @JsonProperty("dropdown_integration")
-    DROPDOWN_INTEGRATION
-
-
+    DROPDOWN_INTEGRATION,
+    @JsonProperty("radiolist")
+    RADIOLIST,
+    @JsonProperty("radiolist_integration")
+    RADIOLIST_INTEGRATION,
+    @JsonProperty("table_integration")
+    TABLE_INTEGRATION
 
 }

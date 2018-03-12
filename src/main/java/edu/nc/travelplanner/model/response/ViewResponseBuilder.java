@@ -11,7 +11,9 @@ public class ViewResponseBuilder {
     private class ViewElementsIndexCounter{
         private int titleIndex=1;
         private int checkboxIndex=1;
+        private int radioboxIndex=1;
         private int checkboxBlockIndex=1;
+        private int radioboxBlockIndex=1;
         private int textboxIndex=1;
         private int datepickerIndex=1;
         private int dropdownlistIndex=1;
@@ -26,6 +28,14 @@ public class ViewResponseBuilder {
 
         public int getCheckboxBlockIndex() {
             return checkboxBlockIndex++;
+        }
+
+        public int getRadioboxIndex() {
+            return radioboxIndex++;
+        }
+
+        public int getRadioboxBlockIndex() {
+            return radioboxBlockIndex++;
         }
 
         public int getTextboxIndex() {
@@ -44,7 +54,9 @@ public class ViewResponseBuilder {
     class ViewElementsPostfixHolder {
         private String titlePostfix="title";
         private String checkboxPostfix ="checkbox";
+        private String radioboxPostfix ="radiobox";
         private String checkboxesBlockPostfix="block";
+        private String radioboxesBlockPostfix="block";
         private String textboxPostfix="textbox";
         private String datepickerPostfix="datepicker";
         private String dropdownlistPostfix="dropdownlist";
@@ -67,6 +79,14 @@ public class ViewResponseBuilder {
         options.forEach((key, value) -> viewResponse.addElement(
                 new CheckViewElement(elementsPostfixHolder.checkboxesBlockPostfix+currentCheckboxBlockIndex+"."+
                         elementsPostfixHolder.checkboxPostfix +indexCounter.getCheckboxIndex()+"."+key, value)));
+        return this;
+    }
+
+    public ViewResponseBuilder addRadioboxes(Map<String, String> options){
+        int currentRadioboxBlockIndex = indexCounter.getRadioboxBlockIndex();
+        options.forEach((key, value) -> viewResponse.addElement(
+                new RadioViewElement(elementsPostfixHolder.radioboxesBlockPostfix+currentRadioboxBlockIndex+"."+
+                        elementsPostfixHolder.radioboxPostfix +indexCounter.getRadioboxIndex()+"."+key, value)));
         return this;
     }
 

@@ -1,0 +1,11 @@
+{
+  "name": "radio-tree",
+  "headActionName": "radio-action-1",
+  "jumps": [
+    {
+      "fromActionName": "radio-action-1",
+      "toActionName": "radio-action-2",
+      "type": "without-condition"
+    }
+  ]
+}

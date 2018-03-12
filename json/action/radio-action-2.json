@@ -1,0 +1,11 @@
+{
+  "name": "radio-action-2",
+  "viewName": "Вы знаете, каким будет Ваше будущее путешествие",
+  "type": "radiolist",
+  "parameters": {
+    "optionsMap": {
+      "1": "Да",
+      "2": "Нет"
+    }
+  }
+}

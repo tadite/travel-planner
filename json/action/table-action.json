@@ -1,0 +1,9 @@
+{
+  "name": "table-action",
+  "viewName": "test-table-action",
+  "type": "table_integration",
+  "dataProducer": "countries-map-producer",
+  "parameters": {
+    "paramsToCheck": ["cid","title"]
+  }
+}

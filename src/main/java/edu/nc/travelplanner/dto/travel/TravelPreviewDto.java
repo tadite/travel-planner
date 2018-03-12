@@ -23,6 +23,7 @@ public class TravelPreviewDto {
 
     public static TravelPreviewDto fromTravel(Travel travel){
         TravelPreviewDto dto = new TravelPreviewDto();
+        dto.setTravelId(travel.getTravelId());
         dto.setName(travel.getName());
         dto.setCost(travel.getCost());
         CheckPoint fromCheckPoint = travel.getFromCheckPoint();
