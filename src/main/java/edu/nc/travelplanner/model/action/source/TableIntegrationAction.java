@@ -10,7 +10,6 @@ import edu.nc.travelplanner.model.response.EmptyResponse;
 import edu.nc.travelplanner.model.response.Response;
 import edu.nc.travelplanner.model.response.ViewResponseBuilder;
 import edu.nc.travelplanner.model.source.dataproducer.DataProducer;
-import jdk.internal.org.objectweb.asm.TypeReference;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -96,8 +95,6 @@ public class TableIntegrationAction implements IntegrationAction {
 
             return new ViewResponseBuilder().addTitleElement("question", viewName).build();
         } catch (DataProducerParseException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
