@@ -45,17 +45,17 @@ public class LogicConditionOnPickResultJump implements Jump {
     }
 
     private boolean resolveLogicPickResult(ActionArgs args, Response response) throws CustomParseException {
-        if (pickResultCheck == "value" && !args.getArgs().containsValue(conditionValue))
+        if (pickResultCheck == "value" && !args.getArgs().containsValue(pickResultName))
             return false;
-        if (pickResultCheck == "key" && !args.getArgs().containsKey(conditionValue))
+        if (pickResultCheck == "key" && !args.getArgs().containsKey(pickResultName))
             return false;
 
         String value;
 
         if (pickResultCheck.equals("key"))
-            value = args.getArgs().get(conditionValue);
+            value = args.getArgs().get(pickResultName);
         else if (pickResultCheck.equals("value"))
-            value = args.getArgs().entrySet().stream().filter(entry -> entry.getValue().equals(conditionValue)).findFirst().get().getKey();
+            value = args.getArgs().entrySet().stream().filter(entry -> entry.getValue().equals(pickResultName)).findFirst().get().getKey();
         else throw new CustomParseException("Value for jump condition not found");
 
         return resolveValueOnLogicCondition(value, conditionType);
