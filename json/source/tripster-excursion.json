@@ -1,0 +1,12 @@
+{
+  "name": "tripster-excursion",
+  "type": "http",
+  "parameters": {
+    "description": "getExcursions default",
+    "params": [
+      "city",
+      "type"
+    ],
+    "url": "https://nc-service-bus.a3c1.starter-us-west-1.openshiftapps.com/endpoint/tripster-excursion"
+  }
+}

@@ -1,7 +1,7 @@
 {
   "map": [
     {
-      "from": "dropdownlist-doYouKnowYourFullTravel-action",
+      "from": "radioButton-doYouKnowYourFullTravel-action",
       "to": "",
       "type": ""
     },
@@ -23,7 +23,7 @@
     {
       "from": "dateIntervalInput-travelPeriod-action",
       "to": "from.travelPeriod",
-      "type": "list-first"
+      "type": ""
     },
     {
       "from": "dropdownlist-countries-action",
@@ -41,34 +41,39 @@
       "type": ""
     },
     {
-      "from": "checklist-typeOfTravel-action",
-      "to": "from.typeOfTravelId",
-      "type": "list-first"
-    },
-    {
-      "from": "dropdownlist-typeOfMovement-action",
-      "to": "from.typeOfMovement",
+      "from": "radioButton-placeOfResidence-action",
+      "to": "from.placeOfResidenceId",
       "type": ""
     },
     {
-      "from": "checklist-viewOfTravel-action",
-      "to": "from.viewOfTravel",
-      "type": "list-first"
-    },
-    {
-      "from": "dropdownlist-kindOfActivity-action",
-      "to": "from.kindOfActivity",
+      "from": "radioButton-typeOfTransport-action",
+      "to": "from.typeOfTransportId",
       "type": ""
     },
     {
-      "from": "dropdownlist-typeOfExcursion-action",
+      "from": "radioButton-visitOfExcursions-action",
+      "to": "",
+      "type": ""
+    },
+    {
+      "from": "checklist-typeOfExcursion-action",
       "to": "from.typeOfExcursion",
+      "type": "list-first"
+    },
+    {
+      "from": "radioButton-choosingTheExcursion-action",
+      "to": "from.excursionId",
       "type": ""
     },
     {
       "from": "checklist-option-action",
       "to": "from.optionId",
       "type": "list-first"
+    },
+    {
+      "from": "textinput-nameOfTravel-action",
+      "to": "from.nameOfTravel",
+      "type": ""
     }
   ]
 }

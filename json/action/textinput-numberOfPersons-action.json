@@ -1,8 +1,4 @@
-{
-  "name": "textinput-numberOfPersons-action",
-  "viewName": "Выберите количество человек",
-  "type": "text_input",
-  "parameters": {
-    "data": "2"
-  }
-}
+{"name":"textinput-numberOfPersons-action",
+  "viewName":"Choose the number of persons",
+  "type":"text_input",
+  "parameters":{"data":""}}

@@ -6,16 +6,16 @@ public class CheckpointAfterPickTreeDto {
     private Long cityId;
     private String cityName;
     private Integer optionId;
-    private Integer typeOfTravelId;
-    private String viewOfTravel;
     private String travelPeriod;
     private String budget;
     private Long departureCityId;
     private Integer departureCountryId;
-    private String kindOfActivity;
     private String typeOfExcursion;
-    private String typeOfMovement;
     private Integer numberOfPerson;
+    private Integer placeOfResidenceId;
+    private Integer typeOfTransportId;
+    private Integer excursionId;
+    private String nameOfTravel;
 
     public Integer getCountryId() {
         return countryId;
@@ -56,22 +56,6 @@ public class CheckpointAfterPickTreeDto {
         this.optionId = optionId;
     }
 
-    public Integer getTypeOfTravelId() {
-        return typeOfTravelId;
-    }
-
-    public void setTypeOfTravelId(Integer typeOfTravelId) {
-        this.typeOfTravelId = typeOfTravelId;
-    }
-
-    public String getViewOfTravel() {
-        return viewOfTravel;
-    }
-
-    public void setViewOfTravel(String viewOfTravelId) {
-        this.viewOfTravel = viewOfTravelId;
-    }
-
     public String getTravelPeriod() {
         return travelPeriod;
     }
@@ -104,28 +88,12 @@ public class CheckpointAfterPickTreeDto {
         this.departureCountryId = departureCountryId;
     }
 
-    public String getKindOfActivity() {
-        return kindOfActivity;
-    }
-
-    public void setKindOfActivity(String kindOfActivity) {
-        this.kindOfActivity = kindOfActivity;
-    }
-
     public String getTypeOfExcursion() {
         return typeOfExcursion;
     }
 
     public void setTypeOfExcursion(String typeOfExcursion) {
         this.typeOfExcursion = typeOfExcursion;
-    }
-
-    public String getTypeOfMovement() {
-        return typeOfMovement;
-    }
-
-    public void setTypeOfMovement(String typeOfMovement) {
-        this.typeOfMovement = typeOfMovement;
     }
 
     public Integer getNumberOfPerson() {
@@ -136,4 +104,35 @@ public class CheckpointAfterPickTreeDto {
         this.numberOfPerson = numberOfPerson;
     }
 
+    public Integer getPlaceOfResidenceId() {
+        return placeOfResidenceId;
+    }
+
+    public void setPlaceOfResidenceId(Integer placeOfResidenceId) {
+        this.placeOfResidenceId = placeOfResidenceId;
+    }
+
+    public Integer getTypeOfTransportId() {
+        return typeOfTransportId;
+    }
+
+    public void setTypeOfTransportId(Integer typeOfTransportId) {
+        this.typeOfTransportId = typeOfTransportId;
+    }
+
+    public Integer getExcursionId() {
+        return excursionId;
+    }
+
+    public void setExcursionId(Integer excursionId) {
+        this.excursionId = excursionId;
+    }
+
+    public String getNameOfTravel() {
+        return nameOfTravel;
+    }
+
+    public void setNameOfTravel(String nameOfTravel) {
+        this.nameOfTravel = nameOfTravel;
+    }
 }

@@ -1,0 +1,16 @@
+{
+  "name": "hotellook-find-hotels",
+  "type": "http",
+  "parameters": {
+    "description": "getHotels default",
+    "params": [
+      "location",
+      "checkIn",
+      "checkOut",
+      "lang",
+      "currency",
+      "adults"
+    ],
+    "url": "https://nc-service-bus.a3c1.starter-us-west-1.openshiftapps.com/endpoint/hotellook-find-hotels"
+  }
+}

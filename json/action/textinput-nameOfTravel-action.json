@@ -1,0 +1,4 @@
+{"name":"textinput-nameOfTravel-action",
+  "viewName":"Give the name for your travel",
+  "type":"text_input",
+  "parameters":{"data":""}}

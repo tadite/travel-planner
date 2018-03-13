@@ -1,0 +1,12 @@
+{
+  "name": "radioButton-typeOfTransport-action",
+  "viewName": "Choose the type of transport",
+  "type": "dropdown_input",
+  "parameters": {
+    "optionsMap": {
+      "1": "111",
+      "2": "222",
+      "3": "333"
+    }
+  }
+}

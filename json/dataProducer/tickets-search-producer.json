@@ -1,0 +1,53 @@
+{
+  "name": "tickets-search-producer",
+  "filters": [
+    {
+      "type": "json_path",
+      "parameters": {
+        "expression": "$"
+      }
+    },
+    {
+      "type": "list_to_map",
+      "parameters": {
+        "valueName": "title",
+        "keyName": "cid"
+      }
+    }
+  ],
+  "mappers": [
+    {
+      "from": "dropdownlist-departure-city-action",
+      "to": "origin_city"
+    },
+    {
+      "from": "",
+      "to": "origin_code"
+    },
+    {
+      "from": "checklist-citiesByCountryId-action",
+      "to": "dest_city"
+    },
+    {
+      "from": "",
+      "to": "dest_code"
+    },
+    {
+      "from": "",
+      "to": "origin_date"
+    },
+    {
+      "from": "",
+      "to": "return_date"
+    },
+    {
+      "from": "",
+      "to": "class"
+    },
+    {
+      "from": "textinput-numberOfPersons-action",
+      "to": "adults"
+    }
+  ],
+  "source": "air-tickets-search"
+}
