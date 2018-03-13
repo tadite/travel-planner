@@ -5,10 +5,7 @@ import edu.nc.travelplanner.service.user.UserManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,8 +31,8 @@ public class UserManageController {
         return new ResponseEntity<>(UserManageDto.fromClient(userManageService.getClientById(clientId)), HttpStatus.OK);
     }
 
-    @PostMapping(path = "/api/manage/user/block/{userId}")
-    public ResponseEntity<Boolean> blockUserById(@PathVariable(value = "userId") Long userId){
+    @PostMapping(path = "/api/manage/user/block")
+    public ResponseEntity<Boolean> blockUserById(@RequestBody Long userId){
         return new ResponseEntity<>(userManageService.blockClientById(userId), HttpStatus.OK);
     }
 }
