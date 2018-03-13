@@ -1,13 +1,17 @@
 {
   "name": "tree",
-  "headActionName": "dateIntervalInput-travelPeriod-action",
+  "headActionName": "radioButton-doYouKnowYourFullTravel-action",
   "jumps": [
-
     {
       "fromActionName": "radioButton-doYouKnowYourFullTravel-action",
       "toActionName": "dropdownlist-departure-country-action",
-      "type": "without-condition",
-      "params": {}
+      "type": "logic-condition-on-pick-result",
+      "params": {
+        "conditionType": "=s",
+        "pickResultName": "radiobox.radioButton-doYouKnowYourFullTravel-action",
+        "pickResultCheck": "value",
+        "conditionValue": "block1.radiobox2.2"
+      }
     },
     {
       "fromActionName": "dropdownlist-departure-country-action",
@@ -69,9 +73,9 @@
       "type": "logic-condition-on-pick-result",
       "params": {
         "conditionType": "=s",
-        "pickResultName": "dropdownlist1.radioButton-visitOfExcursions-action",
+        "pickResultName": "radiobox.radioButton-visitOfExcursions-action",
         "pickResultCheck": "value",
-        "conditionValue": "dropdownlist1.1"
+        "conditionValue": "block1.radiobox1.1"
       }
     },
     {
@@ -80,9 +84,9 @@
       "type": "logic-condition-on-pick-result",
       "params": {
         "conditionType": "=s",
-        "pickResultName": "dropdownlist1.radioButton-visitOfExcursions-action",
+        "pickResultName": "radiobox.radioButton-visitOfExcursions-action",
         "pickResultCheck": "value",
-        "conditionValue": "dropdownlist1.2"
+        "conditionValue": "block1.radiobox2.2"
       }
     },
     {

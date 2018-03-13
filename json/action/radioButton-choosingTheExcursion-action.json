@@ -1,7 +1,7 @@
 {
   "name": "radioButton-choosingTheExcursion-action",
   "viewName": "Choose the excursion",
-  "type": "dropdown_input",
+  "type": "radiolist",
   "parameters": {
     "optionsMap": {
       "1": "111",
