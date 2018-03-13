@@ -4,8 +4,8 @@
   "type": "dropdown_input",
   "parameters": {
     "optionsMap": {
-      "key1": "Да",
-      "key2": "Нет"
+      "1": "Да",
+      "2": "Нет"
     }
   }
 }

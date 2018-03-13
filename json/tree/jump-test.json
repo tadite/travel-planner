@@ -10,7 +10,7 @@
         "conditionType": "=s",
         "pickResultName": "dropdownlist1.dropdownlist-doYouKnowYourFullTravel-action",
         "pickResultCheck": "value",
-        "conditionValue": "dropdownlist1.key1"
+        "conditionValue": "dropdownlist1.1"
       }
     },
     {
@@ -21,7 +21,7 @@
         "conditionType": "=s",
         "pickResultName": "dropdownlist1.dropdownlist-doYouKnowYourFullTravel-action",
         "pickResultCheck": "value",
-        "conditionValue": "dropdownlist1.key2"
+        "conditionValue": "dropdownlist1.2"
       }
     },
     {
@@ -32,7 +32,7 @@
         "conditionType": "=s",
         "pickResultName": "dropdownlist1.test-condition-jump-1",
         "pickResultCheck": "value",
-        "conditionValue": "dropdownlist1.key1"
+        "conditionValue": "dropdownlist1.1"
       }
     }
   ]
