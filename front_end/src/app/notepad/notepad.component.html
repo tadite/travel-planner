@@ -1,0 +1,64 @@
+
+<div class="notepad-page">
+<div class="background-image" style="background-image : url('http://upload.akusherstvo.ru/image1488681.jpg')"></div>          
+<div class="ph">
+            <img class="img" src="http://upload.akusherstvo.ru/image1482617.jpg">
+            <div class="title">TRAVEL PLANNER</div>
+<nav class="fixed-nav-bar">  
+        <ul id="navbar">               
+                <li><a>{{login}} <span class="glyphicon glyphicon-menu-down"></span></a> 
+                  <ul>
+                    <li><a routerLink="/profile" routerLinkActive="active"><span class="glyphicon glyphicon-user"></span> My profile</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-picture"></span> Travels history</a></li>                    
+                    <li><a routerLink="/notepad" routerLinkActive="active"><span class="glyphicon glyphicon-list-alt"></span> Notepad</a></li>
+                    <li><a routerLink="/questions" routerLinkActive="active"><span class="glyphicon glyphicon-plane"></span> Current travel</a></li>
+                    <hr>
+                    <li><a (click)="logout()"><span class="glyphicon glyphicon-log-out"></span> Sign out</a></li>                    
+                  </ul>   
+                </li>              
+                                            
+        </ul>
+</nav>
+</div> 
+  <!--  <form method="post">
+        <br>
+        <div class="blue-bg">
+            <p class="bg-title">Информация о Вашем путешествии:</p>
+        <div class="page foldtr">
+            <p><textarea name="text"></textarea></p>
+            <p><input class="send" type="submit" value="Отправить"></p>
+        </div>        
+        </div>
+      </form>
+</div>-->
+    
+<div class="main-page">
+    <div class = "form-block">
+        <div class="form-group" >  
+           <div align="center" class="form-inline">
+            <div>
+                <p class="bg-title">Fill the information about your travel</p>
+                <table>
+                 <tr>
+                 <th>Question</th>
+                 <th>Answer</th>
+                 </tr>
+                <tr>
+                  <td>Country</td>
+                   <td><input type="text"></td>
+                </tr>
+                <tr>
+                 <td>City</td>
+                 <td><input type="text"></td>
+                </tr>
+                </table>
+            </div>
+           </div>
+            <br>
+            <br>
+               
+        </div>
+    </div>            
+</div>
+</div>
+        

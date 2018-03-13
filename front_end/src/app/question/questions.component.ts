@@ -10,6 +10,7 @@ import { AuthService } from '../auth/auth.service';
 import {NgForm} from '@angular/forms';
 
 
+
 @Component({
     selector: 'questions-app',
     templateUrl: './questions.component.html',
@@ -104,7 +105,7 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
     }
 
     putCheckId(id: any){
-        if (this.checks[id]=='checked')
+        if (this.checks[id]==='checked')
             this.checks[id]=null;
         else
             this.checks[id]='checked';
