@@ -2,6 +2,7 @@ package edu.nc.travelplanner.model.resultsMapper;
 
 import edu.nc.travelplanner.dto.afterPickTree.CheckpointAfterPickTreeDto;
 import edu.nc.travelplanner.dto.afterPickTree.TravelAfterPickTreeDto;
+import edu.nc.travelplanner.model.action.DateInterval;
 import edu.nc.travelplanner.model.action.PickResult;
 
 import java.util.LinkedList;
@@ -60,8 +61,10 @@ public class FromJsonResultsMapper implements ResultsMapper {
             travelDto.getFrom().setCityId(Long.valueOf((String)getPickValue(pick,node)));
         if (node.getTo().equals("from.optionId"))
             travelDto.getFrom().setOptionId(Integer.valueOf((String)getPickValue(pick,node)));
-        if (node.getTo().equals("from.travelPeriod"))
-            travelDto.getFrom().setTravelPeriod((String)getPickValue(pick,node));
+        if (node.getTo().equals("from.travelPeriod")){
+            DateInterval dateInterval = (DateInterval) getPickValue(pick, node);
+            travelDto.getFrom().setTravelPeriod(dateInterval);
+        }
         if (node.getTo().equals("from.budget"))
             travelDto.getFrom().setBudget((String)getPickValue(pick,node));
         if (node.getTo().equals("from.departureCityId"))

@@ -1,6 +1,6 @@
 {
   "name": "tree",
-  "headActionName": "radioButton-visitOfExcursions-action",
+  "headActionName": "dateIntervalInput-travelPeriod-action",
   "jumps": [
 
     {

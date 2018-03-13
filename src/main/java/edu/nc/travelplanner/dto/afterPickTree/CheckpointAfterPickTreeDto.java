@@ -1,12 +1,13 @@
 package edu.nc.travelplanner.dto.afterPickTree;
 
+import edu.nc.travelplanner.model.action.DateInterval;
+
 public class CheckpointAfterPickTreeDto {
     private Integer countryId;
     private String countryName;
     private Long cityId;
     private String cityName;
     private Integer optionId;
-    private String travelPeriod;
     private String budget;
     private Long departureCityId;
     private Integer departureCountryId;
@@ -16,6 +17,8 @@ public class CheckpointAfterPickTreeDto {
     private Integer typeOfTransportId;
     private Integer excursionId;
     private String nameOfTravel;
+
+    private DateInterval travelPeriod;
 
     public Integer getCountryId() {
         return countryId;
@@ -56,11 +59,11 @@ public class CheckpointAfterPickTreeDto {
         this.optionId = optionId;
     }
 
-    public String getTravelPeriod() {
+    public DateInterval getTravelPeriod() {
         return travelPeriod;
     }
 
-    public void setTravelPeriod(String travelPeriod) {
+    public void setTravelPeriod(DateInterval travelPeriod) {
         this.travelPeriod = travelPeriod;
     }
 

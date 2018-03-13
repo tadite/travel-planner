@@ -108,6 +108,10 @@ public class ViewResponseBuilder {
         return this;
     }
 
+    public String getDatePickerName(String id, String data, Integer index){
+        return elementsPostfixHolder.datepickerPostfix+"."+index+"."+id;
+    }
+
     public ViewResponse build(){
         return viewResponse;
     }
