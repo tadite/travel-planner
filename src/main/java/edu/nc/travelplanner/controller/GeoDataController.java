@@ -33,16 +33,26 @@ public class GeoDataController {
         return new ResponseEntity(HttpStatus.EXPECTATION_FAILED);
     }
 
-    @GetMapping(path = "/api/client/geo/city/{countryId}/{query}")
-    public ResponseEntity getCitiesByQuery(@PathVariable String query, @PathVariable Integer countryId) {
+    @GetMapping(path = "/api/client/geo/city/{countryId}")
+    public ResponseEntity getCitiesByQuery(@PathVariable Integer countryId) {
 
+        try {
+            return new ResponseEntity(vkGeoNamesProvider.findCitiesByName("", countryId), HttpStatus.OK);
+        } catch (IOException | DataProducerParseException e) {
+            e.printStackTrace();
+        }
+
+        return new ResponseEntity(HttpStatus.EXPECTATION_FAILED);
+    }
+
+    @GetMapping(path = "/api/client/geo/city/{countryId}/{query}")
+    public ResponseEntity getCitiesByQuery(@PathVariable Integer countryId, @PathVariable String query) {
 
         try {
             return new ResponseEntity(vkGeoNamesProvider.findCitiesByName(query, countryId), HttpStatus.OK);
         } catch (IOException | DataProducerParseException e) {
             e.printStackTrace();
         }
-
 
         return new ResponseEntity(HttpStatus.EXPECTATION_FAILED);
     }
