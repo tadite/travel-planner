@@ -89,6 +89,12 @@ public class SimpleTreeOrchestrator implements TreeOrchestrator {
             return executePresentation(args);
     }
 
+    @Override
+    public void reset() {
+        actionTree=null;
+
+    }
+
     private void saveTravelToDb(TravelAfterPickTreeDto travelAfterPickTreeDto) {
         travelAfterPickTreeDto.setClientId(clientDao.getClientByLogin(authenticationFacade.getAuthentication().getName()).getClientId());
 

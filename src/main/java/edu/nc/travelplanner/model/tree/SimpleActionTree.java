@@ -58,7 +58,7 @@ public class SimpleActionTree implements ActionTree {
         Response response = currentAction.executeDecision(args, pickResults);
 
         this.jumps.stream()
-                .filter(jmp -> jmp.getCurrentAction()==this.currentAction && jmp.canJump(args, response))
+                .filter(jmp -> jmp.getCurrentAction()==this.currentAction && jmp.canJump(args, pickResults, response))
                 .findFirst()
                 .ifPresent(this::executeJump);
 

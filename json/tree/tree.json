@@ -8,9 +8,9 @@
       "type": "logic-condition-on-pick-result",
       "params": {
         "conditionType": "=s",
-        "pickResultName": "radiobox.radioButton-doYouKnowYourFullTravel-action",
-        "pickResultCheck": "value",
-        "conditionValue": "block1.radiobox2.2"
+        "pickResultName": "radioButton-doYouKnowYourFullTravel-action",
+        "pickResultCheck": "key",
+        "conditionValue": "2"
       }
     },
     {
