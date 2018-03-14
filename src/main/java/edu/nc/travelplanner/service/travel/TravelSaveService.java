@@ -59,7 +59,7 @@ public class TravelSaveService {
 
         //from CheckPoint
         CheckpointAfterPickTreeDto from = pickDto.getFrom();
-        if (from!=null){
+        if (from!=null && from.getCityId()!=null && from.getCountryId()!=null){
             CheckPoint fromCheckPoint = saveAndGetFromCheckPoint(pickDto);
             travel.addCheckPoint(fromCheckPoint);
         }

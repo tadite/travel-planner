@@ -1,0 +1,12 @@
+{
+  "name": "tree",
+  "headActionName": "dateIntervalInput-travelPeriod-action",
+  "jumps": [
+    {
+      "fromActionName": "dateIntervalInput-travelPeriod-action",
+      "toActionName": "radioButton-doYouKnowYourFullTravel-action",
+      "type": "without-condition",
+      "params": {}
+    }
+  ]
+}
