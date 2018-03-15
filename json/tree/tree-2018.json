@@ -1,6 +1,6 @@
 {
-  "name": "tree",
-  "headActionName": "radioButton-doYouKnowYourFullTravel-action",
+  "name": "tree-2018",
+  "headActionName": "dateIntervalInput-travelPeriod-action",
   "jumps": [
     {
       "fromActionName": "radioButton-doYouKnowYourFullTravel-action",
@@ -73,9 +73,9 @@
       "type": "logic-condition-on-pick-result",
       "params": {
         "conditionType": "=s",
-        "pickResultName": "radioButton-visitOfExcursions-action",
-        "pickResultCheck": "key",
-        "conditionValue": "1"
+        "pickResultName": "radiobox.radioButton-visitOfExcursions-action",
+        "pickResultCheck": "value",
+        "conditionValue": "block1.radiobox1.1"
       }
     },
     {
@@ -84,9 +84,9 @@
       "type": "logic-condition-on-pick-result",
       "params": {
         "conditionType": "=s",
-        "pickResultName": "radioButton-visitOfExcursions-action",
-        "pickResultCheck": "key",
-        "conditionValue": "2"
+        "pickResultName": "radiobox.radioButton-visitOfExcursions-action",
+        "pickResultCheck": "value",
+        "conditionValue": "block1.radiobox2.2"
       }
     },
     {
