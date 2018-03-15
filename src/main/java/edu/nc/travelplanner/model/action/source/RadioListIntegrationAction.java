@@ -92,4 +92,8 @@ public class RadioListIntegrationAction implements IntegrationAction {
     public DataProducer getDataProducer() {
         return dataProducer;
     }
+
+    public Map<String, String> getOptionsMap() {
+        return optionsMap;
+    }
 }

@@ -10,5 +10,7 @@ public enum FilterType {
     @JsonProperty("regexp_replace")
     REGEXP_REPLACE,
     @JsonProperty("substring")
-    SUBSTRING
+    SUBSTRING,
+    @JsonProperty("list_to_map_multiple")
+    LIST_TO_MAP_MULTIPLE
 }
