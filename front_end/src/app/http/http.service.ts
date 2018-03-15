@@ -16,16 +16,24 @@ export class HttpService{
         return this.httpClient.get(url);
     }
 
+
+    public getData(url: string, body: any): Observable<any>{
+        return this.httpClient.get(url,body);
+    }
+
+
     public postObs(url: string, body: any) : Observable<any>{
         return this.httpClient.post(url, JSON.stringify(body), {headers:{'Content-Type': 'application/json'}});
     }
-
-    public postData(user: User, url: string){
-         
-        return this.httpClient.post(url, user); 
+    public postData( url: string, body: any){
+        return this.httpClient.post(url, body);
     }
 
-    getCityList(countryId: string, cityURL: string): Observable<any> {
+    public deleteDate(url: string){
+        return this.httpClient.delete(url);
+    }
+
+    public getCityList(countryId: string, cityURL: string): Observable<any> {
       
       /* let params = new HttpParams();
        params = params.append('countryId', countryId);*/        
@@ -34,4 +42,5 @@ export class HttpService{
     } 
 
     
+
 }

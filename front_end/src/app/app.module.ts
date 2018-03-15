@@ -22,6 +22,7 @@ import { UnauthGuardService }   from './auth/unauth-guard.service';
 import { NotepadComponent }   from './notepad/notepad.component';
 import  {ProfileComponent } from './profile/profile.component';
 import { AdminComponent }   from './admin/admin.component';
+import { SourseComponent }   from './sourse/sourse.component';
 import { ConfigComponent }   from './config/config.component';
 import {ProfilesComponent} from "./profiles/profiles.component";
 
@@ -31,19 +32,22 @@ const appRoutes: Routes =[
     { path: '', component: HomeComponent},
     { path: 'login', component: LoginComponent, canActivate: [UnauthGuardService]},    
     { path: 'user', component: UserComponent},
-    { path: 'questions', component: QuestionsComponent, canActivate: [AuthGuardService]}, 
+    { path: 'questions', component: QuestionsComponent, canActivate: [AuthGuardService]},
     { path: 'notepad', component: NotepadComponent, canActivate: [AuthGuardService]},
     { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService]}, 
 	{ path: 'admin', component: AdminComponent, canActivate: [AuthGuardService]},
     { path: 'config', component: ConfigComponent, canActivate: [AuthGuardService]},
-    { path: 'profiles', component: ProfilesComponent, canActivate: [AuthGuardService]},	
+    { path: 'profiles', component: ProfilesComponent, canActivate: [AuthGuardService]},
+    { path: 'sourse', component: SourseComponent/*, canActivate: [AuthGuardService]*/},
     { path: '**', component: NotFoundComponent }
     
 ];
 
 @NgModule({
-    imports:      [ BrowserModule, RouterModule.forRoot(appRoutes, { useHash: true }), FormsModule, BrowserAnimationsModule, HttpClientModule, NgbModule.forRoot(), LoadingModule, CdkTableModule, MatTableModule, MatPaginatorModule],
-    declarations: [ AppComponent, HomeComponent, LoginComponent, UserComponent, NotFoundComponent, QuestionsComponent, NotepadComponent, ProfileComponent, AdminComponent, ConfigComponent, ProfilesComponent], 
+
+    imports:      [ BrowserModule, RouterModule.forRoot(appRoutes, { useHash: true }), FormsModule, BrowserAnimationsModule, HttpClientModule, NgbModule.forRoot(), LoadingModule, CdkTableModule, MatTableModule, MatPaginatorModule, LoadingModule],
+    declarations: [ AppComponent, HomeComponent, LoginComponent, UserComponent, NotFoundComponent, QuestionsComponent, NotepadComponent, ProfileComponent, AdminComponent, ConfigComponent, ProfilesComponent, SourseComponent],
+
    providers: [
     {
       provide: HTTP_INTERCEPTORS,

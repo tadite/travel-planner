@@ -65,7 +65,7 @@ export class ProfileComponent {
     }
 
     onSubmit(user: User) { 
-        this.httpService.postData(user, this.actionUrl)
+        this.httpService.postData( this.actionUrl, user)
             .subscribe(
                 (data: User) => {}
                
