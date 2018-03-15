@@ -10,6 +10,7 @@ import { AuthService } from '../auth/auth.service';
 import {NgForm} from '@angular/forms';
 
 
+
 @Component({
     selector: 'questions-app',
     templateUrl: './questions.component.html',
@@ -42,7 +43,7 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
     questions: any;
     objectKeys = Object.keys;
     checks: {};
-      
+    mapDates = {};
     actionUrl: string = '/action';    
     
     login: string;
@@ -66,10 +67,12 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
 
     onSubmit(f: NgForm) {
         var map = {};
+       
         var tempForm = f.value;
         for(var key in tempForm){
-            map[tempForm[key]]= key;
-        }
+             map[tempForm[key]]= key;
+        }        
+
         for(var key in this.checks){
             if (key!=null)
                 map[key]= this.checks[key];
@@ -83,8 +86,8 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
         },
         error => {console.log(error);}
         );
-
     }
+    
 
     getNextActionView(){
         this.loading = true;
@@ -103,12 +106,18 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
         );
     }
 
-    putCheckId(id: any){
-        if (this.checks[id]=='checked')
+    putCheckId(id: any) {
+        console.log('id: ' + id); 
+        console.log('checks: ' + this.checks); 
+        if (this.checks[id]==='checked')
             this.checks[id]=null;
         else
             this.checks[id]='checked';
-        console.log(this.checks); 
+        console.log('checks: ' + this.checks); 
+    }
+
+    getCheckId(id: any){
+        this.checks[id]='checked';
     }
 
     logout(){

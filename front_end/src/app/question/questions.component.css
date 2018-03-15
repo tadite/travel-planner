@@ -1,8 +1,7 @@
 
 #navbar ul{
     display: none;
-    background-color: #8c93b1;
-   /* position: absolute;*/
+    background-color: #4a537a;    
     top: 100%;   
     border-radius: 8px;  
   }
@@ -32,7 +31,7 @@
     margin-top: 6px;    
     padding: 7px;     
     width: 140px;
-    color: rgb(255, 255, 255);
+    color: rgb(255, 255, 255);    
     text-decoration: none;
     text-align: center;
     cursor: pointer;    
@@ -46,7 +45,7 @@
 
   }
 
-  .page-header {
+  .ph {
     margin-top: -20px;
   }
 
@@ -55,20 +54,7 @@
     margin-top: 7px;
     margin-bottom: 0px;
   }
-
-  .form-group{
-    position: absolute; 
-    top: 50%;
-    margin-top: -150px;
-    margin-left: 50%;
-    transform: translateX(-50%);  
-  }
-
-  .form-group hr{
-    padding-top: 20px;
-    padding-bottom: 20px;    
-    width: 470px;
-  }
+  
 
   .img {
     position:absolute;
@@ -119,3 +105,121 @@
     transition: .3s linear;
   }
   tr:hover td {background: #e8edff;}
+
+  .background-image{
+    position: absolute;
+   
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;  
+    z-index:-2;
+  }
+
+  .form-block{
+    position: absolute;     
+    border-radius: 20px;     
+    background: rgba(255, 255, 255, 0.7);
+    min-width: 500px;
+    height: 200px;
+    /* overflow: auto; */
+    top: 50%;
+    margin-top: -140px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .form-group{   
+    padding-top:45px;
+  }
+
+  .form-group hr{
+    padding-top: 20px; 
+    padding-bottom: 20px; 
+    width: 470px;    
+  }  
+
+  .checkbox-block p input[type="checkbox"]{
+    vertical-align: middle;
+    float: left;       
+  }
+
+  .checkbox-block p{
+    margin-left: 20%;
+   
+    /* transform: translateX(-30%); */
+  }
+
+  .checkbox-block p span{
+    display: block;
+    float: left;
+  }
+
+  .radiobutton-block p input[type="radio"]{
+    vertical-align: middle;
+    float: left;       
+  }
+
+  .radiobutton-block p{
+    margin-left: 20%;
+   
+    /* transform: translateX(-30%); */
+  }
+
+  .radiobutton-block p span{
+    display: block;
+    float: left;
+  }
+
+  /*.checkbox-block input[type="checkbox"]{
+    vertical-align: -2px;
+    margin: 0;
+    padding: 0;
+    
+  }*/
+  select {
+    display: inline-block;
+    height: 30px;
+    width: 150px;
+    outline: none;
+    color: #6d6d6d;
+    border: 1px solid #C8BFC4;
+    border-radius: 4px;
+    box-shadow: inset 1px 1px 2px #adacad;
+    background: #fff;
+  }
+
+  
+
+
+/* Always display the drop down caret */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  color: #2c3e50;
+}
+
+/* A few custom styles for date inputs */
+input[type="date"] {
+  
+  color: #7d8283;
+  height: 30px;
+  width: 150px;
+  font-size: 15px;
+  border:1px solid #ecf0f1;
+  background:#ecf0f1;
+  padding:3px;
+  display: inline-block !important;
+  visibility: visible !important;
+}
+
+input[type="date"], focus {
+  color: #7d8283;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+}
+
+input[type="text"] {
+  border: 2px solid #ccc;
+  border-radius: 4px;
+}
+  

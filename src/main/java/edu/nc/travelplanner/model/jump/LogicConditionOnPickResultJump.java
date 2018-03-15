@@ -3,7 +3,10 @@ package edu.nc.travelplanner.model.jump;
 import edu.nc.travelplanner.exception.CustomParseException;
 import edu.nc.travelplanner.model.action.Action;
 import edu.nc.travelplanner.model.action.ActionArgs;
+import edu.nc.travelplanner.model.action.PickResult;
 import edu.nc.travelplanner.model.response.Response;
+
+import java.util.List;
 
 
 public class LogicConditionOnPickResultJump implements Jump {
@@ -35,19 +38,34 @@ public class LogicConditionOnPickResultJump implements Jump {
     }
 
     @Override
-    public boolean canJump(ActionArgs args, Response response){
+    public boolean canJump(ActionArgs args, List<PickResult> pickResults, Response response){
         try {
-            return resolveLogicPickResult(args, response);
-        } catch (CustomParseException e) {
+            return resolveLogicPickResult(pickResults, response);
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
     }
 
-    private boolean resolveLogicPickResult(ActionArgs args, Response response) throws CustomParseException {
-        if (pickResultCheck == "value" && !args.getArgs().containsValue(pickResultName))
+    private boolean resolveLogicPickResult(List<PickResult> pickResults, Response response) throws CustomParseException {
+        if (!((pickResultCheck.equals("value") && pickResults.stream().anyMatch(pick -> pick.getValue().equals(pickResultName)))||
+                (pickResultCheck.equals("key") && pickResults.stream().anyMatch(pick -> pick.getKey().equals(pickResultName)))))
             return false;
-        if (pickResultCheck == "key" && !args.getArgs().containsKey(pickResultName))
+
+        Object value;
+
+        if (pickResultCheck.equals("key"))
+            value = pickResults.stream().filter(pick -> pick.getKey().equals(pickResultName)).findFirst().get().getValue();
+        else if (pickResultCheck.equals("value"))
+            value = pickResults.stream().filter(pick -> pick.getValue().equals(pickResultName)).findFirst().get().getKey();
+        else throw new CustomParseException("Value for jump condition not found");
+
+        return resolveValueOnLogicCondition(value, conditionType);
+    }
+
+    private boolean resolveLogicPickResult(ActionArgs args, Response response) throws CustomParseException {
+        if (!((pickResultCheck == "value" && args.getArgs().containsValue(pickResultName))||
+                (pickResultCheck == "key" && args.getArgs().containsKey(pickResultName))))
             return false;
 
         String value;
@@ -61,7 +79,7 @@ public class LogicConditionOnPickResultJump implements Jump {
         return resolveValueOnLogicCondition(value, conditionType);
     }
 
-    private boolean resolveValueOnLogicCondition(String value, String logicOperation) throws CustomParseException {
+    private boolean resolveValueOnLogicCondition(Object value, String logicOperation) throws CustomParseException {
         if (logicOperation.length() != 2)
             throw new CustomParseException("Logic Operation must be 2 symbols");
 
@@ -69,23 +87,23 @@ public class LogicConditionOnPickResultJump implements Jump {
             case '<':
                 switch (logicOperation.charAt(1)) {
                     case 'd':
-                        return Double.valueOf(value) < Double.valueOf(conditionValue);
+                        return (Double)(value) < Double.valueOf(conditionValue);
                     case 'i':
-                        return Integer.valueOf(value) < Integer.valueOf(conditionValue);
+                        return (Integer)(value) < Integer.valueOf(conditionValue);
                 }
             case '>':
                 switch (logicOperation.charAt(1)) {
                     case 'd':
-                        return Double.valueOf(value) > Double.valueOf(conditionValue);
+                        return (Double)(value) > Double.valueOf(conditionValue);
                     case 'i':
-                        return Integer.valueOf(value) > Integer.valueOf(conditionValue);
+                        return (Integer)(value) > Integer.valueOf(conditionValue);
                 }
             case '=':
                 switch (logicOperation.charAt(1)) {
                     case 'd':
-                        return Double.valueOf(value).equals(Double.valueOf(conditionValue));
+                        return value.equals(Double.valueOf(conditionValue));
                     case 'i':
-                        return Integer.valueOf(value).equals(Integer.valueOf(conditionValue));
+                        return value.equals(Integer.valueOf(conditionValue));
                     case 's':
                         return String.valueOf(value).equals(String.valueOf(conditionValue));
                     case 'o':

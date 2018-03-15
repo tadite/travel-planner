@@ -59,11 +59,12 @@ export class LoginComponent {
                    },
                    error => {
                        console.log('error.status ' + error.status);
-                   if (error.status === 500) {
+                   if (error.status === 500 || error.status === 401) {
                          this.loginError = true;
                    }
                 });
     }
 
+    
    
 }

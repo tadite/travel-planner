@@ -4,7 +4,7 @@ import {User} from '../user/user';
 import { Observable } from 'rxjs/Observable';
 import{Question} from '../question/question';
 import 'rxjs/add/operator/map';
-import {Element} from '../profiles/profiles.component';
+
   
 @Injectable()
 export class HttpService{
@@ -13,18 +13,9 @@ export class HttpService{
     constructor(private httpClient: HttpClient){ } 
 
     public get(url: string): Observable<any>{
-        return this.httpClient.get(url)
-        /*.catch((error, caught) => {
-                if (error.status === 401) {  
-                    console.log('error.status');                  
-                    this.cookieService.deleteAll();
-                    this.router.navigate(['/login']);
-                    return Observable.throw(error);
-                }                
-                return Observable.throw(error);
-
-            }) as any;*/;
+        return this.httpClient.get(url);
     }
+
 
     public getData(url: string, body: any): Observable<any>{
         return this.httpClient.get(url,body);
@@ -38,7 +29,18 @@ export class HttpService{
         return this.httpClient.post(url, body);
     }
 
-    deleteDate(url: string){
+    public deleteDate(url: string){
         return this.httpClient.delete(url);
     }
+
+    public getCityList(countryId: string, cityURL: string): Observable<any> {
+      
+      /* let params = new HttpParams();
+       params = params.append('countryId', countryId);*/        
+       let url: string = cityURL + '/' + countryId;
+        return this.httpClient.get(url);        
+    } 
+
+    
+
 }

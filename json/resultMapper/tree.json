@@ -1,78 +1,53 @@
 {
   "map": [
     {
-      "from": "radioButton-doYouKnowYourFullTravel-action",
-      "to": "",
-      "type": ""
-    },
-    {
       "from": "dropdownlist-departure-country-action",
-      "to": "from.departureCountryId",
-      "type": ""
-    },
-    {
-      "from": "dropdownlist-departure-city-action",
-      "to": "from.departureCityId",
-      "type": ""
-    },
-    {
-      "from": "textinput-numberOfPersons-action",
-      "to": "from.numberOfPersons",
-      "type": ""
-    },
-    {
-      "from": "dateIntervalInput-travelPeriod-action",
-      "to": "from.travelPeriod",
-      "type": ""
-    },
-    {
-      "from": "dropdownlist-countries-action",
       "to": "from.countryId",
       "type": ""
     },
     {
-      "from": "checklist-citiesByCountryId-action",
+      "from": "dropdownlist-departure-city-action",
       "to": "from.cityId",
-      "type": "list-first"
-    },
-    {
-      "from": "dropdownlist-budget-action",
-      "to": "from.budget",
       "type": ""
     },
     {
-      "from": "radioButton-placeOfResidence-action",
-      "to": "from.placeOfResidenceId",
+      "from": "dropdownlist-countries-action",
+      "to": "to.countryId",
       "type": ""
     },
     {
-      "from": "radioButton-typeOfTransport-action",
-      "to": "from.typeOfTransportId",
+      "from": "checklist-citiesByCountryId-action",
+      "to": "to.cityId",
       "type": ""
     },
     {
-      "from": "radioButton-visitOfExcursions-action",
-      "to": "",
+      "from": "dateIntervalInput-travelPeriod-action1",
+      "to": "travelPeriodStart",
+      "type": ""
+    },
+    {
+      "from": "dateIntervalInput-travelPeriod-action2",
+      "to": "travelPeriodEnd",
+      "type": ""
+    },
+    {
+      "from": "radioButton-choosingTheExcursion-action.Value",
+      "to": "excursion.name",
+      "type": ""
+    },
+    {
+      "from": "radioButton-choosingTheExcursion-action",
+      "to": "excursion.id",
       "type": ""
     },
     {
       "from": "checklist-typeOfExcursion-action",
-      "to": "from.typeOfExcursion",
-      "type": "list-first"
-    },
-    {
-      "from": "radioButton-choosingTheExcursion-action",
-      "to": "from.excursionId",
+      "to": "excursion.typeId",
       "type": ""
     },
     {
-      "from": "checklist-option-action",
-      "to": "from.optionId",
-      "type": "list-first"
-    },
-    {
-      "from": "textinput-nameOfTravel-action",
-      "to": "from.nameOfTravel",
+      "from": "dropdownlist-budget-action",
+      "to": "budget.id",
       "type": ""
     }
   ]

@@ -6,6 +6,7 @@ import edu.nc.travelplanner.model.action.constant.*;
 import edu.nc.travelplanner.model.action.source.CheckListIntegrationAction;
 import edu.nc.travelplanner.model.action.source.DropDownListIntegrationAction;
 import edu.nc.travelplanner.model.action.source.InfoIntegrationAction;
+import edu.nc.travelplanner.model.action.source.RadioListIntegrationAction;
 import edu.nc.travelplanner.model.jump.Jump;
 import edu.nc.travelplanner.model.jump.JumpType;
 import edu.nc.travelplanner.model.jump.LogicConditionOnPickResultJump;
@@ -37,11 +38,14 @@ public class DefaultEnumMapper implements EnumMapper {
         put(ActionType.DROPDOWN_INTEGRATION, DropDownListIntegrationAction::new);
         put(ActionType.CHECKLIST_INTEGRATION, CheckListIntegrationAction::new);
         put(ActionType.INFO_INTEGRATION, InfoIntegrationAction::new);
+
+        put(ActionType.RADIOLIST_INTEGRATION, RadioListIntegrationAction::new);
     }};
 
     private Map<FilterType, Supplier<ResponseFilter>> filterCreationMap = new HashMap<FilterType, Supplier<ResponseFilter>>(){{
         put(FilterType.JSON_PATH, JsonPathResponseFilter::new);
         put(FilterType.LIST_TO_MAP, ListToMapJsonResponseFilter::new);
+        put(FilterType.LIST_TO_MAP_MULTIPLE, ListToMapMultipleJsonResponseFilter::new);
         put(FilterType.REGEXP_REPLACE, RegexpReplaceAllResponseFilter::new);
         put(FilterType.SUBSTRING, SubstringResponseFilter::new);
     }};

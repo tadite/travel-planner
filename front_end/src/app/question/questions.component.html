@@ -1,29 +1,58 @@
-<div class="page-header">
+<div class="user-page">
+<div class="background-image" style="background-image : url('http://upload.akusherstvo.ru/image1487938.jpg')"></div>      
+<div class="ph">
         <img class="img" src="http://upload.akusherstvo.ru/image1482617.jpg">
-        <div class="title">ПЛАНИРОВЩИК ПУТЕШЕСТВИЙ</div>
+        <div class="title">TRAVEL PLANNER</div>
 <nav class="fixed-nav-bar">  
         <ul id="navbar">               
                 <li><a>{{login}} <span class="glyphicon glyphicon-menu-down"></span></a> 
                   <ul>
-                    <li><a href="#"><span class="glyphicon glyphicon-picture"></span> История путешествий</a></li>                    
-                    <li><a href="#"><span class="glyphicon glyphicon-list-alt"></span> Мой блокнот</a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-plane"></span> Текущее путешествие</a></li>
+                    <li><a routerLink="/profile" routerLinkActive="active"><span class="glyphicon glyphicon-user"></span> My profile</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-picture"></span> Travels history</a></li>                    
+                    <li><a routerLink="/notepad" routerLinkActive="active"><span class="glyphicon glyphicon-list-alt"></span> Notepad</a></li>
+                    <li><a routerLink="/questions" routerLinkActive="active"><span class="glyphicon glyphicon-plane"></span> Current travel</a></li>
                     <hr>
-                    <li><a (click)="logout()"><span class="glyphicon glyphicon-log-out"></span> Выйти</a></li>                    
+                    <li><a (click)="logout()"><span class="glyphicon glyphicon-log-out"></span> Sign out</a></li>                    
                   </ul>   
                 </li>              
-                <!-- <li><a href="#">Информация</a></li>                                -->
+                                           
         </ul>
 </nav>
-</div>    
+</div> 
+<div class="main-page">
+<div class = "form-block">
     <div class="form-group" >  
-        <hr>
+        <!-- <hr> -->
         <div align="center" class="form-inline">
                 <div> 
+                     <!-- <div class="radiobutton-block">
+                                <p>
+                                    <input type="radio" (change)="putCheckId(question.id)"/><span>Воронеж</span>
+                                </p>                                                          
+                        </div><br>
+                        <div class="radiobutton-block">
+                                <p>
+                                    <input type="radio" (change)="putCheckId(question.id)"/><span>Гоа</span>
+                                </p>                                                          
+                        </div><br>
+                        <div class="radiobutton-block">
+                                <p>
+                                    <input type="radio" (change)="putCheckId(question.id)"/><span>Санкт-Петербург</span>
+                                </p>                                                          
+                        </div><br>                       
+
+                            <p >
+                                <input class="w3-input w3-border w3-round" type="text" name="text" ngModel required pattern="[0-9]*"/>
+                            </p>
+                            <p >                                
+                                <input class="w3-check" type="checkbox" (change)="putCheckId(question.id)"/><span>{{question.data}}</span><br>                                
+                            </p>
+                        -->
+                                                
                     <div *ngIf="result == false">
                     <ngx-loading [show]="loading" [config]="{ backdropBackgroundColour: 'rgba(0,0,0,0)', backdropBorderRadius: '10px',
-                        primaryColour: 'rgb(180, 176, 176)', secondaryColour: 'rgb(180, 176, 176)', tertiaryColour: 'rgb(180, 176, 176)' }"></ngx-loading> 
-                        <form [hidden]="loading" #f="ngForm" #elseBlock (ngSubmit)="onSubmit(f)" novalidate>
+                        primaryColour: 'rgb(161, 160, 160)', secondaryColour: 'rgb(161, 160, 160)', tertiaryColour: 'rgb(161, 160, 160)' }"></ngx-loading> 
+                        <form [hidden]="loading" #f="ngForm" #elseBlock (ngSubmit)="onSubmit(f)" #myForm="ngForm" novalidate>
 
                             <div *ngFor="let question of questions"
                                 [ngSwitch]="question.type"> 
@@ -36,29 +65,49 @@
                                    <option value="{{key}}" *ngFor="let key of objectKeys(question.data)">{{question.data[key]}}</option>
                                 </select><br>
                             </p>
-                            <p *ngSwitchCase="'checkbox'"> 
-                                <input type="checkbox" (change)="putCheckId(question.id)"/>{{question.data}}
+
+                            <div class="checkbox-block">
+                            <p *ngSwitchCase="'checkbox'">                                
+                                <input  type="checkbox" (change)="putCheckId(question.id)"/><span>{{question.data}}</span><br>                                
                             </p>
+                            </div>
+
+                            <div class="radiobutton-block">
+                                <p *ngSwitchCase="'radiobox'">                                
+                                    <input type="radio" name="radio" value="{{question.id}}" ngModel /><span>{{question.data}}</span><br>                                
+                                </p>
+                            </div>
+
+                            <p *ngSwitchCase="'text_input'">
+                                <input type="text" name="text" ngModel required/>
+                            </p>
+
+                            <p *ngSwitchCase="'date_picker'">
+                                <input type="date" name="{{question.id}}" ngModel required/>                               
+                                <!-- <input type="date" name="{{question.id}}" ngModel value="{{question.id}}" (change)="submitDates(f)" required/> -->
+                            </p>
+                            
                             <p *ngSwitchDefault> 
                                 {{question}}
                             </p>
-                            </div>                            
-                            <input class="next" type="submit" (click)="onSubmit()" value="Далее">
+                            </div>  
+                                                  
+                            <input [disabled]="myForm.invalid" class="next" type="submit" (click)="onSubmit()" value="Далее"/>
                             
                         </form>
                         </div>
                     <div *ngIf="result == true">
                         <table>
                                 <tr>
-                                 <th>Вопрос</th>
-                                 <th>Ответ</th>
+                                 <th>Question</th>
+                                 <th>Answer</th>
                                 </tr>
                                 <tr>
-                                 <td>Страна</td>
+                                 <td>Country</td>
                                  <td>{{questions.from.countryName}}</td>
                                  </tr>
                                  <tr>
-                                 <td>Город</td>
+                                 <td>City</td>
                                  <td>{{questions.from.cityName}}</td>
                                </tr>
                         </table>
@@ -67,8 +116,10 @@
         </div>
         <br>
         <br>
-        <hr>
+        <!-- <hr> -->
     </div>
-
+    </div>
+    </div>
+</div>
 
 

@@ -14,27 +14,27 @@ export class AuthService {
     
     
       
-    signup(user: User) {
-       // const myHeaders = new HttpHeaders().set('Authorization', 'my-auth-token');          
-        
-     //   return this.httpClient.post('http://localhost:8090/api/auth/signup', JSON.stringify({login: user.login, password: user.password, email: user.eMail}));        
+    signup(user: User) {      
+    
+    
      this.cookieService.set('login', user.login);
       return this.http.post<any>('/api/auth/signup', user)
      .map(user => {
-         if (user && user.token) {             
-             //localStorage.setItem('currentUser', JSON.stringify({login: user.login, password: user.password, email: user.eMail}));
-             this.cookieService.set( 'token', user.token );             
+         if (user && user.token) { 
+             this.cookieService.set( 'token', user.token );  
+                     
          } 
          return user;
      });        
     }
 
     signin(user: User) { 
+       
         this.cookieService.set('login', user.login);
        return this.http.post<any>('/api/auth/signin', user)
       .map(user => {
           if (user && user.token) { 
-              this.cookieService.set( 'token', user.token );              
+              this.cookieService.set( 'token', user.token ); 
           } 
           return user;
       });        
@@ -48,4 +48,6 @@ export class AuthService {
     getLogin(){        
         return this.cookieService.get("login");
     }
+
+   
 }

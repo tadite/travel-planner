@@ -1,11 +1,11 @@
-import {Component, ViewChild, NgModule, OnInit} from '@angular/core';
-import {MatPaginator, MatTableDataSource} from '@angular/material';
-import { CdkTableModule} from '@angular/cdk/table';
-import {DataSource} from '@angular/cdk/table';
+import { Component, ViewChild, NgModule, OnInit } from '@angular/core';
+import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { CdkTableModule } from '@angular/cdk/table';
+import { DataSource } from '@angular/cdk/table';
 import { Router } from "@angular/router";
-import {MatTableModule} from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
 import { HttpService } from '../http/http.service';
-import { AuthService} from "../auth/auth.service";
+import { AuthService } from "../auth/auth.service";
 import { CookieService } from 'ngx-cookie-service';
 
 

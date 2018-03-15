@@ -8,4 +8,5 @@ import java.io.IOException;
 
 public interface TreeOrchestrator {
     Response execute(ActionArgs args) throws CustomParseException;
+    void reset();
 }

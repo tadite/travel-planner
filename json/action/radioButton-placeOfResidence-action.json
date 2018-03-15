@@ -1,7 +1,7 @@
 {
   "name": "radioButton-placeOfResidence-action",
   "viewName": "Choose the place of residence",
-  "type": "dropdown_input",
+  "type": "radiolist",
   "parameters": {
     "optionsMap": {
       "1": "111",

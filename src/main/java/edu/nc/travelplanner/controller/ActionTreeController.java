@@ -27,6 +27,13 @@ public class ActionTreeController {
         this.orchestrator=orchestrator;
     }
 
+    @PostMapping(path = "/action/reset")
+    public ResponseEntity reset() {
+        this.orchestrator.reset();
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @PostMapping(path = "/action")
     public ResponseEntity<String> executePost(@RequestBody Map<String, String> argsMap) {
 

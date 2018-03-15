@@ -2,7 +2,10 @@ package edu.nc.travelplanner.model.jump;
 
 import edu.nc.travelplanner.model.action.Action;
 import edu.nc.travelplanner.model.action.ActionArgs;
+import edu.nc.travelplanner.model.action.PickResult;
 import edu.nc.travelplanner.model.response.Response;
+
+import java.util.List;
 
 public class NoConditionJump implements Jump {
     private Action currentAction;
@@ -28,8 +31,7 @@ public class NoConditionJump implements Jump {
     }
 
     @Override
-    public boolean canJump(ActionArgs args, Response response) {
-
+    public boolean canJump(ActionArgs args, List<PickResult> pickResults, Response response) {
         return true;
     }
 
