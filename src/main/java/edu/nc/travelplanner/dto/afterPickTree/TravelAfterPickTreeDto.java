@@ -9,6 +9,8 @@ public class TravelAfterPickTreeDto {
     private String travelName;
     private String travelDescription;
     private Long clientId;
+    private String dateIntervalStart;
+    private String dateIntervalEnd;
 
     public TravelAfterPickTreeDto() {
     }
@@ -18,6 +20,22 @@ public class TravelAfterPickTreeDto {
         this.checkpoints = checkpoints;
         this.travelName = travelName;
         this.travelDescription = travelDescription;
+    }
+
+    public String getDateIntervalStart() {
+        return dateIntervalStart;
+    }
+
+    public void setDateIntervalStart(String dateIntervalStart) {
+        this.dateIntervalStart = dateIntervalStart;
+    }
+
+    public String getDateIntervalEnd() {
+        return dateIntervalEnd;
+    }
+
+    public void setDateIntervalEnd(String dateIntervalEnd) {
+        this.dateIntervalEnd = dateIntervalEnd;
     }
 
     public CheckpointAfterPickTreeDto getFrom() {

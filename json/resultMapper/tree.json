@@ -21,8 +21,13 @@
       "type": ""
     },
     {
-      "from": "dateIntervalInput-travelPeriod-action",
-      "to": "from.travelPeriod",
+      "from": "dateIntervalInput-travelPeriod-action1",
+      "to": "from.travelPeriodStart",
+      "type": ""
+    },
+    {
+      "from": "dateIntervalInput-travelPeriod-action2",
+      "to": "from.travelPeriodEnd",
       "type": ""
     },
     {

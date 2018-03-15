@@ -1,11 +1,6 @@
 {
   "name": "checklist-typeOfExcursion-action",
   "viewName": "Choose the types of excursion",
-  "type": "checklist",
-  "parameters": {
-    "optionsMap": {
-      "1": "Однодневные",
-      "2": "Многодневные"
-    }
-  }
+  "type": "checklist_integration",
+  "dataProducer": "tripster-excursion-types-producer"
 }

@@ -27,6 +27,8 @@ public class FromJsonResultsMapper implements ResultsMapper {
         push("from.typeOfTransportId");
         push("from.excursionId");
         push("from.nameOfTravel");
+        push("from.travelPeriodStart");
+        push("from.travelPeriodEnd");
     }};
 
     public FromJsonResultsMapper(List<MapNode> mapNodes) {
@@ -84,7 +86,11 @@ public class FromJsonResultsMapper implements ResultsMapper {
         if (node.getTo().equals("from.nameOfTravel"))
             travelDto.getFrom().setNameOfTravel((String)getPickValue(pick,node));
         else if (node.getTo().equals("from.countryId"))
-            travelDto.getFrom().setCountryId(Integer.valueOf((String)getPickValue(pick,node)));
+            travelDto.getFrom().setCountryId(Integer.valueOf((String)getPickValue(pick,node))); //DASDASDASDADADASDADASDA
+        else if (node.getTo().equals("from.travelPeriodStart"))
+            travelDto.setDateIntervalStart((String)getPickValue(pick,node));
+        else if (node.getTo().equals("from.travelPeriodEnd"))
+            travelDto.setDateIntervalEnd((String)getPickValue(pick,node));
 
     }
 
