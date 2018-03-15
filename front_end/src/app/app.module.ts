@@ -18,6 +18,7 @@ import { QuestionsComponent } from './question/questions.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { AuthGuardService }   from './auth/auth-guard.service';
 import { AdminComponent }   from './admin/admin.component';
+import { SourseComponent }   from './sourse/sourse.component';
 import { ConfigComponent }   from './config/config.component';
 import {ProfilesComponent} from "./profiles/profiles.component";
  
@@ -29,6 +30,7 @@ const appRoutes: Routes =[
     { path: 'questions', component: QuestionsComponent /*, canActivate: [AuthGuardService]*/},
     { path: 'admin', component: AdminComponent/*, canActivate: [AuthGuardService]*/},
     { path: 'config', component: ConfigComponent/*, canActivate: [AuthGuardService]*/},
+    { path: 'sourse', component: SourseComponent/*, canActivate: [AuthGuardService]*/},
     { path: 'profiles', component: ProfilesComponent/*, canActivate: [AuthGuardService]*/},
     { path: '**', component: NotFoundComponent }
     
@@ -37,7 +39,7 @@ const appRoutes: Routes =[
 @NgModule({
 
     imports:      [ BrowserModule, CdkTableModule, MatTableModule, MatPaginatorModule, RouterModule.forRoot(appRoutes, { useHash: true }), FormsModule, BrowserAnimationsModule, HttpClientModule, NgbModule.forRoot(), LoadingModule],
-    declarations: [ AppComponent, HomeComponent, LoginComponent, UserComponent, NotFoundComponent, QuestionsComponent, AdminComponent, ConfigComponent, ProfilesComponent],
+    declarations: [ AppComponent, HomeComponent, LoginComponent, UserComponent, NotFoundComponent, QuestionsComponent, AdminComponent, ConfigComponent, ProfilesComponent, SourseComponent],
 
    providers: [
     {

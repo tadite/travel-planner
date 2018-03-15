@@ -78,3 +78,11 @@ hr{
     color: white;
     letter-spacing: 1px
 }
+
+.span3 {
+    max-height: 450px !important;
+    width: 100%;
+    overflow: scroll;
+    background: rgba(255, 255, 255, .5);
+}​
+

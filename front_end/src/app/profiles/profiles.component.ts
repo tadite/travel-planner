@@ -24,7 +24,7 @@ export class ProfilesComponent implements OnInit{
 
     login: string;
     profilesUrl: string = '/api/manage/user';
-    blocProfilesUrl: string = '/api/manage/user/block/';
+    blocProfilesUrl: string = '/api/manage/user/block';
     //Element: any;
     ELEMENT_DATA: Element[];
     dataSource: any;
@@ -66,7 +66,7 @@ export class ProfilesComponent implements OnInit{
     }
 
     blocUser(element: Element) {
-        this.http.postObs(this.blocProfilesUrl, element.clientId).subscribe(result => {
+        this.http.postData(this.blocProfilesUrl, element.clientId).subscribe(result => {
                 element.isBlocked = !element.isBlocked;
             },
             error => {

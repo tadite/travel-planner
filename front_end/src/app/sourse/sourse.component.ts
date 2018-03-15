@@ -8,29 +8,29 @@ import {Observable} from 'rxjs/Observable';
 
 
 @Component({
-    selector: 'config-app',
-    templateUrl: './config.component.html',
-    styleUrls: ['./config.component.css'],
+    selector: 'sourse-app',
+    templateUrl: './sourse.component.html',
+    styleUrls: ['./sourse.component.css'],
     providers: [HttpService, AuthService]
 
 })
 
-export class ConfigComponent implements OnInit{
+export class SourseComponent implements OnInit{
     login: string;
     actionUrl: string = '/api/manage/action';
     dataProducerUrl: string = '/api/manage/producer';
     sourceUrl: string = '/api/manage/source';
     ELEMENT_DATA: any;
     constructor(private http: HttpService, private cookieService: CookieService, private router: Router, private authService: AuthService) {
-        this.actions = new Array<Action>();
+        this.actions = new Array<Sourse>();
     }
 
     //типы шаблонов
     @ViewChild('readOnlyTemplate') readOnlyTemplate: TemplateRef<any>;
     @ViewChild('editTemplate') editTemplate: TemplateRef<any>;
 
-    editedAction: Action;
-    actions: Array<Action>;
+    editedAction: Sourse;
+    actions: Array<Sourse>;
     isNewRecord: boolean;
     statusMessage: string;
 
@@ -41,27 +41,27 @@ export class ConfigComponent implements OnInit{
 
     //загрузка
     private loadActions() {
-        this.http.get(this.actionUrl).subscribe((data: Action[]) => {
-            this.actions = data;
-            console.log(this.actions);
+        this.http.get(this.sourceUrl).subscribe((data: Sourse[]) => {
+                this.actions = data;
+                console.log(this.actions);
             },
             error => {console.log(error); }
-            );
+        );
     }
 
     // добавление
     addAction() {
-        this.editedAction = new Action("","","",null,"");
+        this.editedAction = new Sourse("","","","", null);
         this.actions.push(this.editedAction);
         this.isNewRecord = true;
     }
 
     // редактирование
-    editAction(action: Action) {
-        this.editedAction = new Action(action.name, action.viewName, action.type, action.parameters, action.dataProducerName);
+    editAction(action: Sourse) {
+        this.editedAction = new Sourse(action.name, action.type, action.url, action.description, action.params);
     }
     // загружаем один из двух шаблонов
-    loadTemplate(action: Action) {
+    loadTemplate(action: Sourse) {
         if (this.editedAction && this.editedAction.name == action.name) {
             return this.editTemplate;
         } else {
@@ -72,7 +72,7 @@ export class ConfigComponent implements OnInit{
     saveAction() {
         if (this.isNewRecord) {
             // добавляем
-            this.http.postData(this.actionUrl,this.editedAction).subscribe(data => {
+            this.http.postData(this.sourceUrl,this.editedAction).subscribe(data => {
                 this.statusMessage = 'Данные успешно добавлены',
                     this.loadActions();
             });
@@ -80,11 +80,11 @@ export class ConfigComponent implements OnInit{
             this.editedAction = null;
         } else {
             // изменяем
-            let url: string = '/api/manage/action' + '/' + this.editedAction.name;
-            this.http.get(url).subscribe((data: Action) => {
+            let url: string = '/api/manage/source' + '/' + this.editedAction.name;
+            this.http.get(url).subscribe((data: Sourse) => {
                 this.editedAction = data;
             });
-            this.http.postData(this.actionUrl,this.editedAction).subscribe(data => {
+            this.http.postData(this.sourceUrl,this.editedAction).subscribe(data => {
                 this.statusMessage = 'Данные успешно обновлены',
                     this.loadActions();
             });
@@ -101,8 +101,8 @@ export class ConfigComponent implements OnInit{
         this.editedAction = null;
     }
     // удаление
-    deleteAction(action: Action) {
-        let url: string = '/api/manage/action' + '/' + action.name;
+    deleteAction(action: Sourse) {
+        let url: string = '/api/manage/source' + '/' + action.name;
         this.http.deleteDate(url).subscribe(data => {
             this.statusMessage = 'Данные успешно удалены',
                 this.loadActions();
@@ -120,13 +120,13 @@ export class ConfigComponent implements OnInit{
 
 }
 
-export class Action{
+export class Sourse{
     constructor(
         public name: string,
-        public viewName: string,
         public type: string,
-        public parameters: any,
-        public dataProducerName: string) { }
+        public url: string,
+        public description: string,
+        public params:any) { }
 
 }
 

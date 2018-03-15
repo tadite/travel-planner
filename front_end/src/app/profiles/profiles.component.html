@@ -68,11 +68,11 @@
                         <mat-header-cell *matHeaderCellDef> Изменить статус </mat-header-cell>
                         <mat-cell *matCellDef="let element">
                             <p *ngIf="element.isBlocked">
-                            <button class="btn btn-default" (click)="blocUser(element)">Блок</button>
+                            <button class="btn btn-default" (click)="blocUser(element)">Разблокировать</button>
                             </p>
                             <p *ngIf="!element.isBlocked">
-                                <button class="btn btn-default" (click)="blocUser(element)">Разблок</button>
-                            </p>{{element.isBlocked}}
+                                <button class="btn btn-default" (click)="blocUser(element)">Заблокировать</button>
+                            </p>
                             </mat-cell>
                     </ng-container>
 
