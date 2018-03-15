@@ -73,8 +73,8 @@
                             </div>
 
                             <div class="radiobutton-block">
-                                <p *ngSwitchCase="'radio_button'">                                
-                                    <input type="radio" (change)="putCheckId(question.id)"/><span>{{question.data}}</span><br>                                
+                                <p *ngSwitchCase="'radiobox'">                                
+                                    <input type="radio" name="radio" value="{{question.id}}" ngModel /><span>{{question.data}}</span><br>                                
                                 </p>
                             </div>
 
@@ -83,7 +83,8 @@
                             </p>
 
                             <p *ngSwitchCase="'date_picker'">
-                                <input type="date" required/>                               
+                                <input type="date" name="{{question.id}}" ngModel required/>                               
+                                <!-- <input type="date" name="{{question.id}}" ngModel value="{{question.id}}" (change)="submitDates(f)" required/> -->
                             </p>
                             
                             <p *ngSwitchDefault> 
