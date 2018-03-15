@@ -108,6 +108,7 @@
 
   .background-image{
     position: absolute;
+   
     top: 0px;
     left: 0px;
     width: 100%;
@@ -120,7 +121,8 @@
     border-radius: 20px;     
     background: rgba(255, 255, 255, 0.7);
     min-width: 500px;
-    min-height: 200px;
+    height: 200px;
+    /* overflow: auto; */
     top: 50%;
     margin-top: -140px;
     margin-left: 50%;
