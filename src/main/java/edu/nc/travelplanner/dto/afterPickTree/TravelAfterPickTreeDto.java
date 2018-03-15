@@ -5,12 +5,16 @@ import java.util.List;
 
 public class TravelAfterPickTreeDto {
     private CheckpointAfterPickTreeDto from = new CheckpointAfterPickTreeDto();
+    private CheckpointAfterPickTreeDto to = new CheckpointAfterPickTreeDto();
     private List<CheckpointAfterPickTreeDto> checkpoints = new LinkedList<>();
     private String travelName;
     private String travelDescription;
     private Long clientId;
     private String dateIntervalStart;
     private String dateIntervalEnd;
+
+    private ExcursionAfterPickTreeDto excursion = new ExcursionAfterPickTreeDto();
+    private BudgetAfterPickTreeDto budget = new BudgetAfterPickTreeDto();
 
     public TravelAfterPickTreeDto() {
     }
@@ -20,6 +24,22 @@ public class TravelAfterPickTreeDto {
         this.checkpoints = checkpoints;
         this.travelName = travelName;
         this.travelDescription = travelDescription;
+    }
+
+    public BudgetAfterPickTreeDto getBudget() {
+        return budget;
+    }
+
+    public void setBudget(BudgetAfterPickTreeDto budget) {
+        this.budget = budget;
+    }
+
+    public ExcursionAfterPickTreeDto getExcursion() {
+        return excursion;
+    }
+
+    public void setExcursion(ExcursionAfterPickTreeDto excursion) {
+        this.excursion = excursion;
     }
 
     public String getDateIntervalStart() {
@@ -40,6 +60,14 @@ public class TravelAfterPickTreeDto {
 
     public CheckpointAfterPickTreeDto getFrom() {
         return from;
+    }
+
+    public CheckpointAfterPickTreeDto getTo() {
+        return to;
+    }
+
+    public void setTo(CheckpointAfterPickTreeDto to) {
+        this.to = to;
     }
 
     public void setFrom(CheckpointAfterPickTreeDto from) {
