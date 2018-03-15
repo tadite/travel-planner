@@ -56,9 +56,9 @@ public class TextInputAction implements Action {
     @Override
     public String getResult(Map<String, String> decisionArgs) {
         Optional<Map.Entry<String, String>> first = decisionArgs.entrySet().stream()
-                .filter((key) -> key.getKey().endsWith(name)).findFirst();
+                .filter((entry) -> entry.getValue().endsWith(name)).findFirst();
         if (first.isPresent())
-            return first.get().getValue();
+            return first.get().getKey();
         return null;
     }
 

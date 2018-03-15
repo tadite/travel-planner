@@ -49,6 +49,16 @@
       "from": "dropdownlist-budget-action",
       "to": "budget.id",
       "type": ""
+    },
+    {
+      "from": "textinput-nameOfTravel-action",
+      "to": "travelName",
+      "type": ""
+    },
+    {
+      "from": "textinput-numberOfPersons-action",
+      "to": "numberOfPersons",
+      "type": ""
     }
   ]
 }
