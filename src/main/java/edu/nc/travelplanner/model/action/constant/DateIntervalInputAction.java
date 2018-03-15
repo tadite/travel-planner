@@ -56,13 +56,13 @@ public class DateIntervalInputAction implements Action {
     public DateInterval getResult(Map<String, String> decisionArgs) {
         ViewResponseBuilder viewResponseBuilder = new ViewResponseBuilder();
 
-        if (decisionArgs.containsKey(viewResponseBuilder.getDatePickerName(name, data,1)) &&
-                decisionArgs.containsKey(viewResponseBuilder.getDatePickerName(name, data,2)))
+        if (decisionArgs.containsValue(viewResponseBuilder.getDatePickerName(name, data,1)) &&
+                decisionArgs.containsValue(viewResponseBuilder.getDatePickerName(name, data,2)))
         {
-            DateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
             try {
-                return new DateInterval(format.parse(decisionArgs.get(viewResponseBuilder.getDatePickerName(name, data,1))),
-                        format.parse(decisionArgs.get(viewResponseBuilder.getDatePickerName(name, data,2))));
+                return new DateInterval(format.parse(decisionArgs.entrySet().stream().filter(entry -> entry.getValue().equals(viewResponseBuilder.getDatePickerName(name, data,1))).findFirst().get().getKey()),
+                        format.parse(decisionArgs.entrySet().stream().filter(entry -> entry.getValue().equals(viewResponseBuilder.getDatePickerName(name, data,2))).findFirst().get().getKey()));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
