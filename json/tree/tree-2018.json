@@ -1,0 +1,111 @@
+{
+  "name": "tree-2018",
+  "headActionName": "dateIntervalInput-travelPeriod-action",
+  "jumps": [
+    {
+      "fromActionName": "radioButton-doYouKnowYourFullTravel-action",
+      "toActionName": "dropdownlist-departure-country-action",
+      "type": "logic-condition-on-pick-result",
+      "params": {
+        "conditionType": "=s",
+        "pickResultName": "radioButton-doYouKnowYourFullTravel-action",
+        "pickResultCheck": "key",
+        "conditionValue": "2"
+      }
+    },
+    {
+      "fromActionName": "dropdownlist-departure-country-action",
+      "toActionName": "dropdownlist-departure-city-action",
+      "type": "without-condition",
+      "params": {}
+    },
+    {
+      "fromActionName": "dropdownlist-departure-city-action",
+      "toActionName": "textinput-numberOfPersons-action",
+      "type": "without-condition",
+      "params": {}
+    },
+    {
+      "fromActionName": "textinput-numberOfPersons-action",
+      "toActionName": "dateIntervalInput-travelPeriod-action",
+      "type": "without-condition",
+      "params": {}
+    },
+    {
+      "fromActionName": "dateIntervalInput-travelPeriod-action",
+      "toActionName": "dropdownlist-countries-action",
+      "type": "without-condition",
+      "params": {}
+    },
+    {
+      "fromActionName": "dropdownlist-countries-action",
+      "toActionName": "checklist-citiesByCountryId-action",
+      "type": "without-condition",
+      "params": {}
+    },
+    {
+      "fromActionName": "checklist-citiesByCountryId-action",
+      "toActionName": "dropdownlist-budget-action",
+      "type": "without-condition",
+      "params": {}
+    },
+    {
+      "fromActionName": "dropdownlist-budget-action",
+      "toActionName": "radioButton-placeOfResidence-action",
+      "type": "without-condition",
+      "params": {}
+    },
+    {
+      "fromActionName": "radioButton-placeOfResidence-action",
+      "toActionName": "radioButton-typeOfTransport-action",
+      "type": "without-condition",
+      "params": {}
+    },
+    {
+      "fromActionName": "radioButton-typeOfTransport-action",
+      "toActionName": "radioButton-visitOfExcursions-action",
+      "type": "without-condition",
+      "params": {}
+    },
+    {
+      "fromActionName": "radioButton-visitOfExcursions-action",
+      "toActionName": "checklist-typeOfExcursion-action",
+      "type": "logic-condition-on-pick-result",
+      "params": {
+        "conditionType": "=s",
+        "pickResultName": "radiobox.radioButton-visitOfExcursions-action",
+        "pickResultCheck": "value",
+        "conditionValue": "block1.radiobox1.1"
+      }
+    },
+    {
+      "fromActionName": "radioButton-visitOfExcursions-action",
+      "toActionName": "checklist-option-action",
+      "type": "logic-condition-on-pick-result",
+      "params": {
+        "conditionType": "=s",
+        "pickResultName": "radiobox.radioButton-visitOfExcursions-action",
+        "pickResultCheck": "value",
+        "conditionValue": "block1.radiobox2.2"
+      }
+    },
+    {
+      "fromActionName": "checklist-typeOfExcursion-action",
+      "toActionName": "radioButton-choosingTheExcursion-action",
+      "type": "without-condition",
+      "params": {}
+    },
+    {
+      "fromActionName": "radioButton-choosingTheExcursion-action",
+      "toActionName": "checklist-option-action",
+      "type": "without-condition",
+      "params": {}
+    },
+    {
+      "fromActionName": "checklist-option-action",
+      "toActionName": "textinput-nameOfTravel-action",
+      "type": "without-condition",
+      "params": {}
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "map": [
+    {
+      "from": "dateIntervalInput-travelPeriod-action1",
+      "to": "from.travelPeriodStart",
+      "type": ""
+    },
+    {
+      "from": "dateIntervalInput-travelPeriod-action2",
+      "to": "from.travelPeriodEnd",
+      "type": ""
+    },
+    {
+      "from": "dropdownlist-countries-action",
+      "to": "from.countryId",
+      "type": ""
+    },
+    {
+      "from": "checklist-citiesByCountryId-action",
+      "to": "from.cityId",
+      "type": "list-first"
+    }
+  ]
+}

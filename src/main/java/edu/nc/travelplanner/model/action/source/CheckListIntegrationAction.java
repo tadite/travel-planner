@@ -88,6 +88,14 @@ public class CheckListIntegrationAction implements IntegrationAction {
         return null;
     }
 
+    public Map<String, String> getOptionsMap() {
+        return optionsMap;
+    }
+
+    public void setOptionsMap(Map<String, String> optionsMap) {
+        this.optionsMap = optionsMap;
+    }
+
     public DataProducer getDataProducer() {
         return dataProducer;
     }

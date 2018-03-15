@@ -2,12 +2,15 @@ package edu.nc.travelplanner.model.tree;
 
 import edu.nc.travelplanner.exception.CustomParseException;
 import edu.nc.travelplanner.model.action.*;
+import edu.nc.travelplanner.model.action.constant.CheckListAction;
+import edu.nc.travelplanner.model.action.source.CheckListIntegrationAction;
 import edu.nc.travelplanner.model.jump.Jump;
 import edu.nc.travelplanner.model.response.Response;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class SimpleActionTree implements ActionTree {
 
@@ -58,7 +61,17 @@ public class SimpleActionTree implements ActionTree {
                 DateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
                 pickResults.add(new PickResult(currentAction.getName() + "1", format.format(dateInterval.getStartDate())));
                 pickResults.add(new PickResult(currentAction.getName() + "2", format.format(dateInterval.getEndDate())));
-            } else
+            }
+            if (currentAction.getType()==ActionType.CHECKLIST_INTEGRATION){
+                CheckListIntegrationAction checkListAction = (CheckListIntegrationAction) this.currentAction;
+                String value = checkListAction.getOptionsMap().get(result);
+                List<String> picks = (List<String>) (result);
+                List<String> values = picks.stream().map(key -> String.valueOf(checkListAction.getOptionsMap().get(key))).collect(Collectors.toList());
+                pickResults.add(new PickResult(currentAction.getName() + ".Key", picks.get(0)));
+                pickResults.add(new PickResult(currentAction.getName(), picks.get(0)));
+                pickResults.add(new PickResult(currentAction.getName() + ".Value", values.get(0)));
+            }
+            else
                 pickResults.add(new PickResult(currentAction.getName(), result));
 
 

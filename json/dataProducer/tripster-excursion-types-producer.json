@@ -1,9 +1,17 @@
 {
   "name": "tripster-excursion-types-producer",
-  "filters": [],
+  "filters": [
+    {
+      "type": "list_to_map",
+      "parameters": {
+        "valueName": "title",
+        "keyName": "type"
+      }
+    }
+  ],
   "mappers": [
     {
-      "from": "checklist-citiesByCountryId-action",
+      "from": "checklist-citiesByCountryId-action.Value",
       "to": "city"
     }
   ],
