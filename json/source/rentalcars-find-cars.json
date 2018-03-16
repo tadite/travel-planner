@@ -1,0 +1,24 @@
+{
+  "name": "rentalcars-find-cars",
+  "type": "http",
+  "parameters": {
+    "description": "getHotels default",
+    "params": [
+      "country ",
+      "city",
+      "location_code",
+      "location_name",
+      "doYear",
+      "doMinute",
+      "puYear",
+      "puMinute",
+      "doDay",
+      "puMonth",
+      "doHour",
+      "puDay",
+      "puHour",
+      "doMonth"
+    ],
+    "url": "https://nc-service-bus.a3c1.starter-us-west-1.openshiftapps.com/endpoint/rentalcars-find-cars"
+  }
+}

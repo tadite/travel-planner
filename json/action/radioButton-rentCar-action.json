@@ -1,0 +1,6 @@
+{
+  "name": "radioButton-rentCar-action",
+  "viewName": "Выберите подходящее авто",
+  "type": "radiolist_integration",
+  "dataProducer" : "rentCar-producer"
+}

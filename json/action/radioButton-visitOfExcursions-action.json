@@ -1,6 +1,6 @@
 {
   "name": "radioButton-visitOfExcursions-action",
-  "viewName": "Do You want to go to excursions?",
+  "viewName": "Хотители Вы посещать экскурсии?",
   "type": "radiolist",
   "parameters": {
     "optionsMap": {

@@ -13,6 +13,7 @@ public class TravelAfterPickTreeDto {
     private String dateIntervalStart;
     private String dateIntervalEnd;
     private String numberOfPersons;
+    private String rentCar;
 
     private ExcursionAfterPickTreeDto excursion = new ExcursionAfterPickTreeDto();
     private BudgetAfterPickTreeDto budget = new BudgetAfterPickTreeDto();
@@ -113,5 +114,13 @@ public class TravelAfterPickTreeDto {
 
     public void setClientId(Long clientId) {
         this.clientId = clientId;
+    }
+
+    public String getRentCar() {
+        return rentCar;
+    }
+
+    public void setRentCar(String rentCar) {
+        this.rentCar = rentCar;
     }
 }

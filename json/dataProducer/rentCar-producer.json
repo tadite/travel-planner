@@ -1,0 +1,71 @@
+{
+  "name": "rentCar-producer",
+  "filters": [
+    {
+      "type": "list_to_map_multiple",
+      "parameters": {
+        "valueNames": ["name", "price-period", "price","climate","transmission","place","company"],
+        "keyName": ""
+      }
+    }
+  ],
+  "mappers": [
+    {
+      "from": "dropdownlist-countries-action.Value",
+      "to": "country "
+    },
+    {
+      "from": "checklist-citiesByCountryId-action.Value",
+      "to": "city"
+    },
+    {
+      "from": "",
+      "to": "location_code"
+    },
+    {
+      "from": "",
+      "to": "location_name"
+    },
+    {
+      "from": "",
+      "to": "doYear"
+    },
+    {
+      "from": "",
+      "to": "doMinute"
+    },
+    {
+      "from": "",
+      "to": "puYear"
+    },
+    {
+      "from": "",
+      "to": "puMinute"
+    },
+    {
+      "from": "",
+      "to": "doDay"
+    },
+    {
+      "from": "",
+      "to": "puMonth"
+    },
+    {
+      "from": "",
+      "to": "doHour"
+    },
+    {
+      "from": "",
+      "to": "puDay"
+    },
+    {
+      "from": "",
+      "to": "puHour"
+    },
+    {
+      "from": "",
+      "to": "doMonth"
+    }
+  ],
+  "source": "air-tickets-search"
+}
