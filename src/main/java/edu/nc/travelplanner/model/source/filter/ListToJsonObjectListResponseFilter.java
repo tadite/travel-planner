@@ -10,21 +10,20 @@ import edu.nc.travelplanner.model.source.FilterType;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-public class ListToMapMultipleJsonResponseFilter implements ResponseFilter {
+public class ListToJsonObjectListResponseFilter implements ResponseFilter {
 
     private String keyName;
     private List<String> valueNames = new LinkedList<>();
 
-    private FilterType type = FilterType.LIST_TO_MAP_MULTIPLE;
+    private FilterType type = FilterType.LIST_TO_OBJECT_LIST;
 
     ObjectMapper mapper = new ObjectMapper();
 
-    public ListToMapMultipleJsonResponseFilter() {
+    public ListToJsonObjectListResponseFilter() {
     }
 
-    public ListToMapMultipleJsonResponseFilter(String keyName, List<String> valueNames) {
+    public ListToJsonObjectListResponseFilter(String keyName, List<String> valueNames) {
         this.keyName = keyName;
         this.valueNames = valueNames;
     }
@@ -44,18 +43,20 @@ public class ListToMapMultipleJsonResponseFilter implements ResponseFilter {
 
             Map<String, Object>[] jsonObjectsInArray = parser.readValueAs(new TypeReference<Map<String, Object>[]>() {
             });
-            Map<String, String> result = new HashMap<String, String>();
+            List<Map<String, String>> result = new LinkedList<>();
 
             String[] keyPropertyPath = keyName.split("\\.");
 
             for (Map<String, Object> jsonObj : jsonObjectsInArray) {
-                List<String> collect = valueNames.stream()
-                        .map(str -> {
-                            return getValueByPropertyPath(jsonObj, str.split("\\."));
-                        })
-                        .collect(Collectors.toList());
+                Map<String, String> properties = new LinkedHashMap<>();
 
-                result.put(getValueByPropertyPath(jsonObj, keyPropertyPath), String.join(", ", collect));
+                properties.put("id", getValueByPropertyPath(jsonObj, keyPropertyPath));
+                valueNames.stream()
+                        .forEach(str ->
+                                properties.put(str, getValueByPropertyPath(jsonObj, str.split("\\.")))
+                        );
+
+                result.add(properties);
             }
 
             return mapper.writeValueAsString(result);
@@ -68,7 +69,7 @@ public class ListToMapMultipleJsonResponseFilter implements ResponseFilter {
     private String getValueByPropertyPath(Map<String, Object> jsonObj, String[] propertyPathArray) {
         Object currentPropertyValue = jsonObj;
         for (String nextProperty : propertyPathArray) {
-            currentPropertyValue = ((Map<String, Object>)currentPropertyValue).get(nextProperty);
+            currentPropertyValue = ((Map<String, Object>) currentPropertyValue).get(nextProperty);
         }
         return currentPropertyValue.toString();
     }

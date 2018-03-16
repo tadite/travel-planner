@@ -32,19 +32,14 @@ public class ListToMapJsonResponseFilter implements ResponseFilter {
 
     @Override
     public Response filter(Response sourceResult) {
-        try {
-            /*
-            JsonNode node = mapper.readTree(sourceResult.getRawData());
-            JsonParser parser = mapper.treeAsTokens(node);
-            Map<String, Object>[] clients = parser.readValueAs(new TypeReference<Map<String, Object>[]>() {
-            });
+        sourceResult.setRawData(filter(sourceResult.getRawData()));
+        return sourceResult;
+    }
 
-            Map<String, String> result = new HashMap<String, String>();
-            for (Map<String, Object> map : clients) {
-                result.put(map.get(keyName).toString(), map.get(valueName).toString());
-            }
-*/
-            JsonNode node = mapper.readTree(sourceResult.getRawData());
+    @Override
+    public String filter(String sourceResult) {
+        try {
+            JsonNode node = mapper.readTree(sourceResult);
             JsonParser parser = mapper.treeAsTokens(node);
 
             Map<String, Object>[] jsonObjectsInArray = parser.readValueAs(new TypeReference<Map<String, Object>[]>() {
@@ -59,8 +54,7 @@ public class ListToMapJsonResponseFilter implements ResponseFilter {
                 result.put(getValueByPropertyPath(jsonObj, keyPropertyPath), getValueByPropertyPath(jsonObj, valuePropertyPath));
             }
 
-            sourceResult.setRawData(mapper.writeValueAsString(result));
-            return sourceResult;
+            return mapper.writeValueAsString(result);
         } catch (IOException e) {
             e.printStackTrace();
         }

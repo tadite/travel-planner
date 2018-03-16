@@ -3,17 +3,18 @@ package edu.nc.travelplanner.model.source.filter;
 import edu.nc.travelplanner.model.response.Response;
 import edu.nc.travelplanner.model.source.FilterType;
 
-public class RegexpReplaceAllResponseFilter implements ResponseFilter {
-    private FilterType type = FilterType.REGEXP_REPLACE;
-    private String regex;
-    private String replacement;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-    public RegexpReplaceAllResponseFilter() {
+public class RegexpGetFirstMatchResponseFilter implements ResponseFilter {
+    private FilterType type = FilterType.REGEXP_FIRST_MATCH;
+    private String regex;
+
+    public RegexpGetFirstMatchResponseFilter() {
     }
 
-    public RegexpReplaceAllResponseFilter(String regex, String replacement) {
+    public RegexpGetFirstMatchResponseFilter(String regex) {
         this.regex = regex;
-        this.replacement = replacement;
     }
 
     @Override
@@ -24,6 +25,9 @@ public class RegexpReplaceAllResponseFilter implements ResponseFilter {
 
     @Override
     public String filter(String sourceResult) {
-        return sourceResult.replaceAll(regex,replacement);
+        Matcher matcher = Pattern.compile(regex).matcher(sourceResult);
+        return matcher.group(1);
     }
+
+
 }

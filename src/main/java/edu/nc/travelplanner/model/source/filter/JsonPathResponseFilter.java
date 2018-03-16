@@ -19,10 +19,14 @@ public class JsonPathResponseFilter implements ResponseFilter{
 
     @Override
     public Response filter(Response sourceResult)  {
-
-        DocumentContext document = JsonPath.parse(sourceResult.getRawData());
-        sourceResult.setRawData(document.read(expression).toString());
+        sourceResult.setRawData(sourceResult.getRawData());
         return sourceResult;
+    }
+
+    @Override
+    public String filter(String sourceResult) {
+        DocumentContext document = JsonPath.parse(sourceResult);
+        return document.read(expression).toString();
     }
 
     public String getExpression() {
