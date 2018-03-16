@@ -9,6 +9,12 @@ public class ParameterMapperDto {
     @JsonProperty("to")
     private String toKey;
 
+    @JsonProperty("default")
+    private String defaultValue;
+
+    @JsonProperty("filter")
+    private ResponseFilterDto filterDto;
+
     public ParameterMapperDto() {
     }
 
@@ -31,5 +37,21 @@ public class ParameterMapperDto {
 
     public void setToKey(String toKey) {
         this.toKey = toKey;
+    }
+
+    public ResponseFilterDto getFilterDto() {
+        return filterDto;
+    }
+
+    public void setFilterDto(ResponseFilterDto filterDto) {
+        this.filterDto = filterDto;
+    }
+
+    public String getDefaultValue() {
+        return defaultValue;
+    }
+
+    public void setDefaultValue(String defaultValue) {
+        this.defaultValue = defaultValue;
     }
 }

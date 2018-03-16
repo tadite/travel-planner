@@ -2,6 +2,12 @@
   "name": "rentCar-producer",
   "filters": [
     {
+      "type": "json_path",
+      "parameters": {
+        "expression": "cars"
+      }
+    },
+    {
       "type": "list_to_map_multiple",
       "parameters": {
         "valueNames": ["name", "price-period", "price","climate","transmission","place","company"],
@@ -12,7 +18,7 @@
   "mappers": [
     {
       "from": "dropdownlist-countries-action.Value",
-      "to": "country "
+      "to": "country"
     },
     {
       "from": "checklist-citiesByCountryId-action.Value",
@@ -20,52 +26,100 @@
     },
     {
       "from": "",
-      "to": "location_code"
+      "to": "location_code",
+      "default":"252129"
+    },
+    {
+      "from": "checklist-citiesByCountryId-action.Value",
+      "to": "location_name",
+      "default":"Вена аэропорт"
+    },
+    {
+      "from": "dateIntervalInput-travelPeriod-action2",
+      "to": "doYear",
+      "filter" : {
+        "type": "split_and_get_by_index",
+        "parameters": {
+          "split": "-",
+          "index": "0"
+        }
+      }
     },
     {
       "from": "",
-      "to": "location_name"
+      "to": "doMinute",
+      "default":"0"
+    },
+    {
+      "from": "dateIntervalInput-travelPeriod-action1",
+      "to": "puYear",
+      "filter" : {
+        "type": "split_and_get_by_index",
+        "parameters": {
+          "split": "-",
+          "index": "0"
+        }
+      }
     },
     {
       "from": "",
-      "to": "doYear"
+      "to": "puMinute",
+      "default":"0"
+    },
+    {
+      "from": "dateIntervalInput-travelPeriod-action2",
+      "to": "doDay",
+      "filter" : {
+        "type": "split_and_get_by_index",
+        "parameters": {
+          "split": "-",
+          "index": "2"
+        }
+      }
+    },
+    {
+      "from": "dateIntervalInput-travelPeriod-action2",
+      "to": "puMonth",
+      "filter" : {
+        "type": "split_and_get_by_index",
+        "parameters": {
+          "split": "-",
+          "index": "1"
+        }
+      }
     },
     {
       "from": "",
-      "to": "doMinute"
+      "to": "doHour",
+      "default":"12"
+    },
+    {
+      "from": "dateIntervalInput-travelPeriod-action1",
+      "to": "puDay",
+      "filter" : {
+        "type": "split_and_get_by_index",
+        "parameters": {
+          "split": "-",
+          "index": "2"
+        }
+      }
     },
     {
       "from": "",
-      "to": "puYear"
+      "to": "puHour",
+      "default":"12"
     },
     {
-      "from": "",
-      "to": "puMinute"
-    },
-    {
-      "from": "",
-      "to": "doDay"
-    },
-    {
-      "from": "",
-      "to": "puMonth"
-    },
-    {
-      "from": "",
-      "to": "doHour"
-    },
-    {
-      "from": "",
-      "to": "puDay"
-    },
-    {
-      "from": "",
-      "to": "puHour"
-    },
-    {
-      "from": "",
-      "to": "doMonth"
+      "from": "dateIntervalInput-travelPeriod-action2",
+      "to": "doMonth",
+      "filter" : {
+        "type": "split_and_get_by_index",
+        "parameters": {
+          "split": "-",
+          "index": "1"
+        }
+      }
     }
   ],
-  "source": "air-tickets-search"
+  "source": "rentalcars-find-cars"
 }

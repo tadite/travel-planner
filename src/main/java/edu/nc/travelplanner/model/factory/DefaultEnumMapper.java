@@ -49,6 +49,8 @@ public class DefaultEnumMapper implements EnumMapper {
         put(FilterType.REGEXP_REPLACE, RegexpReplaceAllResponseFilter::new);
         put(FilterType.SUBSTRING, SubstringResponseFilter::new);
         put(FilterType.LIST_TO_OBJECT_LIST, ListToJsonObjectListResponseFilter::new);
+        put(FilterType.REGEXP_FIRST_MATCH, RegexpGetFirstMatchResponseFilter::new);
+        put(FilterType.SPLIT_AND_GET_BY_INDEX, SplitAndGetByIndexResponseFilter::new);
     }};
 
     private Map<SourceType, Supplier<Source>> sourceCreationMap = new HashMap<SourceType, Supplier<Source>>(){{

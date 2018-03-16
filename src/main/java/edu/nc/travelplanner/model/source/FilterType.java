@@ -16,5 +16,7 @@ public enum FilterType {
     @JsonProperty("list_to_object_list")
     LIST_TO_OBJECT_LIST,
     @JsonProperty("regexp_first_match")
-    REGEXP_FIRST_MATCH
+    REGEXP_FIRST_MATCH,
+    @JsonProperty("split_and_get_by_index")
+    SPLIT_AND_GET_BY_INDEX
 }

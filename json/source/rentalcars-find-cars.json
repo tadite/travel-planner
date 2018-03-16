@@ -4,7 +4,7 @@
   "parameters": {
     "description": "getHotels default",
     "params": [
-      "country ",
+      "country",
       "city",
       "location_code",
       "location_name",

@@ -9,6 +9,7 @@ import edu.nc.travelplanner.model.source.FilterType;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -44,7 +45,7 @@ public class ListToMapJsonResponseFilter implements ResponseFilter {
 
             Map<String, Object>[] jsonObjectsInArray = parser.readValueAs(new TypeReference<Map<String, Object>[]>() {
             });
-            Map<String, String> result = new HashMap<String, String>();
+            Map<String, String> result = new LinkedHashMap<String, String>();
 
             String[] keyPropertyPath = keyName.split("\\.");
             String[] valuePropertyPath = valueName.split("\\.");

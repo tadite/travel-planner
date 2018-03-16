@@ -44,7 +44,7 @@ public class ListToMapMultipleJsonResponseFilter implements ResponseFilter {
 
             Map<String, Object>[] jsonObjectsInArray = parser.readValueAs(new TypeReference<Map<String, Object>[]>() {
             });
-            Map<String, String> result = new HashMap<String, String>();
+            Map<String, String> result = new LinkedHashMap<>();
 
             String[] keyPropertyPath = keyName.split("\\.");
 

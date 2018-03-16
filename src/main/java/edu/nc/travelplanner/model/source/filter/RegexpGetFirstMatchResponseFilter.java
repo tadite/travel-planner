@@ -28,6 +28,4 @@ public class RegexpGetFirstMatchResponseFilter implements ResponseFilter {
         Matcher matcher = Pattern.compile(regex).matcher(sourceResult);
         return matcher.group(1);
     }
-
-
 }

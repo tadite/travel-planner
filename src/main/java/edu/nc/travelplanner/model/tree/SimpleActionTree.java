@@ -4,6 +4,7 @@ import edu.nc.travelplanner.exception.CustomParseException;
 import edu.nc.travelplanner.model.action.*;
 import edu.nc.travelplanner.model.action.constant.CheckListAction;
 import edu.nc.travelplanner.model.action.source.CheckListIntegrationAction;
+import edu.nc.travelplanner.model.action.source.DropDownListIntegrationAction;
 import edu.nc.travelplanner.model.action.source.RadioListIntegrationAction;
 import edu.nc.travelplanner.model.jump.Jump;
 import edu.nc.travelplanner.model.response.Response;
@@ -67,14 +68,18 @@ public class SimpleActionTree implements ActionTree {
                 String value = checkListAction.getOptionsMap().get(result);
                 List<String> picks = (List<String>) (result);
                 List<String> values = picks.stream().map(key -> String.valueOf(checkListAction.getOptionsMap().get(key))).collect(Collectors.toList());
-                pickResults.add(new PickResult(currentAction.getName() + ".Key", picks.get(0)));
                 pickResults.add(new PickResult(currentAction.getName(), picks.get(0)));
                 pickResults.add(new PickResult(currentAction.getName() + ".Value", values.get(0)));
             } else if (currentAction.getType() == ActionType.RADIOLIST_INTEGRATION) {
                 RadioListIntegrationAction checkListAction = (RadioListIntegrationAction) this.currentAction;
                 String pick = String.valueOf(result);
                 String value = checkListAction.getOptionsMap().get(pick);
-                pickResults.add(new PickResult(currentAction.getName() + ".Key", pick));
+                pickResults.add(new PickResult(currentAction.getName(), pick));
+                pickResults.add(new PickResult(currentAction.getName() + ".Value", value));
+            } else if (currentAction.getType() == ActionType.DROPDOWN_INTEGRATION) {
+                DropDownListIntegrationAction checkListAction = (DropDownListIntegrationAction) this.currentAction;
+                String pick = String.valueOf(result);
+                String value = checkListAction.getOptionsMap().get(pick);
                 pickResults.add(new PickResult(currentAction.getName(), pick));
                 pickResults.add(new PickResult(currentAction.getName() + ".Value", value));
             } else

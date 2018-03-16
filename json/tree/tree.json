@@ -106,7 +106,7 @@
       "toActionName": "textinput-nameOfTravel-action",
       "type": "logic-condition-on-pick-result",
       "params": {
-        "conditionType": "=s",
+        "conditionType": "=l",
         "pickResultName": "checklist-option-action",
         "pickResultCheck": "key",
         "conditionValue": "3"
@@ -117,7 +117,7 @@
       "toActionName": "radioButton-rentCar-action",
       "type": "logic-condition-on-pick-result",
       "params": {
-        "conditionType": "=s",
+        "conditionType": "=l",
         "pickResultName": "checklist-option-action",
         "pickResultCheck": "key",
         "conditionValue": "1"
