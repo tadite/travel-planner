@@ -2,7 +2,6 @@ package edu.nc.travelplanner;
 
 import edu.nc.travelplanner.model.response.Response;
 import edu.nc.travelplanner.model.response.TextResponse;
-import edu.nc.travelplanner.model.source.filter.FilterUtil;
 import edu.nc.travelplanner.model.source.filter.ListToMapJsonResponseFilter;
 import edu.nc.travelplanner.model.source.filter.ListToMapMultipleJsonResponseFilter;
 import org.apache.commons.lang.StringEscapeUtils;
