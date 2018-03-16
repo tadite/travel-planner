@@ -9,7 +9,9 @@ import edu.nc.travelplanner.model.source.FilterType;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ListToMapJsonResponseFilter implements ResponseFilter {
 
@@ -31,14 +33,30 @@ public class ListToMapJsonResponseFilter implements ResponseFilter {
     @Override
     public Response filter(Response sourceResult) {
         try {
-
+            /*
             JsonNode node = mapper.readTree(sourceResult.getRawData());
             JsonParser parser = mapper.treeAsTokens(node);
             Map<String, Object>[] clients = parser.readValueAs(new TypeReference<Map<String, Object>[]>() {
             });
+
             Map<String, String> result = new HashMap<String, String>();
             for (Map<String, Object> map : clients) {
                 result.put(map.get(keyName).toString(), map.get(valueName).toString());
+            }
+*/
+            JsonNode node = mapper.readTree(sourceResult.getRawData());
+            JsonParser parser = mapper.treeAsTokens(node);
+
+            Map<String, Object>[] jsonObjectsInArray = parser.readValueAs(new TypeReference<Map<String, Object>[]>() {
+            });
+            Map<String, String> result = new HashMap<String, String>();
+
+            String[] keyPropertyPath = keyName.split("\\.");
+            String[] valuePropertyPath = valueName.split("\\.");
+
+            for (Map<String, Object> jsonObj : jsonObjectsInArray) {
+
+                result.put(getValueByPropertyPath(jsonObj, keyPropertyPath), getValueByPropertyPath(jsonObj, valuePropertyPath));
             }
 
             sourceResult.setRawData(mapper.writeValueAsString(result));
@@ -47,6 +65,14 @@ public class ListToMapJsonResponseFilter implements ResponseFilter {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private String getValueByPropertyPath(Map<String, Object> jsonObj, String[] propertyPathArray) {
+        Object currentPropertyValue = jsonObj;
+        for (String nextProperty : propertyPathArray) {
+            currentPropertyValue = ((Map<String, Object>)currentPropertyValue).get(nextProperty);
+        }
+        return currentPropertyValue.toString();
     }
 
     public FilterType getType() {
