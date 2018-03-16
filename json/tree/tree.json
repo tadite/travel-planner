@@ -104,6 +104,28 @@
     {
       "fromActionName": "checklist-option-action",
       "toActionName": "textinput-nameOfTravel-action",
+      "type": "logic-condition-on-pick-result",
+      "params": {
+        "conditionType": "=s",
+        "pickResultName": "checklist-option-action",
+        "pickResultCheck": "key",
+        "conditionValue": "3"
+      }
+    },
+    {
+      "fromActionName": "checklist-option-action",
+      "toActionName": "radioButton-rentCar-action",
+      "type": "logic-condition-on-pick-result",
+      "params": {
+        "conditionType": "=s",
+        "pickResultName": "checklist-option-action",
+        "pickResultCheck": "key",
+        "conditionValue": "1"
+      }
+    },
+    {
+      "fromActionName": "radioButton-rentCar-action",
+      "toActionName": "textinput-nameOfTravel-action",
       "type": "without-condition",
       "params": {}
     }

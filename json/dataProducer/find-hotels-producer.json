@@ -2,30 +2,24 @@
   "name": "find-hotels-producer",
   "filters": [
     {
-      "type": "json_path",
+      "type": "list_to_map_multiple",
       "parameters": {
-        "expression": "$"
-      }
-    },
-    {
-      "type": "list_to_map",
-      "parameters": {
-        "valueName": "title",
-        "keyName": "cid"
+        "valueNames": ["location", "priceAvg", "hotelName","stars"],
+        "keyName": "hotelId"
       }
     }
   ],
   "mappers": [
   {
-    "from": "checklist-citiesByCountryId-action",
+    "from": "checklist-citiesByCountryId-action.Value",
     "to": "location"
   },
   {
-    "from": "",
+    "from": "dateIntervalInput-travelPeriod-action1.Value",
     "to": "checkIn"
   },
   {
-    "from": "",
+    "from": "dateIntervalInput-travelPeriod-action2.Value",
     "to": "checkOut"
   },
   {
@@ -37,7 +31,7 @@
     "to": "currency"
   },
   {
-    "from": "textinput-numberOfPersons-action",
+    "from": "textinput-numberOfPersons-action.Value",
     "to": "adults"
   }
 ],

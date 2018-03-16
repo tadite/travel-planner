@@ -1,6 +1,6 @@
 {
   "name": "checklist-citiesByCountryId-action",
-  "viewName": "Choose the city for the travel",
+  "viewName": "Выберите город для путешествия",
   "type": "checklist_integration",
   "dataProducer": "cities-by-countryId-producer"
 }

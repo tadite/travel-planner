@@ -1,6 +1,6 @@
 {
   "name": "radioButton-placeOfResidence-action",
-  "viewName": "Choose the place of residence",
+  "viewName": "Выберите место проживания",
   "type": "radiolist",
   "parameters": {
     "optionsMap": {

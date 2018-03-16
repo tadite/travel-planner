@@ -26,6 +26,7 @@ public class FromJsonResultsMapper implements ResultsMapper {
         push("budget.id");
         push("travelName");
         push("numberOfPersons");
+        push("rentCarId");
     }};
 
     public FromJsonResultsMapper(List<MapNode> mapNodes) {
@@ -81,6 +82,8 @@ public class FromJsonResultsMapper implements ResultsMapper {
             travelDto.setTravelName((String)getPickValue(pick,node));
         else if (node.getTo().equals("numberOfPersons"))
             travelDto.setNumberOfPersons((String)getPickValue(pick,node));
+        else if (node.getTo().equals("rentCarId"))
+            travelDto.setRentCar((String)getPickValue(pick,node));
 
 
        /* if (node.getTo().equals("from.cityId"))

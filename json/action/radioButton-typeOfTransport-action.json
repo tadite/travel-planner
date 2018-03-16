@@ -1,6 +1,6 @@
 {
   "name": "radioButton-typeOfTransport-action",
-  "viewName": "Choose the type of transport",
+  "viewName": "Каким образом вы хотите добраться до места проживания",
   "type": "radiolist",
   "parameters": {
     "optionsMap": {

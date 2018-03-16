@@ -1,4 +1,4 @@
 {"name":"textinput-nameOfTravel-action",
-  "viewName":"Give the name for your travel",
+  "viewName":"Введите название путешествия",
   "type":"text_input",
   "parameters":{"data":""}}
