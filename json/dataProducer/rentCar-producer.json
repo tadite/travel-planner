@@ -17,12 +17,14 @@
   ],
   "mappers": [
     {
-      "from": "dropdownlist-countries-action.Value",
-      "to": "country"
+      "from": "",
+      "to": "country",
+      "default":"Австрия"
     },
     {
-      "from": "checklist-citiesByCountryId-action.Value",
-      "to": "city"
+      "from": "",
+      "to": "city",
+      "default":"Вена"
     },
     {
       "from": "",

@@ -16,7 +16,7 @@
       "type": ""
     },
     {
-      "from": "checklist-citiesByCountryId-action",
+      "from": "dropdownlist-citiesByCountryId-action",
       "to": "to.cityId",
       "type": ""
     },

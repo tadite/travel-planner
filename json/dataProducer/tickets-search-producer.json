@@ -20,7 +20,7 @@
       "default":"LON"
     },
     {
-      "from": "checklist-citiesByCountryId-action.Value",
+      "from": "dropdownlist-citiesByCountryId-action.Value",
       "to": "dest_city"
     },
     {
