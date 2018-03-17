@@ -91,12 +91,12 @@
     },
     {
       "fromActionName": "checklist-typeOfExcursion-action",
-      "toActionName": "radioButton-choosingTheExcursion-action",
+      "toActionName": "checklist-choosingTheExcursion-action",
       "type": "without-condition",
       "params": {}
     },
     {
-      "fromActionName": "radioButton-choosingTheExcursion-action",
+      "fromActionName": "checklist-choosingTheExcursion-action",
       "toActionName": "checklist-option-action",
       "type": "without-condition",
       "params": {}

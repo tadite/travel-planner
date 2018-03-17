@@ -4,8 +4,8 @@
   "type": "dropdown_input",
   "parameters": {
     "optionsMap": {
-      "1": "Economy",
-      "2": "Premium"
+      "1": "Эконом",
+      "2": "Премиум"
     }
   }
 }

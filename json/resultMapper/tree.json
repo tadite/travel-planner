@@ -31,12 +31,12 @@
       "type": ""
     },
     {
-      "from": "radioButton-choosingTheExcursion-action.Value",
+      "from": "checklist-choosingTheExcursion-action.Value",
       "to": "excursion.name",
       "type": ""
     },
     {
-      "from": "radioButton-choosingTheExcursion-action",
+      "from": "checklist-choosingTheExcursion-action",
       "to": "excursion.id",
       "type": ""
     },

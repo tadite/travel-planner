@@ -30,9 +30,9 @@
       "default":"252129"
     },
     {
-      "from": "checklist-citiesByCountryId-action.Value",
+      "from": "",
       "to": "location_name",
-      "default":"Вена аэропорт"
+      "default":"Вена+аэропорт"
     },
     {
       "from": "dateIntervalInput-travelPeriod-action2",

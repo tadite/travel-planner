@@ -15,23 +15,25 @@
     "to": "location"
   },
   {
-    "from": "dateIntervalInput-travelPeriod-action1.Value",
+    "from": "dateIntervalInput-travelPeriod-action1",
     "to": "checkIn"
   },
   {
-    "from": "dateIntervalInput-travelPeriod-action2.Value",
+    "from": "dateIntervalInput-travelPeriod-action2",
     "to": "checkOut"
   },
   {
     "from": "",
-    "to": "lang"
+    "to": "lang",
+    "default":"ru_RU"
   },
   {
     "from": "",
-    "to": "currency"
+    "to": "currency",
+    "default":"RUB"
   },
   {
-    "from": "textinput-numberOfPersons-action.Value",
+    "from": "textinput-numberOfPersons-action",
     "to": "adults"
   }
 ],

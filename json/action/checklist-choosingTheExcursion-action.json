@@ -1,6 +1,6 @@
 {
-  "name": "radioButton-choosingTheExcursion-action",
+  "name": "checklist-choosingTheExcursion-action",
   "viewName": "Выберите экскурсию",
-  "type": "radiolist_integration",
+  "type": "checklist_integration",
   "dataProducer" : "tripster-excursion-producer"
 }

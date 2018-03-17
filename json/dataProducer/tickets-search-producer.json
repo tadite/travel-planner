@@ -16,7 +16,8 @@
     },
     {
       "from": "",
-      "to": "origin_code"
+      "to": "origin_code",
+      "default":"LON"
     },
     {
       "from": "checklist-citiesByCountryId-action.Value",
@@ -24,19 +25,21 @@
     },
     {
       "from": "",
-      "to": "dest_code"
+      "to": "dest_code",
+      "default":"MOW"
     },
     {
-      "from": "",
+      "from": "dateIntervalInput-travelPeriod-action1",
       "to": "origin_date"
     },
     {
-      "from": "",
+      "from": "dateIntervalInput-travelPeriod-action2",
       "to": "return_date"
     },
     {
       "from": "",
-      "to": "class"
+      "to": "class",
+      "default":"E"
     },
     {
       "from": "textinput-numberOfPersons-action",
