@@ -44,7 +44,9 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
     objectKeys = Object.keys;
     checks: {};
     mapDates = {};
-    actionUrl: string = '/action';    
+    actionUrl: string = '/action';
+
+    public today: any;
     
     login: string;
 
@@ -53,7 +55,19 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
     result: boolean = false;
 
     constructor(private http: HttpService, private cookieService: CookieService, private router: Router, private authService: AuthService) {
-        
+        const date: Date = new Date();
+        let year: any = date.getFullYear();
+        let month: any = date.getMonth() + 1;
+        let day: any = date.getDate();
+
+        if (month < 10){
+            month = '0' + month;
+        }
+        if (day < 10){
+            day = '0' + day;
+        }
+
+        this.today = year + "-" + month + "-" + day;
     }
 
     isEndOfTree(obj : any) {      

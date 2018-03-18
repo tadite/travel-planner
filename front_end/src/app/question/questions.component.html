@@ -83,7 +83,7 @@
                                     </p>
         
                                     <p *ngSwitchCase="'date_picker'">
-                                        <input type="date" name="{{question.id}}" ngModel required/>                               
+                                        <input type="date" name="{{question.id}}" [min]="today" onkeydown="return false" ngModel required/>
                                         <!-- <input type="date" name="{{question.id}}" ngModel value="{{question.id}}" (change)="submitDates(f)" required/> -->
                                     </p>
                                     
