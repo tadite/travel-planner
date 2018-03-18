@@ -51,12 +51,12 @@
     },
     {
       "fromActionName": "dropdownlist-budget-action",
-      "toActionName": "radioButton-placeOfResidence-action",
+      "toActionName": "radioButton-placeOfResidence-action-NEW-TABLE",
       "type": "without-condition",
       "params": {}
     },
     {
-      "fromActionName": "radioButton-placeOfResidence-action",
+      "fromActionName": "radioButton-placeOfResidence-action-NEW-TABLE",
       "toActionName": "radioButton-typeOfTransport-action",
       "type": "without-condition",
       "params": {}

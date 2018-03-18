@@ -1,10 +1,13 @@
 package edu.nc.travelplanner.model.action.source;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.nc.travelplanner.model.action.ActionArgs;
 import edu.nc.travelplanner.model.action.ActionType;
 import edu.nc.travelplanner.model.action.IntegrationAction;
 import edu.nc.travelplanner.model.action.PickResult;
+import edu.nc.travelplanner.model.action.tableUtil.Column;
+import edu.nc.travelplanner.model.action.tableUtil.Row;
 import edu.nc.travelplanner.model.factory.dataproducer.DataProducerParseException;
 import edu.nc.travelplanner.model.response.EmptyResponse;
 import edu.nc.travelplanner.model.response.Response;
@@ -12,53 +15,12 @@ import edu.nc.travelplanner.model.response.ViewResponseBuilder;
 import edu.nc.travelplanner.model.source.dataproducer.DataProducer;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class TableIntegrationAction implements IntegrationAction {
 
-    class Column{
-        private String name;
-        private String value;
-
-        public Column(String name, String value) {
-            this.name = name;
-            this.value = value;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getValue() {
-            return value;
-        }
-
-        public void setValue(String value) {
-            this.value = value;
-        }
-    }
-
-    class Row{
-        private List<Column> columns = new LinkedList<>();
-
-        public void addColumn(Column column){
-            this.columns.add(column);
-        }
-
-        public List<Column> getColumns() {
-            return columns;
-        }
-    }
-
     private List<Row> rows = new LinkedList<>();
-    private List<String> paramsToCheck = new LinkedList<>();
+    private LinkedHashMap<String, String> columnDefs = new LinkedHashMap<>();
     private String name;
     private String viewName;
     private ActionType type = ActionType.TABLE_INTEGRATION;
@@ -93,15 +55,29 @@ public class TableIntegrationAction implements IntegrationAction {
             Response response = dataProducer.send(pickResults);
             parseTable(response);
 
-            return new ViewResponseBuilder().addTitleElement("question", viewName).build();
-        } catch (DataProducerParseException e) {
+            return new ViewResponseBuilder().addTitleElement("question", viewName).addTable(getTableId(), rows, columnDefs).build();
+        } catch (DataProducerParseException | IOException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    private void parseTable(Response response) {
+    private String getTableId() {
+        return name+"-table";
+    }
 
+    private void parseTable(Response response) throws IOException {
+        List<LinkedHashMap<String,String>> jsonObjs = objectMapper.readValue(response.getRawData(), List.class);
+        for (LinkedHashMap<String, String> jsonObj : jsonObjs) {
+            Row currentRow = new Row();
+            currentRow.addColumn(new Column("id", jsonObj.getOrDefault("id",null)));
+            columnDefs.forEach((key, value) -> {
+                    currentRow.addColumn(new Column(
+                            key,
+                            jsonObj.getOrDefault(key,null)));
+            });
+            rows.add(currentRow);
+        }
     }
 
     @Override

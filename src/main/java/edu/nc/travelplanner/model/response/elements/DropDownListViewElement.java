@@ -8,7 +8,6 @@ import java.util.Map;
 
 public class DropDownListViewElement implements ViewElement {
 
-    private ObjectMapper objectMapper = new ObjectMapper();
     private String id;
     private Map<String, String> optionsMap = new HashMap<>();
 
