@@ -11,5 +11,5 @@ public interface Action {
     ActionType getType();
     Response executeDecision(ActionArgs args, List<PickResult> pickResult);
     Response executePresentation(ActionArgs args, List<PickResult> pickResult);
-    Object getResult(Map<String, String> decisionArgs);
+    void getResult(Map<String, String> decisionArgs, List<PickResult> picks);
 }

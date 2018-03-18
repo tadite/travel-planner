@@ -45,28 +45,29 @@ public class DateIntervalInputAction implements Action {
     }
 
     private String getEndDatePickerName() {
-        return name+"-end-date-picker";
+        return name + "-end-date-picker";
     }
 
     private String getStartDatePickerName() {
-        return name+"-start-date-picker";
+        return name + "-start-date-picker";
     }
 
     @Override
-    public DateInterval getResult(Map<String, String> decisionArgs) {
+    public void getResult(Map<String, String> decisionArgs, List<PickResult> picks) {
         ViewResponseBuilder viewResponseBuilder = new ViewResponseBuilder();
 
-        if (decisionArgs.containsValue(viewResponseBuilder.getDatePickerName(name, data,1)) &&
-                decisionArgs.containsValue(viewResponseBuilder.getDatePickerName(name, data,2)))
-        {
-            DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-            try {
-                return new DateInterval(format.parse(decisionArgs.entrySet().stream().filter(entry -> entry.getValue().equals(viewResponseBuilder.getDatePickerName(name, data,1))).findFirst().get().getKey()),
-                        format.parse(decisionArgs.entrySet().stream().filter(entry -> entry.getValue().equals(viewResponseBuilder.getDatePickerName(name, data,2))).findFirst().get().getKey()));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+        if (decisionArgs.containsValue(viewResponseBuilder.getDatePickerName(name, data, 1)) &&
+                decisionArgs.containsValue(viewResponseBuilder.getDatePickerName(name, data, 2))) {
+            String date1 = decisionArgs.entrySet().stream()
+                    .filter(entry -> entry.getValue().equals(viewResponseBuilder.getDatePickerName(name, data, 1)))
+                    .findFirst().get().getKey();
+
+            String date2 = decisionArgs.entrySet().stream()
+                    .filter(entry -> entry.getValue().equals(viewResponseBuilder.getDatePickerName(name, data, 2)))
+                    .findFirst().get().getKey();
+
+            picks.add(new PickResult(getName() + "1", date1));
+            picks.add(new PickResult(getName() + "2", date2));
         }
-        return null;
     }
 }

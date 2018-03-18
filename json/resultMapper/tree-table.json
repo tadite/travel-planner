@@ -1,0 +1,64 @@
+{
+  "map": [
+    {
+      "from": "dropdownlist-departure-country-action",
+      "to": "from.countryId",
+      "type": ""
+    },
+    {
+      "from": "dropdownlist-departure-city-action",
+      "to": "from.cityId",
+      "type": ""
+    },
+    {
+      "from": "dropdownlist-countries-action",
+      "to": "to.countryId",
+      "type": ""
+    },
+    {
+      "from": "dropdownlist-citiesByCountryId-action",
+      "to": "to.cityId",
+      "type": ""
+    },
+    {
+      "from": "dateIntervalInput-travelPeriod-action1",
+      "to": "travelPeriodStart",
+      "type": ""
+    },
+    {
+      "from": "dateIntervalInput-travelPeriod-action2",
+      "to": "travelPeriodEnd",
+      "type": ""
+    },
+    {
+      "from": "checklist-choosingTheExcursion-action.Value",
+      "to": "excursion.name",
+      "type": ""
+    },
+    {
+      "from": "checklist-choosingTheExcursion-action",
+      "to": "excursion.id",
+      "type": ""
+    },
+    {
+      "from": "checklist-typeOfExcursion-action",
+      "to": "excursion.typeId",
+      "type": ""
+    },
+    {
+      "from": "dropdownlist-budget-action",
+      "to": "budget.id",
+      "type": ""
+    },
+    {
+      "from": "textinput-nameOfTravel-action",
+      "to": "travelName",
+      "type": ""
+    },
+    {
+      "from": "textinput-numberOfPersons-action",
+      "to": "numberOfPersons",
+      "type": ""
+    }
+  ]
+}

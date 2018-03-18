@@ -1,6 +1,5 @@
 package edu.nc.travelplanner.model.action.source;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.nc.travelplanner.model.action.ActionArgs;
 import edu.nc.travelplanner.model.action.ActionType;
@@ -63,26 +62,38 @@ public class TableIntegrationAction implements IntegrationAction {
     }
 
     private String getTableId() {
-        return name+"-table";
+        return name + "-table";
     }
 
     private void parseTable(Response response) throws IOException {
-        List<LinkedHashMap<String,String>> jsonObjs = objectMapper.readValue(response.getRawData(), List.class);
+        List<LinkedHashMap<String, String>> jsonObjs = objectMapper.readValue(response.getRawData(), List.class);
         for (LinkedHashMap<String, String> jsonObj : jsonObjs) {
             Row currentRow = new Row();
-            currentRow.addColumn(new Column("id", jsonObj.getOrDefault("id",null)));
+            currentRow.addColumn(new Column("id", jsonObj.getOrDefault("id", null)));
             columnDefs.forEach((key, value) -> {
-                    currentRow.addColumn(new Column(
-                            key,
-                            jsonObj.getOrDefault(key,null)));
+                currentRow.addColumn(new Column(
+                        key,
+                        jsonObj.getOrDefault(key, null)));
             });
             rows.add(currentRow);
         }
     }
 
     @Override
-    public Object getResult(Map<String, String> decisionArgs) {
-        return null;
+    public void getResult(Map<String, String> decisionArgs, List<PickResult> picks) {
+        Optional<Map.Entry<String, String>> argOptional = decisionArgs.entrySet().stream()
+                .filter((entry) -> entry.getKey().substring(entry.getKey().lastIndexOf('.') + 1).equals(getName()))
+                .findFirst();
+
+        if (argOptional.isPresent()) {
+            String pickedId = argOptional.get().getValue();
+
+            rows.stream().filter(row -> row.getColumns()
+                    .stream()
+                    .anyMatch(column -> column.equals("id")))
+                    .forEach(row -> row.getColumns().stream()
+                            .forEach(column -> picks.add(new PickResult(getName() + "." + column.getName(), column.getValue()))));
+        }
     }
 
     public DataProducer getDataProducer() {
