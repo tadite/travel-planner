@@ -1,10 +1,10 @@
 package edu.nc.travelplanner.model.response;
 
+import edu.nc.travelplanner.model.action.tableUtil.Column;
+import edu.nc.travelplanner.model.action.tableUtil.Row;
 import edu.nc.travelplanner.model.response.elements.*;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class ViewResponseBuilder {
 
@@ -17,6 +17,7 @@ public class ViewResponseBuilder {
         private int textboxIndex=1;
         private int datepickerIndex=1;
         private int dropdownlistIndex=1;
+        private int tableIndex=1;
 
         public int getTitleIndex() {
             return titleIndex++;
@@ -49,6 +50,10 @@ public class ViewResponseBuilder {
         public int getDropdownlistIndex() {
             return dropdownlistIndex++;
         }
+
+        public int getTableIndex() {
+            return dropdownlistIndex++;
+        }
     }
 
     class ViewElementsPostfixHolder {
@@ -60,6 +65,7 @@ public class ViewResponseBuilder {
         private String textboxPostfix="textbox";
         private String datepickerPostfix="datepicker";
         private String dropdownlistPostfix="dropdownlist";
+        private String tablePostfix="table";
     }
 
     ViewElementsIndexCounter indexCounter = new ViewElementsIndexCounter();
@@ -105,6 +111,11 @@ public class ViewResponseBuilder {
 
     public ViewResponseBuilder addDatePicker(String id, String data){
         viewResponse.addElement(new DatePickerViewElement(elementsPostfixHolder.datepickerPostfix+"."+indexCounter.getDatepickerIndex()+"."+id, data));
+        return this;
+    }
+
+    public ViewResponseBuilder addTable(String id, List<Row> rows, LinkedHashMap<String, String> columnDefs){
+        viewResponse.addElement(new TableViewElement(elementsPostfixHolder.tablePostfix+"."+indexCounter.getTableIndex()+"."+id, rows, columnDefs));
         return this;
     }
 

@@ -2,8 +2,10 @@ package edu.nc.travelplanner.model.factory.action;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import edu.nc.travelplanner.model.action.ActionType;
+import edu.nc.travelplanner.model.action.tableUtil.Column;
 
 import javax.xml.crypto.Data;
+import java.util.List;
 import java.util.Map;
 
 public class ActionDto {

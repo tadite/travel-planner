@@ -3,10 +3,7 @@ package edu.nc.travelplanner.model.factory;
 import edu.nc.travelplanner.model.action.Action;
 import edu.nc.travelplanner.model.action.ActionType;
 import edu.nc.travelplanner.model.action.constant.*;
-import edu.nc.travelplanner.model.action.source.CheckListIntegrationAction;
-import edu.nc.travelplanner.model.action.source.DropDownListIntegrationAction;
-import edu.nc.travelplanner.model.action.source.InfoIntegrationAction;
-import edu.nc.travelplanner.model.action.source.RadioListIntegrationAction;
+import edu.nc.travelplanner.model.action.source.*;
 import edu.nc.travelplanner.model.jump.Jump;
 import edu.nc.travelplanner.model.jump.JumpType;
 import edu.nc.travelplanner.model.jump.LogicConditionOnPickResultJump;
@@ -40,6 +37,7 @@ public class DefaultEnumMapper implements EnumMapper {
         put(ActionType.INFO_INTEGRATION, InfoIntegrationAction::new);
 
         put(ActionType.RADIOLIST_INTEGRATION, RadioListIntegrationAction::new);
+        put(ActionType.TABLE_INTEGRATION, TableIntegrationAction::new);
     }};
 
     private Map<FilterType, Supplier<ResponseFilter>> filterCreationMap = new HashMap<FilterType, Supplier<ResponseFilter>>(){{

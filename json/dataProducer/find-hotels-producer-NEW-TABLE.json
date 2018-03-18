@@ -1,8 +1,8 @@
 {
-  "name": "find-hotels-producer",
+  "name": "find-hotels-producer-NEW-TABLE",
   "filters": [
     {
-      "type": "list_to_map_multiple",
+      "type": "list_to_object_list",
       "parameters": {
         "valueNames": ["location.country","location.name", "priceAvg", "hotelName","stars"],
         "keyName": "hotelId"

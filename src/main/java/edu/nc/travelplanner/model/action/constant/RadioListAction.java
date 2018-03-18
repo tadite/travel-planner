@@ -9,7 +9,6 @@ import edu.nc.travelplanner.model.response.Response;
 import edu.nc.travelplanner.model.response.ViewResponseBuilder;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class RadioListAction implements Action {
 
@@ -68,17 +67,20 @@ public class RadioListAction implements Action {
     }
 
     @Override
-    public String getResult(Map<String, String> decisionArgs) {
+    public void getResult(Map<String, String> decisionArgs, List<PickResult> picks) {
 
-        return decisionArgs.entrySet().stream()
+        String key = decisionArgs.entrySet().stream()
                 .filter((entry) ->
                         optionsMap.containsKey(entry.getKey()
                                 .substring(entry.getKey()
-                                .lastIndexOf('.') + 1)))
+                                        .lastIndexOf('.') + 1)))
                 .findFirst()
                 .map(stringStringEntry -> stringStringEntry.getKey()
                         .substring(stringStringEntry.getKey().lastIndexOf('.') + 1))
                 .orElse(null);
+
+        picks.add(new PickResult(getName(), key));
+        picks.add(new PickResult(getName() + ".Value", optionsMap.get(key)));
 
     }
 }

@@ -34,7 +34,7 @@
     {
       "from": "",
       "to": "location_name",
-      "default":"Вена+аэропорт"
+      "default":"Вена аэропорт"
     },
     {
       "from": "dateIntervalInput-travelPeriod-action2",

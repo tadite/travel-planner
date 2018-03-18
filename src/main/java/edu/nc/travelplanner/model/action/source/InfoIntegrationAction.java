@@ -1,6 +1,5 @@
 package edu.nc.travelplanner.model.action.source;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import edu.nc.travelplanner.model.action.ActionArgs;
 import edu.nc.travelplanner.model.action.ActionType;
 import edu.nc.travelplanner.model.action.IntegrationAction;
@@ -65,8 +64,8 @@ public class InfoIntegrationAction implements IntegrationAction {
     }
 
     @Override
-    public Object getResult(Map<String, String> decisionArgs) {
-        return null;
+    public void getResult(Map<String, String> decisionArgs, List<PickResult> picks) {
+
     }
 
     private String getTitleId(){
