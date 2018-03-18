@@ -4,7 +4,7 @@
     {
       "type": "list_to_map_multiple",
       "parameters": {
-        "valueNames": ["location", "priceAvg", "hotelName","stars"],
+        "valueNames": ["location.country","location.name", "priceAvg", "hotelName","stars"],
         "keyName": "hotelId"
       }
     }
