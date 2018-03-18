@@ -47,6 +47,7 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
     actionUrl: string = '/action';
 
     public today: any;
+    public currentDate: Date;
     
     login: string;
 
@@ -55,10 +56,10 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
     result: boolean = false;
 
     constructor(private http: HttpService, private cookieService: CookieService, private router: Router, private authService: AuthService) {
-        const date: Date = new Date();
-        let year: any = date.getFullYear();
-        let month: any = date.getMonth() + 1;
-        let day: any = date.getDate();
+        this.currentDate = new Date();
+        let year: any = this.currentDate.getFullYear();
+        let month: any = this.currentDate.getMonth() + 1;
+        let day: any = this.currentDate.getDate();
 
         if (month < 10){
             month = '0' + month;
