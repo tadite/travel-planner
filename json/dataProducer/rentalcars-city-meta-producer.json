@@ -1,0 +1,23 @@
+{
+  "name": "rentalcars-city-meta-producer",
+  "filters": [
+    {
+      "type": "list_to_map_multiple",
+      "parameters": {
+        "valueNames": ["name", "id"],
+        "keyName": "id"
+      }
+    }
+  ],
+  "mappers": [
+    {
+      "from": "dropdownlist-countries-action.Value",
+      "to": "country"
+    },
+    {
+      "from": "dropdownlist-citiesByCountryId-action.Value",
+      "to": "city"
+    }
+  ],
+  "source": "rentalcars-city-meta"
+}

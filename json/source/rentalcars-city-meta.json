@@ -1,0 +1,12 @@
+{
+  "name": "rentalcars-city-meta",
+  "type": "http",
+  "parameters": {
+    "description": "getPlace default",
+    "params": [
+      "country",
+      "city"
+    ],
+    "url": "https://nc-service-bus.a3c1.starter-us-west-1.openshiftapps.com/endpoint/rentalcars-city-meta"
+  }
+}

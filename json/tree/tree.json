@@ -114,7 +114,7 @@
     },
     {
       "fromActionName": "checklist-option-action",
-      "toActionName": "radioButton-rentCar-action",
+      "toActionName": "radioButton-placeForRentalCars-action",
       "type": "logic-condition-on-pick-result",
       "params": {
         "conditionType": "=l",
@@ -124,10 +124,17 @@
       }
     },
     {
+      "fromActionName": "radioButton-placeForRentalCars-action",
+      "toActionName": "radioButton-rentCar-action",
+      "type": "without-condition",
+      "params": {}
+    },
+    {
       "fromActionName": "radioButton-rentCar-action",
       "toActionName": "textinput-nameOfTravel-action",
       "type": "without-condition",
       "params": {}
     }
+
   ]
 }
