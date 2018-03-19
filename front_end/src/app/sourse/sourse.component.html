@@ -30,27 +30,33 @@
             <h2>Список конфигураций</h2>
             <input type="button" value="Добавить" class="btn btn-default" (click)="addAction()" />
             <div class="span3" style="margin-top: 10px">
-                <table class="table table-responsive table-hover table-condensed">
+                <style type="text/css">
+                    TABLE {
+                        table-layout: fixed; /* Ячейки фиксированной ширины */
+                    }
+                </style>
+
+                    <table class="table table-responsive table-hover table-condensed">
                     <thead>
                     <tr>
-                        <td width="14%"> Name</td>
-                        <td width="7%"> Type</td>
-                        <td width="17%"> URL</td>
-                        <td width="14%"> Description</td>
-                        <td width="14"> Params</td>
-                        <td width="17%"> </td>
-                        <td width="17%"> </td>
+                        <td width="13%"> Name</td>
+                        <td width="10%"> Type</td>
+                        <td width="32%"> URL</td>
+                        <td width="17%"> Description</td>
+                        <td width="14%"> </td>
+                        <td width="14%"> </td>
+
                     </tr>
                     </thead>
                     <tbody>
                     <tr *ngFor="let action of actions">
-                        <ng-template [ngTemplateOutlet]="loadTemplate(action)"
-                                     [ngTemplateOutletContext]="{ $implicit: action}">
+                        <ng-template [ngTemplateOutletContext]="{ $implicit: action}"
+                                     [ngTemplateOutlet]="loadTemplate(action)">
                         </ng-template>
                     </tr>
                     </tbody>
                 </table>
-                <div>{{statusMessage}}</div>
+
 
                 <!--шаблон для чтения-->
                 <ng-template #readOnlyTemplate let-action>
@@ -58,13 +64,13 @@
                     <td>{{action.type}}</td>
                     <td>{{action.url}}</td>
                     <td>{{action.description}}</td>
-                    <td>{{action.params}}</td>
                     <td>
                         <input type="button" value="Изменить" class="btn btn-default" (click)="editAction(action)" />
                     </td>
                     <td>
                         <input type="button" value="Удалить" (click)="deleteAction(action)" class="btn btn-default" />
                     </td>
+
                 </ng-template>
 
                 <!--шаблон для редактирования-->
@@ -82,18 +88,19 @@
                         <input type="text" [(ngModel)]="editedAction.description" class="form-control" />
                     </td>
                     <td>
-                        <input type="text" [(ngModel)]="editedAction.params" class="form-control" />
-                    </td>
-                    <td>
                         <input type="button" value="Сохранить" (click)="saveAction()" class="btn btn-default" />
                     </td>
                     <td>
                         <input type="button" value="Отмена" (click)="cancel()" class="btn btn-default" />
                     </td>
+
                 </ng-template>
+
             </div>
         </div>
 
     </div>
+
     <div class="background-image" style="background-image : url('http://upload.akusherstvo.ru/image1458482.jpg')"> </div>
 </div>
+

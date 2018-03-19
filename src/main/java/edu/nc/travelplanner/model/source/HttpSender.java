@@ -4,6 +4,7 @@ import edu.nc.travelplanner.model.response.Response;
 import edu.nc.travelplanner.model.response.TextResponse;
 
 import java.io.BufferedReader;
+import java.io.Console;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -36,8 +37,10 @@ public class HttpSender implements Sender {
             response.append(inputLine);
         }
         in.close();
+        String responseStr = response.toString();
 
-        return new TextResponse(response.toString());
+        System.out.println(responseStr);
+        return new TextResponse(responseStr);
     }
 
 }

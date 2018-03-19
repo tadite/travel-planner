@@ -1,159 +1,192 @@
 <div class="user-page">
-<div class="background-image" style="background-image : url('http://upload.akusherstvo.ru/image1487938.jpg')"></div>      
-<div class="ph">
-        <img class="img" src="http://upload.akusherstvo.ru/image1482617.jpg">
-        <div class="title">TRAVEL PLANNER</div>
-<nav class="fixed-nav-bar">  
-        <ul id="navbar">               
-                <li><a>{{login}} <span class="glyphicon glyphicon-menu-down"></span></a> 
-                  <ul>
-                    <li><a routerLink="/profile" routerLinkActive="active"><span class="glyphicon glyphicon-user"></span> My profile</a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-picture"></span> Travels history</a></li>                    
-                    <li><a routerLink="/notepad" routerLinkActive="active"><span class="glyphicon glyphicon-list-alt"></span> Notepad</a></li>
-                    <li><a routerLink="/questions" routerLinkActive="active"><span class="glyphicon glyphicon-plane"></span> Current travel</a></li>
-                    <hr>
-                    <li><a (click)="logout()"><span class="glyphicon glyphicon-log-out"></span> Sign out</a></li>                    
-                  </ul>   
-                </li>              
-                                           
-        </ul>
-</nav>
-</div> 
-<div class="main-page">
-<div class = "form-block">
-    <div class="form-group" >  
-        <!-- <hr> -->
-        <div align="center" class="form-inline">
-                <div> 
-                     <!-- <div class="radiobutton-block">
-                                <p>
-                                    <input type="radio" (change)="putCheckId(question.id)"/><span>Воронеж</span>
-                                </p>                                                          
-                        </div><br>
-                        <div class="radiobutton-block">
-                                <p>
-                                    <input type="radio" (change)="putCheckId(question.id)"/><span>Гоа</span>
-                                </p>                                                          
-                        </div><br>
-                        <div class="radiobutton-block">
-                                <p>
-                                    <input type="radio" (change)="putCheckId(question.id)"/><span>Санкт-Петербург</span>
-                                </p>                                                          
-                        </div><br>                       
-
-                            <p >
-                                <input class="w3-input w3-border w3-round" type="text" name="text" ngModel required pattern="[0-9]*"/>
-                            </p>
-                            <p >                                
-                                <input class="w3-check" type="checkbox" (change)="putCheckId(question.id)"/><span>{{question.data}}</span><br>                                
-                            </p>
-                        -->
-                                                
-                        <div *ngIf="result == false">
-                            <ngx-loading [show]="loading" [config]="{ backdropBackgroundColour: 'rgba(0,0,0,0)', backdropBorderRadius: '10px',
-                                primaryColour: 'rgb(161, 160, 160)', secondaryColour: 'rgb(161, 160, 160)', tertiaryColour: 'rgb(161, 160, 160)' }"></ngx-loading> 
-                                <form [hidden]="loading" #f="ngForm" #elseBlock (ngSubmit)="onSubmit(f)" #myForm="ngForm" novalidate>
-        
-                                    <div *ngFor="let question of questions"
-                                        [ngSwitch]="question.type"> 
-                                
-                                    <p *ngSwitchCase="'title'">
-                                        {{question.data}}<br>
-                                    </p>
-                                    <p *ngSwitchCase="'dropdown_list'">
-                                        <select name="{{question.id}}" ngModel>
-                                           <option value="{{key}}" *ngFor="let key of objectKeys(question.data)">{{question.data[key]}}</option>
-                                        </select><br>
-                                    </p>
-        
-                                    <div class="checkbox-block">
-                                    <p *ngSwitchCase="'checkbox'">                                
-                                        <input  type="checkbox" (change)="putCheckId(question.id)"/><span>{{question.data}}</span><br>                                
-                                    </p>
-                                    </div>
-        
-                                    <div class="radiobutton-block">
-                                        <p *ngSwitchCase="'radiobox'">                                
-                                            <input type="radio" name="radio" value="{{question.id}}" ngModel /><span>{{question.data}}</span><br>                                
+    <!-- <div class="background-image" style="background-image : url(https://preview.ibb.co/c48LfH/james_donaldson_365418_unsplash.jpg)"></div>       -->
+    <div class="background-image">
+    <div class="ph">
+            <img class="img" src="http://upload.akusherstvo.ru/image1482617.jpg">
+            <div class="title">ПЛАНИРОВЩИК ПУТЕШЕСТВИЙ</div>
+    <nav class="fixed-nav-bar">  
+            <ul id="navbar">               
+                    <li><a>{{login}} <span class="glyphicon glyphicon-menu-down"></span></a> 
+                      <ul>
+                        <li><a routerLink="/profile" routerLinkActive="active"><span class="glyphicon glyphicon-user"></span> Мой профиль</a></li>
+                        <!-- <li><a href="#"><span class="glyphicon glyphicon-picture"></span> История путешествий</a></li>                     -->
+                        <li><a routerLink="/notepad" routerLinkActive="active"><span class="glyphicon glyphicon-list-alt"></span> Блокнот</a></li>
+                        <li><a routerLink="/questions" routerLinkActive="active"><span class="glyphicon glyphicon-plane"></span> Мое путешествие</a></li>
+                        <hr>
+                        <li><a (click)="logout()"><span class="glyphicon glyphicon-log-out"></span> Выйти</a></li>                    
+                      </ul>   
+                    </li>              
+                                               
+            </ul>
+    </nav>
+    </div> 
+    <div class="main-page">
+    <div class = "form-block">
+        <div class="form-group" >  
+            <!-- <hr> -->
+            <div align="center" class="form-inline">
+                    <div> 
+                         <!-- <div class="radiobutton-block">
+                                    <p>
+                                        <input type="radio" (change)="putCheckId(question.id)"/><span>Воронеж</span>
+                                    </p>                                                          
+                            </div><br>
+                            <div class="radiobutton-block">
+                                    <p>
+                                        <input type="radio" (change)="putCheckId(question.id)"/><span>Гоа</span>
+                                    </p>                                                          
+                            </div><br>
+                            <div class="radiobutton-block">
+                                    <p>
+                                        <input type="radio" (change)="putCheckId(question.id)"/><span>Санкт-Петербург</span>
+                                    </p>                                                          
+                            </div><br>                       
+    
+                                <p >
+                                    <input class="w3-input w3-border w3-round" type="text" name="text" ngModel required pattern="[0-9]*"/>
+                                </p>
+                                <p >                                
+                                    <input class="w3-check" type="checkbox" (change)="putCheckId(question.id)"/><span>{{question.data}}</span><br>                                
+                                </p>
+                            -->
+                                                    
+                            <div *ngIf="result == false">
+                                <ngx-loading [show]="loading" [config]="{ backdropBackgroundColour: 'rgba(0,0,0,0)', backdropBorderRadius: '10px',
+                                    primaryColour: 'rgb(161, 160, 160)', secondaryColour: 'rgb(161, 160, 160)', tertiaryColour: 'rgb(161, 160, 160)' }"></ngx-loading> 
+                                    <form [hidden]="loading" #f="ngForm" #elseBlock (ngSubmit)="onSubmit(f)" #myForm="ngForm" novalidate>
+            
+                                        <div *ngFor="let question of questions"
+                                            [ngSwitch]="question.type"> 
+                                    
+                                        <p *ngSwitchCase="'title'">
+                                            {{question.data}}<br>
                                         </p>
-                                    </div>
-        
-                                    <p *ngSwitchCase="'text_input'">
-                                        <input type="text" name="{{question.id}}" ngModel required/>
-                                    </p>
-        
-                                    <p *ngSwitchCase="'date_picker'">
-                                        <input type="date" name="{{question.id}}" [min]="today" onkeydown="return false" ngModel required/>
-                                        <style>
-                                            input::-webkit-inner-spin-button,
-                                            input::-webkit-outer-spin-button{
-                                                display: none;
-                                            }
-                                        </style>
-                                        <!-- <input type="date" name="{{question.id}}" ngModel value="{{question.id}}" (change)="submitDates(f)" required/> -->
-                                    </p>
-                                    
-                                    <p *ngSwitchDefault> 
-                                        {{question}}
-                                    </p>
-                                    </div>  
-                                                          
-                                    <input [disabled]="myForm.invalid" class="next" type="submit" (click)="onSubmit()" value="Далее"/>
-                                    
-                                </form>
-                                </div>        
-                    <div *ngIf="result == true">
-                        <table>
-                                <tr>
-                                 <th>Question</th>
-                                 <th>Answer</th>
-                                </tr>
-                                <tr>
-                                <td>Travel name</td>
-                                <td>{{questions.travelName}}</td>
-                                </tr>
-                                <tr>
-                                 <td>Departure Country</td>
-                                 <td>{{questions.from.countryName}}</td>
-                                 </tr>
-                                 <tr>
-                                 <td>Departure City</td>
-                                 <td>{{questions.from.cityName}}</td>
-                                 </tr>
-                                 <tr>
-                                 <td>Destination Country</td>
-                                 <td>{{questions.to.countryName}}</td>
-                                 </tr>
-                                 <tr>
-                                 <td>Destination City</td>
-                                 <td>{{questions.to.cityName}}</td>
-                                 </tr>
-                                 <tr>
-                                 <td>Budget</td>
-                                 <td>{{questions.budget.name}}</td>
-                                 </tr>
-                                 <tr>
-                                 <td>Start Date</td>
-                                 <td>{{questions.dateIntervalStart}}</td>
-                                 </tr>
-                                 <tr>
-                                 <td>End Date</td>
-                                 <td>{{questions.dateIntervalEnd}}</td>
-                                 </tr>
-                                 <tr>
-                                 <td>Excursions</td>
-                                 <td>{{questions.excursion.name}}</td>
-                                 </tr>
-                        </table>
+                                        <p *ngSwitchCase="'dropdown_list'">
+                                            <select name="{{question.id}}" ngModel>
+                                               <option value="{{key}}" *ngFor="let key of objectKeys(question.data)">{{question.data[key]}}</option>
+                                            </select><br>
+                                        </p>
+            
+                                        <div class="checkbox-block">
+                                        <p *ngSwitchCase="'checkbox'">                                
+                                            <input  type="checkbox" (change)="putCheckId(question.id)"/><span>{{question.data}}</span><br>                                
+                                        </p>
+                                        </div>
+            
+                                        <div class="radiobutton-block">
+                                            <p *ngSwitchCase="'radiobox'">                                
+                                                <input type="radio" name="radio" value="{{question.id}}" ngModel /><span>{{question.data}}</span><br>                                
+                                            </p>
+                                        </div>
+            
+                                        <div *ngSwitchCase="'text_input'">
+                                            <div *ngIf="question.id == 'textbox1.textinput-numberOfPersons-action'">
+                                                <input type="text" name="{{question.id}}" #text="ngModel" ngModel required pattern="[0-9]+"/>
+                                                <div [hidden]="myForm.valid || text.untouched" class="alert alert-danger" id="hid">
+                                                    Некорректный ввод 
+                                                </div>
+                                            </div>
+                                            <div *ngIf="question.id == 'textbox1.textinput-nameOfTravel-action'">
+                                                    <input type="text" name="{{question.id}}" ngModel required/>
+                                            </div>
+                                        </div>
+            
+                                        <p *ngSwitchCase="'date_picker'">
+                                            <input type="date" name="{{question.id}}" [min]="today" onkeydown="return false" ngModel required/>                                                                                      
+                                        </p>
+
+                                        <div class="radiotable-block">
+                                        <div *ngSwitchCase="'table_picker'">
+                                            <div *ngFor="let item of question.data.rows">                                   
+                                                <input type="radio" name="radio" value="{{item.columns[0].value}}" ngModel />
+                                                <!-- <input type="radio" name="radio" ngModel /> -->
+                                            <table>
+                                                <tr>
+                                                    <td>{{question.data.columnDefs['location__сountry']}}</td>                                                    
+                                                    <td>{{item.columns[1].value}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{question.data.columnDefs['location__name']}}</td>                                                    
+                                                    <td>{{item.columns[2].value}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{question.data.columnDefs.priceAvg}}</td>
+                                                    <td>{{item.columns[3].value}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{question.data.columnDefs.hotelName}}</td>
+                                                    <td>{{item.columns[4].value}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{question.data.columnDefs.stars}}</td>
+                                                    <td>{{item.columns[5].value}}</td>
+                                                </tr>
+                                            </table><br>
+                                            </div>
+                                        </div>
+                                        </div>
+                                        <p *ngSwitchDefault> 
+                                            {{question}}
+                                        </p>
+                                        </div>  
+                                                              
+                                        <input [disabled]="myForm.invalid" class="next" type="submit" (click)="onSubmit()" value="Далее"/>
+                                        
+                                    </form>
+                                    </div>        
+                        <div *ngIf="result == true">
+                            <table>
+                                    <tr>
+                                     <th>Вопрос</th>
+                                     <th>Ответ</th>
+                                    </tr>
+                                    <tr>
+                                    <td>Название путешествия</td>
+                                    <td>{{questions.travelName}}</td>
+                                    </tr>
+                                    <tr>
+                                     <td>Страна отправления</td>
+                                     <td>{{questions.from.countryName}}</td>
+                                     </tr>
+                                     <tr>
+                                     <td>Город отправления</td>
+                                     <td>{{questions.from.cityName}}</td>
+                                     </tr>
+                                     <tr>
+                                     <td>Страна назначения</td>
+                                     <td>{{questions.to.countryName}}</td>
+                                     </tr>
+                                     <tr>
+                                     <td>Город назначения</td>
+                                     <td>{{questions.to.cityName}}</td>
+                                     </tr>
+                                     <tr>
+                                     <td>Бюджет</td>
+                                     <td>{{questions.budget.name}}</td>
+                                     </tr>
+                                     <tr>
+                                     <td>Дата отъезда</td>
+                                     <td>{{questions.dateIntervalStart}}</td>
+                                     </tr>
+                                     <tr>
+                                     <td>Дата приезда</td>
+                                     <td>{{questions.dateIntervalEnd}}</td>
+                                     </tr>
+                                     <tr>
+                                     <td>Экскурсии</td>
+                                     <td>{{questions.excursion.name}}</td>
+                                     </tr>
+                            </table>
+                        </div>
                     </div>
-                </div>
+            </div>
+            <br>
+            <br>
+            <!-- <hr> -->
         </div>
-        <br>
-        <br>
-        <!-- <hr> -->
+        </div>
+        </div>
     </div>
-    </div>
-    </div>
-</div>
-
-
+    
+    
+    

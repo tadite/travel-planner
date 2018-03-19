@@ -51,8 +51,8 @@ export class ConfigComponent implements OnInit{
 
     // добавление
     addAction() {
-        this.editedAction = new Action("","","",null,"");
-        this.actions.push(this.editedAction);
+        this.editedAction = new Action("","","",{},"");
+        this.actions.unshift(this.editedAction);
         this.isNewRecord = true;
     }
 
@@ -95,7 +95,7 @@ export class ConfigComponent implements OnInit{
     cancel() {
         // если отмена при добавлении, удаляем последнюю запись
         if (this.isNewRecord) {
-            this.actions.pop();
+            this.actions.shift();
             this.isNewRecord = false;
         }
         this.editedAction = null;
@@ -125,7 +125,7 @@ export class Action{
         public name: string,
         public viewName: string,
         public type: string,
-        public parameters: any,
+        public parameters: {[key:string]:object;},
         public dataProducerName: string) { }
 
 }

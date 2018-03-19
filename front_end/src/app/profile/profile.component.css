@@ -3,6 +3,7 @@
     background-color: #4a537a;    
     top: 100%;   
     border-radius: 8px;  
+   
   }
   #navbar li:hover ul { display: block; }
   #navbar, #navbar ul{
@@ -89,8 +90,9 @@
 .contact_form ul {  
   list-style-type:none;
 	list-style-position:outside;
-	margin:0px;
-	padding:0px;
+	
+  padding:0px;
+  margin-left: 10px;
 }
 .contact_form li{
 	padding:12px; 
@@ -168,10 +170,10 @@ button.submit {
 	-ms-box-shadow: 0 1px 0 0 #c9d3c2 inset;
 	-o-box-shadow: 0 1px 0 0 #c9d3c2 inset;
 	color: rgb(48, 46, 46);
-	width: 80px;
+
   padding: 6px 20px;
   margin: 10px;
-  margin-left: 220px;
+  margin-left: 200px;
   
 	text-align: center;
 	text-shadow: 0 -1px 0 #51574c;
