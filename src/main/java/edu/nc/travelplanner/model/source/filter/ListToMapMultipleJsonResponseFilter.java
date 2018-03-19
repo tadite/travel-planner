@@ -46,12 +46,12 @@ public class ListToMapMultipleJsonResponseFilter implements ResponseFilter {
             });
             Map<String, String> result = new LinkedHashMap<>();
 
-            String[] keyPropertyPath = keyName.split("\\.");
+            String[] keyPropertyPath = keyName.split("__");
 
             for (Map<String, Object> jsonObj : jsonObjectsInArray) {
                 List<String> collect = valueNames.stream()
                         .map(str -> {
-                            return getValueByPropertyPath(jsonObj, str.split("\\."));
+                            return getValueByPropertyPath(jsonObj, str.split("__"));
                         })
                         .collect(Collectors.toList());
 

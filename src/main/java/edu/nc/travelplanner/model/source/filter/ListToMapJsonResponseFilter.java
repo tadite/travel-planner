@@ -47,8 +47,8 @@ public class ListToMapJsonResponseFilter implements ResponseFilter {
             });
             Map<String, String> result = new LinkedHashMap<String, String>();
 
-            String[] keyPropertyPath = keyName.split("\\.");
-            String[] valuePropertyPath = valueName.split("\\.");
+            String[] keyPropertyPath = keyName.split("__");
+            String[] valuePropertyPath = valueName.split("__");
 
             for (Map<String, Object> jsonObj : jsonObjectsInArray) {
 

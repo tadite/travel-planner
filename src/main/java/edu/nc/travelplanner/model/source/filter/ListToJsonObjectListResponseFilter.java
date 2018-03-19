@@ -45,7 +45,7 @@ public class ListToJsonObjectListResponseFilter implements ResponseFilter {
             });
             List<Map<String, String>> result = new LinkedList<>();
 
-            String[] keyPropertyPath = keyName.split("\\.");
+            String[] keyPropertyPath = keyName.split("__");
 
             for (Map<String, Object> jsonObj : jsonObjectsInArray) {
                 Map<String, String> properties = new LinkedHashMap<>();
@@ -53,7 +53,7 @@ public class ListToJsonObjectListResponseFilter implements ResponseFilter {
                 properties.put("id", getValueByPropertyPath(jsonObj, keyPropertyPath));
                 valueNames.stream()
                         .forEach(str ->
-                                properties.put(str, getValueByPropertyPath(jsonObj, str.split("\\.")))
+                                properties.put(str, getValueByPropertyPath(jsonObj, str.split("__")))
                         );
 
                 result.add(properties);
