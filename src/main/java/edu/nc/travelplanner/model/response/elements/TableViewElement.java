@@ -12,9 +12,9 @@ import java.util.Map;
 public class TableViewElement implements ViewElement{
     private String id;
     private final List<Row> rows;
-    private final LinkedHashMap<String, String> columnDefs;
+    private final Row columnDefs;
 
-    public TableViewElement(String id, List<Row> rows, LinkedHashMap<String, String> columnDefs) {
+    public TableViewElement(String id, List<Row> rows, Row columnDefs) {
         this.id = id;
         this.rows = rows;
         this.columnDefs = columnDefs;

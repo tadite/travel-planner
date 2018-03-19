@@ -71,13 +71,6 @@ public class DefaultDataProducer implements DataProducer{
                 source.addParameterValue(parameterMapper.getToKey(), parameterMapper.getDefaultValue());
 
         }
-        /*for (PickResult pickResult : pickResults) {
-            for (ParameterMapper parameterMapper : parameterMappers) {
-                String newKey = parameterMapper.map(pickResult.getKey());
-                if (newKey!=null)
-                    source.addParameterValue(newKey, parameterMapper.filterValue(pickResult.getValue().toString()));
-            }
-        }*/
     }
 
     public String getName() {

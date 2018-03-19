@@ -115,7 +115,10 @@ public class ViewResponseBuilder {
     }
 
     public ViewResponseBuilder addTable(String id, List<Row> rows, LinkedHashMap<String, String> columnDefs){
-        viewResponse.addElement(new TableViewElement(elementsPostfixHolder.tablePostfix+"."+indexCounter.getTableIndex()+"."+id, rows, columnDefs));
+        Row columnsDefsRow = new Row();
+        columnDefs.forEach((key, value) -> columnsDefsRow.addColumn(new Column(key, value)));
+
+        viewResponse.addElement(new TableViewElement(elementsPostfixHolder.tablePostfix+"."+indexCounter.getTableIndex()+"."+id, rows, columnsDefsRow));
         return this;
     }
 
