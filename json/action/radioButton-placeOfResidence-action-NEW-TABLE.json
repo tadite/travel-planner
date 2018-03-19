@@ -6,8 +6,8 @@
   "parameters": {
     "columnDefs":
       {
-        "location.country": "Страна",
-        "location.name": "Город",
+        "location__country": "Страна",
+        "location__name": "Город",
         "priceAvg": "Сред. стоимость",
         "hotelName": "Название отеля",
         "stars": "кол-во звёзд"

@@ -4,7 +4,7 @@
     {
       "type": "list_to_object_list",
       "parameters": {
-        "valueNames": ["location.country","location.name", "priceAvg", "hotelName","stars"],
+        "valueNames": ["location__country","location__name", "priceAvg", "hotelName","stars"],
         "keyName": "hotelId"
       }
     }
