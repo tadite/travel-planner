@@ -1,33 +1,33 @@
 <div class="login-page">
     <div class="form">    
       <form class="register-form" name="register-form" novalidate [@visibilityChanged]='reg_state' method="post">      
-        <input type="text" placeholder="Login" [(ngModel)]="user.login" #regLogin="ngModel" name="regLogin" required/>
+        <input type="text" placeholder="Логин" [(ngModel)]="user.login" #regLogin="ngModel" name="regLogin" required/>
         <div [hidden]="regLogin.valid || regLogin.untouched" class="alert alert-danger" style="font-size: small">
-          Login does not specify
+          Не указан логин
         </div>              
-        <input type="password" placeholder="Password" [(ngModel)]="user.password" #regPassword="ngModel" name="regPassword" required pattern="[0-9a-zA-Z!@#$%^*]{5,}"/>
+        <input type="password" placeholder="Пароль" [(ngModel)]="user.password" #regPassword="ngModel" name="regPassword" required pattern="[0-9a-zA-Z!@#$%^*]{5,}"/>
        <div [hidden]="regPassword.valid || regPassword.untouched" class="alert alert-danger" style="font-size: small">
-          Password must contain not less than 6 characters
+         Пароль должен содержать не менее 5 символов
          </div>
         <input type="email" placeholder="E-mail" [(ngModel)]="user.eMail" #regEmail="ngModel" name="regEmail" required email/>    
         <div [hidden]="regEmail.valid || regEmail.untouched" class="alert alert-danger" style="font-size: small">
-          Incorrect e-mail
+          Некорректный e-mail
          </div>   
          <div [hidden]="userExists == false" class="alert alert-danger" style="font-size: small">
-          Login or e-mail is already token
+          Введенный логин или e-mail уже используется
          </div>
-      <button [disabled]="regLogin.invalid  || regPassword.invalid || regEmail.invalid" (click)="signup(user)" routerLinkActive="active">register</button>         
-        <p class="message">Have you already registered? <a (click)="animateMe()">Sign in</a></p>
+      <button [disabled]="regLogin.invalid  || regPassword.invalid || regEmail.invalid" (click)="signup(user)" routerLinkActive="active">зарегистрироваться</button>         
+        <p class="message">Уже зарегистрированы? <a (click)="animateMe()">Войти</a></p>
       </form>
 
       <form class="login-form" name="login-form" novalidate [@visibilityChanged]='login_state' method="post">
-        <input type="login" placeholder="Login" [(ngModel)]="user.login" #logLogin="ngModel" name="logLogin"  required/>        
-        <input type="password" placeholder="Password" [(ngModel)]="user.password" #logPassword="ngModel" name="logPassword" required />       
+        <input type="login" placeholder="Логин" [(ngModel)]="user.login" #logLogin="ngModel" name="logLogin"  required/>        
+        <input type="password" placeholder="Пароль" [(ngModel)]="user.password" #logPassword="ngModel" name="logPassword" required />       
         <div [hidden]="loginError == false" class="alert alert-danger" style="font-size: small">
-         Incorrect login or password input
+         Некорректный ввод логина или пароля
          </div>
-        <button [disabled]="logLogin.invalid || logPassword.invalid" (click)="signin(user)" routerLinkActive="active">sign in</button>
-        <p class="message">Are you unregistered? <a (click)="animateMe()">Create an account</a></p>
+        <button [disabled]="logLogin.invalid || logPassword.invalid" (click)="signin(user)" routerLinkActive="active">войти</button>
+        <p class="message">Не зарегистрированы? <a (click)="animateMe()">Создать аккаунт</a></p>
       </form>            
     </div>
    <div class="background-image" style="background-image : url('http://upload.akusherstvo.ru/image1458493.jpg')"></div>      

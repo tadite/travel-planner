@@ -11,7 +11,7 @@ import { HttpClient } from '@angular/common/http';
     selector: 'profile-app',     
     templateUrl: './profile.component.html',
     styleUrls: ['./profile.component.css'],
-    providers: [HttpService, AuthService],   
+    providers: [HttpService, AuthService]   
     
 })
 export class ProfileComponent { 
