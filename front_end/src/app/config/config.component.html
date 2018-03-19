@@ -30,16 +30,21 @@
             <h2>Список конфигураций</h2>
             <input type="button" value="Добавить" class="btn btn-default" (click)="addAction()" />
             <div class="span3" style="margin-top: 10px">
+                <style type="text/css">
+                    TABLE {
+                        table-layout: fixed; /* Ячейки фиксированной ширины */
+                    }
+                </style>
+
             <table class="table table-responsive table-hover table-condensed">
                 <thead>
                 <tr>
-                    <td width="17%"> Name</td>
-                    <td width="17%"> ViewName</td>
+                    <td width="20%"> Name</td>
+                    <td width="20%"> ViewName</td>
                     <td width="17%"> Type</td>
-                    <td width="8%"> Parameters</td>
-                    <td width="7%"> Producer</td>
-                    <td width="17%"> </td>
-                    <td width="17%"> </td>
+                    <td width="15%"> Producer</td>
+                    <td width="14%"> </td>
+                    <td width="14%"> </td>
                 </tr>
                 </thead>
                 <tbody>
@@ -57,7 +62,6 @@
                 <td>{{action.name}}</td>
                 <td>{{action.viewName}}</td>
                 <td>{{action.type}}</td>
-                <td>{{action.parameters}}</td>
                 <td>{{action.dataProducerName}}</td>
                 <td>
                     <input type="button" value="Изменить" class="btn btn-default" (click)="editAction(action)" />
@@ -77,9 +81,6 @@
                 </td>
                 <td>
                     <input type="text" [(ngModel)]="editedAction.type" class="form-control" />
-                </td>
-                <td>
-                    <input type="text" [(ngModel)]="editedAction.parameters" class="form-control" />
                 </td>
                 <td>
                     <input type="text" [(ngModel)]="editedAction.dataProducerName" class="form-control" />
