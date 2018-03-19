@@ -57,6 +57,12 @@
     },
     {
       "fromActionName": "radioButton-placeOfResidence-action-NEW-TABLE",
+      "toActionName": "noview-air-tickets-get-id-action",
+      "type": "without-condition",
+      "params": {}
+    },
+    {
+      "fromActionName": "noview-air-tickets-get-id-action",
       "toActionName": "radioButton-typeOfTransport-action",
       "type": "without-condition",
       "params": {}

@@ -1,5 +1,6 @@
 package edu.nc.travelplanner.model.source.dataproducer;
 
+import edu.nc.travelplanner.exception.DataProducerSendException;
 import edu.nc.travelplanner.model.action.PickResult;
 import edu.nc.travelplanner.model.response.Response;
 import edu.nc.travelplanner.model.factory.dataproducer.DataProducerParseException;
@@ -42,7 +43,7 @@ public class DefaultDataProducer implements DataProducer{
     }
 
     @Override
-    public Response send(List<PickResult> pickResults) throws DataProducerParseException {
+    public Response send(List<PickResult> pickResults) throws DataProducerSendException {
         try {
             mapParameters(pickResults);
 
@@ -55,7 +56,7 @@ public class DefaultDataProducer implements DataProducer{
             return response;
 
         } catch (IOException e) {
-            throw new DataProducerParseException(e);
+            throw new DataProducerSendException(e);
         }
     }
 

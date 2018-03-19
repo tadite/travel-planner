@@ -1,12 +1,6 @@
 {
   "name": "radioButton-typeOfTransport-action",
-  "viewName": "Каким образом вы хотите добраться до места проживания",
-  "type": "radiolist",
-  "parameters": {
-    "optionsMap": {
-      "1": "111",
-      "2": "222",
-      "3": "333"
-    }
-  }
+  "viewName": "Как летим?",
+  "type": "radiolist_integration",
+  "dataProducer": "air-tickets-search-producer"
 }

@@ -1,5 +1,6 @@
 package edu.nc.travelplanner;
 
+import edu.nc.travelplanner.exception.DataProducerSendException;
 import edu.nc.travelplanner.model.action.ActionArgs;
 import edu.nc.travelplanner.model.action.source.CheckListIntegrationAction;
 import edu.nc.travelplanner.model.response.Response;
@@ -27,7 +28,7 @@ import static org.mockito.Mockito.when;
 public class CheckListIntegrationActionTests {
 
     //@Test
-    public void canExecutePresentation() throws IOException, JSONException {
+    public void canExecutePresentation() throws IOException, JSONException, DataProducerSendException {
         //Array
 
         String vkCountriesResponse = "{\"response\":[{\"cid\":19,\"title\":\"Австралия\"},{\"cid\":20,\"title\":\"Австрия\"}]}";

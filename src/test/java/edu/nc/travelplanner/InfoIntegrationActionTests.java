@@ -1,5 +1,6 @@
 package edu.nc.travelplanner;
 
+import edu.nc.travelplanner.exception.DataProducerSendException;
 import edu.nc.travelplanner.model.action.ActionArgs;
 import edu.nc.travelplanner.model.action.source.InfoIntegrationAction;
 import edu.nc.travelplanner.model.response.Response;
@@ -23,7 +24,7 @@ import static org.mockito.Mockito.when;
 public class InfoIntegrationActionTests {
 
     //@Test
-    public void canExecutePresentation() throws IOException, JSONException {
+    public void canExecutePresentation() throws IOException, JSONException, DataProducerSendException {
         //Array
         String currencyResponse = "{\n" +
                 "\"timestamp\": 1515142420,\n" +

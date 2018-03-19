@@ -1,0 +1,80 @@
+{
+  "name": "air-tickets-get-id-producer",
+  "filters": [
+    {
+      "type": "json_path",
+      "parameters": {
+        "expression": "$.params.session_id"
+      }
+    },
+    {
+      "type": "regexp_replace",
+      "parameters": {
+        "regex": "([\\[]|[\"]|[\\]])",
+        "replacement": ""
+      }
+    }
+  ],
+  "mappers": [
+    {
+      "from": "dropdownlist-departure-city-action.Value",
+      "to": "origin_city"
+    },
+    {
+      "from": "dropdownlist-departure-city-action.Value",
+      "to": "origin_code",
+      "default": "LON",
+      "filter": {
+        "type": "get_value_if_contains_in_array_from_json_file",
+        "parameters": {
+          "jsonFilePath": "/json/other/top_ru.json",
+          "valuePath": "iata",
+          "arrayPath": "index_strings"
+        }
+      }
+    },
+    {
+      "from": "dropdownlist-citiesByCountryId-action.Value",
+      "to": "dest_city"
+    },
+    {
+      "from": "dropdownlist-citiesByCountryId-action.Value",
+      "to": "dest_code",
+      "default": "MOW",
+      "filter": {
+        "type": "get_value_if_contains_in_array_from_json_file",
+        "parameters": {
+          "jsonFilePath": "/json/other/top_ru.json",
+          "valuePath": "iata",
+          "arrayPath": "index_strings"
+        }
+      }
+    },
+    {
+      "from": "dateIntervalInput-travelPeriod-action1",
+      "to": "origin_date"
+    },
+    {
+      "from": "dateIntervalInput-travelPeriod-action2",
+      "to": "return_date"
+    },
+    {
+      "from": "dropdownlist-budget-action",
+      "to": "class",
+      "default": "E",
+      "filter": {
+        "type": "get_value_if_contains_in_array_from_json_file",
+        "parameters": {
+          "jsonFilePath": "/json/other/tickets_class.json",
+          "valuePath": "result",
+          "arrayPath": "array"
+        }
+      }
+    },
+    {
+      "from": "textinput-numberOfPersons-action",
+      "to": "adults"
+    }
+  ],
+  "source": "air-tickets-get-id-source"
+}

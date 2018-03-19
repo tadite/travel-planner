@@ -38,6 +38,8 @@ public class DefaultEnumMapper implements EnumMapper {
 
         put(ActionType.RADIOLIST_INTEGRATION, RadioListIntegrationAction::new);
         put(ActionType.TABLE_INTEGRATION, TableIntegrationAction::new);
+
+        put(ActionType.NO_VIEW_TEXT_INTEGRAION, NoViewIntegrationAction::new);
     }};
 
     private Map<FilterType, Supplier<ResponseFilter>> filterCreationMap = new HashMap<FilterType, Supplier<ResponseFilter>>(){{
@@ -49,6 +51,7 @@ public class DefaultEnumMapper implements EnumMapper {
         put(FilterType.LIST_TO_OBJECT_LIST, ListToJsonObjectListResponseFilter::new);
         put(FilterType.REGEXP_FIRST_MATCH, RegexpGetFirstMatchResponseFilter::new);
         put(FilterType.SPLIT_AND_GET_BY_INDEX, SplitAndGetByIndexResponseFilter::new);
+        put(FilterType.GET_VALUE_IF_CONTAINS_IN_ARRAY_FROM_JSON_FILE, GetValueIfContainsInArrayFromJsonResponseFilter::new);
     }};
 
     private Map<SourceType, Supplier<Source>> sourceCreationMap = new HashMap<SourceType, Supplier<Source>>(){{

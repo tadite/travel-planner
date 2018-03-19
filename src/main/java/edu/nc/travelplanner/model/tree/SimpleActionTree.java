@@ -1,16 +1,12 @@
 package edu.nc.travelplanner.model.tree;
 
+import edu.nc.travelplanner.exception.DataProducerSendException;
 import edu.nc.travelplanner.model.action.*;
-import edu.nc.travelplanner.model.action.source.CheckListIntegrationAction;
-import edu.nc.travelplanner.model.action.source.DropDownListIntegrationAction;
-import edu.nc.travelplanner.model.action.source.RadioListIntegrationAction;
 import edu.nc.travelplanner.model.jump.Jump;
+import edu.nc.travelplanner.model.response.ErrorResponse;
 import edu.nc.travelplanner.model.response.Response;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class SimpleActionTree implements ActionTree {
 
@@ -21,6 +17,9 @@ public class SimpleActionTree implements ActionTree {
     private List<PickResult> pickResults = new LinkedList<>();
 
     private boolean currentActionExecuted = false;
+
+    private Integer attemptsCount;
+    private Integer waitAfterFail;
 
     public SimpleActionTree() {
     }
@@ -47,8 +46,23 @@ public class SimpleActionTree implements ActionTree {
 
     @Override
     public Response executePresentation(ActionArgs args) {
+        int triesLeft = attemptsCount;
 
-        return currentAction.executePresentation(args, pickResults);
+        while (triesLeft > 0) {
+            try {
+                return currentAction.executePresentation(args, pickResults);
+            } catch (DataProducerSendException e) {
+                e.printStackTrace();
+                triesLeft--;
+                try {
+                    Thread.sleep(waitAfterFail);
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+
+        return new ErrorResponse();
     }
 
     @Override
@@ -58,12 +72,41 @@ public class SimpleActionTree implements ActionTree {
 
         Response response = currentAction.executeDecision(args, pickResults);
 
+        executeJumps(args, response);
+
+        while (currentAction.getType() == ActionType.NO_VIEW_TEXT_INTEGRAION) {
+            tryGetResultForNoViewAction(args, pickResults);
+            currentAction.getResult(args.getArgs(), pickResults);
+            executeJumps(args, response);
+        }
+
+        return response;
+    }
+
+    private void tryGetResultForNoViewAction(ActionArgs args, List<PickResult> picks) {
+        int triesLeft = attemptsCount;
+
+        while (triesLeft > 0) {
+            try {
+                currentAction.executePresentation(args, picks);
+                return;
+            } catch (DataProducerSendException e) {
+                e.printStackTrace();
+                triesLeft--;
+                try {
+                    Thread.sleep(waitAfterFail);
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void executeJumps(ActionArgs args, Response response) {
         this.jumps.stream()
                 .filter(jmp -> jmp.getCurrentAction() == this.currentAction && jmp.canJump(args, pickResults, response))
                 .findFirst()
                 .ifPresent(this::executeJump);
-
-        return response;
     }
 
     @Override
@@ -75,6 +118,12 @@ public class SimpleActionTree implements ActionTree {
     public Boolean isEnded() {
 
         return currentActionExecuted && !jumps.stream().anyMatch(jmp -> jmp.getCurrentAction() == currentAction);
+    }
+
+    @Override
+    public void setRequestAttemptParams(Integer attemptsCount, Integer waitAfterFail) {
+        this.attemptsCount = attemptsCount;
+        this.waitAfterFail = waitAfterFail;
     }
 
     private void executeJump(Jump jump) {

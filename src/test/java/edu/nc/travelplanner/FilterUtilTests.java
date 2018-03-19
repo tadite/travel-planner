@@ -1,7 +1,9 @@
 package edu.nc.travelplanner;
 
+import edu.nc.travelplanner.dao.json.JsonFileUtil;
 import edu.nc.travelplanner.model.response.Response;
 import edu.nc.travelplanner.model.response.TextResponse;
+import edu.nc.travelplanner.model.source.filter.GetValueIfContainsInArrayFromJsonResponseFilter;
 import edu.nc.travelplanner.model.source.filter.ListToJsonObjectListResponseFilter;
 import edu.nc.travelplanner.model.source.filter.ListToMapJsonResponseFilter;
 import edu.nc.travelplanner.model.source.filter.ListToMapMultipleJsonResponseFilter;
@@ -21,5 +23,17 @@ public class FilterUtilTests {
 
 
         return;
+    }
+
+    @Test
+    public void canGetCityFromJsonIfContainsInArray(){
+        GetValueIfContainsInArrayFromJsonResponseFilter filter =
+                new GetValueIfContainsInArrayFromJsonResponseFilter("/json/other/top_ru.json","iata","index_strings");
+
+        String moscow = filter.filter("Paris");
+
+        return;
+
+
     }
 }

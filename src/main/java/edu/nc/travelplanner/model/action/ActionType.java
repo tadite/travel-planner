@@ -26,6 +26,8 @@ public enum ActionType {
     @JsonProperty("radiolist_integration")
     RADIOLIST_INTEGRATION,
     @JsonProperty("table_integration")
-    TABLE_INTEGRATION
+    TABLE_INTEGRATION,
+    @JsonProperty("no_view_text_integration")
+    NO_VIEW_TEXT_INTEGRAION
 
 }

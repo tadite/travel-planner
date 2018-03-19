@@ -19,7 +19,7 @@ public class JsonPathResponseFilter implements ResponseFilter{
 
     @Override
     public Response filter(Response sourceResult)  {
-        sourceResult.setRawData(sourceResult.getRawData());
+        sourceResult.setRawData(filter(sourceResult.getRawData()));
         return sourceResult;
     }
 
