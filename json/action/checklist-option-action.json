@@ -1,14 +1,12 @@
 {
   "name": "checklist-option-action",
-  "viewName": "Additional options:",
+  "viewName": "Дополнительные опции:",
   "type": "checklist",
   "parameters": {
     "optionsMap": {
-      "1": "Vacation with kids",
-      "2": "Rent a car",
-      "3": "Public transport information",
-      "4": "Rating and addresses of the nearest restaurants",
-      "5": "Average price level of the nearest restaurants"
+      "1": "Аренда авто",
+      "2": "Стоимость жизни",
+      "3": "Ничего"
     }
   }
 }

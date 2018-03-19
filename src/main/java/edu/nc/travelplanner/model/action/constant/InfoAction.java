@@ -52,8 +52,7 @@ public class InfoAction implements Action {
     }
 
     @Override
-    public String getResult(Map<String, String> decisionArgs) {
-        return null;
+    public void getResult(Map<String, String> decisionArgs, List<PickResult> picks) {
     }
 
     public void setName(String name) {

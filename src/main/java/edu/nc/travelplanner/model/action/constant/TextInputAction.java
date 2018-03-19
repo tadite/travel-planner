@@ -54,12 +54,13 @@ public class TextInputAction implements Action {
     }
 
     @Override
-    public String getResult(Map<String, String> decisionArgs) {
+    public void getResult(Map<String, String> decisionArgs, List<PickResult> picks) {
         Optional<Map.Entry<String, String>> first = decisionArgs.entrySet().stream()
-                .filter((key) -> key.getKey().endsWith(name)).findFirst();
-        if (first.isPresent())
-            return first.get().getValue();
-        return null;
+                .filter((entry) -> entry.getValue().endsWith(name)).findFirst();
+        if (first.isPresent()) {
+            String key = first.get().getKey();
+            picks.add(new PickResult(getName(), key));
+        }
     }
 
     private String getTextboxElementName(){

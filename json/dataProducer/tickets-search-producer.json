@@ -2,47 +2,44 @@
   "name": "tickets-search-producer",
   "filters": [
     {
-      "type": "json_path",
+      "type": "list_to_map_multiple",
       "parameters": {
-        "expression": "$"
-      }
-    },
-    {
-      "type": "list_to_map",
-      "parameters": {
-        "valueName": "title",
-        "keyName": "cid"
+        "valueNames": ["flights", "price"],
+        "keyName": ""
       }
     }
   ],
   "mappers": [
     {
-      "from": "dropdownlist-departure-city-action",
+      "from": "dropdownlist-departure-city-action.Value",
       "to": "origin_city"
     },
     {
       "from": "",
-      "to": "origin_code"
+      "to": "origin_code",
+      "default":"LON"
     },
     {
-      "from": "checklist-citiesByCountryId-action",
+      "from": "dropdownlist-citiesByCountryId-action.Value",
       "to": "dest_city"
     },
     {
       "from": "",
-      "to": "dest_code"
+      "to": "dest_code",
+      "default":"MOW"
     },
     {
-      "from": "",
+      "from": "dateIntervalInput-travelPeriod-action1",
       "to": "origin_date"
     },
     {
-      "from": "",
+      "from": "dateIntervalInput-travelPeriod-action2",
       "to": "return_date"
     },
     {
       "from": "",
-      "to": "class"
+      "to": "class",
+      "default":"E"
     },
     {
       "from": "textinput-numberOfPersons-action",

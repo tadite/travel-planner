@@ -13,7 +13,6 @@ import edu.nc.travelplanner.model.source.dataproducer.DataProducer;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class RadioListIntegrationAction implements IntegrationAction {
 
@@ -76,9 +75,9 @@ public class RadioListIntegrationAction implements IntegrationAction {
     }
 
     @Override
-    public Object getResult(Map<String, String> decisionArgs) {
+    public void getResult(Map<String, String> decisionArgs, List<PickResult> picks) {
 
-        return decisionArgs.entrySet().stream()
+        String key = decisionArgs.entrySet().stream()
                 .filter((entry) ->
                         optionsMap.containsKey(entry.getKey()
                                 .substring(entry.getKey()
@@ -87,6 +86,9 @@ public class RadioListIntegrationAction implements IntegrationAction {
                 .map(stringStringEntry -> stringStringEntry.getKey()
                         .substring(stringStringEntry.getKey().lastIndexOf('.') + 1))
                 .orElse(null);
+
+        picks.add(new PickResult(getName(), key));
+        picks.add(new PickResult(getName() + ".Value", optionsMap.get(key)));
     }
 
     public DataProducer getDataProducer() {

@@ -1,4 +1,4 @@
 {"name":"dropdownlist-departure-country-action",
-  "viewName":"Choose the country of departure",
+  "viewName":"Выберите страну отправления",
   "type":"dropdown_integration",
   "dataProducer": "countries-map-producer"}

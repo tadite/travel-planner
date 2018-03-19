@@ -1,0 +1,16 @@
+{
+  "name": "radioButton-placeOfResidence-action-NEW-TABLE",
+  "viewName": "Выберите место проживания",
+  "type": "table_integration",
+  "dataProducer": "find-hotels-producer-NEW-TABLE",
+  "parameters": {
+    "columnDefs":
+      {
+        "location__country": "Страна",
+        "location__name": "Город",
+        "priceAvg": "Сред. стоимость",
+        "hotelName": "Название отеля",
+        "stars": "кол-во звёзд"
+      }
+  }
+}

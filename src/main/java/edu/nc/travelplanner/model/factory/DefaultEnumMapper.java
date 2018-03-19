@@ -3,10 +3,7 @@ package edu.nc.travelplanner.model.factory;
 import edu.nc.travelplanner.model.action.Action;
 import edu.nc.travelplanner.model.action.ActionType;
 import edu.nc.travelplanner.model.action.constant.*;
-import edu.nc.travelplanner.model.action.source.CheckListIntegrationAction;
-import edu.nc.travelplanner.model.action.source.DropDownListIntegrationAction;
-import edu.nc.travelplanner.model.action.source.InfoIntegrationAction;
-import edu.nc.travelplanner.model.action.source.RadioListIntegrationAction;
+import edu.nc.travelplanner.model.action.source.*;
 import edu.nc.travelplanner.model.jump.Jump;
 import edu.nc.travelplanner.model.jump.JumpType;
 import edu.nc.travelplanner.model.jump.LogicConditionOnPickResultJump;
@@ -40,6 +37,7 @@ public class DefaultEnumMapper implements EnumMapper {
         put(ActionType.INFO_INTEGRATION, InfoIntegrationAction::new);
 
         put(ActionType.RADIOLIST_INTEGRATION, RadioListIntegrationAction::new);
+        put(ActionType.TABLE_INTEGRATION, TableIntegrationAction::new);
     }};
 
     private Map<FilterType, Supplier<ResponseFilter>> filterCreationMap = new HashMap<FilterType, Supplier<ResponseFilter>>(){{
@@ -48,6 +46,9 @@ public class DefaultEnumMapper implements EnumMapper {
         put(FilterType.LIST_TO_MAP_MULTIPLE, ListToMapMultipleJsonResponseFilter::new);
         put(FilterType.REGEXP_REPLACE, RegexpReplaceAllResponseFilter::new);
         put(FilterType.SUBSTRING, SubstringResponseFilter::new);
+        put(FilterType.LIST_TO_OBJECT_LIST, ListToJsonObjectListResponseFilter::new);
+        put(FilterType.REGEXP_FIRST_MATCH, RegexpGetFirstMatchResponseFilter::new);
+        put(FilterType.SPLIT_AND_GET_BY_INDEX, SplitAndGetByIndexResponseFilter::new);
     }};
 
     private Map<SourceType, Supplier<Source>> sourceCreationMap = new HashMap<SourceType, Supplier<Source>>(){{

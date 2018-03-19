@@ -1,6 +1,6 @@
 {
   "name": "checklist-typeOfExcursion-action",
-  "viewName": "Choose the types of excursion",
+  "viewName": "Выберите тип экскурсии",
   "type": "checklist_integration",
   "dataProducer": "tripster-excursion-types-producer"
 }

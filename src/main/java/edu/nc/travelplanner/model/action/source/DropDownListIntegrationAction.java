@@ -82,13 +82,15 @@ public class DropDownListIntegrationAction implements IntegrationAction {
     }
 
     @Override
-    public String getResult(Map<String, String> decisionArgs) {
+    public void getResult(Map<String, String> decisionArgs, List<PickResult> picks) {
         Optional<Map.Entry<String, String>> first = decisionArgs.entrySet().stream()
                 .filter((entry) -> optionsMap.containsKey(entry.getKey().substring(entry.getKey().lastIndexOf('.') + 1))).findFirst();
 
-        if (first.isPresent())
-            return first.get().getKey().substring(first.get().getKey().lastIndexOf('.') + 1);
-        return null;
+        if (first.isPresent()){
+            String key = first.get().getKey().substring(first.get().getKey().lastIndexOf('.') + 1);
+            picks.add(new PickResult(getName(), key));
+            picks.add(new PickResult(getName()+".Value", optionsMap.get(key)));
+        }
     }
 
     private String getDropdownElementName(){

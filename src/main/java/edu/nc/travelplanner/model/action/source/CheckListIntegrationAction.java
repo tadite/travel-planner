@@ -76,16 +76,16 @@ public class CheckListIntegrationAction implements IntegrationAction {
     }
 
     @Override
-    public Object getResult(Map<String, String> decisionArgs) {
+    public void getResult(Map<String, String> decisionArgs, List<PickResult> picks) {
         Set<Map.Entry<String,String>> results = new HashSet<> (decisionArgs.entrySet().stream()
                 .filter((entry) -> optionsMap.containsKey(entry.getKey().substring(entry.getKey().lastIndexOf('.')+1))).collect(Collectors.toSet()));
 
         if (!results.isEmpty()){
             List<String> pickedValues = new LinkedList<>();
             results.iterator().forEachRemaining(entry -> pickedValues.add(entry.getKey().substring(entry.getKey().lastIndexOf('.')+1)));
-            return pickedValues;
+            picks.add(new PickResult(getName(), pickedValues.get(0)));
+            picks.add(new PickResult(getName()+ ".Value", optionsMap.get(pickedValues.get(0))));
         }
-        return null;
     }
 
     public Map<String, String> getOptionsMap() {

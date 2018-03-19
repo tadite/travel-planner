@@ -39,24 +39,24 @@
     },
     {
       "fromActionName": "dropdownlist-countries-action",
-      "toActionName": "checklist-citiesByCountryId-action",
+      "toActionName": "dropdownlist-citiesByCountryId-action",
       "type": "without-condition",
       "params": {}
     },
     {
-      "fromActionName": "checklist-citiesByCountryId-action",
+      "fromActionName": "dropdownlist-citiesByCountryId-action",
       "toActionName": "dropdownlist-budget-action",
       "type": "without-condition",
       "params": {}
     },
     {
       "fromActionName": "dropdownlist-budget-action",
-      "toActionName": "radioButton-placeOfResidence-action",
+      "toActionName": "radioButton-placeOfResidence-action-NEW-TABLE",
       "type": "without-condition",
       "params": {}
     },
     {
-      "fromActionName": "radioButton-placeOfResidence-action",
+      "fromActionName": "radioButton-placeOfResidence-action-NEW-TABLE",
       "toActionName": "radioButton-typeOfTransport-action",
       "type": "without-condition",
       "params": {}
@@ -91,12 +91,12 @@
     },
     {
       "fromActionName": "checklist-typeOfExcursion-action",
-      "toActionName": "radioButton-choosingTheExcursion-action",
+      "toActionName": "checklist-choosingTheExcursion-action",
       "type": "without-condition",
       "params": {}
     },
     {
-      "fromActionName": "radioButton-choosingTheExcursion-action",
+      "fromActionName": "checklist-choosingTheExcursion-action",
       "toActionName": "checklist-option-action",
       "type": "without-condition",
       "params": {}
@@ -104,8 +104,37 @@
     {
       "fromActionName": "checklist-option-action",
       "toActionName": "textinput-nameOfTravel-action",
+      "type": "logic-condition-on-pick-result",
+      "params": {
+        "conditionType": "=l",
+        "pickResultName": "checklist-option-action",
+        "pickResultCheck": "key",
+        "conditionValue": "3"
+      }
+    },
+    {
+      "fromActionName": "checklist-option-action",
+      "toActionName": "radioButton-placeForRentalCars-action",
+      "type": "logic-condition-on-pick-result",
+      "params": {
+        "conditionType": "=l",
+        "pickResultName": "checklist-option-action",
+        "pickResultCheck": "key",
+        "conditionValue": "1"
+      }
+    },
+    {
+      "fromActionName": "radioButton-placeForRentalCars-action",
+      "toActionName": "radioButton-rentCar-action",
+      "type": "without-condition",
+      "params": {}
+    },
+    {
+      "fromActionName": "radioButton-rentCar-action",
+      "toActionName": "textinput-nameOfTravel-action",
       "type": "without-condition",
       "params": {}
     }
+
   ]
 }

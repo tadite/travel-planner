@@ -13,15 +13,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class DataLoader implements ApplicationRunner {
 
-    @Autowired
-    TravelSaveService travelSaveService;
+    /*@Autowired
+    TravelSaveService travelSaveService;*/
 
     public void run(ApplicationArguments args) {
         initTypesOfResidence();
     }
 
     private void initTypesOfResidence() {
-        TravelAfterPickTreeDto travelAfterPickTreeDto = new TravelAfterPickTreeDto();
+        /*TravelAfterPickTreeDto travelAfterPickTreeDto = new TravelAfterPickTreeDto();
         travelAfterPickTreeDto.setTravelName("test-travel-name");
         travelAfterPickTreeDto.setClientId(Long.valueOf(1));
         travelAfterPickTreeDto.setFrom(new CheckpointAfterPickTreeDto() {{
@@ -33,6 +33,6 @@ public class DataLoader implements ApplicationRunner {
             this.setCityId(Long.valueOf(2));
         }});
 
-        travelSaveService.saveTravelAfterPick(travelAfterPickTreeDto);
+        travelSaveService.saveTravelAfterPick(travelAfterPickTreeDto);*/
     }
 }

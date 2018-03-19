@@ -14,5 +14,7 @@ public enum ViewElementType {
     @JsonProperty("date_picker")
     DATE_PICKER,
     @JsonProperty("radiobox")
-    RADIOBOX
+    RADIOBOX,
+    @JsonProperty("table_picker")
+    TABLE_PICKER
 }

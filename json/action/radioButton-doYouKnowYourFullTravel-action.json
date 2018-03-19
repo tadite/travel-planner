@@ -1,11 +1,11 @@
 {
   "name": "radioButton-doYouKnowYourFullTravel-action",
-  "viewName": "Do You know everything about your future travel?",
+  "viewName": "Вы знаете, каким будет Ваше будущее путешествие?",
   "type": "radiolist",
   "parameters": {
     "optionsMap": {
-      "1": "Yes",
-      "2": "No"
+      "1": "Да",
+      "2": "Нет"
     }
   }
 }

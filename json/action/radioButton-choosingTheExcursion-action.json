@@ -1,6 +1,0 @@
-{
-  "name": "radioButton-choosingTheExcursion-action",
-  "viewName": "Choose the excursion",
-  "type": "radiolist_integration",
-  "dataProducer" : "tripster-excursion-producer"
-}

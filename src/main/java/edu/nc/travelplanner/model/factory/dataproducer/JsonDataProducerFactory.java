@@ -9,6 +9,7 @@ import edu.nc.travelplanner.model.source.Source;
 import edu.nc.travelplanner.model.source.SourceType;
 import edu.nc.travelplanner.model.source.dataproducer.DataProducer;
 import edu.nc.travelplanner.model.source.dataproducer.DefaultDataProducer;
+import edu.nc.travelplanner.model.source.filter.ResponseFilter;
 import edu.nc.travelplanner.model.source.parametermapper.ParameterMapper;
 import edu.nc.travelplanner.model.source.parametermapper.PickResultParameterMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,7 @@ public class JsonDataProducerFactory implements DataProducerFactory {
             return createDataProducerFromDto(producerDto);
 
         } catch (Throwable e) {
-            throw new DataProducerParseException(name,e);
+            throw new DataProducerParseException(name, e);
         }
     }
 
@@ -62,9 +63,16 @@ public class JsonDataProducerFactory implements DataProducerFactory {
         return producer;
     }
 
-    private void setMappersByFactory(DataProducerDto producerDto, DefaultDataProducer producer) {
+    private void setMappersByFactory(DataProducerDto producerDto, DefaultDataProducer producer) throws FilterParseException {
         for (ParameterMapperDto mapperDto : producerDto.getParameterMappers()) {
-            producer.addParameterMapper(new PickResultParameterMapper(mapperDto.getFromKey(), mapperDto.getToKey()));
+            ResponseFilter responseFilter = null;
+            String defaultValue = null;
+            if (mapperDto.getFilterDto() != null)
+                responseFilter = responseFilterFactory.create(mapperDto.getFilterDto());
+            if (mapperDto.getDefaultValue() != null)
+                defaultValue = mapperDto.getDefaultValue();
+
+            producer.addParameterMapper(new PickResultParameterMapper(mapperDto.getFromKey(), mapperDto.getToKey(), responseFilter, defaultValue));
         }
     }
 

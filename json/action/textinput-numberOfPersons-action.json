@@ -1,4 +1,4 @@
 {"name":"textinput-numberOfPersons-action",
-  "viewName":"Choose the number of persons",
+  "viewName":"Введите число людей",
   "type":"text_input",
   "parameters":{"data":""}}

@@ -1,0 +1,6 @@
+{
+  "name": "radioButton-placeForRentalCars-action",
+  "viewName": "Выберите место",
+  "type": "radiolist_integration",
+  "dataProducer": "rentalcars-city-meta-producer"
+}

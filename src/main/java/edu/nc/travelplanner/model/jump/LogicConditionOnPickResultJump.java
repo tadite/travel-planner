@@ -106,6 +106,8 @@ public class LogicConditionOnPickResultJump implements Jump {
                         return value.equals(Integer.valueOf(conditionValue));
                     case 's':
                         return String.valueOf(value).equals(String.valueOf(conditionValue));
+                    case 'l':
+                        return ((List<Object>)value).contains(conditionValue);
                     case 'o':
                         return value.equals(conditionValue);
                 }

@@ -60,13 +60,24 @@ public class DefaultDataProducer implements DataProducer{
     }
 
     private void mapParameters(List<PickResult> pickResults) {
-        for (PickResult pickResult : pickResults) {
+        for (ParameterMapper parameterMapper : parameterMappers) {
+            Optional<PickResult> pickResultOptional = pickResults.stream()
+                    .filter(pickResult -> pickResult.getKey().equals(parameterMapper.getFromKey()))
+                    .findFirst();
+
+            if (pickResultOptional.isPresent())
+                source.addParameterValue(parameterMapper.getToKey(), parameterMapper.filterValue(pickResultOptional.get().getValue().toString()));
+            else if (parameterMapper.getDefaultValue()!=null)
+                source.addParameterValue(parameterMapper.getToKey(), parameterMapper.getDefaultValue());
+
+        }
+        /*for (PickResult pickResult : pickResults) {
             for (ParameterMapper parameterMapper : parameterMappers) {
                 String newKey = parameterMapper.map(pickResult.getKey());
                 if (newKey!=null)
-                    source.addParameterValue(newKey,pickResult.getValue().toString());
+                    source.addParameterValue(newKey, parameterMapper.filterValue(pickResult.getValue().toString()));
             }
-        }
+        }*/
     }
 
     public String getName() {

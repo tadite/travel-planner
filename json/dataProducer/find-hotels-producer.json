@@ -2,39 +2,35 @@
   "name": "find-hotels-producer",
   "filters": [
     {
-      "type": "json_path",
+      "type": "list_to_map_multiple",
       "parameters": {
-        "expression": "$"
-      }
-    },
-    {
-      "type": "list_to_map",
-      "parameters": {
-        "valueName": "title",
-        "keyName": "cid"
+        "valueNames": ["location.country","location.name", "priceAvg", "hotelName","stars"],
+        "keyName": "hotelId"
       }
     }
   ],
   "mappers": [
   {
-    "from": "checklist-citiesByCountryId-action",
+    "from": "dropdownlist-citiesByCountryId-action.Value",
     "to": "location"
   },
   {
-    "from": "",
+    "from": "dateIntervalInput-travelPeriod-action1",
     "to": "checkIn"
   },
   {
-    "from": "",
+    "from": "dateIntervalInput-travelPeriod-action2",
     "to": "checkOut"
   },
   {
     "from": "",
-    "to": "lang"
+    "to": "lang",
+    "default":"ru_RU"
   },
   {
     "from": "",
-    "to": "currency"
+    "to": "currency",
+    "default":"RUB"
   },
   {
     "from": "textinput-numberOfPersons-action",

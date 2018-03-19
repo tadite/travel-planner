@@ -1,12 +1,11 @@
 {
   "name": "dropdownlist-budget-action",
-  "viewName": "Choose your budget level",
+  "viewName": "Выберите бюджет",
   "type": "dropdown_input",
   "parameters": {
     "optionsMap": {
-      "1": "Economy",
-      "2": "Medium",
-      "3": "Premium"
+      "1": "Эконом",
+      "2": "Премиум"
     }
   }
 }

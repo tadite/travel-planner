@@ -12,6 +12,8 @@ public class TravelAfterPickTreeDto {
     private Long clientId;
     private String dateIntervalStart;
     private String dateIntervalEnd;
+    private String numberOfPersons;
+    private String rentCar;
 
     private ExcursionAfterPickTreeDto excursion = new ExcursionAfterPickTreeDto();
     private BudgetAfterPickTreeDto budget = new BudgetAfterPickTreeDto();
@@ -24,6 +26,14 @@ public class TravelAfterPickTreeDto {
         this.checkpoints = checkpoints;
         this.travelName = travelName;
         this.travelDescription = travelDescription;
+    }
+
+    public String getNumberOfPersons() {
+        return numberOfPersons;
+    }
+
+    public void setNumberOfPersons(String numberOfPersons) {
+        this.numberOfPersons = numberOfPersons;
     }
 
     public BudgetAfterPickTreeDto getBudget() {
@@ -104,5 +114,13 @@ public class TravelAfterPickTreeDto {
 
     public void setClientId(Long clientId) {
         this.clientId = clientId;
+    }
+
+    public String getRentCar() {
+        return rentCar;
+    }
+
+    public void setRentCar(String rentCar) {
+        this.rentCar = rentCar;
     }
 }

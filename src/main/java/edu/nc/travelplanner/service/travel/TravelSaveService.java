@@ -66,6 +66,18 @@ public class TravelSaveService {
         //name
         travel.setName(pickDto.getTravelName());
 
+        switch (pickDto.getBudget().getId()) {
+            case "1":
+                pickDto.getBudget().setName("Economy");
+                break;
+            case "2":
+                pickDto.getBudget().setName("Medium");
+                break;
+            case "3":
+                pickDto.getBudget().setName("Premium");
+                break;
+        }
+
         return travel;
     }
 
@@ -105,6 +117,21 @@ public class TravelSaveService {
         }
 
         pickDto.getFrom().setCityName(cityById.getName());
+
+
+        cityId = pickDto.getTo().getCityId();
+        cityById = cityDao.getCityById(cityId);
+        if (cityById==null){
+            cityById = new City();
+            cityById.setCityId(cityId);
+            cityById.setCountryId(countryById.getCountryId());
+            cityById.setName(vkGeoNamesProvider.getCityNameById(cityId.intValue()));
+
+            cityDao.saveCity(cityById);
+        }
+
+        pickDto.getTo().setCityName(cityById.getName());
+
         return cityById;
     }
 
@@ -120,6 +147,20 @@ public class TravelSaveService {
         }
 
         pickDto.getFrom().setCountryName(countryById.getName());
+
+
+        countryId = pickDto.getTo().getCountryId();
+        countryById = countryDao.getCountryById(countryId);
+        if (countryById==null){
+            countryById = new Country();
+            countryById.setCountryId(countryId);
+            countryById.setName(vkGeoNamesProvider.getCountryNameById(countryId));
+
+            countryDao.saveCountry(countryById);
+        }
+
+        pickDto.getTo().setCountryName(countryById.getName());
+
         return countryById;
     }
 }

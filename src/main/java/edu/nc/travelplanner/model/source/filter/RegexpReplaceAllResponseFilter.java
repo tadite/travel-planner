@@ -18,7 +18,12 @@ public class RegexpReplaceAllResponseFilter implements ResponseFilter {
 
     @Override
     public Response filter(Response sourceResult) {
-        sourceResult.setRawData(sourceResult.getRawData().replaceAll(regex,replacement));
+        sourceResult.setRawData(filter(sourceResult.getRawData()));
         return sourceResult;
+    }
+
+    @Override
+    public String filter(String sourceResult) {
+        return sourceResult.replaceAll(regex,replacement);
     }
 }

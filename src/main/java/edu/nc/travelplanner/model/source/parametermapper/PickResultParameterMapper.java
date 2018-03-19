@@ -1,6 +1,7 @@
 package edu.nc.travelplanner.model.source.parametermapper;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import edu.nc.travelplanner.model.source.filter.ResponseFilter;
 
 public class PickResultParameterMapper implements ParameterMapper {
 
@@ -10,6 +11,11 @@ public class PickResultParameterMapper implements ParameterMapper {
     @JsonProperty("to")
     private String toKey;
 
+    @JsonProperty("default")
+    private String defaultValue;
+
+    private ResponseFilter filter;
+
     public PickResultParameterMapper() {
     }
 
@@ -18,8 +24,43 @@ public class PickResultParameterMapper implements ParameterMapper {
         this.toKey = toKey;
     }
 
+    public PickResultParameterMapper(String fromKey, String toKey, ResponseFilter filter) {
+        this.fromKey = fromKey;
+        this.toKey = toKey;
+        this.filter=filter;
+    }
+
+    public PickResultParameterMapper(String fromKey, String toKey, ResponseFilter filter, String defaultValue) {
+        this.fromKey = fromKey;
+        this.toKey = toKey;
+        this.filter=filter;
+        this.defaultValue=defaultValue;
+    }
+
     @Override
     public String map(String key) {
-        return key.equals(fromKey)?toKey:null;
+        return key.equals(fromKey) ? toKey : null;
+    }
+
+    @Override
+    public String filterValue(String value) {
+        if (filter!=null && value!=null)
+            return filter.filter(value);
+        return value;
+    }
+
+    @Override
+    public String getToKey() {
+        return toKey;
+    }
+
+    @Override
+    public String getFromKey() {
+        return fromKey;
+    }
+
+    @Override
+    public String getDefaultValue() {
+        return defaultValue;
     }
 }

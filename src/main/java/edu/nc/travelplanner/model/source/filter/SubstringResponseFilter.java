@@ -16,9 +16,14 @@ public class SubstringResponseFilter implements ResponseFilter{
 
     @Override
     public Response filter(Response sourceResult) {
-        sourceResult.setRawData(sourceResult.getRawData()
-                .substring(sourceResult.getRawData().indexOf(firstIndexStr)+1,
-                        sourceResult.getRawData().indexOf(lastIndexStr)));
+        sourceResult.setRawData(filter(sourceResult.getRawData()));
         return sourceResult;
+    }
+
+    @Override
+    public String filter(String sourceResult) {
+        return sourceResult
+                .substring(sourceResult.indexOf(firstIndexStr)+1,
+                        sourceResult.indexOf(lastIndexStr));
     }
 }
