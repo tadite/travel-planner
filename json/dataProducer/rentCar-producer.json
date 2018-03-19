@@ -11,30 +11,26 @@
       "type": "list_to_map_multiple",
       "parameters": {
         "valueNames": ["name", "price-period", "price","climate","transmission","place","company"],
-        "keyName": ""
+        "keyName": "name"
       }
     }
   ],
   "mappers": [
     {
-      "from": "",
-      "to": "country",
-      "default":"Австрия"
+      "from": "dropdownlist-countries-action.Value",
+      "to": "country"
     },
     {
-      "from": "",
-      "to": "city",
-      "default":"Вена"
+      "from": "dropdownlist-citiesByCountryId-action.Value",
+      "to": "city"
     },
     {
-      "from": "",
-      "to": "location_code",
-      "default":"252129"
+      "from": "radioButton-placeForRentalCars-action",
+      "to": "location_code"
     },
     {
-      "from": "",
-      "to": "location_name",
-      "default":"Вена аэропорт"
+      "from": "radioButton-placeForRentalCars-action.Value",
+      "to": "location_name"
     },
     {
       "from": "dateIntervalInput-travelPeriod-action2",

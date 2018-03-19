@@ -2,9 +2,9 @@
   "name": "rentalcars-city-meta-producer",
   "filters": [
     {
-      "type": "list_to_map_multiple",
+      "type": "list_to_map",
       "parameters": {
-        "valueNames": ["name", "id"],
+        "valueName": "name",
         "keyName": "id"
       }
     }
