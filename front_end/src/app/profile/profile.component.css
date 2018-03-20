@@ -1,3 +1,13 @@
+@import url(http://allfont.ru/allfont.css?fonts=pt-sans-caption);
+* {
+  font-family: 'PT Sans Caption', arial; 
+}
+
+.glyphicon {
+  font-family: 'Glyphicons Halflings';
+}
+
+
 #navbar ul{
     display: none;
     background-color: #4a537a;    

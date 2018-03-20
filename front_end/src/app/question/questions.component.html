@@ -25,31 +25,7 @@
         <div class="form-group" >  
             <!-- <hr> -->
             <div align="center" class="form-inline">
-                    <div> 
-                         <!-- <div class="radiobutton-block">
-                                    <p>
-                                        <input type="radio" (change)="putCheckId(question.id)"/><span>Воронеж</span>
-                                    </p>                                                          
-                            </div><br>
-                            <div class="radiobutton-block">
-                                    <p>
-                                        <input type="radio" (change)="putCheckId(question.id)"/><span>Гоа</span>
-                                    </p>                                                          
-                            </div><br>
-                            <div class="radiobutton-block">
-                                    <p>
-                                        <input type="radio" (change)="putCheckId(question.id)"/><span>Санкт-Петербург</span>
-                                    </p>                                                          
-                            </div><br>                       
-    
-                                <p >
-                                    <input class="w3-input w3-border w3-round" type="text" name="text" ngModel required pattern="[0-9]*"/>
-                                </p>
-                                <p >                                
-                                    <input class="w3-check" type="checkbox" (change)="putCheckId(question.id)"/><span>{{question.data}}</span><br>                                
-                                </p>
-                            -->
-                                                    
+                    <div>                       
                             <div *ngIf="result == false">
                                 <ngx-loading [show]="loading" [config]="{ backdropBackgroundColour: 'rgba(0,0,0,0)', backdropBorderRadius: '10px',
                                     primaryColour: 'rgb(161, 160, 160)', secondaryColour: 'rgb(161, 160, 160)', tertiaryColour: 'rgb(161, 160, 160)' }"></ngx-loading> 
@@ -72,13 +48,14 @@
                                             <input  type="checkbox" (change)="putCheckId(question.id)"/><span>{{question.data}}</span><br>                                
                                         </p>
                                         </div>
-            
+          
                                         <div class="radiobutton-block">
                                             <p *ngSwitchCase="'radiobox'">                                
                                                 <input type="radio" name="radio" value="{{question.id}}" ngModel /><span>{{question.data}}</span><br>                                
                                             </p>
-                                        </div>
-            
+                                        </div>                                       
+
+           
                                         <div *ngSwitchCase="'text_input'">
                                             <div *ngIf="question.id == 'textbox1.textinput-numberOfPersons-action'">
                                                 <input type="text" name="{{question.id}}" #text="ngModel" ngModel required pattern="[0-9]+"/>
@@ -95,43 +72,25 @@
                                             <input type="date" name="{{question.id}}" [min]="today" onkeydown="return false" ngModel required/>                                                                                      
                                         </p>
 
-                                        <div class="radiotable-block">
-                                        <div *ngSwitchCase="'table_picker'">
-                                            <div *ngFor="let item of question.data.rows">                                   
-                                                <input type="radio" name="radio" value="{{item.columns[0].value}}" ngModel />
-                                                <!-- <input type="radio" name="radio" ngModel /> -->
+                                        <div class="table-block">
+                                        <div *ngSwitchCase="'table_picker'">                                           
+                                            <div *ngFor="let item of question.data.rows">                                                                                                                           
+                                                <input type="radio" name="radio" value="{{item.columns[0].value}}" ngModel />                                               
                                             <table>
-                                                <tr>
-                                                    <td>{{question.data.columnDefs['location__сountry']}}</td>                                                    
-                                                    <td>{{item.columns[1].value}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>{{question.data.columnDefs['location__name']}}</td>                                                    
-                                                    <td>{{item.columns[2].value}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>{{question.data.columnDefs.priceAvg}}</td>
-                                                    <td>{{item.columns[3].value}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>{{question.data.columnDefs.hotelName}}</td>
-                                                    <td>{{item.columns[4].value}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>{{question.data.columnDefs.stars}}</td>
-                                                    <td>{{item.columns[5].value}}</td>
-                                                </tr>
+                                                <tr *ngFor="let defs of question.data.columnDefs.columns; let i = index">                                       
+                                                    <td>{{defs.value}}</td>                                      
+                                                    <td>{{item.columns[i+1].value}}</td>              
+                                                </tr> 
                                             </table><br>
-                                            </div>
+                                            </div>                                           
                                         </div>
                                         </div>
+
                                         <p *ngSwitchDefault> 
                                             {{question}}
                                         </p>
-                                        </div>  
-                                                              
-                                        <input [disabled]="myForm.invalid" class="next" type="submit" (click)="onSubmit()" value="Далее"/>
-                                        
+                                        </div>               
+                                        <input [disabled]="myForm.invalid" class="next" type="submit" (click)="onSubmit()" value="Далее"/>                                        
                                     </form>
                                     </div>        
                         <div *ngIf="result == true">
