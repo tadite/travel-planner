@@ -1,0 +1,23 @@
+{
+  "name": "tripster-excursion-producer-NEW-TABLE",
+  "filters": [
+    {
+      "type": "list_to_object_list",
+      "parameters": {
+        "valueNames": ["title","description", "price", "time","experience_id"],
+        "keyName": "experience_id"
+      }
+    }
+  ],
+  "mappers": [
+    {
+      "from": "dropdownlist-citiesByCountryId-action.Value",
+      "to": "city"
+    },
+    {
+      "from": "checklist-typeOfExcursion-action",
+      "to": "type"
+    }
+  ],
+  "source": "tripster-excursion"
+}

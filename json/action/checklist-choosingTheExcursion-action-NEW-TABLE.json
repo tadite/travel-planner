@@ -1,0 +1,16 @@
+{
+  "name": "checklist-choosingTheExcursion-action-NEW-TABLE",
+  "viewName": "Выберите экскурсию",
+  "type": "table_integration",
+  "dataProducer" : "tripster-excursion-producer-NEW-TABLE",
+  "parameters": {
+    "columnDefs":
+    {
+      "title": "Назание",
+      "description":"Описание",
+      "price": "Цена",
+      "time": "Время",
+      "experience_id":"Сайт"
+    }
+  }
+}

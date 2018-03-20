@@ -97,12 +97,12 @@
     },
     {
       "fromActionName": "checklist-typeOfExcursion-action",
-      "toActionName": "checklist-choosingTheExcursion-action",
+      "toActionName": "checklist-choosingTheExcursion-action-NEW-TABLE",
       "type": "without-condition",
       "params": {}
     },
     {
-      "fromActionName": "checklist-choosingTheExcursion-action",
+      "fromActionName": "checklist-choosingTheExcursion-action-NEW-TABLE",
       "toActionName": "checklist-option-action",
       "type": "without-condition",
       "params": {}
