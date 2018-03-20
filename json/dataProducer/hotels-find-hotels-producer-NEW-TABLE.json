@@ -1,10 +1,15 @@
 {
   "name": "hotels-find-hotels-producer-NEW-TABLE",
-  "filters": [
+  "filters": [{
+    "type": "json_path",
+    "parameters": {
+      "expression": "hotels"
+    }
+  },
     {
       "type": "list_to_object_list",
       "parameters": {
-        "valueNames": ["hotels.name","hotels.address", "price", "price_period","price_info","booking"],
+        "valueNames": ["name", "address", "price", "price_period","price_info","booking"],
         "keyName": "name"
       }
     }
@@ -15,19 +20,33 @@
       "to": "city"
     },
     {
-      "from": "",
-      "to": "in_date_slash"
+      "from": "dateIntervalInput-travelPeriod-action1",
+      "to": "in_date_slash",
+      "filter" : {
+        "type": "date_format_parse",
+        "parameters": {
+          "fromFormat": "yyyy-MM-dd",
+          "toFormat": "dd/MM/yyyy"
+        }
+      }
     },
     {
-      "from": "",
+      "from": "dateIntervalInput-travelPeriod-action1",
       "to": "in_date"
     },
     {
-      "from": "",
-      "to": "out_date_slash"
+      "from": "dateIntervalInput-travelPeriod-action2",
+      "to": "out_date_slash",
+      "filter" : {
+        "type": "date_format_parse",
+        "parameters": {
+          "fromFormat": "yyyy-MM-dd",
+          "toFormat": "dd/MM/yyyy"
+        }
+      }
     },
     {
-      "from": "",
+      "from": "dateIntervalInput-travelPeriod-action2",
       "to": "out_date"
     },
 

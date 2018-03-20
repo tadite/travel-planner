@@ -20,5 +20,7 @@ public enum FilterType {
     @JsonProperty("split_and_get_by_index")
     SPLIT_AND_GET_BY_INDEX,
     @JsonProperty("get_value_if_contains_in_array_from_json_file")
-    GET_VALUE_IF_CONTAINS_IN_ARRAY_FROM_JSON_FILE
+    GET_VALUE_IF_CONTAINS_IN_ARRAY_FROM_JSON_FILE,
+    @JsonProperty("date_format_parse")
+    DATE_FORMAT_PARSE
 }

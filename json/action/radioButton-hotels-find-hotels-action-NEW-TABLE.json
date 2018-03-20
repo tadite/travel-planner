@@ -6,8 +6,8 @@
   "parameters": {
     "columnDefs":
     {
-      "hotels.name": "Название отеля",
-      "hotels.address": "Адрес",
+      "name": "Название отеля",
+      "address": "Адрес",
       "price": "Стоимость",
       "price_period": "Период",
       "price_info": "Информация",
