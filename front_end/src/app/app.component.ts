@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
     template: `<div>
  <h1></h1>
     <router-outlet></router-outlet>
-</div>`
+</div>`    
 })
 export class AppComponent { 
     
