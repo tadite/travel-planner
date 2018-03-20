@@ -1,0 +1,38 @@
+{
+  "name": "air-tickets-search-producer-NEW-TABLE",
+  "filters": [
+    {
+      "type": "json_path",
+      "parameters": {
+        "expression": "result.flights"
+      }
+    },
+    {
+      "type": "list_to_object_list",
+      "parameters": {
+        "valueNames": [
+          "flight_to__aircraft",
+          "flight_to__company__name",
+          "flight_to__class",
+          "flight_to__departure_date",
+          "flight_to__departure_time",
+          "flight_to__time_in_path",
+          "flight_from__company__name",
+          "flight_from__class",
+          "flight_from__departure_date",
+          "flight_from__departure_time",
+          "flight_from__time_in_path",
+          "price__RUB"
+        ],
+        "keyName": "flight_to__flight_no"
+      }
+    }
+  ],
+  "mappers": [
+    {
+      "from": "noview-air-tickets-get-id-action",
+      "to": "session_id"
+    }
+  ],
+  "source": "air-tickets-search"
+}

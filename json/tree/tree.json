@@ -63,12 +63,12 @@
     },
     {
       "fromActionName": "noview-air-tickets-get-id-action",
-      "toActionName": "radioButton-typeOfTransport-action",
+      "toActionName": "radioButton-typeOfTransport-action-NEW-TABLE",
       "type": "without-condition",
       "params": {}
     },
     {
-      "fromActionName": "radioButton-typeOfTransport-action",
+      "fromActionName": "radioButton-typeOfTransport-action-NEW-TABLE",
       "toActionName": "radioButton-visitOfExcursions-action",
       "type": "without-condition",
       "params": {}
