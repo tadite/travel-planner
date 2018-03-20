@@ -120,7 +120,7 @@
     },
     {
       "fromActionName": "checklist-option-action",
-      "toActionName": "radioButton-placeForRentalCars-action",
+      "toActionName": "noview-auto-tickets-get-id-action",
       "type": "logic-condition-on-pick-result",
       "params": {
         "conditionType": "=l",
@@ -130,13 +130,13 @@
       }
     },
     {
-      "fromActionName": "radioButton-placeForRentalCars-action",
-      "toActionName": "radioButton-rentCar-action",
+      "fromActionName": "noview-auto-tickets-get-id-action",
+      "toActionName": "radioButton-rentCar-action-NEW-TABLE",
       "type": "without-condition",
       "params": {}
     },
     {
-      "fromActionName": "radioButton-rentCar-action",
+      "fromActionName": "radioButton-rentCar-action-NEW-TABLE",
       "toActionName": "textinput-nameOfTravel-action",
       "type": "without-condition",
       "params": {}

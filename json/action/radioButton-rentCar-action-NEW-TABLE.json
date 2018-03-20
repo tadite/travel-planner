@@ -1,0 +1,22 @@
+{
+  "name": "radioButton-rentCar-action-NEW-TABLE",
+  "viewName": "Выберите подходящее авто",
+  "type": "table_integration",
+  "dataProducer" : "auto-tickets-search-producer-NEW-TABLE",
+  "parameters": {
+    "columnDefs":
+    {
+      "name": "Название",
+      "price-period": "Период",
+      "price": "Цена в EUR",
+      "seats": "Число поссажиров",
+      "doors": "Количество дверей",
+      "climate": "Климат",
+      "transmission": "Коробка передач",
+      "class": "Класс",
+      "mileage": "Условие пробега",
+      "rating": "Рейтинг",
+      "booking":"Ссылка"
+    }
+  }
+}

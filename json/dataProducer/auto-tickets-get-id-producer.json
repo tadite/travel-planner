@@ -1,0 +1,64 @@
+{
+  "name": "auto-tickets-get-id-producer",
+  "filters": [
+    {
+      "type": "json_path",
+      "parameters": {
+        "expression": "$.params.session_id"
+      }
+    },
+    {
+      "type": "regexp_replace",
+      "parameters": {
+        "regex": "([\\[]|[\"]|[\\]])",
+        "replacement": ""
+      }
+    }
+  ],
+  "mappers": [
+    {
+      "from": "dateIntervalInput-travelPeriod-action1",
+      "to": "start_date"
+    },
+    {
+      "from": "",
+      "to": "start_time"
+    },
+    {
+      "from": "dateIntervalInput-travelPeriod-action2",
+      "to": "end_date"
+    },
+    {
+      "from": "",
+      "to": "end_time"
+    },
+
+    {
+      "from": "",
+      "to": "location_id"
+    },
+
+    {
+      "from": "",
+      "to": "country_id"
+    },
+    {
+      "from": "dropdownlist-citiesByCountryId-action.Value",
+      "to": "city_id ",
+      "default": "MOW",
+      "filter": {
+        "type": "get_value_if_contains_in_array_from_json_file",
+        "parameters": {
+          "jsonFilePath": "/json/other/top_ru.json",
+          "valuePath": "iata",
+          "arrayPath": "index_strings"
+        }
+      }
+    },
+    {
+      "from": "",
+      "to": "location"
+    }
+  ],
+  "source": "auto-tickets-get-id-source"
+}

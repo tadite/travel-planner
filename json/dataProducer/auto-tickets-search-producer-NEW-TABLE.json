@@ -1,0 +1,37 @@
+{
+  "name": "auto-tickets-search-producer-NEW-TABLE",
+  "filters": [
+    {
+      "type": "json_path",
+      "parameters": {
+        "expression": "cars"
+      }
+    },
+    {
+      "type": "list_to_object_list",
+      "parameters": {
+        "valueNames": [
+          "name",
+          "price-period",
+          "price",
+          "seats",
+          "doors",
+          "climate",
+          "transmission",
+          "class",
+          "mileage",
+          "rating",
+          "booking"
+        ],
+        "keyName": "name"
+      }
+    }
+  ],
+  "mappers": [
+    {
+      "from": "noview-auto-tickets-get-id-action",
+      "to": "session_id"
+    }
+  ],
+  "source": "auto-tickets-search"
+}
