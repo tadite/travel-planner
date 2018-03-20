@@ -17,7 +17,8 @@
       "flight_from__departure_date": "Дата полета",
       "flight_from__departure_time": "Время полета",
       "flight_from__time_in_path": "Время в пути",
-      "price__RUB": "Цена"
+      "price__RUB": "Цена",
+      "booking":"Ссылка"
     }
   }
 }
