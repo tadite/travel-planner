@@ -1,0 +1,16 @@
+{
+  "name": "hotels-find-hotels",
+  "type": "http",
+  "parameters": {
+    "description": "getHotels default",
+    "params": [
+        "city",
+        "in_date_slash",
+        "in_date",
+        "out_date_slash",
+        "out_date",
+        "adults"
+    ],
+    "url": "https://nc-service-bus.a3c1.starter-us-west-1.openshiftapps.com/endpoint/hotels-find-hotels"
+  }
+}

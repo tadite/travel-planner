@@ -51,12 +51,12 @@
     },
     {
       "fromActionName": "dropdownlist-budget-action",
-      "toActionName": "radioButton-placeOfResidence-action-NEW-TABLE",
+      "toActionName": "radioButton-hotels-find-hotels-action-NEW-TABLE",
       "type": "without-condition",
       "params": {}
     },
     {
-      "fromActionName": "radioButton-placeOfResidence-action-NEW-TABLE",
+      "fromActionName": "radioButton-hotels-find-hotels-action-NEW-TABLE",
       "toActionName": "noview-air-tickets-get-id-action",
       "type": "without-condition",
       "params": {}

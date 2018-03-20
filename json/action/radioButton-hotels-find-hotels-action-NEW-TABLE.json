@@ -1,0 +1,17 @@
+{
+  "name": "radioButton-hotels-find-hotels-action-NEW-TABLE",
+  "viewName": "Выберите место проживания",
+  "type": "table_integration",
+  "dataProducer": "hotels-find-hotels-producer-NEW-TABLE",
+  "parameters": {
+    "columnDefs":
+    {
+      "hotels.name": "Название отеля",
+      "hotels.address": "Адрес",
+      "price": "Стоимость",
+      "price_period": "Период",
+      "price_info": "Информация",
+      "booking": "Ссылка"
+    }
+  }
+}

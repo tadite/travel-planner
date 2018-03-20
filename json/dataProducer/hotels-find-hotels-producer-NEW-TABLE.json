@@ -1,0 +1,40 @@
+{
+  "name": "hotels-find-hotels-producer-NEW-TABLE",
+  "filters": [
+    {
+      "type": "list_to_object_list",
+      "parameters": {
+        "valueNames": ["hotels.name","hotels.address", "price", "price_period","price_info","booking"],
+        "keyName": "name"
+      }
+    }
+  ],
+  "mappers": [
+    {
+      "from": "dropdownlist-citiesByCountryId-action.Value",
+      "to": "city"
+    },
+    {
+      "from": "",
+      "to": "in_date_slash"
+    },
+    {
+      "from": "",
+      "to": "in_date"
+    },
+    {
+      "from": "",
+      "to": "out_date_slash"
+    },
+    {
+      "from": "",
+      "to": "out_date"
+    },
+
+    {
+      "from": "textinput-numberOfPersons-action",
+      "to": "adults"
+    }
+  ],
+  "source": "hotels-find-hotels"
+}
