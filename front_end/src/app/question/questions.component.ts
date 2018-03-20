@@ -40,7 +40,7 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
     }
 
     //questions: any = [{"id":"title1.question","data":"Выберите город","type":"title"},{"id":"block1.checkbox1.1959511","data":"Liepāja","type":"checkbox"},{"id":"block1.checkbox2.1921996","data":"Rēzekne","type":"checkbox"},{"id":"block1.checkbox3.1713629","data":"Daugavpils","type":"checkbox"},{"id":"block1.checkbox4.1715161","data":"Ogre","type":"checkbox"},{"id":"block1.checkbox5.1909043","data":"Ventspils","type":"checkbox"},{"id":"block1.checkbox6.1925340","data":"Rīga","type":"checkbox"},{"id":"block1.checkbox7.1801712","data":"Jelgava","type":"checkbox"},{"id":"block1.checkbox8.1953391","data":"Jūrmala","type":"checkbox"},{"id":"block1.checkbox9.1905282","data":"Valmiera","type":"checkbox"},{"id":"block1.checkbox10.1907193","data":"Cēsis","type":"checkbox"}]
-    questions: any = [{"id":"title1.question","data":"Вы знаете, каким будет Ваше будущее путешествие?","type":"title"},
+    questions: any;/* = [{"id":"title1.question","data":"Вы знаете, каким будет Ваше будущее путешествие?","type":"title"},
     {"id":"block1.radiobox1.1","data":"Да","type":"radiobox"},
     {"id":"block1.radiobox2.2","data":"Нет","type":"radiobox"}];
     /* = [{"id":"title1.question","data":"Выберите место проживания","type":"title"},
@@ -160,7 +160,7 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
     
     ngOnInit(){        
         this.login = this.getLogin();        
-       // this.getNextActionView();        
+        this.getNextActionView();        
     }
 
     onSubmit(f: NgForm) {
