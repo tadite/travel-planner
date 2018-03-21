@@ -1,0 +1,14 @@
+{
+  "name": "coast-of-living-action-Table",
+  "viewName": "Стоимость жизни",
+  "type": "table_integration",
+  "dataProducer": "coast-of-living-producer",
+  "parameters": {
+    "columnDefs":
+    {
+      "category":"Категория",
+      "title":"Название",
+      "price":"Цена"
+    }
+  }
+}

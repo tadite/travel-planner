@@ -130,6 +130,17 @@
       }
     },
     {
+      "fromActionName": "checklist-option-action",
+      "toActionName": "coast-of-living-action-Table",
+      "type": "logic-condition-on-pick-result",
+      "params": {
+        "conditionType": "=l",
+        "pickResultName": "checklist-option-action",
+        "pickResultCheck": "key",
+        "conditionValue": "2"
+      }
+    },
+    {
       "fromActionName": "noview-auto-tickets-get-id-action",
       "toActionName": "radioButton-rentCar-action-NEW-TABLE",
       "type": "without-condition",
@@ -140,7 +151,12 @@
       "toActionName": "textinput-nameOfTravel-action",
       "type": "without-condition",
       "params": {}
+    },
+    {
+      "fromActionName": "coast-of-living-action-Table",
+      "toActionName": "textinput-nameOfTravel-action",
+      "type": "without-condition",
+      "params": {}
     }
-
   ]
 }
