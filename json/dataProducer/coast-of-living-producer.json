@@ -1,0 +1,25 @@
+{
+  "name": "coast-of-living-producer",
+  "filters": [
+    {
+      "type": "json_path",
+      "parameters": {
+        "expression": "fields"
+      }
+    },
+    {
+      "type": "list_to_object_list",
+      "parameters": {
+        "valueNames": ["category","title", "price"],
+        "keyName": "title"
+      }
+    }
+  ],
+  "mappers": [
+    {
+      "from": "dropdownlist-citiesByCountryId-action.Value",
+      "to": "city"
+    }
+  ],
+  "source": "coast-of-living"
+}
