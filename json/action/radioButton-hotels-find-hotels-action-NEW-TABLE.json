@@ -12,6 +12,7 @@
       "price_period": "Период",
       "price_info": "Информация",
       "booking": "Ссылка"
-    }
+    },
+    "links":["booking"]
   }
 }

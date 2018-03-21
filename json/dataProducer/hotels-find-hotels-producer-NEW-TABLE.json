@@ -1,15 +1,23 @@
 {
   "name": "hotels-find-hotels-producer-NEW-TABLE",
-  "filters": [{
-    "type": "json_path",
-    "parameters": {
-      "expression": "hotels"
-    }
-  },
+  "filters": [
+    {
+      "type": "json_path",
+      "parameters": {
+        "expression": "hotels"
+      }
+    },
     {
       "type": "list_to_object_list",
       "parameters": {
-        "valueNames": ["name", "address", "price", "price_period","price_info","booking"],
+        "valueNames": [
+          "name",
+          "address",
+          "price",
+          "price_period",
+          "price_info",
+          "booking"
+        ],
         "keyName": "name"
       }
     }
@@ -22,7 +30,7 @@
     {
       "from": "dateIntervalInput-travelPeriod-action1",
       "to": "in_date_slash",
-      "filter" : {
+      "filter": {
         "type": "date_format_parse",
         "parameters": {
           "fromFormat": "yyyy-MM-dd",
@@ -37,7 +45,7 @@
     {
       "from": "dateIntervalInput-travelPeriod-action2",
       "to": "out_date_slash",
-      "filter" : {
+      "filter": {
         "type": "date_format_parse",
         "parameters": {
           "fromFormat": "yyyy-MM-dd",
@@ -49,7 +57,6 @@
       "from": "dateIntervalInput-travelPeriod-action2",
       "to": "out_date"
     },
-
     {
       "from": "textinput-numberOfPersons-action",
       "to": "adults"

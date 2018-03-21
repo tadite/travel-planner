@@ -11,6 +11,7 @@
       "price": "Цена",
       "time": "Время",
       "experience_id":"Сайт"
-    }
+    },
+    "links":["experience_id"]
   }
 }

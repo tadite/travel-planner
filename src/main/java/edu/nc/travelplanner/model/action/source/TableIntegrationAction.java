@@ -20,6 +20,7 @@ import java.util.*;
 public class TableIntegrationAction implements IntegrationAction {
 
     private List<Row> rows = new LinkedList<>();
+    private List<String> links = new LinkedList<>();
     private LinkedHashMap<String, String> columnDefs = new LinkedHashMap<>();
     private String name;
     private String viewName;
@@ -55,7 +56,7 @@ public class TableIntegrationAction implements IntegrationAction {
             Response response = dataProducer.send(pickResults);
             parseTable(response);
 
-            return new ViewResponseBuilder().addTitleElement("question", viewName).addTable(getTableId(), rows, columnDefs).build();
+            return new ViewResponseBuilder().addTitleElement("question", viewName).addTable(getTableId(), rows, columnDefs, links).build();
         } catch (IOException e) {
             e.printStackTrace();
         }

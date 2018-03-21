@@ -19,6 +19,7 @@
       "flight_from__time_in_path": "Время в пути",
       "price__RUB": "Цена",
       "booking":"Ссылка"
-    }
+    },
+    "links":["booking"]
   }
 }

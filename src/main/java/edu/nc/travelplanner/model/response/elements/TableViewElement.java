@@ -10,14 +10,16 @@ import java.util.List;
 import java.util.Map;
 
 public class TableViewElement implements ViewElement{
+    private final List<String> links;
     private String id;
     private final List<Row> rows;
     private final Row columnDefs;
 
-    public TableViewElement(String id, List<Row> rows, Row columnDefs) {
+    public TableViewElement(String id, List<Row> rows, Row columnDefs, List<String> links) {
         this.id = id;
         this.rows = rows;
         this.columnDefs = columnDefs;
+        this.links=links;
     }
 
     @Override
@@ -36,6 +38,7 @@ public class TableViewElement implements ViewElement{
             this.put("id", id);
             this.put("columnDefs", columnDefs);
             this.put("rows", rows);
+            this.put("links", links);
         }};
     }
 }
