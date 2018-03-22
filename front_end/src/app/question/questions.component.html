@@ -21,6 +21,7 @@
     </nav>
     </div> 
     <div class="main-page">
+    <div class="container">    
     <div class = "form-block">
         <div class="form-group" >  
             <!-- <hr> -->
@@ -42,20 +43,51 @@
                                                <option value="{{key}}" *ngFor="let key of objectKeys(question.data)">{{question.data[key]}}</option>
                                             </select><br>
                                         </p>
-            
-                                        <div class="checkbox-block">
+            <!-- ************************************************************************ -->
+                                      <!--  <div class="checkbox-block">
                                         <p *ngSwitchCase="'checkbox'">                                
                                             <input  type="checkbox" (change)="putCheckId(question.id)"/><span>{{question.data}}</span><br>                                
                                         </p>
+                                        </div>-->
+
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                            <div class="checkbox-block-fa">
+                                                <div *ngSwitchCase="'checkbox'">
+                                                    <div class="btn-group btn-group-vertical">
+                                                        <label class="btn">
+                                                            <input type="checkbox"(change)="putCheckId(question.id)"/><i class="fa fa-square-o fa-2x"></i><i class="fa fa-check-square-o fa-2x"></i> <span> {{question.data}}</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </div>
                                         </div>
-          
-                                        <div class="radiobutton-block">
+            
+                                       <!-- <div class="radiobutton-block">
                                             <p *ngSwitchCase="'radiobox'">                                
                                                 <input type="radio" name="radio" value="{{question.id}}" ngModel /><span>{{question.data}}</span><br>                                
                                             </p>
-                                        </div>                                       
+                                        </div>-->
+                                        
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                            <div class="radiobox-block-fa">
+                                                <div *ngSwitchCase="'radiobox'">
+                                                    <div class="btn-group btn-group-vertical">
+                                                         <label class="btn">
+                                                            <input type="radio" name="radio" value="{{question.id}}" ngModel />
+                                                                <i class="fa fa-circle-o fa-2x"></i>
+                                                                <i class="fa fa-dot-circle-o fa-2x"></i> <span> {{question.data}}</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        
 
-           
+            <!-- ************************************************************************ -->
                                         <div *ngSwitchCase="'text_input'">
                                             <div *ngIf="question.id == 'textbox1.textinput-numberOfPersons-action'">
                                                 <input type="text" name="{{question.id}}" #text="ngModel" ngModel required pattern="[0-9]+"/>
@@ -72,18 +104,25 @@
                                             <input type="date" name="{{question.id}}" [min]="today" onkeydown="return false" ngModel required/>                                                                                      
                                         </p>
 
-                                        <div class="table-block">
-                                        <div *ngSwitchCase="'table_picker'">                                           
-                                            <div *ngFor="let item of question.data.rows">                                                                                                                           
-                                                <input type="radio" name="radio" value="{{item.columns[0].value}}" ngModel />                                               
-                                            <table>
-                                                <tr *ngFor="let defs of question.data.columnDefs.columns; let i = index">                                       
-                                                    <td>{{defs.value}}</td>                                      
-                                                    <td>{{item.columns[i+1].value}}</td>              
-                                                </tr> 
-                                            </table><br>
-                                            </div>                                           
-                                        </div>
+                                        
+                                        <div class="table-block">                                        
+                                        <div *ngSwitchCase="'table_picker'"> 
+                                            <div class="btn-group btn-group-toggle" >                                          
+                                            <div *ngFor="let item of question.data.rows">                                               
+                                                <label class="btn">
+                                                    <input type="radio" name="radio" value="{{item.columns[0].value}}" ngModel/>                                            
+                                                    <table>
+                                                    <tr *ngFor="let defs of question.data.columnDefs.columns; let i = index">                                       
+                                                        <td>{{defs.value}}</td>                                      
+                                                        <td>{{item.columns[i+1].value}}</td>              
+                                                    </tr> 
+                                                    </table>
+                                                </label> 
+                                                </div>
+                                                <!-- <br>  --> 
+                                            </div>
+                                        </div>                                         
+                                        
                                         </div>
 
                                         <p *ngSwitchDefault> 
@@ -94,6 +133,7 @@
                                     </form>
                                     </div>        
                         <div *ngIf="result == true">
+                            <div class="result-table-block">
                             <table>
                                     <tr>
                                      <th>Вопрос</th>
@@ -136,12 +176,14 @@
                                      <td>{{questions.excursion.name}}</td>
                                      </tr>
                             </table>
+                            </div>
                         </div>
                     </div>
             </div>
             <br>
             <br>
             <!-- <hr> -->
+        </div>
         </div>
         </div>
         </div>
