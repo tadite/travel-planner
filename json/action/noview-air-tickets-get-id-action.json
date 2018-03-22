@@ -1,0 +1,6 @@
+{
+  "name": "noview-air-tickets-get-id-action",
+  "viewName": "",
+  "type": "no_view_text_integration",
+  "dataProducer": "air-tickets-get-id-producer"
+}

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.nc.travelplanner.model.response.Response;
 import edu.nc.travelplanner.model.source.FilterType;
+import edu.nc.travelplanner.model.source.Link;
 
 import java.io.IOException;
 import java.util.*;
@@ -30,12 +31,12 @@ public class ListToJsonObjectListResponseFilter implements ResponseFilter {
 
     @Override
     public Response filter(Response sourceResult) {
-        sourceResult.setRawData(filter(sourceResult.getRawData()));
+        sourceResult.setRawData(filter(sourceResult.getRawData(), null));
         return sourceResult;
     }
 
     @Override
-    public String filter(String sourceResult) {
+    public String filter(String sourceResult, Map<String, String> results) {
         try {
 
             JsonNode node = mapper.readTree(sourceResult);
@@ -43,18 +44,16 @@ public class ListToJsonObjectListResponseFilter implements ResponseFilter {
 
             Map<String, Object>[] jsonObjectsInArray = parser.readValueAs(new TypeReference<Map<String, Object>[]>() {
             });
-            List<Map<String, String>> result = new LinkedList<>();
+            List<Map<String, Object>> result = new LinkedList<>();
 
             String[] keyPropertyPath = keyName.split("__");
 
             for (Map<String, Object> jsonObj : jsonObjectsInArray) {
-                Map<String, String> properties = new LinkedHashMap<>();
+                Map<String, Object> properties = new LinkedHashMap<>();
 
                 properties.put("id", getValueByPropertyPath(jsonObj, keyPropertyPath));
                 valueNames.stream()
-                        .forEach(str ->
-                                properties.put(str, getValueByPropertyPath(jsonObj, str.split("__")))
-                        );
+                        .forEach(str -> properties.put(str, getValueByPropertyPath(jsonObj, str.split("__"))));
 
                 result.add(properties);
             }

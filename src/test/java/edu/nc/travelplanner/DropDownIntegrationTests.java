@@ -1,5 +1,6 @@
 package edu.nc.travelplanner;
 
+import edu.nc.travelplanner.exception.DataProducerSendException;
 import edu.nc.travelplanner.model.action.ActionArgs;
 import edu.nc.travelplanner.model.action.source.DropDownListIntegrationAction;
 import edu.nc.travelplanner.model.response.Response;
@@ -25,7 +26,7 @@ public class DropDownIntegrationTests {
 
 
     //@Test
-    public void canExecutePresentation() throws IOException, JSONException {
+    public void canExecutePresentation() throws IOException, JSONException, DataProducerSendException {
         //Array
         String vkCountriesResponse = "{\"response\":[{\"cid\":19,\"title\":\"Австралия\"},{\"cid\":20,\"title\":\"Австрия\"}]}";
         String actionResponseExpected = "[{\"id\":\"testAction1-name-dropdown-list\",\"type\":\"dropdown_list\",\"data\":{\"19\":\"Австралия\",\"20\":\"Австрия\"}}]";

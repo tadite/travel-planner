@@ -1,6 +1,7 @@
 package edu.nc.travelplanner.model.action.source;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.nc.travelplanner.exception.DataProducerSendException;
 import edu.nc.travelplanner.model.action.ActionArgs;
 import edu.nc.travelplanner.model.action.ActionType;
 import edu.nc.travelplanner.model.action.IntegrationAction;
@@ -55,14 +56,12 @@ public class RadioListIntegrationAction implements IntegrationAction {
     }
 
     @Override
-    public Response executePresentation(ActionArgs args, List<PickResult> pickResults) {
+    public Response executePresentation(ActionArgs args, List<PickResult> pickResults) throws DataProducerSendException {
 
         try {
             Response response = dataProducer.send(pickResults);
             saveOptionsMap(response);
             return new ViewResponseBuilder().addTitleElement("question", viewName).addRadioboxes(optionsMap).build();
-        } catch (DataProducerParseException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

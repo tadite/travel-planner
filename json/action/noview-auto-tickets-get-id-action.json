@@ -1,0 +1,6 @@
+{
+  "name": "noview-auto-tickets-get-id-action",
+  "viewName": "",
+  "type": "no_view_text_integration",
+  "dataProducer": "auto-tickets-get-id-producer"
+}

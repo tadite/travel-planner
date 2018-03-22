@@ -114,8 +114,11 @@ public class ViewResponseBuilder {
         return this;
     }
 
-    public ViewResponseBuilder addTable(String id, List<Row> rows, LinkedHashMap<String, String> columnDefs){
-        viewResponse.addElement(new TableViewElement(elementsPostfixHolder.tablePostfix+"."+indexCounter.getTableIndex()+"."+id, rows, columnDefs));
+    public ViewResponseBuilder addTable(String id, List<Row> rows, LinkedHashMap<String, String> columnDefs, List<String> links){
+        Row columnsDefsRow = new Row();
+        columnDefs.forEach((key, value) -> columnsDefsRow.addColumn(new Column(key, value)));
+
+        viewResponse.addElement(new TableViewElement(elementsPostfixHolder.tablePostfix+"."+indexCounter.getTableIndex()+"."+id, rows, columnsDefsRow, links));
         return this;
     }
 

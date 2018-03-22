@@ -1,0 +1,25 @@
+{
+  "name": "radioButton-typeOfTransport-action-NEW-TABLE",
+  "viewName": "Как летим?",
+  "type": "table_integration",
+  "dataProducer": "air-tickets-search-producer-NEW-TABLE",
+  "parameters": {
+    "columnDefs":
+    {
+      "flight_to__aircraft": "",
+      "flight_to__company__name": "Компания в одну сторону",
+      "flight_to__class": "Класс",
+      "flight_to__departure_date": "Дата полета",
+      "flight_to__departure_time": "Время полета",
+      "flight_to__time_in_path": "Время в пути",
+      "flight_from__company__name": "Компания в другую сторону",
+      "flight_from__class": "Класс",
+      "flight_from__departure_date": "Дата полета",
+      "flight_from__departure_time": "Время полета",
+      "flight_from__time_in_path": "Время в пути",
+      "price__RUB": "Цена",
+      "booking":"Ссылка"
+    },
+    "links":["booking"]
+  }
+}

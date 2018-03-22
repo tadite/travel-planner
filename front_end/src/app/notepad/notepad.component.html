@@ -3,17 +3,17 @@
 <div class="background-image" style="background-image : url('http://upload.akusherstvo.ru/image1488681.jpg')"></div>          
 <div class="ph">
             <img class="img" src="http://upload.akusherstvo.ru/image1482617.jpg">
-            <div class="title">TRAVEL PLANNER</div>
+            <div class="title">ПЛАНИРОВЩИК ПУТЕШЕСТВИЙ</div>
 <nav class="fixed-nav-bar">  
         <ul id="navbar">               
                 <li><a>{{login}} <span class="glyphicon glyphicon-menu-down"></span></a> 
                   <ul>
-                    <li><a routerLink="/profile" routerLinkActive="active"><span class="glyphicon glyphicon-user"></span> My profile</a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-picture"></span> Travels history</a></li>                    
-                    <li><a routerLink="/notepad" routerLinkActive="active"><span class="glyphicon glyphicon-list-alt"></span> Notepad</a></li>
-                    <li><a routerLink="/questions" routerLinkActive="active"><span class="glyphicon glyphicon-plane"></span> Current travel</a></li>
+                    <li><a routerLink="/profile" routerLinkActive="active"><span class="glyphicon glyphicon-user"></span> Мой профиль</a></li>
+                    <!-- <li><a href="#"><span class="glyphicon glyphicon-picture"></span> История путешествий</a></li>                     -->
+                    <li><a routerLink="/notepad" routerLinkActive="active"><span class="glyphicon glyphicon-list-alt"></span> Блокнот</a></li>
+                    <li><a routerLink="/questions" routerLinkActive="active"><span class="glyphicon glyphicon-plane"></span> Мое путешествие</a></li>
                     <hr>
-                    <li><a (click)="logout()"><span class="glyphicon glyphicon-log-out"></span> Sign out</a></li>                    
+                    <li><a (click)="logout()"><span class="glyphicon glyphicon-log-out"></span> Выйти</a></li>                    
                   </ul>   
                 </li>              
                                             
@@ -37,21 +37,49 @@
         <div class="form-group" >  
            <div align="center" class="form-inline">
             <div>
-                <p class="bg-title">Fill the information about your travel</p>
+                <p class="bg-title">Заполните информацию о своем путешествии</p>
                 <table>
-                 <tr>
-                 <th>Question</th>
-                 <th>Answer</th>
-                 </tr>
-                <tr>
-                  <td>Country</td>
-                   <td><input type="text"></td>
-                </tr>
-                <tr>
-                 <td>City</td>
-                 <td><input type="text"></td>
-                </tr>
-                </table>
+                    <tr>
+                     <th>Вопрос</th>
+                     <th class="ans">Ответ</th>
+                    </tr>
+                    <tr>
+                    <td>Название путешествия</td>
+                    <td class="ans"><input type="text"></td>
+                    </tr>
+                    <tr>
+                     <td>Страна отправления</td>
+                     <td class="ans"><input type="text"></td>
+                     </tr>
+                     <tr>
+                     <td>Город отправления</td>
+                     <td class="ans"><input type="text"></td>
+                     </tr>
+                     <tr>
+                     <td>Страна назначения</td>
+                     <td class="ans"><input type="text"></td>
+                     </tr>
+                     <tr>
+                     <td>Город назначения</td>
+                     <td class="ans"><input type="text"></td>
+                     </tr>
+                     <tr>
+                     <td>Бюджет</td>
+                     <td class="ans"><input type="text"></td>
+                     </tr>
+                     <tr>
+                     <td>Дата отъезда</td>
+                     <td class="ans"><input type="text"></td>
+                     </tr>
+                     <tr>
+                     <td>Дата приезда</td>
+                     <td class="ans"><input type="text"></td>
+                     </tr>
+                     <tr>
+                     <td>Экскурсии</td>
+                     <td class="ans"><input type="text"></td>
+                     </tr>
+            </table>               
             </div>
            </div>
             <br>

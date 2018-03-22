@@ -38,6 +38,12 @@ public class SimpleTreeOrchestrator implements TreeOrchestrator {
     @Value( "${travelplanner.maintree}" )
     private String treeName;
 
+    @Value("${travelplanner.requestAttemptsCount}")
+    private String requestAttemtsCount;
+
+    @Value("${travelplanner.requestWaitAfterFailSecs}")
+    private String requestWaitAfterFailSecs;
+
     ResultsMapperReader resultsMapperReader;
 
     private TravelAfterPickTreeDto travelAfterPickTreeDto;
@@ -52,6 +58,7 @@ public class SimpleTreeOrchestrator implements TreeOrchestrator {
         if (actionTree==null) {
             try {
                 this.actionTree=treeFactory.createByName(treeName);
+                this.actionTree.setRequestAttemptParams(Integer.valueOf(requestAttemtsCount), Integer.valueOf(requestWaitAfterFailSecs));
             } catch (ActionTreeParseException e) {
                 e.printStackTrace();
             }

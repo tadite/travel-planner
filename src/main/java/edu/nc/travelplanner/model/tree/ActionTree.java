@@ -18,4 +18,5 @@ public interface ActionTree {
     Response executeDecision(ActionArgs args);
     List<PickResult> getPickResults();
     Boolean isEnded();
+    void setRequestAttemptParams(Integer attemptsCount, Integer requestWaitAfterFailSecs);
 }

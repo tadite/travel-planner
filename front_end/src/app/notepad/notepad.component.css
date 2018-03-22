@@ -1,3 +1,11 @@
+@import url(http://allfont.ru/allfont.css?fonts=pt-sans-caption);
+* {
+  font-family: 'PT Sans Caption', arial; 
+}
+
+.glyphicon {
+  font-family: 'Glyphicons Halflings';
+}
 
 #navbar ul{
     display: none;
@@ -88,10 +96,11 @@
     background: rgba(255, 255, 255, 0.7);
     min-width: 500px;
     min-height: 200px;
-    top: 50%;
-    margin-top: -140px;
+    top: 12%;
+    /* margin-top: -140px; */
     margin-left: 50%;
     transform: translateX(-50%);
+    width: 60%;
   }
 
   .form-group{   
@@ -108,6 +117,7 @@
       border: none;
       outline: none;
       width: 100%;
+      padding: 0px;
   }
 
   table {    
@@ -117,6 +127,11 @@
      border-collapse: collapse;
      text-align: left;
    }
+
+   .ans{
+    width: 70%;
+   }
+
    th {
      font-weight: normal;
      color: #039;
@@ -126,7 +141,7 @@
    td {
      border-bottom: 1px solid #ccc;
      color: #669;
-     padding: 9px 8px;
+     padding: 9px 7px;
      transition: .3s linear;
    }
    tr:hover td {background: #e8edff;}

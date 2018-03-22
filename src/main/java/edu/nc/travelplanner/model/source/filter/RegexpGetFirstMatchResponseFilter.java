@@ -3,6 +3,7 @@ package edu.nc.travelplanner.model.source.filter;
 import edu.nc.travelplanner.model.response.Response;
 import edu.nc.travelplanner.model.source.FilterType;
 
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,12 +20,12 @@ public class RegexpGetFirstMatchResponseFilter implements ResponseFilter {
 
     @Override
     public Response filter(Response sourceResult) {
-        sourceResult.setRawData(filter(sourceResult.getRawData()));
+        sourceResult.setRawData(filter(sourceResult.getRawData(), null));
         return sourceResult;
     }
 
     @Override
-    public String filter(String sourceResult) {
+    public String filter(String sourceResult, Map<String, String> results) {
         Matcher matcher = Pattern.compile(regex).matcher(sourceResult);
         return matcher.group(1);
     }

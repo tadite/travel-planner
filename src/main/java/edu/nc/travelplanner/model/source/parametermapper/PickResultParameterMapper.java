@@ -3,6 +3,8 @@ package edu.nc.travelplanner.model.source.parametermapper;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import edu.nc.travelplanner.model.source.filter.ResponseFilter;
 
+import java.util.Map;
+
 public class PickResultParameterMapper implements ParameterMapper {
 
     @JsonProperty("from")
@@ -43,9 +45,9 @@ public class PickResultParameterMapper implements ParameterMapper {
     }
 
     @Override
-    public String filterValue(String value) {
+    public String filterValue(String value, Map<String, String> params) {
         if (filter!=null && value!=null)
-            return filter.filter(value);
+            return filter.filter(value, params);
         return value;
     }
 

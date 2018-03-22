@@ -39,8 +39,56 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
         this.states[this.current_question] = 'shown';
     }
 
-    //questions: any[] = [{"id":"title1.question","data":"Выберите город","type":"title"},{"id":"block1.checkbox1.1959511","data":"Liepāja","type":"checkbox"},{"id":"block1.checkbox2.1921996","data":"Rēzekne","type":"checkbox"},{"id":"block1.checkbox3.1713629","data":"Daugavpils","type":"checkbox"},{"id":"block1.checkbox4.1715161","data":"Ogre","type":"checkbox"},{"id":"block1.checkbox5.1909043","data":"Ventspils","type":"checkbox"},{"id":"block1.checkbox6.1925340","data":"Rīga","type":"checkbox"},{"id":"block1.checkbox7.1801712","data":"Jelgava","type":"checkbox"},{"id":"block1.checkbox8.1953391","data":"Jūrmala","type":"checkbox"},{"id":"block1.checkbox9.1905282","data":"Valmiera","type":"checkbox"},{"id":"block1.checkbox10.1907193","data":"Cēsis","type":"checkbox"}]
-    questions: any;
+    //questions: any = [{"id":"title1.question","data":"Выберите город","type":"title"},{"id":"block1.checkbox1.1959511","data":"Liepāja","type":"checkbox"},{"id":"block1.checkbox2.1921996","data":"Rēzekne","type":"checkbox"},{"id":"block1.checkbox3.1713629","data":"Daugavpils","type":"checkbox"}];
+    questions: any;/* = [{"id":"title1.question","data":"Выберите место проживания","type":"title"},
+        {"id":"table.1.radioButton-placeOfResidence-action-NEW-TABLE-table",
+        "data":{
+            "id":"table.1.radioButton-placeOfResidence-action-NEW-TABLE-table",
+            "columnDefs":{
+                "columns":[
+                    {"name":"location__country","value":"Страна"},
+                    {"name":"location__name","value":"Город"},
+                    {"name":"priceAvg","value":"Сред. стоимость"},
+                    {"name":"hotelName","value":"Название отеля"},
+                    {"name":"stars","value":"Количество звезд"}
+                ]},
+            "rows":[
+                {"columns":[
+                    {"name":"id","value":"269104"},
+                    {"name":"location__country","value":"Германия"},
+                    {"name":"location__name","value":"Kurfuerstendamm 27, Берлин, BE, 10719 Германия"},
+                    {"name":"priceAvg","value":"8890.6"},
+                    {"name":"hotelName","value":"Pullman Berlin Schweizerhof"},
+                    {"name":"stars","value":"ааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааа"}
+                ]},
+                {"columns":[
+                    {"name":"id","value":"269507"},
+                    {"name":"location__country","value":"Германия"},
+                    {"name":"location__name","value":"Берлин"},
+                    {"name":"priceAvg","value":"6610.22"},
+                    {"name":"hotelName","value":"Scandic Berlin Potsdamer Platz"},
+                    {"name":"stars","value":"4"}
+                ]},
+                {"columns":[
+                    {"name":"id","value":"29839620"},
+                    {"name":"location__country","value":"Германия"},
+                    {"name":"location__name","value":"Берлин"},
+                    {"name":"priceAvg","value":"6927.74"},
+                    {"name":"hotelName","value":"Motel One Berlin-Potsdamer Platz"},
+                    {"name":"stars","value":"3"}
+                ]},
+                {"columns":[
+                    {"name":"id","value":"269588"},
+                    {"name":"location__country","value":"Германия"},
+                    {"name":"location__name","value":"Берлин"},
+                    {"name":"priceAvg","value":"6234.97"},
+                    {"name":"hotelName","value":"Motel One Berlin-Hauptbahnhof"},
+                    {"name":"stars","value":"2"}
+                ]}               
+            ]},
+            "type":"table_picker"
+        }]*/
+
     objectKeys = Object.keys;
     checks: {};
     mapDates = {};
@@ -77,7 +125,7 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
     
     ngOnInit(){        
         this.login = this.getLogin();        
-        this.getNextActionView();
+        this.getNextActionView();        
     }
 
     onSubmit(f: NgForm) {

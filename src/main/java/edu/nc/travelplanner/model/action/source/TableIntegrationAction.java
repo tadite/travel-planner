@@ -1,6 +1,7 @@
 package edu.nc.travelplanner.model.action.source;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.nc.travelplanner.exception.DataProducerSendException;
 import edu.nc.travelplanner.model.action.ActionArgs;
 import edu.nc.travelplanner.model.action.ActionType;
 import edu.nc.travelplanner.model.action.IntegrationAction;
@@ -19,6 +20,7 @@ import java.util.*;
 public class TableIntegrationAction implements IntegrationAction {
 
     private List<Row> rows = new LinkedList<>();
+    private List<String> links = new LinkedList<>();
     private LinkedHashMap<String, String> columnDefs = new LinkedHashMap<>();
     private String name;
     private String viewName;
@@ -48,14 +50,14 @@ public class TableIntegrationAction implements IntegrationAction {
     }
 
     @Override
-    public Response executePresentation(ActionArgs args, List<PickResult> pickResults) {
+    public Response executePresentation(ActionArgs args, List<PickResult> pickResults) throws DataProducerSendException {
 
         try {
             Response response = dataProducer.send(pickResults);
             parseTable(response);
 
-            return new ViewResponseBuilder().addTitleElement("question", viewName).addTable(getTableId(), rows, columnDefs).build();
-        } catch (DataProducerParseException | IOException e) {
+            return new ViewResponseBuilder().addTitleElement("question", viewName).addTable(getTableId(), rows, columnDefs, links).build();
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return null;

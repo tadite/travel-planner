@@ -1,0 +1,76 @@
+{
+  "name": "auto-tickets-get-id-producer",
+  "filters": [
+    {
+      "type": "json_path",
+      "parameters": {
+        "expression": "$.params.session_id"
+      }
+    },
+    {
+      "type": "regexp_replace",
+      "parameters": {
+        "regex": "([\\[]|[\"]|[\\]])",
+        "replacement": ""
+      }
+    }
+  ],
+  "mappers": [
+    {
+      "from": "dateIntervalInput-travelPeriod-action1",
+      "to": "start_date"
+    },
+    {
+      "from": "",
+      "to": "start_time",
+      "default": "10:00"
+    },
+    {
+      "from": "dateIntervalInput-travelPeriod-action2",
+      "to": "end_date"
+    },
+    {
+      "from": "",
+      "to": "end_time",
+      "default": "18:00"
+    },
+    {
+      "from": "dropdownlist-citiesByCountryId-action.Value",
+      "to": "location",
+      "filter": {
+        "type": "get_valuelist_if_in_property_from_json_array_file",
+        "parameters": {
+          "jsonFilePath": "/json/other/places_en.json",
+          "paramMappers": [
+            {
+              "path": "code",
+              "name": "location_id"
+            },
+            {
+              "path": "country_id",
+              "name": "country_id"
+            },
+            {
+              "path": "city_id",
+              "name": "city_id"
+            }
+          ],
+          "keyPath": "name"
+        }
+      }
+    },
+    {
+      "from": "",
+      "to": "location_id"
+    },
+    {
+      "from": "",
+      "to": "country_id"
+    },
+    {
+      "from": "",
+      "to": "city_id"
+    }
+  ],
+  "source": "auto-tickets-get-id-source"
+}

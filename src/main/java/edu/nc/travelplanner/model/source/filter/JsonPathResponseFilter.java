@@ -6,6 +6,8 @@ import com.jayway.jsonpath.JsonPath;
 import edu.nc.travelplanner.model.response.Response;
 import edu.nc.travelplanner.model.source.FilterType;
 
+import java.util.Map;
+
 public class JsonPathResponseFilter implements ResponseFilter{
     private String expression;
     private FilterType type = FilterType.JSON_PATH;
@@ -19,12 +21,12 @@ public class JsonPathResponseFilter implements ResponseFilter{
 
     @Override
     public Response filter(Response sourceResult)  {
-        sourceResult.setRawData(sourceResult.getRawData());
+        sourceResult.setRawData(filter(sourceResult.getRawData(),null));
         return sourceResult;
     }
 
     @Override
-    public String filter(String sourceResult) {
+    public String filter(String sourceResult, Map<String, String> results) {
         DocumentContext document = JsonPath.parse(sourceResult);
         return document.read(expression).toString();
     }

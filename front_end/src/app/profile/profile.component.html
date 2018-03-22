@@ -2,17 +2,17 @@
         <div class="background-image" style="background-image : url('http://upload.akusherstvo.ru/image1488681.jpg')"></div>          
         <div class="ph">
                     <img class="img" src="http://upload.akusherstvo.ru/image1482617.jpg">
-                    <div class="title">TRAVEL PLANNER</div>
+                    <div class="title">ПЛАНИРОВЩИК ПУТЕШЕСТВИЙ</div>
         <nav class="fixed-nav-bar">  
                 <ul id="navbar">               
                         <li><a>{{login}} <span class="glyphicon glyphicon-menu-down"></span></a> 
                           <ul>
-                            <li><a routerLink="/profile" routerLinkActive="active"><span class="glyphicon glyphicon-user"></span> My profile</a></li>
-                            <li><a href="#"><span class="glyphicon glyphicon-picture"></span> Travels history</a></li>                    
-                            <li><a routerLink="/notepad" routerLinkActive="active"><span class="glyphicon glyphicon-list-alt"></span> Notepad</a></li>
-                            <li><a routerLink="/questions" routerLinkActive="active"><span class="glyphicon glyphicon-plane"></span> Current travel</a></li>
+                            <li><a routerLink="/profile" routerLinkActive="active"><span class="glyphicon glyphicon-user"></span> Мой профиль</a></li>
+                            <!-- <li><a href="#"><span class="glyphicon glyphicon-picture"></span> История путешествий</a></li>                     -->
+                            <li><a routerLink="/notepad" routerLinkActive="active"><span class="glyphicon glyphicon-list-alt"></span> Блокнот</a></li>
+                            <li><a routerLink="/questions" routerLinkActive="active"><span class="glyphicon glyphicon-plane"></span> Мое путешествие</a></li>
                             <hr>
-                            <li><a (click)="logout()"><span class="glyphicon glyphicon-log-out"></span> Sign out</a></li>                    
+                            <li><a (click)="logout()"><span class="glyphicon glyphicon-log-out"></span> Выйти</a></li>                    
                           </ul>   
                         </li>              
                                                     
@@ -26,34 +26,34 @@
                  <ul>
                           <li>
                                 <label for="firstName">
-                                        First name:                               
+                                        Имя:                               
                                 </label>
-                                <input type="text" [(ngModel)]="user.firstName" #firstName="ngModel" name="firstName" required pattern="[A-Z][a-z]+"/>                                
+                                <input type="text" [(ngModel)]="user.firstName" #firstName="ngModel" name="firstName" required pattern="[A-ZА-Я][a-zа-я]+"/>                                
                                  <div [hidden]="firstName.valid || firstName.untouched" class="alert alert-danger" id="hid">
-                                        Incorrect input of the first name
+                                        Некорректный ввод имени
                                 </div>
                           </li>
                           <li>
                                 <label for="lastName">                                        
-                                        Last name: 
+                                        Фамилия: 
                                 </label>
-                                <input type="text" [(ngModel)]="user.lastName" #lastName="ngModel"  name="lastName" required pattern="[A-Z][a-z]+"/>
+                                <input type="text" [(ngModel)]="user.lastName" #lastName="ngModel"  name="lastName" required pattern="[A-ZА-Я][a-zа-я]+"/>
                                 <div [hidden]="lastName.valid || lastName.untouched" class="alert alert-danger" id="hid">
-                                        Incorrect input of the last name
+                                        Некорректный ввод фамилии
                                 </div>
                           </li>
                           <li>
                                         <label for="age">                                        
-                                                Age:                                
+                                                Возраст:                                
                                         </label>
                                         <input type="text" [(ngModel)]="user.age" #age="ngModel"  name="age" required  pattern="[0-9]*"/>
                                        <div [hidden]="age.valid || age.untouched" class="alert alert-danger" id="hid">
-                                                Incorrect input of the age
+                                                Некорректный ввод возраста
                                       </div>
                                 </li>
                            <li>
                                 <label for="countryId">
-                                        Country:                                
+                                        Страна проживания:                                
                                 </label>
                                 <!-- <input type="text" [(ngModel)]="user.countryName" #countryName="ngModel"  name="countryName" required  pattern="[A-Z][a-z]+"/> -->
                                 <div class="drop_down_country">
@@ -64,7 +64,7 @@
                           </li>
                            <li>
                                 <label for="cityId">                                        
-                                        City:                                
+                                        Город проживания:                                
                                 </label>
                                 
                               <div class="drop_down_country">                                       
@@ -75,7 +75,7 @@
                                 </div>
                           </li>
                           
-                             <button [disabled]="myForm.invalid" class="submit" (click)="onSubmit(user)">Save</button> 
+                             <button [disabled]="myForm.invalid" class="submit" (click)="onSubmit(user)">Сохранить</button> 
                 </ul>
             </form>
             </div>
@@ -83,32 +83,32 @@
                         <div align="center" class="form-inline">
                         <table>
                                 <tr>
-                                 <th>Question</th>
-                                 <th>Answer</th>
+                                 <th>Вопрос</th>
+                                 <th>Ответ</th>
                                 </tr>
                                 <tr>
-                                 <td>First name</td>
+                                 <td>Имя</td>
                                  <td>{{user.firstName}}</td>
                                  </tr>
                                  <tr>
-                                 <td>Last name</td>
+                                 <td>Фамилия</td>
                                  <td>{{user.lastName}}</td>
                                </tr>
                                <tr>
-                                 <td>Age</td>
+                                 <td>Возраст</td>
                                  <td>{{user.age}}</td>
                                 </tr>
                                 <tr>
-                                  <td>Country</td>
+                                  <td>Страна проживания</td>
                                    <td>{{user.countryName}}</td>
                                 </tr>
                                 <tr>
-                                  <td>City</td>
+                                  <td>Город проживания</td>
                                   <td>{{user.cityName}}</td>
                                 </tr>
                         </table>
                         </div>
-                        <button class="submit" (click)="edit(user)">Edit</button> 
+                        <button class="submit" (click)="edit(user)">Редактировать</button> 
                         
                     </div>
             </div>

@@ -4,15 +4,8 @@
   "parameters": {
     "description": "getTickets default",
     "params": [
-      "origin_city",
-      "origin_code",
-      "dest_city",
-      "dest_code",
-      "origin_date",
-      "return_date",
-      "class",
-      "adults"
+      "session_id"
     ],
-    "url": "https://nc-service-bus.a3c1.starter-us-west-1.openshiftapps.com/endpoint/air-tickets-get-id"
+    "url": "https://nc-service-bus.a3c1.starter-us-west-1.openshiftapps.com/endpoint/air-tickets-search"
   }
 }
