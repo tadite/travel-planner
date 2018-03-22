@@ -25,6 +25,7 @@ import { AdminComponent }   from './admin/admin.component';
 import { SourseComponent }   from './sourse/sourse.component';
 import { ConfigComponent }   from './config/config.component';
 import {ProfilesComponent} from "./profiles/profiles.component";
+import {DataProducerComponent} from "./dataProducer/dataProducer.component";
 
 
 // определение маршрутов
@@ -39,6 +40,7 @@ const appRoutes: Routes =[
     { path: 'config', component: ConfigComponent, canActivate: [AuthGuardService]},
     { path: 'profiles', component: ProfilesComponent, canActivate: [AuthGuardService]},
     { path: 'sourse', component: SourseComponent/*, canActivate: [AuthGuardService]*/},
+    { path: 'producer', component: DataProducerComponent/*, canActivate: [AuthGuardService]*/},
     { path: '**', component: NotFoundComponent }
     
 ];
@@ -46,7 +48,7 @@ const appRoutes: Routes =[
 @NgModule({
 
     imports:      [ BrowserModule, RouterModule.forRoot(appRoutes, { useHash: true }), FormsModule, BrowserAnimationsModule, HttpClientModule, NgbModule.forRoot(), LoadingModule, CdkTableModule, MatTableModule, MatPaginatorModule, LoadingModule],
-    declarations: [ AppComponent, HomeComponent, LoginComponent, UserComponent, NotFoundComponent, QuestionsComponent, NotepadComponent, ProfileComponent, AdminComponent, ConfigComponent, ProfilesComponent, SourseComponent],
+    declarations: [ AppComponent, HomeComponent, LoginComponent, UserComponent, NotFoundComponent, QuestionsComponent, NotepadComponent, ProfileComponent, AdminComponent, ConfigComponent, ProfilesComponent, SourseComponent, DataProducerComponent],
 
    providers: [
     {
