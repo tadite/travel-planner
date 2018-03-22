@@ -6,6 +6,7 @@ import edu.nc.travelplanner.model.source.FilterType;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,13 +26,13 @@ public class DateFormatParserResponseFilter implements ResponseFilter {
     @Override
     public Response filter(Response sourceResult) {
 
-        sourceResult.setRawData(filter(sourceResult.getRawData()));
+        sourceResult.setRawData(filter(sourceResult.getRawData(),null));
 
         return sourceResult;
     }
 
     @Override
-    public String filter(String sourceResult) {
+    public String filter(String sourceResult, Map<String, String> results) {
 
         String startTime = sourceResult;
 

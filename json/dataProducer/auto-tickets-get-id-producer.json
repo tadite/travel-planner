@@ -23,7 +23,7 @@
     {
       "from": "",
       "to": "start_time",
-      "default":"00:00"
+      "default": "10:00"
     },
     {
       "from": "dateIntervalInput-travelPeriod-action2",
@@ -32,34 +32,44 @@
     {
       "from": "",
       "to": "end_time",
-      "default":"23:59"
-    },
-
-    {
-      "from": "",
-      "to": "location_id"
-    },
-
-    {
-      "from": "",
-      "to": "country_id"
+      "default": "18:00"
     },
     {
       "from": "dropdownlist-citiesByCountryId-action.Value",
-      "to": "city_id",
-      "default": "MOW",
+      "to": "location",
       "filter": {
-        "type": "get_value_if_contains_in_array_from_json_file",
+        "type": "get_valuelist_if_in_property_from_json_array_file",
         "parameters": {
-          "jsonFilePath": "/json/other/top_ru.json",
-          "valuePath": "iata",
-          "arrayPath": "index_strings"
+          "jsonFilePath": "/json/other/places_en.json",
+          "paramMappers": [
+            {
+              "path": "code",
+              "name": "location_id"
+            },
+            {
+              "path": "country_id",
+              "name": "country_id"
+            },
+            {
+              "path": "city_id",
+              "name": "city_id"
+            }
+          ],
+          "keyPath": "name"
         }
       }
     },
     {
       "from": "",
-      "to": "location"
+      "to": "location_id"
+    },
+    {
+      "from": "",
+      "to": "country_id"
+    },
+    {
+      "from": "",
+      "to": "city_id"
     }
   ],
   "source": "auto-tickets-get-id-source"

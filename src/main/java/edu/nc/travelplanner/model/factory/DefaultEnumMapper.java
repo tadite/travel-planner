@@ -53,6 +53,7 @@ public class DefaultEnumMapper implements EnumMapper {
         put(FilterType.SPLIT_AND_GET_BY_INDEX, SplitAndGetByIndexResponseFilter::new);
         put(FilterType.GET_VALUE_IF_CONTAINS_IN_ARRAY_FROM_JSON_FILE, GetValueIfContainsInArrayFromJsonResponseFilter::new);
         put(FilterType.DATE_FORMAT_PARSE, DateFormatParserResponseFilter::new);
+        put(FilterType.GET_VALUELIST_IF_IN_PROPERTY_FROM_JSON_ARRAY, GetValueListIfContainsInPropertyFromJsonArray::new);
     }};
 
     private Map<SourceType, Supplier<Source>> sourceCreationMap = new HashMap<SourceType, Supplier<Source>>(){{

@@ -2,6 +2,8 @@ package edu.nc.travelplanner.model.source.filter;
 
 import edu.nc.travelplanner.model.response.Response;
 
+import java.util.Map;
+
 public class SubstringResponseFilter implements ResponseFilter{
     String firstIndexStr;
     String lastIndexStr;
@@ -16,12 +18,12 @@ public class SubstringResponseFilter implements ResponseFilter{
 
     @Override
     public Response filter(Response sourceResult) {
-        sourceResult.setRawData(filter(sourceResult.getRawData()));
+        sourceResult.setRawData(filter(sourceResult.getRawData(), null));
         return sourceResult;
     }
 
     @Override
-    public String filter(String sourceResult) {
+    public String filter(String sourceResult, Map<String, String> results) {
         return sourceResult
                 .substring(sourceResult.indexOf(firstIndexStr)+1,
                         sourceResult.indexOf(lastIndexStr));

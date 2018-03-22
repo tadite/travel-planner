@@ -2,11 +2,13 @@ package edu.nc.travelplanner.model.source;
 
 import com.google.common.base.Joiner;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public class HttpSource implements Source{
+public class HttpSource implements Source {
     private String name;
     private String description;
     private String url;
@@ -36,7 +38,7 @@ public class HttpSource implements Source{
 
     @Override
     public String getUrlWithParameterValues() {
-        if (paramValuesMap.size()==0)
+        if (paramValuesMap.size() == 0)
             return url;
 
         String outputUrl = url;
@@ -44,10 +46,16 @@ public class HttpSource implements Source{
         String paramsString = Joiner.on("&").withKeyValueSeparator("=").join(paramValuesMap.entrySet()
                 .stream()
                 .filter(entry -> params.contains(entry.getKey()))
+                .peek(entry -> {
+                    try {
+                        entry.setValue(URLEncoder.encode(entry.getValue(), "UTF-8"));
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                })
                 .collect(Collectors.toList()));
 
-
-        return url+"?" + paramsString;
+        return url + "?" + paramsString;
     }
 
     public String getDescription() {

@@ -5,6 +5,7 @@ import edu.nc.travelplanner.model.action.*;
 import edu.nc.travelplanner.model.jump.Jump;
 import edu.nc.travelplanner.model.response.ErrorResponse;
 import edu.nc.travelplanner.model.response.Response;
+import edu.nc.travelplanner.model.response.ViewResponseBuilder;
 
 import java.util.*;
 
@@ -51,7 +52,7 @@ public class SimpleActionTree implements ActionTree {
         while (triesLeft > 0) {
             try {
                 return currentAction.executePresentation(args, pickResults);
-            } catch (DataProducerSendException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 triesLeft--;
                 try {
@@ -62,7 +63,7 @@ public class SimpleActionTree implements ActionTree {
             }
         }
 
-        return new ErrorResponse();
+        return new ViewResponseBuilder().addTitleElement("question", currentAction.getViewName()).addTitleElement("errorResult", "Данные по запросу не найдены.").build();
     }
 
     @Override

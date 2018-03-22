@@ -39,7 +39,7 @@ public class GetValueIfContainsInArrayFromJsonResponseFilter implements Response
     }
 
     @Override
-    public String filter(String sourceResult) {
+    public String filter(String sourceResult, Map<String, String> results) {
         try {
             String result = sourceResult.toLowerCase();
 

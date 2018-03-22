@@ -33,12 +33,12 @@ public class ListToMapJsonResponseFilter implements ResponseFilter {
 
     @Override
     public Response filter(Response sourceResult) {
-        sourceResult.setRawData(filter(sourceResult.getRawData()));
+        sourceResult.setRawData(filter(sourceResult.getRawData(), null));
         return sourceResult;
     }
 
     @Override
-    public String filter(String sourceResult) {
+    public String filter(String sourceResult, Map<String, String> results) {
         try {
             JsonNode node = mapper.readTree(sourceResult);
             JsonParser parser = mapper.treeAsTokens(node);

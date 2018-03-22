@@ -10,10 +10,7 @@ import edu.nc.travelplanner.model.source.Source;
 import edu.nc.travelplanner.model.source.filter.ResponseFilter;
 
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class DefaultDataProducer implements DataProducer{
 
@@ -61,13 +58,21 @@ public class DefaultDataProducer implements DataProducer{
     }
 
     private void mapParameters(List<PickResult> pickResults) {
+        Map<String, String> tempParameterValues = new LinkedHashMap<>();
         for (ParameterMapper parameterMapper : parameterMappers) {
+            if (tempParameterValues.containsKey(parameterMapper.getToKey())) {
+                source.addParameterValue(parameterMapper.getToKey(), tempParameterValues.get(parameterMapper.getToKey()));
+                continue;
+            }
+
             Optional<PickResult> pickResultOptional = pickResults.stream()
                     .filter(pickResult -> pickResult.getKey().equals(parameterMapper.getFromKey()))
                     .findFirst();
 
             if (pickResultOptional.isPresent())
-                source.addParameterValue(parameterMapper.getToKey(), parameterMapper.filterValue(pickResultOptional.get().getValue().toString()));
+                source.addParameterValue(parameterMapper.getToKey(), parameterMapper.filterValue(
+                        String.valueOf(pickResultOptional.get().getValue()),
+                        tempParameterValues));
             else if (parameterMapper.getDefaultValue()!=null)
                 source.addParameterValue(parameterMapper.getToKey(), parameterMapper.getDefaultValue());
 
