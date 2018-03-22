@@ -56,10 +56,10 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
                 {"columns":[
                     {"name":"id","value":"269104"},
                     {"name":"location__country","value":"Германия"},
-                    {"name":"location__name","value":"Берлин"},
+                    {"name":"location__name","value":"Kurfuerstendamm 27, Берлин, BE, 10719 Германия"},
                     {"name":"priceAvg","value":"8890.6"},
                     {"name":"hotelName","value":"Pullman Berlin Schweizerhof"},
-                    {"name":"stars","value":"5"}
+                    {"name":"stars","value":"ааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааа"}
                 ]},
                 {"columns":[
                     {"name":"id","value":"269507"},
