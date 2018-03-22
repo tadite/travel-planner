@@ -8,29 +8,29 @@ import {Observable} from 'rxjs/Observable';
 
 
 @Component({
-    selector: 'config-app',
-    templateUrl: './config.component.html',
-    styleUrls: ['./config.component.css'],
+    selector: 'dataProducer-app',
+    templateUrl: './dataProducer.component.html',
+    styleUrls: ['./dataProducer.component.css'],
     providers: [HttpService, AuthService]
 
 })
 
-export class ConfigComponent implements OnInit{
+export class DataProducerComponent implements OnInit{
     login: string;
     actionUrl: string = '/api/manage/action';
     dataProducerUrl: string = '/api/manage/producer';
     sourceUrl: string = '/api/manage/source';
     ELEMENT_DATA: any;
     constructor(private http: HttpService, private cookieService: CookieService, private router: Router, private authService: AuthService) {
-        this.actions = new Array<Action>();
+        this.actions = new Array<DataProducer>();
     }
 
     //типы шаблонов
     @ViewChild('readOnlyTemplate') readOnlyTemplate: TemplateRef<any>;
     @ViewChild('editTemplate') editTemplate: TemplateRef<any>;
 
-    editedAction: Action;
-    actions: Array<Action>;
+    editedAction: DataProducer;
+    actions: Array<DataProducer>;
     isNewRecord: boolean;
     statusMessage: string;
 
@@ -41,27 +41,27 @@ export class ConfigComponent implements OnInit{
 
     //загрузка
     private loadActions() {
-        this.http.get(this.actionUrl).subscribe((data: Action[]) => {
-            this.actions = data;
-            console.log(this.actions);
+        this.http.get(this.dataProducerUrl).subscribe((data: DataProducer[]) => {
+                this.actions = data;
+                console.log(this.actions);
             },
             error => {console.log(error); }
-            );
+        );
     }
 
     // добавление
     addAction() {
-        this.editedAction = new Action("","","",null,"");
+        this.editedAction = new DataProducer("",[],[],"");
         this.actions.unshift(this.editedAction);
         this.isNewRecord = true;
     }
 
     // редактирование
-    editAction(action: Action) {
-        this.editedAction = new Action(action.name, action.viewName, action.type, action.parameters, action.dataProducerName);
+    editAction(action: DataProducer) {
+        this.editedAction = new DataProducer(action.name, action.filters, action.mappers, action.source);
     }
     // загружаем один из двух шаблонов
-    loadTemplate(action: Action) {
+    loadTemplate(action: DataProducer) {
         if (this.editedAction && this.editedAction.name == action.name) {
             return this.editTemplate;
         } else {
@@ -72,7 +72,7 @@ export class ConfigComponent implements OnInit{
     saveAction() {
         if (this.isNewRecord) {
             // добавляем
-            this.http.postData(this.actionUrl,this.editedAction).subscribe(data => {
+            this.http.postData(this.dataProducerUrl,this.editedAction).subscribe(data => {
                 this.statusMessage = 'Данные успешно добавлены',
                     this.loadActions();
             });
@@ -80,11 +80,11 @@ export class ConfigComponent implements OnInit{
             this.editedAction = null;
         } else {
             // изменяем
-            let url: string = '/api/manage/action' + '/' + this.editedAction.name;
-            this.http.get(url).subscribe((data: Action) => {
+            let url: string = '/api/manage/producer' + '/' + this.editedAction.name;
+            this.http.get(url).subscribe((data: DataProducer) => {
                 this.editedAction = data;
             });
-            this.http.postData(this.actionUrl,this.editedAction).subscribe(data => {
+            this.http.postData(this.dataProducerUrl,this.editedAction).subscribe(data => {
                 this.statusMessage = 'Данные успешно обновлены',
                     this.loadActions();
             });
@@ -101,8 +101,8 @@ export class ConfigComponent implements OnInit{
         this.editedAction = null;
     }
     // удаление
-    deleteAction(action: Action) {
-        let url: string = '/api/manage/action' + '/' + action.name;
+    deleteAction(action: DataProducer) {
+        let url: string = '/api/manage/producer' + '/' + action.name;
         this.http.deleteDate(url).subscribe(data => {
             this.statusMessage = 'Данные успешно удалены',
                 this.loadActions();
@@ -117,16 +117,14 @@ export class ConfigComponent implements OnInit{
         return this.authService.getLogin();
     }
 
-
 }
 
-export class Action{
+export class DataProducer{
     constructor(
         public name: string,
-        public viewName: string,
-        public type: string,
-        public parameters: any,
-        public dataProducerName: string) { }
+        public filters: object[],
+        public mappers:  object[],
+        public source: string) { }
 
 }
 

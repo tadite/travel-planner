@@ -18,7 +18,7 @@
     <div class="col-xs-3 col-md-3"  style="  height:100%;margin-top: 30px; background: rgba(255, 255, 255, .5)">
         <ul class="list-group list-unstyled">
             <a class="list-group-item" style="background: rgba(255, 255, 255, .5); margin-top: 10px" ><li><span class="glyphicon glyphicon-dashboard" style="cursor: pointer;"></span><span style="cursor: pointer"> type Action</span></li></a>
-            <a class="list-group-item"style="background: rgba(255, 255, 255, .5)"><li><span class="glyphicon glyphicon-dashboard" style="cursor: pointer"></span><span style="cursor: pointer"> type DataProducer</span></li></a>
+            <a [routerLink]="['/producer']" class="list-group-item"style="background: rgba(255, 255, 255, .5)"><li><span class="glyphicon glyphicon-dashboard" style="cursor: pointer"></span><span style="cursor: pointer"> type DataProducer</span></li></a>
             <a [routerLink]="['/sourse']" class="list-group-item"style="background: rgba(255, 255, 255, .5)"><li><span class="glyphicon glyphicon-dashboard" style="cursor: pointer"></span><span style="cursor: pointer"> type Source</span></li></a>
             <hr>
             <a [routerLink]="['/admin']" class="list-group-item"style="background: rgba(255, 255, 255, .5)"><li><span class="glyphicon glyphicon-home" style="cursor: pointer"></span><span style="cursor: pointer"> Назад</span></li></a>
@@ -39,12 +39,13 @@
             <table class="table table-responsive table-hover table-condensed">
                 <thead>
                 <tr>
-                    <td width="20%"> Name</td>
+                    <td width="15%"> Name</td>
                     <td width="20%"> ViewName</td>
-                    <td width="17%"> Type</td>
-                    <td width="15%"> Producer</td>
-                    <td width="14%"> </td>
-                    <td width="14%"> </td>
+                    <td width="15%"> Type</td>
+                    <td width="16%"> Parameters</td>
+                    <td width="9%"> Producer</td>
+                    <td width="11%"> </td>
+                    <td width="11%"> </td>
                 </tr>
                 </thead>
                 <tbody>
@@ -62,6 +63,8 @@
                 <td>{{action.name}}</td>
                 <td>{{action.viewName}}</td>
                 <td>{{action.type}}</td>
+                <!-- <td *ngFor="let key of objectKeys(action.parameters.optionsMap)" > {{action.parameters.optionsMap[key]}}</td>-->
+                <td>{{action.parameters}}</td>
                 <td>{{action.dataProducerName}}</td>
                 <td>
                     <input type="button" value="Изменить" class="btn btn-default" (click)="editAction(action)" />
@@ -81,6 +84,9 @@
                 </td>
                 <td>
                     <input type="text" [(ngModel)]="editedAction.type" class="form-control" />
+                </td>
+                <td>
+                    <input type="text" [(ngModel)]="editedAction.parameters" class="form-control" />
                 </td>
                 <td>
                     <input type="text" [(ngModel)]="editedAction.dataProducerName" class="form-control" />
