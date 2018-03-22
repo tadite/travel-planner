@@ -69,9 +69,11 @@ public class TableIntegrationAction implements IntegrationAction {
 
     private void parseTable(Response response) throws IOException {
         List<LinkedHashMap<String, String>> jsonObjs = objectMapper.readValue(response.getRawData(), List.class);
+        int id = 100;
         for (LinkedHashMap<String, String> jsonObj : jsonObjs) {
             Row currentRow = new Row();
-            currentRow.addColumn(new Column("id", jsonObj.getOrDefault("id", null)));
+            // currentRow.addColumn(new Column("id", jsonObj.getOrDefault("id", null)));
+            currentRow.addColumn(new Column("id", String.valueOf(id++)));
             columnDefs.forEach((key, value) -> {
                 currentRow.addColumn(new Column(
                         key,
@@ -83,9 +85,13 @@ public class TableIntegrationAction implements IntegrationAction {
 
     @Override
     public void getResult(Map<String, String> decisionArgs, List<PickResult> picks) {
-        Optional<Map.Entry<String, String>> argOptional = decisionArgs.entrySet().stream()
-                .filter((entry) -> entry.getKey().substring(entry.getKey().lastIndexOf('.') + 1).equals(getName()))
+        /*Optional<Map.Entry<String, String>> argOptional = decisionArgs.entrySet().stream()
+                .filter((entry) -> rows.stream()
+                        .filter(row -> row.getColumns()
+                                .stream().filter(tRow -> tRow.getName().equals("id")).)))
                 .findFirst();
+
+
 
         if (argOptional.isPresent()) {
             String pickedId = argOptional.get().getValue();
@@ -95,7 +101,29 @@ public class TableIntegrationAction implements IntegrationAction {
                     .anyMatch(column -> column.equals("id")))
                     .forEach(row -> row.getColumns().stream()
                             .forEach(column -> picks.add(new PickResult(getName() + "." + column.getName(), column.getValue()))));
-        }
+        }*/
+
+        decisionArgs.entrySet()
+                .stream()
+                .map(entry -> rows
+                        .stream()
+                        .map(row -> row.getColumns()
+                                .stream()
+                                .filter(col -> col.getName().equals("id") &&
+                                        col.getValue().equals(entry.getKey()))
+                                .findFirst()
+                        )
+                        .findFirst())
+                .findFirst()
+                .ifPresent(opt1 -> opt1.ifPresent(opt2 -> opt2.ifPresent(col -> {
+                    String pickedId = col.getValue();
+
+                    rows.stream().filter(row -> row.getColumns()
+                            .stream()
+                            .anyMatch(column -> column.equals("id") && column.getValue().equals(pickedId)))
+                            .forEach(row -> row.getColumns().stream()
+                                    .forEach(column -> picks.add(new PickResult(getName() + "." + column.getName(), column.getValue()))));
+                })));
     }
 
     public DataProducer getDataProducer() {

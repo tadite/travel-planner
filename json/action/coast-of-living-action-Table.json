@@ -6,9 +6,10 @@
   "parameters": {
     "columnDefs":
     {
-      "category":"Категория",
       "title":"Название",
-      "price":"Цена"
+      "price":"Средняя цена",
+      "price_range__from":"Минимальная цена",
+      "price_range__to":"Максимальная цена"
     }
   }
 }

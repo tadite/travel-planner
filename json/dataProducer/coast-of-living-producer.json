@@ -4,13 +4,13 @@
     {
       "type": "json_path",
       "parameters": {
-        "expression": "fields"
+        "expression": "$.[*].[fields].[?(@.title)]"
       }
     },
     {
       "type": "list_to_object_list",
       "parameters": {
-        "valueNames": ["category","title", "price"],
+        "valueNames": ["title","price", "price_range__from", "price_range__to"],
         "keyName": "title"
       }
     }
