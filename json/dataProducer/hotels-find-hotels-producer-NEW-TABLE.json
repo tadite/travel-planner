@@ -18,7 +18,7 @@
           "price_info",
           "booking"
         ],
-        "keyName": "name"
+        "keyName": "booking"
       }
     }
   ],

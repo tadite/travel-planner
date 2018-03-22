@@ -23,7 +23,7 @@
           "rating",
           "booking"
         ],
-        "keyName": "name"
+        "keyName": "booking"
       }
     }
   ],
