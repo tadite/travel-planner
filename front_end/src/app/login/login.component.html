@@ -7,7 +7,7 @@
         </div>              
         <input type="password" placeholder="Пароль" [(ngModel)]="user.password" #regPassword="ngModel" name="regPassword" required pattern="[0-9a-zA-Z!@#$%^*]{5,}"/>
        <div [hidden]="regPassword.valid || regPassword.untouched" class="alert alert-danger" style="font-size: small">
-         Пароль должен содержать не менее 5 символов
+         Пароль должен содержать не менее 5 символов 
          </div>
         <input type="email" placeholder="E-mail" [(ngModel)]="user.eMail" #regEmail="ngModel" name="regEmail" required email/>    
         <div [hidden]="regEmail.valid || regEmail.untouched" class="alert alert-danger" style="font-size: small">
