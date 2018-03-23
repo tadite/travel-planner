@@ -72,8 +72,9 @@ export class SourseComponent implements OnInit{
     saveAction() {
         if (this.isNewRecord) {
             // добавляем
-            this.http.postData(this.sourceUrl,this.editedAction).subscribe(data => {
+            this.http.postData(this.sourceUrl,JSON.stringify(this.editedAction)).subscribe(data => {
                 this.statusMessage = 'Данные успешно добавлены',
+                    console.log(this.editedAction);
                     this.loadActions();
             });
             this.isNewRecord = false;

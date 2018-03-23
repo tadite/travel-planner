@@ -41,10 +41,10 @@
                     <tr>
                         <td width="15%"> Name</td>
                         <td width="21%"> Filters</td>
-                        <td width="21%"> Mappers</td>
+                        <td width="27%"> Mappers</td>
                         <td width="15%"> SourceName</td>
-                        <td width="14%"> </td>
-                        <td width="14%"> </td>
+                        <td width="11%"> </td>
+                        <td width="11%"> </td>
 
                     </tr>
                     </thead>
@@ -61,8 +61,8 @@
                 <!--шаблон для чтения-->
                 <ng-template #readOnlyTemplate let-action>
                     <td>{{action.name}}</td>
-                    <td>{{action.filters}}</td>
-                    <td>{{action.mappers}}</td>
+                    <td>{{action.filters | json}}</td>
+                    <td>{{action.mappers | json}}</td>
                     <td>{{action.source}}</td>
                     <td>
                         <input type="button" value="Изменить" class="btn btn-default" (click)="editAction(action)" />
