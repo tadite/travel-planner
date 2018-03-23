@@ -13,7 +13,7 @@
     {
       "from": "dropdownlist-citiesByCountryId-action.Value",
       "to": "city"
-    } 
+    }
   ],
   "source": "tripster-excursion"
 }
