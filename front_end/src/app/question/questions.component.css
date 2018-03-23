@@ -1,4 +1,4 @@
-@import url(https://allfont.ru/allfont.css?fonts=pt-sans-caption);
+ @import url(https://fonts.googleapis.com/css?family=PT+Sans+Caption); 
 
 * {
   font-family: 'PT Sans Caption', arial; 
@@ -92,7 +92,7 @@
     box-shadow:  2px 2px 0 rgb(175, 175, 175);
     width: 90px;
     height: 35px;
-    margin-top: 12px;
+    margin-top: 10px;
   }
 
   .newTravel{
@@ -103,7 +103,7 @@
     box-shadow:  2px 2px 0 rgb(175, 175, 175);
     width: 280px;
     height: 35px;
-    margin-top: 12px;
+    margin-top: 10px;
   }
 
   .result-table-block table {
@@ -131,9 +131,9 @@
   .result-table-block tr:hover td {background: #e8edff;} 
   
   .background-image{ 
-    background-image: url(http://www.picshare.ru/uploads/180316/HHmxiL86BP.jpg); 
+    background-image: url(http://www.picshare.ru/uploads/180323/2JjngTcsyK.jpg); 
     width: 100%; 
-    height: 2100px; 
+    height: 1500px; 
    
     background-repeat: repeat-y; 
     -webkit-background-size: 100%; 
