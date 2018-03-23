@@ -6,6 +6,7 @@ import edu.nc.travelplanner.model.jump.Jump;
 import edu.nc.travelplanner.model.response.ErrorResponse;
 import edu.nc.travelplanner.model.response.Response;
 import edu.nc.travelplanner.model.response.ViewResponseBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
 
@@ -21,6 +22,10 @@ public class SimpleActionTree implements ActionTree {
 
     private Integer attemptsCount;
     private Integer waitAfterFail;
+
+    private RollbackMaster rollbackMaster=new RollbackMaster();
+
+    private boolean failedAtPresent=false;
 
     public SimpleActionTree() {
     }
@@ -46,8 +51,16 @@ public class SimpleActionTree implements ActionTree {
     }
 
     @Override
+    public void rollback() {
+        HistoryState previousState = rollbackMaster.rollback();
+        this.pickResults=previousState.getPicks();
+        this.currentAction=previousState.getJastJump().getCurrentAction();
+    }
+
+    @Override
     public Response executePresentation(ActionArgs args) {
         int triesLeft = attemptsCount;
+        failedAtPresent=false;
 
         while (triesLeft > 0) {
             try {
@@ -63,22 +76,34 @@ public class SimpleActionTree implements ActionTree {
             }
         }
 
+        failedAtPresent=true;
         return new ViewResponseBuilder().addTitleElement("question", currentAction.getViewName()).addTitleElement("errorResult", "Данные по запросу не найдены.").build();
     }
 
     @Override
     public Response executeDecision(ActionArgs args) {
+        if (failedAtPresent)
+        {
+            Jump forcedJump = executeJumps(null, null, true);
+            if (forcedJump!=null)
+                rollbackMaster.addStep(new HistoryState(this.pickResults, forcedJump));
+        }
+
         currentActionExecuted = true;
-        currentAction.getResult(args.getArgs(), pickResults);
+        Jump currentStepJump = null;
+        LinkedList<PickResult> currentStepPicks = new LinkedList<>(this.pickResults);
 
-        Response response = currentAction.executeDecision(args, pickResults);
+        currentAction.getResult(args.getArgs(), this.pickResults);
+        Response response = currentAction.executeDecision(args, this.pickResults);
+        currentStepJump = executeJumps(args, response, false);
 
-        executeJumps(args, response);
+        if (currentStepJump!=null)
+            rollbackMaster.addStep(new HistoryState(currentStepPicks, currentStepJump));
 
         while (currentAction.getType() == ActionType.NO_VIEW_TEXT_INTEGRAION) {
-            tryGetResultForNoViewAction(args, pickResults);
-            currentAction.getResult(args.getArgs(), pickResults);
-            executeJumps(args, response);
+            tryGetResultForNoViewAction(args, this.pickResults);
+            currentAction.getResult(args.getArgs(), this.pickResults);
+            executeJumps(args, response, false);
         }
 
         return response;
@@ -103,11 +128,17 @@ public class SimpleActionTree implements ActionTree {
         }
     }
 
-    private void executeJumps(ActionArgs args, Response response) {
-        this.jumps.stream()
-                .filter(jmp -> jmp.getCurrentAction() == this.currentAction && jmp.canJump(args, pickResults, response))
-                .findFirst()
-                .ifPresent(this::executeJump);
+    private Jump executeJumps(ActionArgs args, Response response, Boolean force) {
+        Optional<Jump> jump = this.jumps.stream()
+                .filter(jmp -> jmp.getCurrentAction() == this.currentAction && (force || jmp.canJump(args, pickResults, response)))
+                .findFirst();
+
+        if (!jump.isPresent())
+            return null;
+
+        Jump jumpToExecute = jump.get();
+        executeJump(jumpToExecute);
+        return jumpToExecute;
     }
 
     @Override
@@ -131,7 +162,6 @@ public class SimpleActionTree implements ActionTree {
         if (jump != null) {
             currentAction = jump.getNextAction();
             currentActionExecuted = false;
-
         }
     }
 

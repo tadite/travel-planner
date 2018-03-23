@@ -64,10 +64,12 @@ public class TableIntegrationAction implements IntegrationAction {
     }
 
     private String getTableId() {
-        return name + "-table";
+        return name;
     }
 
     private void parseTable(Response response) throws IOException {
+        rows.clear();
+
         List<LinkedHashMap<String, String>> jsonObjs = objectMapper.readValue(response.getRawData(), List.class);
         int id = 100;
         for (LinkedHashMap<String, String> jsonObj : jsonObjs) {
@@ -105,25 +107,20 @@ public class TableIntegrationAction implements IntegrationAction {
 
         decisionArgs.entrySet()
                 .stream()
-                .map(entry -> rows
-                        .stream()
-                        .map(row -> row.getColumns()
-                                .stream()
-                                .filter(col -> col.getName().equals("id") &&
-                                        col.getValue().equals(entry.getKey()))
-                                .findFirst()
-                        )
-                        .findFirst())
+                .filter(arg -> arg.getValue().substring(arg.getValue().lastIndexOf('.'),
+                        arg.getValue().length() - 1)
+                        .equals(this.getName())
+                )
                 .findFirst()
-                .ifPresent(opt1 -> opt1.ifPresent(opt2 -> opt2.ifPresent(col -> {
-                    String pickedId = col.getValue();
+                .ifPresent(arg1 -> {
+                    String pickedId = arg1.getKey();
 
                     rows.stream().filter(row -> row.getColumns()
                             .stream()
-                            .anyMatch(column -> column.equals("id") && column.getValue().equals(pickedId)))
+                            .anyMatch(column -> column.getName().equals("id") && column.getValue().equals(pickedId)))
                             .forEach(row -> row.getColumns().stream()
                                     .forEach(column -> picks.add(new PickResult(getName() + "." + column.getName(), column.getValue()))));
-                })));
+                });
     }
 
     public DataProducer getDataProducer() {

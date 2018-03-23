@@ -7,12 +7,16 @@ import edu.nc.travelplanner.exception.CustomParseException;
 import edu.nc.travelplanner.model.action.*;
 import edu.nc.travelplanner.model.factory.tree.ActionTreeFactory;
 import edu.nc.travelplanner.model.factory.tree.ActionTreeParseException;
-import edu.nc.travelplanner.model.response.Response;
-import edu.nc.travelplanner.model.response.TravelResultResponse;
+import edu.nc.travelplanner.model.response.*;
 import edu.nc.travelplanner.model.resultsMapper.ResultsMapperReader;
 import edu.nc.travelplanner.service.travel.TravelSaveService;
+import org.springframework.aop.scope.ScopedObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
@@ -23,6 +27,9 @@ import java.io.IOException;
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Component
 public class SimpleTreeOrchestrator implements TreeOrchestrator {
+
+    @Autowired
+    private ApplicationContext context;
 
     @Autowired
     AuthenticationFacade authenticationFacade;
@@ -97,9 +104,15 @@ public class SimpleTreeOrchestrator implements TreeOrchestrator {
     }
 
     @Override
-    public void reset() {
-        actionTree=null;
+    public Response rollback() {
+        this.actionTree.rollback();
+        return new EmptyResponse();
+    }
 
+    @Override
+    public void reset() {
+        this.travelAfterPickTreeDto=null;
+        this.actionTree=null;
     }
 
     private void saveTravelToDb(TravelAfterPickTreeDto travelAfterPickTreeDto) {
