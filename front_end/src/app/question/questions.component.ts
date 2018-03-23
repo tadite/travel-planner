@@ -170,7 +170,7 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
     }
     
     ngOnInit(){        
-        this.login = this.getLogin();        
+        this.login = this.getLogin();
         this.getNextActionView();        
     }
 
@@ -186,6 +186,7 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
     }
 
     onReset() {  
+      
         this.result=false;
         var self = this;
         this.http.deleteObs(this.actionUrl+'/reset').subscribe(result => {
@@ -217,14 +218,13 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
             this.checks={};
             self.getNextActionView();
         },
-        error => {console.log(error); self.loading=false;}
+        error => {console.log(error);}
         );
     }
     
 
     getNextActionView(){
         this.loading = true;
-
         var self = this;
         this.http.get(this.actionUrl).subscribe(value => {            
             self.loading = false;    

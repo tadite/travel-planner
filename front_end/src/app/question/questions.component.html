@@ -59,7 +59,7 @@
                                                 <div *ngSwitchCase="'checkbox'">
                                                     <div class="btn-group btn-group-vertical">
                                                         <label class="btn">
-                                                            <input type="checkbox"(change)="putCheckId(question.id)"/><i class="fa fa-square-o fa-2x"></i><i class="fa fa-check-square-o fa-2x"></i> <span> {{question.data}}</span>
+                                                            <input type="checkbox" (change)="putCheckId(question.id)"/><i class="fa fa-square-o fa-2x"></i><i class="fa fa-check-square-o fa-2x"></i> <span> {{question.data}}</span>
                                                         </label>
                                                     </div>
                                                 </div>
@@ -105,6 +105,38 @@
                                         
                                         <div class="table-block">                                        
                                         <div *ngSwitchCase="'table_picker'"> 
+                                            <div *ngIf="question.id == 'table.1.coast-of-living-action-Table'">
+                                                <div class="costOfLiving">                                          
+                                                        <div *ngFor="let item of question.data.rows">                                                                
+                                                                <table>
+                                                                <tr *ngFor="let defs of question.data.columnDefs.columns; let i = index">                                       
+                                                                    <td>{{defs.value}}</td>                                      
+                                                                    <td *ngIf="isLink(question.data, defs.name); else elseTextBlock"><a href="{{item.columns[i+1].value}}" target="_blank">Перейти</a></td>  
+                                                                    <ng-template #elseTextBlock><td>{{item.columns[i+1].value}}</td></ng-template>            
+                                                                </tr> 
+                                                                </table>
+                                                        </div>
+                                                                    <!-- <br>  --> 
+                                                    </div>
+                                            </div>
+                                            <div *ngIf="question.id == 'table.1.checklist-choosingTheExcursion-action-NEW-TABLE'">
+                                                    <div class="btn-group btn-group-toggle" >                                          
+                                                            <div *ngFor="let item of question.data.rows">                                               
+                                                                <label class="btn">
+                                                                    <input type="checkbox" (change)="putCheckId(item.columns[0].value)"/>                                            
+                                                                    <table>
+                                                                    <tr *ngFor="let defs of question.data.columnDefs.columns; let i = index">                                       
+                                                                        <td>{{defs.value}}</td>                                      
+                                                                        <td *ngIf="isLink(question.data, defs.name); else elseTextBlock"><a href="{{item.columns[i+1].value}}" target="_blank">Перейти</a></td>  
+                                                                        <ng-template #elseTextBlock><td>{{item.columns[i+1].value}}</td></ng-template>            
+                                                                    </tr> 
+                                                                    </table>
+                                                                </label> 
+                                                            </div>
+                                                                <!-- <br>  --> 
+                                                    </div>
+                                            </div>
+                                            <div *ngIf="question.id == 'table.1.radioButton-hotels-find-hotels-action-NEW-TABLE' || question.id == 'table.1.radioButton-typeOfTransport-action-NEW-TABLE'">
                                             <div class="btn-group btn-group-toggle" >                                          
                                             <div *ngFor="let item of question.data.rows">                                               
                                                 <label class="btn">
@@ -119,6 +151,7 @@
                                                 </label> 
                                                 </div>
                                                 <!-- <br>  --> 
+                                            </div>
                                             </div>
                                         </div>                                         
                                         
