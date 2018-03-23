@@ -19,7 +19,6 @@ import { QuestionsComponent } from './question/questions.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { AuthGuardService }   from './auth/auth-guard.service';
 import { UnauthGuardService }   from './auth/unauth-guard.service';
-import { NotepadComponent }   from './notepad/notepad.component';
 import  {ProfileComponent } from './profile/profile.component';
 import { AdminComponent }   from './admin/admin.component';
 import { SourseComponent }   from './sourse/sourse.component';
@@ -33,8 +32,7 @@ const appRoutes: Routes =[
     { path: '', component: HomeComponent},
     { path: 'login', component: LoginComponent, canActivate: [UnauthGuardService]},    
     { path: 'user', component: UserComponent},
-    { path: 'questions', component: QuestionsComponent, canActivate: [AuthGuardService]},
-    { path: 'notepad', component: NotepadComponent, canActivate: [AuthGuardService]},
+    { path: 'questions', component: QuestionsComponent, canActivate: [AuthGuardService]},   
     { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService]}, 
 	{ path: 'admin', component: AdminComponent, canActivate: [AuthGuardService]},
     { path: 'config', component: ConfigComponent, canActivate: [AuthGuardService]},
@@ -48,7 +46,7 @@ const appRoutes: Routes =[
 @NgModule({
 
     imports:      [ BrowserModule, RouterModule.forRoot(appRoutes, { useHash: true }), FormsModule, BrowserAnimationsModule, HttpClientModule, NgbModule.forRoot(), LoadingModule, CdkTableModule, MatTableModule, MatPaginatorModule, LoadingModule],
-    declarations: [ AppComponent, HomeComponent, LoginComponent, UserComponent, NotFoundComponent, QuestionsComponent, NotepadComponent, ProfileComponent, AdminComponent, ConfigComponent, ProfilesComponent, SourseComponent, DataProducerComponent],
+    declarations: [ AppComponent, HomeComponent, LoginComponent, UserComponent, NotFoundComponent, QuestionsComponent, ProfileComponent, AdminComponent, ConfigComponent, ProfilesComponent, SourseComponent, DataProducerComponent],
 
    providers: [
     {

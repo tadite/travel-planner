@@ -2,7 +2,7 @@
   "name": "coast-of-living-producer",
   "filters": [
     {
-      "type": "json_path",
+      "type": "json_path", 
       "parameters": {
         "expression": "$.[*].fields.[?(@.title)]"
       }
