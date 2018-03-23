@@ -20,6 +20,7 @@ export class ConfigComponent implements OnInit{
     actionUrl: string = '/api/manage/action';
     dataProducerUrl: string = '/api/manage/producer';
     sourceUrl: string = '/api/manage/source';
+    Action: any;
     ELEMENT_DATA: any;
     constructor(private http: HttpService, private cookieService: CookieService, private router: Router, private authService: AuthService) {
         this.actions = new Array<Action>();
@@ -30,7 +31,8 @@ export class ConfigComponent implements OnInit{
     @ViewChild('editTemplate') editTemplate: TemplateRef<any>;
 
     editedAction: Action;
-    actions: Array<Action>;
+   // actions: Array<Action>;
+    actions: any;
     isNewRecord: boolean;
     statusMessage: string;
 
@@ -58,7 +60,7 @@ export class ConfigComponent implements OnInit{
 
     // редактирование
     editAction(action: Action) {
-        this.editedAction = new Action(action.name, action.viewName, action.type, action.parameters, action.dataProducerName);
+        this.editedAction = new Action(action.name, action.viewName, action.type, action.parameters, action.dataProducer);
     }
     // загружаем один из двух шаблонов
     loadTemplate(action: Action) {
@@ -72,8 +74,9 @@ export class ConfigComponent implements OnInit{
     saveAction() {
         if (this.isNewRecord) {
             // добавляем
-            this.http.postData(this.actionUrl,this.editedAction).subscribe(data => {
+            this.http.postData(this.actionUrl,JSON.stringify(this.editedAction)).subscribe(data => {
                 this.statusMessage = 'Данные успешно добавлены',
+                    console.log(this.editedAction);
                     this.loadActions();
             });
             this.isNewRecord = false;
@@ -126,7 +129,7 @@ export class Action{
         public viewName: string,
         public type: string,
         public parameters: any,
-        public dataProducerName: string) { }
+        public dataProducer: string) { }
 
 }
 

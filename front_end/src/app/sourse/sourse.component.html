@@ -65,7 +65,7 @@
                     <td>{{action.type}}</td>
                     <td>{{action.url}}</td>
                     <td>{{action.description}}</td>
-                    <td>{{action.params}}</td>
+                    <td>{{action.params | json}}</td>
                     <td>
                         <input type="button" value="Изменить" class="btn btn-default" (click)="editAction(action)" />
                     </td>
