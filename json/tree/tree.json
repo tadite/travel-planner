@@ -34,18 +34,18 @@
     },
     {
       "fromActionName": "dropdownlist-citiesByCountryId-action",
-      "toActionName": "dropdownlist-budget-action",
-      "type": "without-condition",
-      "params": {}
-    },
-    {
-      "fromActionName": "dropdownlist-budget-action",
       "toActionName": "coast-of-living-action-Table",
       "type": "without-condition",
       "params": {}
     },
     {
       "fromActionName": "coast-of-living-action-Table",
+      "toActionName": "dropdownlist-budget-action",
+      "type": "without-condition",
+      "params": {}
+    },
+    {
+      "fromActionName": "dropdownlist-budget-action",
       "toActionName": "radioButton-hotels-find-hotels-action-NEW-TABLE",
       "type": "without-condition",
       "params": {}

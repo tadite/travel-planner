@@ -4,7 +4,7 @@
     {
       "type": "json_path",
       "parameters": {
-        "expression": "$.[*].[fields].[?(@.title)]"
+        "expression": "$.[*].fields.[?(@.title)]"
       }
     },
     {
