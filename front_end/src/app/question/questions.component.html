@@ -26,10 +26,11 @@
         <div class="form-group" >  
             <!-- <hr> -->
             <div align="center" class="form-inline">
-                    <div>                       
+                    <div>                  
+                        <ngx-loading [show]="loading" [config]="{ backdropBackgroundColour: 'rgba(0,0,0,0)', backdropBorderRadius: '10px',
+                        primaryColour: 'rgb(161, 160, 160)', secondaryColour: 'rgb(161, 160, 160)', tertiaryColour: 'rgb(161, 160, 160)' }"></ngx-loading>      
                             <div *ngIf="result == false">
-                                <ngx-loading [show]="loading" [config]="{ backdropBackgroundColour: 'rgba(0,0,0,0)', backdropBorderRadius: '10px',
-                                    primaryColour: 'rgb(161, 160, 160)', secondaryColour: 'rgb(161, 160, 160)', tertiaryColour: 'rgb(161, 160, 160)' }"></ngx-loading> 
+                                
                                     <form [hidden]="loading" #f="ngForm" #elseBlock (ngSubmit)="onSubmit(f)" #myForm="ngForm" novalidate>
             
                                         <div *ngFor="let question of questions"
@@ -110,11 +111,12 @@
                                             <div class="btn-group btn-group-toggle" >                                          
                                             <div *ngFor="let item of question.data.rows">                                               
                                                 <label class="btn">
-                                                    <input type="radio" name="radio" value="{{item.columns[0].value}}" ngModel/>                                            
+                                                    <input type="radio" name="{{question.id}}" value="{{item.columns[0].value}}" ngModel/>                                            
                                                     <table>
                                                     <tr *ngFor="let defs of question.data.columnDefs.columns; let i = index">                                       
                                                         <td>{{defs.value}}</td>                                      
-                                                        <td>{{item.columns[i+1].value}}</td>              
+                                                        <td *ngIf="isLink(question.data, defs.name); else elseTextBlock"><a href="{{item.columns[i+1].value}}" target="_blank">Перейти</a></td>  
+                                                        <ng-template #elseTextBlock>{{item.columns[i+1].value}}</ng-template>            
                                                     </tr> 
                                                     </table>
                                                 </label> 
@@ -128,9 +130,10 @@
                                         <p *ngSwitchDefault> 
                                             {{question}}
                                         </p>
-                                        </div>               
-                                        <input [disabled]="myForm.invalid" class="next" type="submit" (click)="onSubmit()" value="Далее"/>                                        
-                                    </form>
+                                        </div>        
+                                        <input class="next" type="button" (click)="onRollback()" value="Назад"/>            
+                                        <input [disabled]="myForm.invalid" class="next" type="submit" (click)="onSubmit()" value="Далее"/>                                       
+                                    </form> 
                                     </div>        
                         <div *ngIf="result == true">
                             <div class="result-table-block">
@@ -176,6 +179,7 @@
                                      <td>{{questions.excursion.name}}</td>
                                      </tr>
                             </table>
+                            <input class="next" type="button" (click)="onReset()" value="Новое путешествие"/>
                             </div>
                         </div>
                     </div>

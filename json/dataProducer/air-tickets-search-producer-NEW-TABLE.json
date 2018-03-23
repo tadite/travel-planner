@@ -25,7 +25,7 @@
           "price__RUB",
           "booking"
         ],
-        "keyName": "flight_to__flight_no"
+        "keyName": "booking"
       }
     }
   ],

@@ -14,6 +14,7 @@ public interface ActionTree {
     String getName();
     void addAllJumps(Collection<Jump> jumps);
     void addJump(Jump jump);
+    void rollback();
     Response executePresentation(ActionArgs args);
     Response executeDecision(ActionArgs args);
     List<PickResult> getPickResults();
