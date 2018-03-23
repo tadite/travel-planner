@@ -12,6 +12,7 @@
       "time": "Время",
       "experience_id":"Сайт"
     },
-    "links":["experience_id"]
+    "links":["experience_id"],
+    "multiPick":true
   }
 }

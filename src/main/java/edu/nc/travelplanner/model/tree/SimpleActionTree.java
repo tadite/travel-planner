@@ -52,6 +52,9 @@ public class SimpleActionTree implements ActionTree {
 
     @Override
     public void rollback() {
+        if (rollbackMaster.isEmpty())
+            return;
+
         HistoryState previousState = rollbackMaster.rollback();
         this.pickResults=previousState.getPicks();
         this.currentAction=previousState.getJastJump().getCurrentAction();

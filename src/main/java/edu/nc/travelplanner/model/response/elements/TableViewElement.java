@@ -11,15 +11,17 @@ import java.util.Map;
 
 public class TableViewElement implements ViewElement{
     private final List<String> links;
+    private Boolean multiPick;
     private String id;
     private final List<Row> rows;
     private final Row columnDefs;
 
-    public TableViewElement(String id, List<Row> rows, Row columnDefs, List<String> links) {
+    public TableViewElement(String id, List<Row> rows, Row columnDefs, List<String> links, Boolean multiPick) {
         this.id = id;
         this.rows = rows;
         this.columnDefs = columnDefs;
         this.links=links;
+        this.multiPick = multiPick;
     }
 
     @Override
@@ -39,6 +41,7 @@ public class TableViewElement implements ViewElement{
             this.put("columnDefs", columnDefs);
             this.put("rows", rows);
             this.put("links", links);
+            this.put("multiPick", multiPick);
         }};
     }
 }
