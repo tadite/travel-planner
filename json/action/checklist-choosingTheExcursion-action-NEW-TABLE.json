@@ -1,6 +1,6 @@
 {
   "name": "checklist-choosingTheExcursion-action-NEW-TABLE",
-  "viewName": "Выберите экскурсию",
+  "viewName": "Экскурсии",
   "type": "table_integration",
   "dataProducer" : "tripster-excursion-producer-NEW-TABLE",
   "parameters": {

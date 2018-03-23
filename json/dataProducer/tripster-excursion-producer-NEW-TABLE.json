@@ -13,10 +13,6 @@
     {
       "from": "dropdownlist-citiesByCountryId-action.Value",
       "to": "city"
-    },
-    {
-      "from": "checklist-typeOfExcursion-action",
-      "to": "type"
     }
   ],
   "source": "tripster-excursion"

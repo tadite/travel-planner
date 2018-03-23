@@ -1,0 +1,11 @@
+{
+  "name": "radioButton-doYouWantRentCar-action",
+  "viewName": "Вам нужна аренда авто",
+  "type": "radiolist",
+  "parameters": {
+    "optionsMap": {
+      "1": "Да",
+      "2": "Нет"
+    }
+  }
+}
