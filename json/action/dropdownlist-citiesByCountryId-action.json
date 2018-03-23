@@ -1,6 +1,6 @@
 {
   "name": "dropdownlist-citiesByCountryId-action",
-  "viewName": "Выберите город для путешествия",
+  "viewName": "Город для путешествия",
   "type": "dropdown_integration",
   "dataProducer": "cities-by-countryId-producer"
 }

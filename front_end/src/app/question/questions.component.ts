@@ -119,6 +119,12 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
         this.today = year + "-" + month + "-" + day;
     }
 
+    isLink(questionData : any, defName : String) {     
+        if (!(questionData.links instanceof Array)) 
+            return false;
+        return (<Array<String>>questionData.links).indexOf(defName)>-1;            
+    }
+
     isEndOfTree(obj : any) {      
         return typeof(obj.countryId) !== 'undefined';
     }
@@ -128,7 +134,31 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
         this.getNextActionView();        
     }
 
+    onRollback() { 
+        this.loading = true; 
+        var self = this;
+        this.http.deleteObs(this.actionUrl).subscribe(result => {
+            this.checks={};
+            self.getNextActionView();
+        },
+        error => {console.log(error);self.loading=false;}
+        );
+    }
+
+    onReset() {  
+        this.result=false;
+        var self = this;
+        this.http.deleteObs(this.actionUrl+'/reset').subscribe(result => {
+            this.checks={};
+            self.getNextActionView();
+            self.loading=false;
+        },
+        error => {console.log(error);self.loading=false;}
+        );
+    }
+
     onSubmit(f: NgForm) {
+        this.loading = true;
         var map = {};
        
         var tempForm = f.value;
@@ -154,8 +184,10 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
 
     getNextActionView(){
         this.loading = true;
-        this.http.get(this.actionUrl).subscribe(value => {
-            this.loading = false;
+
+        var self = this;
+        this.http.get(this.actionUrl).subscribe(value => {            
+            self.loading = false;    
             this.questions = value;
             console.log('.from: ' + typeof this.questions.from);
             console.log('[from]: '  + typeof this.questions['from']);
@@ -163,9 +195,9 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
                 this.result = true;
             }
             console.log('result: ' + this.result);  
-            console.log(this.questions);        
+            console.log(this.questions);    
         },
-        error => { }
+        error => { self.loading = false; }
         );
     }
 

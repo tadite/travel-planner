@@ -34,6 +34,29 @@ public class ActionTreeController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @DeleteMapping(path = "/action")
+    public ResponseEntity<String> executeDelete() {
+
+        try {
+            return new ResponseEntity<>(orchestrator.rollback().getRawData(), HttpStatus.OK) ;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    @DeleteMapping(path = "/action/reset")
+    public ResponseEntity<String> resetTree() {
+
+        try {
+            orchestrator.reset();
+            return new ResponseEntity<>(HttpStatus.OK) ;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
     @PostMapping(path = "/action")
     public ResponseEntity<String> executePost(@RequestBody Map<String, String> argsMap) {
 

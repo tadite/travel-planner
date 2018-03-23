@@ -33,6 +33,10 @@ export class HttpService{
         return this.httpClient.delete(url);
     }
 
+    public deleteObs(url: string) : Observable<any> {
+        return this.httpClient.delete(url);
+    }
+
     public getCityList(countryId: string, cityURL: string): Observable<any> {
       
       /* let params = new HttpParams();
