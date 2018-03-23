@@ -1,4 +1,5 @@
-@import url(http://allfont.ru/allfont.css?fonts=pt-sans-caption);
+@import url(https://allfont.ru/allfont.css?fonts=pt-sans-caption);
+
 * {
   font-family: 'PT Sans Caption', arial; 
 }
@@ -91,6 +92,18 @@
     box-shadow:  2px 2px 0 rgb(175, 175, 175);
     width: 90px;
     height: 35px;
+    margin-top: 12px;
+  }
+
+  .newTravel{
+    border: 1px solid rgb(175, 175, 175);
+  	background: #fff;
+	  color: rgb(36, 36, 36);
+   	border-radius: 5px;
+    box-shadow:  2px 2px 0 rgb(175, 175, 175);
+    width: 280px;
+    height: 35px;
+    margin-top: 12px;
   }
 
   .result-table-block table {
@@ -121,7 +134,8 @@
     background-image: url(http://www.picshare.ru/uploads/180316/HHmxiL86BP.jpg); 
     width: 100%; 
     height: 2100px; 
-    background-repeat: no-repeat; 
+   
+    background-repeat: repeat-y; 
     -webkit-background-size: 100%; 
     background-size: 100%; 
    
@@ -258,7 +272,7 @@
     background: #fff;
   }
 
-  
+ 
 
 
 /* Always display the drop down caret */
@@ -291,6 +305,7 @@ input[type="text"] {
   border: 2px solid #ccc;
   border-radius: 4px;
   margin-bottom: 10px;
+  padding-left: 5px;
 }
   
 
