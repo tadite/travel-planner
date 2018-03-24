@@ -189,8 +189,7 @@
                                     </form> 
                                     </div>        
                         <div *ngIf="result == true">
-                            <div class="result-table-block">
-                                <!-- <p>Общая информация</p> -->
+                            <div class="result-table-block">                               
                             <table>
                                     <caption>Общая информация</caption>
                                     <tr>
@@ -256,7 +255,7 @@
                                         <td>{{questions.hotel.priceInfo}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Покупка/бронь</td>
+                                        <td>Просмотр</td>
                                         <td><a href="{{questions.hotel.booking}}" target="_blank">Перейти</a></td>  
                                     </tr>
                                 </table>
@@ -267,9 +266,17 @@
                                     <td>Самолет</td>
                                     <td>{{questions.twoWayFlight.flightTo.aircraft}}</td>
                                 </tr>
-                                <tr>                                                                                                                  
+                                <tr>                                                                                                                 
                                     <td>Авиакомпания</td>
                                     <td>{{questions.twoWayFlight.flightTo.companyName}}</td>
+                                </tr>
+                                <tr>                                                                                                                  
+                                    <td>Аэропорт вылета</td>
+                                    <td>{{questions.twoWayFlight.flightTo.departureName}}</td>
+                                </tr>
+                                <tr>                                                                                                                  
+                                    <td>Аэропорт прилета</td>
+                                    <td>{{questions.twoWayFlight.flightTo.arrivalName}}</td>
                                 </tr>
                                 <tr>                                                                                                                  
                                     <td>Класс обслуживания</td>
@@ -298,8 +305,16 @@
                                <tr>                                                                                                                  
                                    <td>Авиакомпания</td>
                                    <td>{{questions.twoWayFlight.flightFrom.companyName}}</td>
-                               </tr>
+                               </tr>                               
                                <tr>                                                                                                                  
+                                    <td>Аэропорт вылета</td>
+                                    <td>{{questions.twoWayFlight.flightFrom.departureName}}</td>
+                                </tr>
+                                <tr>                                                                                                                  
+                                    <td>Аэропорт прилета</td>
+                                    <td>{{questions.twoWayFlight.flightFrom.arrivalName}}</td>
+                                </tr>
+                                <tr>                                                                                                                  
                                    <td>Класс обслуживания</td>
                                    <td>{{questions.twoWayFlight.flightFrom.classType}}</td>
                                </tr>
@@ -324,24 +339,74 @@
                                        <td>{{questions.twoWayFlight.price}}</td>
                                   </tr>
                                   <tr>                                                                                                        
-                                        <td>Покупка/бронь</td>
+                                        <td>Просмотр</td>
                                         <td><a href="{{questions.twoWayFlight.booking}}" target="_blank">Перейти</a></td>  
                                    </tr>
-                              </table>                              
-                                                     
+                              </table> 
+
+                             <div *ngFor="let item of questions.excursions; let i = index">                 
                             <table>   
-                                    <caption>Экскурсии</caption> 
+                                    <caption>Экскурсия №{{i+1}}</caption> 
                                 <tr>                                                                                                        
-                                     <td></td>
-                                     <td></td>
+                                     <td>Название</td>
+                                     <td>{{item.name}}</td>
                                 </tr>
+                                <tr>                                                                                                        
+                                    <td>Описание</td>
+                                    <td>{{item.description}}</td>
+                                </tr>
+                                <tr>                                                                                                        
+                                    <td>Цена</td>
+                                    <td>{{item.price}}</td>
+                                </tr>
+                                <tr>                                                                                                        
+                                    <td>Продолжительность</td>
+                                    <td>{{item.time}}</td>
+                                </tr>
+                                <tr>                                                                                                        
+                                    <td>Просмотр</td>
+                                    <td><a href="{{item.booking}}" target="_blank">Перейти</a></td>  
+                                </tr>                                                                                                    
                             </table>
+                            </div>  
                                                    
                             <table>   
-                                    <caption>Аренда авто</caption> 
+                                    <caption>Аренда автомобиля</caption> 
                                 <tr>                                                                                                        
-                                     <td></td>
-                                     <td></td>
+                                     <td>Марка авто</td>
+                                     <td>{{questions.carRent.name}}</td>
+                                </tr>
+                                <tr>                                                                                                        
+                                    <td>Срок аренды</td>
+                                    <td>{{questions.carRent.pricePeriod}}</td>
+                                </tr>
+                                <tr>                                                                                                        
+                                    <td>Стоимость</td>
+                                    <td>{{questions.carRent.price}}</td>
+                                </tr>
+                                <tr>                                                                                                        
+                                    <td>Количество пассажиров</td>
+                                    <td>{{questions.carRent.seats}}</td>
+                                </tr>
+                                <tr>                                                                                                        
+                                    <td>Количество дверей</td>
+                                    <td>{{questions.carRent.doors}}</td>
+                                </tr>
+                                <tr>                                                                                                        
+                                    <td>Тип коробки передач</td>
+                                    <td>{{questions.carRent.transmission}}</td>
+                                </tr>
+                                <tr>                                                                                                        
+                                    <td>Класс</td>
+                                    <td>{{questions.carRent.classType}}</td>
+                                </tr>
+                                <tr>                                                                                                        
+                                    <td>Пробег</td>
+                                    <td>{{questions.carRent.mileage}}</td>
+                                </tr>
+                                <tr>                                                                                                        
+                                    <td>Просмотр</td>
+                                    <td><a href="{{questions.carRent.booking}}" target="_blank">Перейти</a></td>  
                                 </tr>
                             </table>                           
                             <div class="googlemap">
