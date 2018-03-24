@@ -39,17 +39,34 @@
                                             {{question.data}}<br>
                                         </p>
                                         <div *ngSwitchCase="'dropdown_list'">
-                                            <!-- <div *ngIf="question.id == 'dropdownlist1.dropdownlist-departure-country-action-dropdown-list'"> -->
-                                             <select name="{{question.id}}" ngModel>
-                                                    <!-- <option value="" [selected]="isSelected" > Russia </option>                                                     -->
+                                             <div *ngIf="question.id == 'dropdownlist1.dropdownlist-departure-country-action-dropdown-list'">
+                                             <select name="{{question.id}}" #select [(ngModel)]="departureCountryId" ngModel>                                                                                                 
                                                     <option value="{{key}}" *ngFor="let key of objectKeys(question.data)" >{{question.data[key]}}</option>
                                                 </select><br>                                             
-                                            <!-- </div> -->
-                                            <!--<div *ngIf="question.id == 'dropdownlist1.dropdownlist-departure-city-action-dropdown-list'">
-                                                    <select name="{{question.id}}" ngModel>
+                                             </div>
+                                             <div *ngIf="question.id == 'dropdownlist1.dropdownlist-departure-city-action-dropdown-list'">
+                                                    <select name="{{question.id}}" #select [(ngModel)]="departureCityId" ngModel>
                                                         <option value="{{key}}" *ngFor="let key of objectKeys(question.data)">{{question.data[key]}}</option>
-                                                    </select><br>-->
-                                            <!-- </div> -->
+                                                    </select><br>
+                                            </div>
+                                            <div *ngIf="question.id == 'dropdownlist1.dropdownlist-countries-action-dropdown-list'">
+                                                    <select name="{{question.id}}" #select [(ngModel)]="destinationCountryId" ngModel>
+                                                        <option value="{{key}}" *ngFor="let key of objectKeys(question.data)">{{question.data[key]}}</option>
+                                                    </select><br>
+                                            </div>
+                                            <div *ngIf="question.id == 'dropdownlist1.dropdownlist-citiesByCountryId-action-dropdown-list'">
+                                                    <select name="{{question.id}}" #select [(ngModel)]="destinationCityId" ngModel>
+                                                        <option value="{{key}}" *ngFor="let key of objectKeys(question.data)">{{question.data[key]}}</option>
+                                                    </select><br>
+                                            </div>
+                                            <div *ngIf="question.id != 'dropdownlist1.dropdownlist-departure-country-action-dropdown-list' &&
+                                                        question.id != 'dropdownlist1.dropdownlist-departure-city-action-dropdown-list' &&
+                                                        question.id != 'dropdownlist1.dropdownlist-countries-action-dropdown-list' &&
+                                                        question.id != 'dropdownlist1.dropdownlist-citiesByCountryId-action-dropdown-list'">
+                                                    <select name="{{question.id}}" #select [(ngModel)]="defaultId" ngModel>
+                                                        <option value="{{key}}" *ngFor="let key of objectKeys(question.data)">{{question.data[key]}}</option>
+                                                    </select><br>
+                                            </div>
                                         </div>
             <!-- ************************************************************************ -->                                     
 
@@ -88,19 +105,25 @@
             <!-- ************************************************************************ -->
                                         <div *ngSwitchCase="'text_input'">
                                             <div *ngIf="question.id == 'textbox1.textinput-numberOfPersons-action'">
-                                                <input type="text" placeholder="2" name="{{question.id}}" #text="ngModel" ngModel required pattern="[1-8]" />
+                                                <input type="text" name="{{question.id}}" #text="ngModel" [(ngModel)]="numValue" ngModel required pattern="[1-8]" />
                                                 <div [hidden]="myForm.valid || text.untouched" class="alert alert-danger" id="hid">
                                                     Некорректный ввод 
                                                 </div>
                                             </div>
                                             <div *ngIf="question.id == 'textbox1.textinput-nameOfTravel-action'">
-                                                    <input type="text" placeholder="Prague_10/04_14/04" name="{{question.id}}" ngModel required/>
+                                                    <input type="text" name="{{question.id}}" [(ngModel)]="textValue" ngModel required/>
                                             </div>
                                         </div>
             
-                                        <p *ngSwitchCase="'date_picker'">
-                                            <input type="date" name="{{question.id}}" [min]="today" onkeydown="return false" ngModel required/>                                                                                      
-                                        </p>
+                                        <div *ngSwitchCase="'date_picker'">
+                                            <div *ngIf="question.id == 'datepicker.1.dateIntervalInput-travelPeriod-action'">
+                                                <input type="date" name="{{question.id}}" [min]="today" onkeydown="return false" [(ngModel)] ="defaultStartDate" ngModel required/>                                                                                      
+                                            </div>
+                                            <div *ngIf="question.id == 'datepicker.2.dateIntervalInput-travelPeriod-action'">
+                                                    <input type="date" name="{{question.id}}" [min]="today" onkeydown="return false" [(ngModel)] ="defaultEndDate" ngModel required/>                                                                                      
+                                            </div>
+
+                                        </div>
 
                                         
                                         <div class="table-block">                                        
