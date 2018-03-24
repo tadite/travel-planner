@@ -21,6 +21,8 @@ import java.util.stream.Stream;
 public class TableIntegrationAction implements IntegrationAction {
 
     private List<Row> rows = new LinkedList<>();
+    private List<Row> fullRows = new LinkedList<>();
+
     private List<String> links = new LinkedList<>();
     private LinkedHashMap<String, String> columnDefs = new LinkedHashMap<>();
     private String name;
@@ -74,10 +76,21 @@ public class TableIntegrationAction implements IntegrationAction {
         rows.clear();
 
         List<LinkedHashMap<String, String>> jsonObjs = objectMapper.readValue(response.getRawData(), List.class);
-        int id = 100;
+        int id = 99;
         for (LinkedHashMap<String, String> jsonObj : jsonObjs) {
+            String idVal = String.valueOf(id++);
+
+            Row currentFullRow = new Row();
+            currentFullRow.addColumn(new Column("id", idVal));
+            jsonObj.entrySet()
+                    .forEach(entry -> {
+                        if (entry.getKey() != "id")
+                            currentFullRow.addColumn(new Column(entry.getKey(), entry.getValue()));
+                    });
+            fullRows.add(currentFullRow);
+
             Row currentRow = new Row();
-            currentRow.addColumn(new Column("id", String.valueOf(id++)));
+            currentRow.addColumn(new Column("id", idVal));
             columnDefs.forEach((key, value) -> {
                 currentRow.addColumn(new Column(
                         key,
@@ -101,7 +114,7 @@ public class TableIntegrationAction implements IntegrationAction {
                 .forEach(arg1 -> {
                     String pickedId = arg1.getKey();
 
-                    rows.stream().filter(
+                    fullRows.stream().filter(
                             row -> row.getColumns()
                                     .stream()
                                     .anyMatch(column -> column.getName().equals("id") && column.getValue().equals(pickedId))
@@ -121,7 +134,7 @@ public class TableIntegrationAction implements IntegrationAction {
                 .ifPresent(arg1 -> {
                     String pickedId = arg1.getKey();
 
-                    rows.stream().filter(
+                    fullRows.stream().filter(
                             row -> row.getColumns()
                                     .stream()
                                     .anyMatch(column -> column.getName().equals("id") && column.getValue().equals(pickedId))

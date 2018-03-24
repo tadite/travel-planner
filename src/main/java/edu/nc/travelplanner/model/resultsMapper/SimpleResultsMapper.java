@@ -74,10 +74,14 @@ public class SimpleResultsMapper implements ResultsMapper {
 
             FlightAfterPickTreeDto toFlightDto = createFlightDto(columns, "flight_to__aircraft", "flight_to__company__name",
                     "flight_to__class", "flight_to__departure_date", "flight_to__departure_time",
-                    "flight_to__time_in_path");
+                    "flight_to__time_in_path", "flight_to__departure__place_code", "flight_to__departure__place_name",
+                    "flight_to__arrival__place_code", "flight_to__arrival__place_name");
+
             FlightAfterPickTreeDto fromFlightDto = createFlightDto(columns, "flight_from__aircraft", "flight_from__company__name",
                     "flight_from__class", "flight_from__departure_date", "flight_from__departure_time",
-                    "flight_from__time_in_path");
+                    "flight_from__time_in_path", "flight_from__departure__place_code", "flight_from__departure__place_name",
+                    "flight_from__arrival__place_code", "flight_from__arrival__place_name");
+
             String price = getColumnValueOrEmpty(columns, "price__RUB");
             String booking = getColumnValueOrEmpty(columns, "booking");
 
@@ -97,15 +101,22 @@ public class SimpleResultsMapper implements ResultsMapper {
     }
 
     private FlightAfterPickTreeDto createFlightDto(List<Column> columns, String aircraft, String companyName, String classType,
-                                                   String departureDate, String departureTime, String timeInPath) {
+                                                   String departureDate, String departureTime, String timeInPath, String departureCode,
+                                                   String departureName, String arrivalCode, String arrivalName) {
         String aircraftVal = getColumnValueOrEmpty(columns, aircraft);
         String companyNameVal = getColumnValueOrEmpty(columns, companyName);
         String classTypeVal = getColumnValueOrEmpty(columns, classType);
         String departureDateVal = getColumnValueOrEmpty(columns, departureDate);
         String departureTimeVal = getColumnValueOrEmpty(columns, departureTime);
         String timeInPathVal = getColumnValueOrEmpty(columns, timeInPath);
+        String departureCodeVal = getColumnValueOrEmpty(columns, departureCode);
+        String departureNameVal = getColumnValueOrEmpty(columns, departureName);
+        String arrivalCodeVal = getColumnValueOrEmpty(columns, arrivalCode);
+        String arrivalNameVal = getColumnValueOrEmpty(columns, arrivalName);
 
-        return new FlightAfterPickTreeDto(aircraftVal, companyNameVal, classTypeVal, departureDateVal, departureTimeVal, timeInPathVal);
+        return new FlightAfterPickTreeDto(aircraftVal, companyNameVal, classTypeVal, departureDateVal,
+                departureTimeVal, timeInPathVal, departureCodeVal, departureNameVal,
+                arrivalCodeVal, arrivalNameVal);
     }
 
     private void setHotel(TravelAfterPickTreeDto travelDto, List<PickResult> picks) {
