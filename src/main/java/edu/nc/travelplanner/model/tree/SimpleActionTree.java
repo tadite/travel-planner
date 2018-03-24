@@ -119,7 +119,7 @@ public class SimpleActionTree implements ActionTree {
             try {
                 currentAction.executePresentation(args, picks);
                 return;
-            } catch (DataProducerSendException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 triesLeft--;
                 try {

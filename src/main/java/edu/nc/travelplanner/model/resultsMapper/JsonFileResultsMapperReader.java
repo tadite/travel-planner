@@ -10,9 +10,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-@Component
-public class JsonFileResultsMapperReader implements ResultsMapperReader {
-
+//@Component
+public class JsonFileResultsMapperReader /*implements ResultsMapperReader*/ {
+/*
     @Autowired
     PathMapper pathMapper;
 
@@ -29,5 +29,5 @@ public class JsonFileResultsMapperReader implements ResultsMapperReader {
 
     private String getPathToJson(String treeName) {
         return PathUtil.getPathInUserDir(pathMapper.getResultMapperPath(), treeName, pathMapper.getExtension());
-    }
+    }*/
 }

@@ -6,22 +6,22 @@ import java.util.List;
 
 public class TablePickResult {
 
-    private List<Row> rows = new LinkedList<>();
+    private Row row;
     private List<String> links = new LinkedList<>();
     private LinkedHashMap<String, String> columnDefs = new LinkedHashMap<>();
 
-    public TablePickResult(List<Row> rows, List<String> links, LinkedHashMap<String, String> columnDefs) {
-        this.rows = rows;
+    public TablePickResult(Row row, List<String> links, LinkedHashMap<String, String> columnDefs) {
+        this.row = row;
         this.links = links;
         this.columnDefs = columnDefs;
     }
 
-    public List<Row> getRows() {
-        return rows;
+    public Row getRow() {
+        return row;
     }
 
-    public void setRows(List<Row> rows) {
-        this.rows = rows;
+    public void setRow(Row row) {
+        this.row = row;
     }
 
     public List<String> getLinks() {

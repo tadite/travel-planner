@@ -106,7 +106,7 @@ public class TableIntegrationAction implements IntegrationAction {
                                     .anyMatch(column -> column.getName().equals("id") && column.getValue().equals(pickedId))
                     )
                             .forEach(row -> tablePickResults.add(
-                                    new TablePickResult(new LinkedList<>(rows),
+                                    new TablePickResult(row,
                                             new LinkedList<>(links),
                                             new LinkedHashMap<>(columnDefs))));
                 });
@@ -126,7 +126,7 @@ public class TableIntegrationAction implements IntegrationAction {
                                     .anyMatch(column -> column.getName().equals("id") && column.getValue().equals(pickedId))
                     )
                             .findFirst()
-                            .ifPresent(row -> picks.add(new PickResult(getName(), new TablePickResult(new LinkedList<>(rows),
+                            .ifPresent(row -> picks.add(new PickResult(getName(), new TablePickResult(row,
                                     new LinkedList<>(links),
                                     new LinkedHashMap<>(columnDefs)), TablePickResult.class)));
                 });
@@ -135,9 +135,11 @@ public class TableIntegrationAction implements IntegrationAction {
     private Stream<Map.Entry<String, String>> getArgsStreamForThisAction(Map<String, String> decisionArgs) {
         return decisionArgs.entrySet()
                 .stream()
-                .filter(arg -> arg.getValue().substring(arg.getValue().lastIndexOf('.'),
-                        arg.getValue().length() - 1)
-                        .equals(this.getName())
+                .filter(arg -> {
+                            String value = arg.getValue().substring(arg.getValue().lastIndexOf('.') + 1,
+                                    arg.getValue().length());
+                            return value.equals(this.getName()) || value.equals("checked");
+                        }
                 );
     }
 
