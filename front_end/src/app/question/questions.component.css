@@ -1,4 +1,5 @@
-@import url(http://allfont.ru/allfont.css?fonts=pt-sans-caption);
+ @import url(https://fonts.googleapis.com/css?family=PT+Sans+Caption); 
+
 * {
   font-family: 'PT Sans Caption', arial; 
 }
@@ -91,6 +92,18 @@
     box-shadow:  2px 2px 0 rgb(175, 175, 175);
     width: 90px;
     height: 35px;
+    margin-top: 10px;
+  }
+
+  .newTravel{
+    border: 1px solid rgb(175, 175, 175);
+  	background: #fff;
+	  color: rgb(36, 36, 36);
+   	border-radius: 5px;
+    box-shadow:  2px 2px 0 rgb(175, 175, 175);
+    width: 280px;
+    height: 35px;
+    margin-top: 10px;
   }
 
   .result-table-block table {
@@ -118,10 +131,11 @@
   .result-table-block tr:hover td {background: #e8edff;} 
   
   .background-image{ 
-    background-image: url(http://www.picshare.ru/uploads/180316/HHmxiL86BP.jpg); 
+    background-image: url(http://www.picshare.ru/uploads/180323/2JjngTcsyK.jpg); 
     width: 100%; 
-    height: 2100px; 
-    background-repeat: no-repeat; 
+    height: 1500px; 
+   
+    background-repeat: repeat-y; 
     -webkit-background-size: 100%; 
     background-size: 100%; 
    
@@ -191,7 +205,7 @@
     margin: 10px;
   }
 
-  .table-block input[type="radio"]{
+  .table-block input[type="radio"], .table-block input[type="checkbox"]{
     /* margin-top:20%; 
     vertical-align: middle;
     float: left;*/
@@ -206,6 +220,13 @@
     border-radius:7px;
     -moz-border-radius:7px;
   }
+
+  .table-block .costOfLiving table{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 450px; 
+  }
+
   .table-block td {
     border-bottom: 1px solid #ccc;
     color: #669;
@@ -239,7 +260,7 @@
   box-shadow: none;
 }
 
-.table-block input[type="radio"]:checked ~ table {
+.table-block input[type="radio"]:checked ~ table, .table-block input[type="checkbox"]:checked ~ table {
   background: #ccd5f0;
   border:solid #6678b1 3px;
   border-collapse:separate;
@@ -258,7 +279,7 @@
     background: #fff;
   }
 
-  
+ 
 
 
 /* Always display the drop down caret */
@@ -291,6 +312,7 @@ input[type="text"] {
   border: 2px solid #ccc;
   border-radius: 4px;
   margin-bottom: 10px;
+  padding-left: 5px;
 }
   
 

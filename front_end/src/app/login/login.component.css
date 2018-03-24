@@ -1,8 +1,14 @@
-@import url(http://allfont.ru/allfont.css?fonts=pt-sans-caption);
+@import url(https://fonts.googleapis.com/css?family=PT+Sans+Caption); 
+
 * {
   font-family: 'PT Sans Caption', arial; 
 }
 
+.background-image{
+  background-image : url('http://upload.akusherstvo.ru/image1458493.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
 
 .form {
     position: relative;

@@ -1,7 +1,9 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:300|Roboto+Condensed');
+@import url(https://fonts.googleapis.com/css?family=PT+Sans+Caption); 
+
 * {
-  font-family: "Open Sans", Arial, sans-serif; 
+  font-family: 'PT Sans Caption', arial; 
 }
+
 
 .background-image{
     position: absolute;

@@ -3,14 +3,14 @@
     <div class="background-image">
     <div class="ph">
             <img class="img" src="http://upload.akusherstvo.ru/image1482617.jpg">
-            <div class="title">ПЛАНИРОВЩИК ПУТЕШЕСТВИЙ</div>
+            <div class="title">TRAVEL PLANNER</div>
     <nav class="fixed-nav-bar">  
             <ul id="navbar">               
                     <li><a>{{login}} <span class="glyphicon glyphicon-menu-down"></span></a> 
                       <ul>
                         <li><a routerLink="/profile" routerLinkActive="active"><span class="glyphicon glyphicon-user"></span> Мой профиль</a></li>
                         <!-- <li><a href="#"><span class="glyphicon glyphicon-picture"></span> История путешествий</a></li>                     -->
-                        <li><a routerLink="/notepad" routerLinkActive="active"><span class="glyphicon glyphicon-list-alt"></span> Блокнот</a></li>
+                       
                         <li><a routerLink="/questions" routerLinkActive="active"><span class="glyphicon glyphicon-plane"></span> Мое путешествие</a></li>
                         <hr>
                         <li><a (click)="logout()"><span class="glyphicon glyphicon-log-out"></span> Выйти</a></li>                    
@@ -29,8 +29,7 @@
                     <div>                  
                         <ngx-loading [show]="loading" [config]="{ backdropBackgroundColour: 'rgba(0,0,0,0)', backdropBorderRadius: '10px',
                         primaryColour: 'rgb(161, 160, 160)', secondaryColour: 'rgb(161, 160, 160)', tertiaryColour: 'rgb(161, 160, 160)' }"></ngx-loading>      
-                            <div *ngIf="result == false">
-                                
+                            <div *ngIf="result == false">                                
                                     <form [hidden]="loading" #f="ngForm" #elseBlock (ngSubmit)="onSubmit(f)" #myForm="ngForm" novalidate>
             
                                         <div *ngFor="let question of questions"
@@ -39,17 +38,20 @@
                                         <p *ngSwitchCase="'title'">
                                             {{question.data}}<br>
                                         </p>
-                                        <p *ngSwitchCase="'dropdown_list'">
-                                            <select name="{{question.id}}" ngModel>
-                                               <option value="{{key}}" *ngFor="let key of objectKeys(question.data)">{{question.data[key]}}</option>
-                                            </select><br>
-                                        </p>
-            <!-- ************************************************************************ -->
-                                      <!--  <div class="checkbox-block">
-                                        <p *ngSwitchCase="'checkbox'">                                
-                                            <input  type="checkbox" (change)="putCheckId(question.id)"/><span>{{question.data}}</span><br>                                
-                                        </p>
-                                        </div>-->
+                                        <div *ngSwitchCase="'dropdown_list'">
+                                            <!-- <div *ngIf="question.id == 'dropdownlist1.dropdownlist-departure-country-action-dropdown-list'"> -->
+                                             <select name="{{question.id}}" ngModel>
+                                                    <!-- <option value="" [selected]="isSelected" > Russia </option>                                                     -->
+                                                    <option value="{{key}}" *ngFor="let key of objectKeys(question.data)" >{{question.data[key]}}</option>
+                                                </select><br>                                             
+                                            <!-- </div> -->
+                                            <!--<div *ngIf="question.id == 'dropdownlist1.dropdownlist-departure-city-action-dropdown-list'">
+                                                    <select name="{{question.id}}" ngModel>
+                                                        <option value="{{key}}" *ngFor="let key of objectKeys(question.data)">{{question.data[key]}}</option>
+                                                    </select><br>-->
+                                            <!-- </div> -->
+                                        </div>
+            <!-- ************************************************************************ -->                                     
 
                                         <div class="row">
                                             <div class="col-xs-12">
@@ -57,19 +59,14 @@
                                                 <div *ngSwitchCase="'checkbox'">
                                                     <div class="btn-group btn-group-vertical">
                                                         <label class="btn">
-                                                            <input type="checkbox"(change)="putCheckId(question.id)"/><i class="fa fa-square-o fa-2x"></i><i class="fa fa-check-square-o fa-2x"></i> <span> {{question.data}}</span>
+                                                            <input type="checkbox" (change)="putCheckId(question.id)"/><i class="fa fa-square-o fa-2x"></i><i class="fa fa-check-square-o fa-2x"></i> <span> {{question.data}}</span>
                                                         </label>
                                                     </div>
                                                 </div>
                                             </div>
                                             </div>
-                                        </div>
-            
-                                       <!-- <div class="radiobutton-block">
-                                            <p *ngSwitchCase="'radiobox'">                                
-                                                <input type="radio" name="radio" value="{{question.id}}" ngModel /><span>{{question.data}}</span><br>                                
-                                            </p>
-                                        </div>-->
+                                        </div>           
+                                    
                                         
                                         <div class="row">
                                             <div class="col-xs-12">
@@ -91,13 +88,13 @@
             <!-- ************************************************************************ -->
                                         <div *ngSwitchCase="'text_input'">
                                             <div *ngIf="question.id == 'textbox1.textinput-numberOfPersons-action'">
-                                                <input type="text" name="{{question.id}}" #text="ngModel" ngModel required pattern="[0-9]+"/>
+                                                <input type="text" placeholder="2" name="{{question.id}}" #text="ngModel" ngModel required pattern="[1-8]" />
                                                 <div [hidden]="myForm.valid || text.untouched" class="alert alert-danger" id="hid">
                                                     Некорректный ввод 
                                                 </div>
                                             </div>
                                             <div *ngIf="question.id == 'textbox1.textinput-nameOfTravel-action'">
-                                                    <input type="text" name="{{question.id}}" ngModel required/>
+                                                    <input type="text" placeholder="Berlin_10/04_14/04" name="{{question.id}}" ngModel required/>
                                             </div>
                                         </div>
             
@@ -108,6 +105,38 @@
                                         
                                         <div class="table-block">                                        
                                         <div *ngSwitchCase="'table_picker'"> 
+                                            <div *ngIf="question.id == 'table.1.coast-of-living-action-Table'">
+                                                <div class="costOfLiving">                                          
+                                                        <div *ngFor="let item of question.data.rows">                                                                
+                                                                <table>
+                                                                <tr *ngFor="let defs of question.data.columnDefs.columns; let i = index">                                       
+                                                                    <td>{{defs.value}}</td>                                      
+                                                                    <td *ngIf="isLink(question.data, defs.name); else elseTextBlock"><a href="{{item.columns[i+1].value}}" target="_blank">Перейти</a></td>  
+                                                                    <ng-template #elseTextBlock><td>{{item.columns[i+1].value}}</td></ng-template>            
+                                                                </tr> 
+                                                                </table>
+                                                        </div>
+                                                                    <!-- <br>  --> 
+                                                    </div>
+                                            </div>
+                                            <div *ngIf="question.id == 'table.1.checklist-choosingTheExcursion-action-NEW-TABLE'">
+                                                    <div class="btn-group btn-group-toggle" >                                          
+                                                            <div *ngFor="let item of question.data.rows">                                               
+                                                                <label class="btn">
+                                                                    <input type="checkbox" (change)="putCheckId(item.columns[0].value)"/>                                            
+                                                                    <table>
+                                                                    <tr *ngFor="let defs of question.data.columnDefs.columns; let i = index">                                       
+                                                                        <td>{{defs.value}}</td>                                      
+                                                                        <td *ngIf="isLink(question.data, defs.name); else elseTextBlock"><a href="{{item.columns[i+1].value}}" target="_blank">Перейти</a></td>  
+                                                                        <ng-template #elseTextBlock><td>{{item.columns[i+1].value}}</td></ng-template>            
+                                                                    </tr> 
+                                                                    </table>
+                                                                </label> 
+                                                            </div>
+                                                                <!-- <br>  --> 
+                                                    </div>
+                                            </div>
+                                            <div *ngIf="question.id == 'table.1.radioButton-hotels-find-hotels-action-NEW-TABLE' || question.id == 'table.1.radioButton-typeOfTransport-action-NEW-TABLE'">
                                             <div class="btn-group btn-group-toggle" >                                          
                                             <div *ngFor="let item of question.data.rows">                                               
                                                 <label class="btn">
@@ -116,12 +145,13 @@
                                                     <tr *ngFor="let defs of question.data.columnDefs.columns; let i = index">                                       
                                                         <td>{{defs.value}}</td>                                      
                                                         <td *ngIf="isLink(question.data, defs.name); else elseTextBlock"><a href="{{item.columns[i+1].value}}" target="_blank">Перейти</a></td>  
-                                                        <ng-template #elseTextBlock>{{item.columns[i+1].value}}</ng-template>            
+                                                        <ng-template #elseTextBlock><td>{{item.columns[i+1].value}}</td></ng-template>            
                                                     </tr> 
                                                     </table>
                                                 </label> 
                                                 </div>
                                                 <!-- <br>  --> 
+                                            </div>
                                             </div>
                                         </div>                                         
                                         
@@ -198,7 +228,7 @@
                                     </agm-polyline>
                                 </agm-map>
                             </div>
-                            <input class="next" type="button" (click)="onReset()" value="Новое путешествие"/>
+                            <input class="newTravel" type="button" (click)="onReset()" value="Новое путешествие"/>
                             </div>
                         </div>
                     </div>

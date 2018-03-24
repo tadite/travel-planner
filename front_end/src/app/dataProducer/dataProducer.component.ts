@@ -51,7 +51,7 @@ export class DataProducerComponent implements OnInit{
 
     // добавление
     addAction() {
-        this.editedAction = new DataProducer("",[],[],"");
+        this.editedAction = new DataProducer("",null,null,"");
         this.actions.unshift(this.editedAction);
         this.isNewRecord = true;
     }
@@ -122,8 +122,8 @@ export class DataProducerComponent implements OnInit{
 export class DataProducer{
     constructor(
         public name: string,
-        public filters: object[],
-        public mappers:  object[],
+        public filters: any,
+        public mappers:  any,
         public source: string) { }
 
 }

@@ -64,17 +64,39 @@
                 <td>{{action.viewName}}</td>
                 <td>{{action.type}}</td>
                 <!-- <td *ngFor="let key of objectKeys(action.parameters.optionsMap)" > {{action.parameters.optionsMap[key]}}</td>-->
-                <td>{{action.parameters}}</td>
-                <td>{{action.dataProducerName}}</td>
-                <td>
-                    <input type="button" value="Изменить" class="btn btn-default" (click)="editAction(action)" />
-                </td>
-                <td>
-                    <input type="button" value="Удалить" (click)="deleteAction(action)" class="btn btn-default" />
-                </td>
-            </ng-template>
+                <!-- <td [ngSwitch]="action.parameters.value" >
+                   <p *ngSwitchCase="'optionsMap'">
+                       <ng-container *ngFor="let key of objectKeys(action.parameters.optionsMap)">
+                           {{action.parameters.optionsMap[key]}}
+                       </ng-container><br>
+                  </p>
+                   <p *ngSwitchCase="'columnDefs'">
+                       <ng-container *ngFor="let key of objectKeys(action.parameters.columnDefs)">
+                           {{action.parameters.columnDefs[key]}}
+                       </ng-container><br>
+               </p>
+                   <p *ngSwitchCase="'paramsToCheck'">
+                       <ng-container *ngFor="let key of objectKeys(action.parameters.paramsToCheck)">
+                           {{action.parameters.paramsToCheck[key]}}
+                       </ng-container><br>
+                   </p>
+                   <p *ngSwitchCase="'data'">
+                       <ng-container *ngFor="let key of objectKeys(action.parameters.data)">
+                           {{action.parameters.data[key]}}
+                       </ng-container><br>
+                   </p>
+               </td>-->
+                <td>{{action.parameters | json}}</td>
+               <td>{{action.dataProducer}}</td>
+               <td>
+                   <input type="button" value="Изменить" class="btn btn-default" (click)="editAction(action)" />
+               </td>
+               <td>
+                   <input type="button" value="Удалить" (click)="deleteAction(action)" class="btn btn-default" />
+               </td>
+           </ng-template>
 
-            <!--шаблон для редактирования-->
+           <!--шаблон для редактирования-->
             <ng-template #editTemplate>
                 <td>
                     <input type="text" [(ngModel)]="editedAction.name"  class="form-control" />
@@ -89,7 +111,7 @@
                     <input type="text" [(ngModel)]="editedAction.parameters" class="form-control" />
                 </td>
                 <td>
-                    <input type="text" [(ngModel)]="editedAction.dataProducerName" class="form-control" />
+                    <input type="text" [(ngModel)]="editedAction.dataProducer" class="form-control" />
                 </td>
                 <td>
                     <input type="button" value="Сохранить" (click)="saveAction()" class="btn btn-default" />
