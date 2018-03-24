@@ -47,8 +47,8 @@ public class SimpleResultsMapper implements ResultsMapper {
         excursionsResultOptional.ifPresent(flightPick -> {
             if (flightPick.getResultClass() != List.class)
                 return;
-
-            List<?> excursionTables = (List<?>) flightPick;
+            //TODO: flightPick.getValue() -> class
+            List<?> excursionTables = (List<?>) flightPick.getValue();
             excursionTables.forEach(excursionPick -> {
                 if (excursionPick.getClass() != TablePickResult.class)
                     return;
