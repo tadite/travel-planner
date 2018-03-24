@@ -94,7 +94,7 @@
                                                 </div>
                                             </div>
                                             <div *ngIf="question.id == 'textbox1.textinput-nameOfTravel-action'">
-                                                    <input type="text" placeholder="Berlin_10/04_14/04" name="{{question.id}}" ngModel required/>
+                                                    <input type="text" placeholder="Prague_10/04_14/04" name="{{question.id}}" ngModel required/>
                                             </div>
                                         </div>
             
@@ -119,7 +119,7 @@
                                                                     <!-- <br>  --> 
                                                     </div>
                                             </div>
-                                            <div *ngIf="question.id == 'table.1.checklist-choosingTheExcursion-action-NEW-TABLE'">
+                                            <div *ngIf="question.data.multiPick == true">
                                                     <div class="btn-group btn-group-toggle" >                                          
                                                             <div *ngFor="let item of question.data.rows">                                               
                                                                 <label class="btn">
@@ -136,7 +136,7 @@
                                                                 <!-- <br>  --> 
                                                     </div>
                                             </div>
-                                            <div *ngIf="question.id == 'table.1.radioButton-hotels-find-hotels-action-NEW-TABLE' || question.id == 'table.1.radioButton-typeOfTransport-action-NEW-TABLE'">
+                                            <div *ngIf="question.data.multiPick == false">
                                             <div class="btn-group btn-group-toggle" >                                          
                                             <div *ngFor="let item of question.data.rows">                                               
                                                 <label class="btn">
@@ -167,48 +167,160 @@
                                     </div>        
                         <div *ngIf="result == true">
                             <div class="result-table-block">
+                                <!-- <p>Общая информация</p> -->
                             <table>
-                                    <tr>
-                                     <th>Вопрос</th>
-                                     <th>Ответ</th>
-                                    </tr>
+                                    <caption>Общая информация</caption>
                                     <tr>
                                     <td>Название путешествия</td>
-                                    <td>{{questions.travelName}}</td>
+                                    <td>{{questions.name}}</td>
                                     </tr>
                                     <tr>
                                      <td>Страна отправления</td>
-                                     <td>{{questions.from.countryName}}</td>
+                                     <td>{{questions.fromCheckpoint.countryName}}</td>
                                      </tr>
                                      <tr>
                                      <td>Город отправления</td>
-                                     <td>{{questions.from.cityName}}</td>
+                                     <td>{{questions.fromCheckpoint.cityName}}</td>
                                      </tr>
                                      <tr>
                                      <td>Страна назначения</td>
-                                     <td>{{questions.to.countryName}}</td>
+                                     <td>{{questions.toCheckpoint.countryName}}</td>
                                      </tr>
                                      <tr>
                                      <td>Город назначения</td>
-                                     <td>{{questions.to.cityName}}</td>
-                                     </tr>
-                                     <tr>
-                                     <td>Бюджет</td>
-                                     <td>{{questions.budget.name}}</td>
-                                     </tr>
+                                     <td>{{questions.toCheckpoint.cityName}}</td>
+                                     </tr>                                     
                                      <tr>
                                      <td>Дата отъезда</td>
-                                     <td>{{questions.dateIntervalStart}}</td>
+                                     <td>{{questions.dateStart}}</td>
                                      </tr>
                                      <tr>
                                      <td>Дата приезда</td>
-                                     <td>{{questions.dateIntervalEnd}}</td>
+                                     <td>{{questions.dateEnd}}</td>
                                      </tr>
                                      <tr>
-                                     <td>Экскурсии</td>
-                                     <td>{{questions.excursion.name}}</td>
-                                     </tr>
+                                        <td>Количество человек</td>
+                                        <td>{{questions.numberOfPersons}}</td>
+                                        </tr>
+                                     <tr>
+                                    <tr>
+                                        <td>Бюджет</td>
+                                        <td>{{questions.budgetType}}</td>
+                                    </tr>
+                                </table>
+                                
+                                <table>
+                                    <caption>Проживание</caption>
+                                    <tr>
+                                        <td>Отель</td>
+                                        <td>{{questions.hotel.name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Адрес</td>
+                                        <td>{{questions.hotel.address}}</td>
+                                    </tr>                                                                      
+                                    <tr>
+                                    <tr>
+                                        <td>Стоимость</td>
+                                        <td>{{questions.hotel.price}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Период</td>
+                                        <td>{{questions.hotel.pricePeriod}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Информация</td>
+                                        <td>{{questions.hotel.priceInfo}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Покупка/бронь</td>
+                                        <td><a href="{{questions.hotel.booking}}" target="_blank">Перейти</a></td>  
+                                    </tr>
+                                </table>
+                                
+                                <table>
+                                    <caption>Путь туда</caption>
+                                <tr>                                                                                                                  
+                                    <td>Самолет</td>
+                                    <td>{{questions.twoWayFlight.flightTo.aircraft}}</td>
+                                </tr>
+                                <tr>                                                                                                                  
+                                    <td>Авиакомпания</td>
+                                    <td>{{questions.twoWayFlight.flightTo.companyName}}</td>
+                                </tr>
+                                <tr>                                                                                                                  
+                                    <td>Класс обслуживания</td>
+                                    <td>{{questions.twoWayFlight.flightTo.classType}}</td>
+                                </tr>
+                                <tr>                                                                                                                  
+                                    <td>Дата вылета</td>
+                                    <td>{{questions.twoWayFlight.flightTo.departureDate}}</td>
+                                 </tr>
+                                <tr>                                                                                                                  
+                                    <td>Время вылета</td>
+                                    <td>{{questions.twoWayFlight.flightTo.departureTime}}</td>
+                                </tr>
+                                <tr>                                                                                                                  
+                                    <td>Время в пути</td>
+                                    <td>{{questions.twoWayFlight.flightTo.timeInPath}}</td>
+                                </tr>                                                                                                                                  
+                               </table>
+                              
+                               <table>
+                                    <caption>Путь обратно</caption>
+                               <tr>                                                                                                                  
+                                   <td>Самолет</td>
+                                   <td>{{questions.twoWayFlight.flightFrom.aircraft}}</td>
+                               </tr>
+                               <tr>                                                                                                                  
+                                   <td>Авиакомпания</td>
+                                   <td>{{questions.twoWayFlight.flightFrom.companyName}}</td>
+                               </tr>
+                               <tr>                                                                                                                  
+                                   <td>Класс обслуживания</td>
+                                   <td>{{questions.twoWayFlight.flightFrom.classType}}</td>
+                               </tr>
+                               <tr>                                                                                                                  
+                                   <td>Дата вылета</td>
+                                   <td>{{questions.twoWayFlight.flightFrom.departureDate}}</td>
+                                </tr>
+                               <tr>                                                                                                                  
+                                   <td>Время вылета</td>
+                                   <td>{{questions.twoWayFlight.flightFrom.departureTime}}</td>
+                               </tr>
+                               <tr>                                                                                                                  
+                                    <td>Время в пути</td>
+                                    <td>{{questions.twoWayFlight.flightFrom.timeInPath}}</td>
+                                </tr>                                                                                                                                                                
+                              </table>
+                                                    
+                              <table>   
+                                    <caption>Билеты</caption> 
+                                  <tr>                                                                                                        
+                                       <td>Общая стоимость</td>
+                                       <td>{{questions.twoWayFlight.price}}</td>
+                                  </tr>
+                                  <tr>                                                                                                        
+                                        <td>Покупка/бронь</td>
+                                        <td><a href="{{questions.twoWayFlight.booking}}" target="_blank">Перейти</a></td>  
+                                   </tr>
+                              </table>                              
+                                                     
+                            <table>   
+                                    <caption>Экскурсии</caption> 
+                                <tr>                                                                                                        
+                                     <td></td>
+                                     <td></td>
+                                </tr>
                             </table>
+                                                   
+                            <table>   
+                                    <caption>Аренда авто</caption> 
+                                <tr>                                                                                                        
+                                     <td></td>
+                                     <td></td>
+                                </tr>
+                            </table>                           
                             <div class="googlemap">
                                 <agm-map
                                         [latitude]="55.41030689999999"
