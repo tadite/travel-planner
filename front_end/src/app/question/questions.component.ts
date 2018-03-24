@@ -8,6 +8,9 @@ import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 import {NgForm} from '@angular/forms';
+import { } from '@types/googlemaps';
+import { GoogleMapsAPIWrapper, MapsAPILoader } from '@agm/core';
+import { Observable } from 'rxjs';
 
 
 
@@ -24,7 +27,7 @@ import {NgForm} from '@angular/forms';
           ])     
     ],
   //  providers: [HttpClient]
-   providers: [HttpService, AuthService]
+   providers: [HttpService, AuthService, GoogleMapsAPIWrapper]
 })
 
 export class QuestionsComponent implements OnInit
@@ -103,7 +106,9 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
 
     result: boolean = false;
 
-    constructor(private http: HttpService, private cookieService: CookieService, private router: Router, private authService: AuthService) {
+    locations: Location[] = new Array();
+
+    constructor(private http: HttpService, private cookieService: CookieService, private router: Router, private authService: AuthService, private mapsApiLoader: MapsAPILoader) {
         this.currentDate = new Date();
         let year: any = this.currentDate.getFullYear();
         let month: any = this.currentDate.getMonth() + 1;
@@ -117,6 +122,7 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
         }
 
         this.today = year + "-" + month + "-" + day;
+        this.mapsApiLoader.load();
     }
 
     isLink(questionData : any, defName : String) {     
@@ -131,7 +137,7 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
     
     ngOnInit(){        
         this.login = this.getLogin();        
-        this.getNextActionView();        
+        this.getNextActionView();
     }
 
     onRollback() { 
@@ -191,7 +197,9 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
             this.questions = value;
             console.log('.from: ' + typeof this.questions.from);
             console.log('[from]: '  + typeof this.questions['from']);
-            if (typeof this.questions.from !== 'undefined') {                
+            if (typeof this.questions.from !== 'undefined') {
+                this.mapsApiLoader.load();
+                this.buildRoute();
                 this.result = true;
             }
             console.log('result: ' + this.result);  
@@ -223,4 +231,44 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
         return this.authService.getLogin();
     }
 
+    buildRoute(){
+        this.mapsApiLoader.load();
+        if (this.questions.from.countryName != null && this.questions.from.cityName != null){
+            this.setLocationCoords(this.questions.from.cityName + ' ' + this.questions.from.countryName);
+        }
+        if (this.questions.to.countryName != null && this.questions.to.cityName != null){
+            this.setLocationCoords(this.questions.to.cityName + ' ' + this.questions.to.countryName);
+        }
+    }
+
+    setLocationCoords(address: string){
+        this.getCoordinates(address)
+            .subscribe(result => {
+                this.locations.push(new Location(result.lat(), result.lng()))
+            });
+    }
+
+    getCoordinates(address: string): Observable<any> {
+        let geocoder = new google.maps.Geocoder();
+        return Observable.create((observer: any) => {
+            geocoder.geocode({'address': address}, (results, status) => {
+                if (status == google.maps.GeocoderStatus.OK){
+                    observer.next(results[0].geometry.location);
+                    observer.complete();
+                } else {
+                    observer.error();
+                }
+            });
+        });
+    }
+}
+
+export class Location{
+    lat: any;
+    lng: any;
+
+    constructor(lat: number, lng: number){
+        this.lat = lat;
+        this.lng = lng;
+    }
 }

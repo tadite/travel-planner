@@ -179,6 +179,25 @@
                                      <td>{{questions.excursion.name}}</td>
                                      </tr>
                             </table>
+                            <div class="googlemap">
+                                <agm-map
+                                        [latitude]="55.41030689999999"
+                                        [longitude]="37.90245129999994"
+                                        [zoom]="2">
+                                    <div class="markers" *ngFor="let i of locations">
+                                        <agm-marker
+                                                [latitude]="i.lat"
+                                                [longitude]="i.lng"></agm-marker>
+                                    </div>
+                                    <agm-polyline>
+                                        <ng-container *ngFor="let i of locations">
+                                            <agm-polyline-point
+                                                    [latitude]="i.lat"
+                                                    [longitude]="i.lng"></agm-polyline-point>
+                                        </ng-container>
+                                    </agm-polyline>
+                                </agm-map>
+                            </div>
                             <input class="next" type="button" (click)="onReset()" value="Новое путешествие"/>
                             </div>
                         </div>
@@ -192,6 +211,6 @@
         </div>
         </div>
     </div>
-    
+</div>
     
     

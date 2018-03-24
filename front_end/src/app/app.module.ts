@@ -9,6 +9,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoadingModule} from 'ngx-loading';
 import { CdkTableModule } from '@angular/cdk/table';
 import { MatTableModule, MatPaginatorModule } from '@angular/material';
+import { AgmCoreModule, GoogleMapsAPIWrapper } from '@agm/core';
 
 import { AppComponent }   from './app.component';
 import { LoginComponent }   from './login/login.component';
@@ -47,7 +48,9 @@ const appRoutes: Routes =[
 
 @NgModule({
 
-    imports:      [ BrowserModule, RouterModule.forRoot(appRoutes, { useHash: true }), FormsModule, BrowserAnimationsModule, HttpClientModule, NgbModule.forRoot(), LoadingModule, CdkTableModule, MatTableModule, MatPaginatorModule, LoadingModule],
+    imports:      [ BrowserModule, RouterModule.forRoot(appRoutes, { useHash: true }), FormsModule, BrowserAnimationsModule, HttpClientModule, NgbModule.forRoot(), LoadingModule, CdkTableModule, MatTableModule, MatPaginatorModule, LoadingModule, AgmCoreModule.forRoot({
+        apiKey: 'AIzaSyD28p35CCvhDbiAPL7u96KayO36U6Ny84o'
+    })],
     declarations: [ AppComponent, HomeComponent, LoginComponent, UserComponent, NotFoundComponent, QuestionsComponent, NotepadComponent, ProfileComponent, AdminComponent, ConfigComponent, ProfilesComponent, SourseComponent, DataProducerComponent],
 
    providers: [
@@ -58,7 +61,8 @@ const appRoutes: Routes =[
     }, 
     CookieService,
     AuthGuardService,
-    UnauthGuardService
+    UnauthGuardService,
+    GoogleMapsAPIWrapper
   ],
     bootstrap:    [ AppComponent ]
 })

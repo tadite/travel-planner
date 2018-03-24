@@ -446,3 +446,8 @@ color: rgb(103, 135, 167);
 -webkit-box-shadow: none;
 box-shadow: none;
 }
+
+agm-map{
+  height: 400px;
+  width: 500px;
+}
