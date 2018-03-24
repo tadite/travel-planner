@@ -11,15 +11,7 @@ import org.springframework.stereotype.Component;
 public class StartupApplicationListener implements
         ApplicationListener<ContextRefreshedEvent> {
 
-    @Autowired
-    TypeOfResidenceDao typeOfResidenceDao;
-
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        TypeOfResidence typeOfResidence = new TypeOfResidence();
-        typeOfResidence.setTypeOfResidenceId(1);
-        typeOfResidence.setName("Место отправления");
-
-        typeOfResidenceDao.saveTypeOfResidence(typeOfResidence);
     }
 }

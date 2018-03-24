@@ -2,6 +2,7 @@ package edu.nc.travelplanner.config;
 
 import edu.nc.travelplanner.security.auth.JwtAuthenticationEntryPoint;
 import edu.nc.travelplanner.security.auth.JwtAuthenticationTokenFilter;
+import edu.nc.travelplanner.table.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -61,6 +62,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.js"
                 ).permitAll()
                 .antMatchers("/api/auth/**").permitAll()
+                .antMatchers("/api/manage/**").hasAuthority(Roles.ADMIN)
                 .anyRequest().authenticated();
 
         httpSecurity

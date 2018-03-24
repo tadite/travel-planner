@@ -55,7 +55,7 @@ public class Client implements UserDetails {
     private String role;
 
     @Column(name = "is_blocked")
-    private Boolean isBlocked;
+    private Boolean isBlocked=false;
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "client")
     private Set<SocialNetwork> socialNetworks = new HashSet<>();
@@ -114,7 +114,6 @@ public class Client implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(role));
         authorities.add(new SimpleGrantedAuthority(role));
         return authorities;
     }
