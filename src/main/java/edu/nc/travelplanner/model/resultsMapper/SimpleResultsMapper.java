@@ -1,6 +1,7 @@
 package edu.nc.travelplanner.model.resultsMapper;
 
 import com.google.common.collect.Iterables;
+import com.google.common.reflect.TypeToken;
 import edu.nc.travelplanner.config.AuthenticationFacade;
 import edu.nc.travelplanner.dao.ClientDao;
 import edu.nc.travelplanner.dto.afterPickTree.*;
@@ -45,8 +46,9 @@ public class SimpleResultsMapper implements ResultsMapper {
 
         List<ExcursionAfterPickTreeDto> excursionDtos = new LinkedList<>();
         excursionsResultOptional.ifPresent(flightPick -> {
-            if (flightPick.getResultClass() != List.class)
+            if (!(flightPick.getValue() instanceof LinkedList))
                 return;
+
             //TODO: flightPick.getValue() -> class
             List<?> excursionTables = (List<?>) flightPick.getValue();
             excursionTables.forEach(excursionPick -> {
@@ -147,7 +149,27 @@ public class SimpleResultsMapper implements ResultsMapper {
     }
 
     private void setCarRent(TravelAfterPickTreeDto travelDto, List<PickResult> picks) {
+        Optional<PickResult> carRentResultOptional = getSingleResultFromPicks(picks, "radioButton-rentCar-action-NEW-TABLE");
 
+        carRentResultOptional.ifPresent(carRentPick -> {
+            if (carRentPick.getResultClass() != TablePickResult.class)
+                return;
+
+            List<Column> columns = ((TablePickResult) carRentPick.getValue()).getRow().getColumns();
+            String name = getColumnValueOrEmpty(columns, "name");
+            String pricePeriod = getColumnValueOrEmpty(columns, "price-period");
+            String price = getColumnValueOrEmpty(columns, "price");
+            String seats = getColumnValueOrEmpty(columns, "seats");
+            String doors = getColumnValueOrEmpty(columns, "doors");
+            String climate = getColumnValueOrEmpty(columns, "climate");
+            String transmission = getColumnValueOrEmpty(columns, "transmission");
+            String classType = getColumnValueOrEmpty(columns, "class");
+            String mileage = getColumnValueOrEmpty(columns, "mileage");
+            String booking = getColumnValueOrEmpty(columns, "booking");
+
+            travelDto.setCarRent(new CarRentAfterPickTreeDto(name, pricePeriod, price, seats, doors, climate,
+                    transmission, classType, mileage, booking));
+        });
     }
 
     private void setCheckpoints(TravelAfterPickTreeDto travelDto, List<PickResult> picks) {
