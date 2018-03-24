@@ -232,11 +232,11 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
 
     buildRoute(){
         this.mapsApiLoader.load();
-        if (this.questions.from.countryName != null && this.questions.from.cityName != null){
-            this.setLocationCoords(this.questions.from.cityName + ' ' + this.questions.from.countryName);
+        if (this.questions.fromCheckpoint.countryName != null && this.questions.fromCheckpoint.cityName != null){
+            this.setLocationCoords(this.questions.fromCheckpoint.cityName + ' ' + this.questions.fromCheckpoint.countryName);
         }
-        if (this.questions.to.countryName != null && this.questions.to.cityName != null){
-            this.setLocationCoords(this.questions.to.cityName + ' ' + this.questions.to.countryName);
+        if (this.questions.toCheckpoint.countryName != null && this.questions.toCheckpoint.cityName != null){
+            this.setLocationCoords(this.questions.toCheckpoint.cityName + ' ' + this.questions.toCheckpoint.countryName);
         }
     }
 
