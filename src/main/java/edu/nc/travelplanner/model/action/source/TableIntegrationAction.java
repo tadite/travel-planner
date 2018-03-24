@@ -28,6 +28,7 @@ public class TableIntegrationAction implements IntegrationAction {
     private ActionType type = ActionType.TABLE_INTEGRATION;
     private DataProducer dataProducer;
     private Boolean multiPick = false;
+    private Boolean canPick = true;
 
     ObjectMapper objectMapper = new ObjectMapper();
 
@@ -58,7 +59,7 @@ public class TableIntegrationAction implements IntegrationAction {
             Response response = dataProducer.send(pickResults);
             parseTable(response);
 
-            return new ViewResponseBuilder().addTitleElement("question", viewName).addTable(getTableId(), rows, columnDefs, links, multiPick).build();
+            return new ViewResponseBuilder().addTitleElement("question", viewName).addTable(getTableId(), rows, columnDefs, links, multiPick, canPick).build();
         } catch (IOException e) {
             e.printStackTrace();
         }

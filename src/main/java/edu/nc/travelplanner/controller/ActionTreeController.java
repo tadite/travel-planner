@@ -57,6 +57,17 @@ public class ActionTreeController {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
 
+    @PostMapping(path = "/action/reset")
+    public ResponseEntity<String> saveTree() {
+        try {
+            orchestrator.save();
+            return new ResponseEntity<>(HttpStatus.OK) ;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
     @PostMapping(path = "/action")
     public ResponseEntity<String> executePost(@RequestBody Map<String, String> argsMap) {
 
