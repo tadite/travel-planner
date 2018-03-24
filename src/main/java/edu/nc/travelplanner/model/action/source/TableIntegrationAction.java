@@ -136,6 +136,8 @@ public class TableIntegrationAction implements IntegrationAction {
         return decisionArgs.entrySet()
                 .stream()
                 .filter(arg -> {
+                            if (arg.getValue() == null)
+                                return false;
                             String value = arg.getValue().substring(arg.getValue().lastIndexOf('.') + 1,
                                     arg.getValue().length());
                             return value.equals(this.getName()) || value.equals("checked");
