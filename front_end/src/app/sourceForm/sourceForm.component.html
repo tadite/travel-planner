@@ -1,0 +1,47 @@
+<!--suppress ALL -->
+<form novalidate
+      [formGroup]="myform">
+  
+    <div class="form-group">
+      <label>Name</label>
+      <input type="text"
+             class="form-control"
+             formControlName="name">
+    </div>
+
+  <div class="form-group">
+    <label>Description</label>
+    <input type="text"
+           class="form-control"
+           formControlName="description">
+  </div>
+
+  <div class="form-group">
+    <label>Url</label>
+    <input type="text"
+           class="form-control"
+           formControlName="url">
+  </div>
+
+  <div class="form-group">
+    <label>Type</label>
+    <select class="form-control"
+            formControlName="type">
+      <option value="">Please select a type</option>
+      <option *ngFor="let type of types"
+              [value]="type">{{type}}
+      </option>
+    </select>
+  </div>
+
+  <div class="form-group" formArrayName="params">
+    <label>Params</label>
+    <div class="form-inline" *ngFor="let param of myform.controls.params.controls; index as i">
+        <input class="form-control" type="text" [formControlName]="i">
+        <button type="button" class="btn btn-default" (click)="removeParam(i);">X</button>
+    </div>
+  </div>
+  <button type="button" class="btn btn-default" (click)="addParam();">Save</button>
+
+  <pre>{{myform.value | json}}</pre>
+</form>

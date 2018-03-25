@@ -1,7 +1,7 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {Routes, RouterModule} from '@angular/router';
-import { FormsModule }   from '@angular/forms';
+import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
@@ -26,6 +26,7 @@ import { SourseComponent }   from './sourse/sourse.component';
 import { ConfigComponent }   from './config/config.component';
 import {ProfilesComponent} from "./profiles/profiles.component";
 import {DataProducerComponent} from "./dataProducer/dataProducer.component";
+import {SourceFormComponent} from "./sourceForm/sourceForm.component";
 
 
 // определение маршрутов
@@ -40,15 +41,16 @@ const appRoutes: Routes =[
     { path: 'profiles', component: ProfilesComponent, canActivate: [AuthGuardService]},
     { path: 'sourse', component: SourseComponent/*, canActivate: [AuthGuardService]*/},
     { path: 'producer', component: DataProducerComponent/*, canActivate: [AuthGuardService]*/},
+    { path: 'sourceForm', component: SourceFormComponent/*, canActivate: [AuthGuardService]*/},
     { path: '**', component: NotFoundComponent }
     
 ];
 
 @NgModule({
-    imports:      [ BrowserModule, RouterModule.forRoot(appRoutes, { useHash: true }), FormsModule, BrowserAnimationsModule, HttpClientModule, NgbModule.forRoot(), LoadingModule, CdkTableModule, MatTableModule, MatPaginatorModule, LoadingModule, AgmCoreModule.forRoot({
+    imports:      [ BrowserModule, RouterModule.forRoot(appRoutes, { useHash: true }), FormsModule, ReactiveFormsModule, BrowserAnimationsModule, HttpClientModule, NgbModule.forRoot(), LoadingModule, CdkTableModule, MatTableModule, MatPaginatorModule, LoadingModule, AgmCoreModule.forRoot({
         apiKey: 'AIzaSyD28p35CCvhDbiAPL7u96KayO36U6Ny84o'
     })],
-    declarations: [ AppComponent, HomeComponent, LoginComponent, UserComponent, NotFoundComponent, QuestionsComponent, ProfileComponent, AdminComponent, ConfigComponent, ProfilesComponent, SourseComponent, DataProducerComponent],
+    declarations: [ AppComponent, HomeComponent, LoginComponent, UserComponent, NotFoundComponent, QuestionsComponent, ProfileComponent, AdminComponent, ConfigComponent, ProfilesComponent, SourseComponent, DataProducerComponent, SourceFormComponent],
 
    providers: [
     {
