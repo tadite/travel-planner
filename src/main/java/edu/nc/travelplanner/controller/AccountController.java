@@ -10,6 +10,7 @@ import edu.nc.travelplanner.security.auth.JwtUser;
 import edu.nc.travelplanner.security.auth.JwtUtil;
 import edu.nc.travelplanner.service.user.UserService;
 import edu.nc.travelplanner.table.Client;
+import edu.nc.travelplanner.table.Roles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,7 +92,7 @@ public class AccountController {
         client.setPassword(password);
         client.setEmail(email);
         client.setIsBlocked(false);
-        client.setRole("USER");
+        client.setRole(Roles.USER);
         userService.save(client);
 
         Client userDetails;

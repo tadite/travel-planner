@@ -4,28 +4,76 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class TravelAfterPickTreeDto {
-    private CheckpointAfterPickTreeDto from = new CheckpointAfterPickTreeDto();
-    private CheckpointAfterPickTreeDto to = new CheckpointAfterPickTreeDto();
-    private List<CheckpointAfterPickTreeDto> checkpoints = new LinkedList<>();
-    private String travelName;
-    private String travelDescription;
     private Long clientId;
-    private String dateIntervalStart;
-    private String dateIntervalEnd;
+    private CheckpointAfterPickTreeDto fromCheckpoint;
+    private CheckpointAfterPickTreeDto toCheckpoint;
+    private String name;
+    private String dateStart;
+    private String dateEnd;
     private String numberOfPersons;
-    private String rentCar;
+    private String budgetType;
 
-    private ExcursionAfterPickTreeDto excursion = new ExcursionAfterPickTreeDto();
-    private BudgetAfterPickTreeDto budget = new BudgetAfterPickTreeDto();
+    private HotelAfterPickTreeDto hotel;
+    private TwoWayFlightAfterPickTreeDto twoWayFlight;
+    private List<ExcursionAfterPickTreeDto> excursions = new LinkedList<>();
+    private CarRentAfterPickTreeDto carRent;
 
     public TravelAfterPickTreeDto() {
     }
 
-    public TravelAfterPickTreeDto(CheckpointAfterPickTreeDto from, List<CheckpointAfterPickTreeDto> checkpoints, String travelName, String travelDescription) {
-        this.from = from;
-        this.checkpoints = checkpoints;
-        this.travelName = travelName;
-        this.travelDescription = travelDescription;
+    public TravelAfterPickTreeDto(Long clientId, CheckpointAfterPickTreeDto fromCheckpoint, CheckpointAfterPickTreeDto toCheckpoint, String name, String dateStart, String dateEnd, String numberOfPersons, String budgetType, HotelAfterPickTreeDto hotel, TwoWayFlightAfterPickTreeDto twoWayFlight, List<ExcursionAfterPickTreeDto> excursions, CarRentAfterPickTreeDto carRent) {
+        this.clientId = clientId;
+        this.fromCheckpoint = fromCheckpoint;
+        this.toCheckpoint = toCheckpoint;
+        this.name = name;
+        this.dateStart = dateStart;
+        this.dateEnd = dateEnd;
+        this.numberOfPersons = numberOfPersons;
+        this.budgetType = budgetType;
+        this.hotel = hotel;
+        this.twoWayFlight = twoWayFlight;
+        this.excursions = excursions;
+        this.carRent = carRent;
+    }
+
+    public CheckpointAfterPickTreeDto getFromCheckpoint() {
+        return fromCheckpoint;
+    }
+
+    public void setFromCheckpoint(CheckpointAfterPickTreeDto fromCheckpoint) {
+        this.fromCheckpoint = fromCheckpoint;
+    }
+
+    public CheckpointAfterPickTreeDto getToCheckpoint() {
+        return toCheckpoint;
+    }
+
+    public void setToCheckpoint(CheckpointAfterPickTreeDto toCheckpoint) {
+        this.toCheckpoint = toCheckpoint;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDateStart() {
+        return dateStart;
+    }
+
+    public void setDateStart(String dateStart) {
+        this.dateStart = dateStart;
+    }
+
+    public String getDateEnd() {
+        return dateEnd;
+    }
+
+    public void setDateEnd(String dateEnd) {
+        this.dateEnd = dateEnd;
     }
 
     public String getNumberOfPersons() {
@@ -36,76 +84,44 @@ public class TravelAfterPickTreeDto {
         this.numberOfPersons = numberOfPersons;
     }
 
-    public BudgetAfterPickTreeDto getBudget() {
-        return budget;
+    public String getBudgetType() {
+        return budgetType;
     }
 
-    public void setBudget(BudgetAfterPickTreeDto budget) {
-        this.budget = budget;
+    public void setBudgetType(String budgetType) {
+        this.budgetType = budgetType;
     }
 
-    public ExcursionAfterPickTreeDto getExcursion() {
-        return excursion;
+    public HotelAfterPickTreeDto getHotel() {
+        return hotel;
     }
 
-    public void setExcursion(ExcursionAfterPickTreeDto excursion) {
-        this.excursion = excursion;
+    public void setHotel(HotelAfterPickTreeDto hotel) {
+        this.hotel = hotel;
     }
 
-    public String getDateIntervalStart() {
-        return dateIntervalStart;
+    public TwoWayFlightAfterPickTreeDto getTwoWayFlight() {
+        return twoWayFlight;
     }
 
-    public void setDateIntervalStart(String dateIntervalStart) {
-        this.dateIntervalStart = dateIntervalStart;
+    public void setTwoWayFlight(TwoWayFlightAfterPickTreeDto twoWayFlight) {
+        this.twoWayFlight = twoWayFlight;
     }
 
-    public String getDateIntervalEnd() {
-        return dateIntervalEnd;
+    public List<ExcursionAfterPickTreeDto> getExcursions() {
+        return excursions;
     }
 
-    public void setDateIntervalEnd(String dateIntervalEnd) {
-        this.dateIntervalEnd = dateIntervalEnd;
+    public void setExcursions(List<ExcursionAfterPickTreeDto> excursions) {
+        this.excursions = excursions;
     }
 
-    public CheckpointAfterPickTreeDto getFrom() {
-        return from;
+    public CarRentAfterPickTreeDto getCarRent() {
+        return carRent;
     }
 
-    public CheckpointAfterPickTreeDto getTo() {
-        return to;
-    }
-
-    public void setTo(CheckpointAfterPickTreeDto to) {
-        this.to = to;
-    }
-
-    public void setFrom(CheckpointAfterPickTreeDto from) {
-        this.from = from;
-    }
-
-    public List<CheckpointAfterPickTreeDto> getCheckpoints() {
-        return checkpoints;
-    }
-
-    public void setCheckpoints(List<CheckpointAfterPickTreeDto> checkpoints) {
-        this.checkpoints = checkpoints;
-    }
-
-    public String getTravelName() {
-        return travelName;
-    }
-
-    public void setTravelName(String travelName) {
-        this.travelName = travelName;
-    }
-
-    public String getTravelDescription() {
-        return travelDescription;
-    }
-
-    public void setTravelDescription(String travelDescription) {
-        this.travelDescription = travelDescription;
+    public void setCarRent(CarRentAfterPickTreeDto carRent) {
+        this.carRent = carRent;
     }
 
     public Long getClientId() {
@@ -114,13 +130,5 @@ public class TravelAfterPickTreeDto {
 
     public void setClientId(Long clientId) {
         this.clientId = clientId;
-    }
-
-    public String getRentCar() {
-        return rentCar;
-    }
-
-    public void setRentCar(String rentCar) {
-        this.rentCar = rentCar;
     }
 }

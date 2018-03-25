@@ -1,16 +1,18 @@
 package edu.nc.travelplanner.dto.afterPickTree;
 
 public class ExcursionAfterPickTreeDto {
-    private String id;
     private String name;
-    private String typeId;
+    private String description;
+    private String price;
+    private String time;
+    private String booking;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public ExcursionAfterPickTreeDto(String name, String description, String price, String time, String booking) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.time = time;
+        this.booking = booking;
     }
 
     public String getName() {
@@ -21,11 +23,35 @@ public class ExcursionAfterPickTreeDto {
         this.name = name;
     }
 
-    public String getTypeId() {
-        return typeId;
+    public String getDescription() {
+        return description;
     }
 
-    public void setTypeId(String typeId) {
-        this.typeId = typeId;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getBooking() {
+        return booking;
+    }
+
+    public void setBooking(String booking) {
+        this.booking = booking;
     }
 }

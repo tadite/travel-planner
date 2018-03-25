@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TravelSaveService {
-
+/*
     @Autowired
     VkGeoNamesProvider vkGeoNamesProvider;
 
@@ -162,5 +162,5 @@ public class TravelSaveService {
         pickDto.getTo().setCountryName(countryById.getName());
 
         return countryById;
-    }
+    }*/
 }

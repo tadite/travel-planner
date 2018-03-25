@@ -1,9 +1,13 @@
 package edu.nc.travelplanner.config;
 
+import edu.nc.travelplanner.dao.ClientDao;
 import edu.nc.travelplanner.dao.TypeOfResidenceDao;
 import edu.nc.travelplanner.dto.afterPickTree.CheckpointAfterPickTreeDto;
 import edu.nc.travelplanner.dto.afterPickTree.TravelAfterPickTreeDto;
 import edu.nc.travelplanner.service.travel.TravelSaveService;
+import edu.nc.travelplanner.service.user.UserService;
+import edu.nc.travelplanner.table.Client;
+import edu.nc.travelplanner.table.Roles;
 import edu.nc.travelplanner.table.TypeOfResidence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -13,26 +17,26 @@ import org.springframework.stereotype.Component;
 @Component
 public class DataLoader implements ApplicationRunner {
 
-    /*@Autowired
-    TravelSaveService travelSaveService;*/
+    @Autowired
+    private UserService userService;
+
 
     public void run(ApplicationArguments args) {
         initTypesOfResidence();
     }
 
     private void initTypesOfResidence() {
-        /*TravelAfterPickTreeDto travelAfterPickTreeDto = new TravelAfterPickTreeDto();
-        travelAfterPickTreeDto.setTravelName("test-travel-name");
-        travelAfterPickTreeDto.setClientId(Long.valueOf(1));
-        travelAfterPickTreeDto.setFrom(new CheckpointAfterPickTreeDto() {{
-            this.setCountryId(1);
-            this.setCityId(Long.valueOf(1));
-        }});
-        travelAfterPickTreeDto.getCheckpoints().add(new CheckpointAfterPickTreeDto() {{
-            this.setCountryId(1);
-            this.setCityId(Long.valueOf(2));
-        }});
+        Client admin = userService.find("admin");
 
-        travelSaveService.saveTravelAfterPick(travelAfterPickTreeDto);*/
+        if (admin==null || admin.getBlocked()==null)
+        {
+            admin=new Client();
+            admin.setPassword("admin");
+            admin.setLogin("admin");
+            admin.setEmail("admin@gmail.com");
+            admin.setRole(Roles.ADMIN);
+
+            userService.save(admin);
+        }
     }
 }

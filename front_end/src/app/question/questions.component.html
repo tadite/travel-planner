@@ -27,8 +27,9 @@
             <!-- <hr> -->
             <div align="center" class="form-inline">
                     <div>                  
-                        <ngx-loading [show]="loading" [config]="{ backdropBackgroundColour: 'rgba(0,0,0,0)', backdropBorderRadius: '10px',
-                        primaryColour: 'rgb(161, 160, 160)', secondaryColour: 'rgb(161, 160, 160)', tertiaryColour: 'rgb(161, 160, 160)' }"></ngx-loading>      
+                    <ngx-loading [show]="loading" [config]="{ backdropBackgroundColour: 'rgba(0,0,0,0)', backdropBorderRadius: '10px',
+                        primaryColour: 'rgb(161, 160, 160)', secondaryColour: 'rgb(161, 160, 160)', tertiaryColour: 'rgb(161, 160, 160)' }">
+                    </ngx-loading>      
                             <div *ngIf="result == false">                                
                                     <form [hidden]="loading" #f="ngForm" #elseBlock (ngSubmit)="onSubmit(f)" #myForm="ngForm" novalidate>
             
@@ -39,17 +40,34 @@
                                             {{question.data}}<br>
                                         </p>
                                         <div *ngSwitchCase="'dropdown_list'">
-                                            <!-- <div *ngIf="question.id == 'dropdownlist1.dropdownlist-departure-country-action-dropdown-list'"> -->
-                                             <select name="{{question.id}}" ngModel>
-                                                    <!-- <option value="" [selected]="isSelected" > Russia </option>                                                     -->
+                                             <div *ngIf="question.id == 'dropdownlist1.dropdownlist-departure-country-action-dropdown-list'">
+                                             <select name="{{question.id}}" #select [(ngModel)]="departureCountryId" ngModel>                                                                                                 
                                                     <option value="{{key}}" *ngFor="let key of objectKeys(question.data)" >{{question.data[key]}}</option>
                                                 </select><br>                                             
-                                            <!-- </div> -->
-                                            <!--<div *ngIf="question.id == 'dropdownlist1.dropdownlist-departure-city-action-dropdown-list'">
-                                                    <select name="{{question.id}}" ngModel>
+                                             </div>
+                                             <div *ngIf="question.id == 'dropdownlist1.dropdownlist-departure-city-action-dropdown-list'">
+                                                    <select name="{{question.id}}" #select [(ngModel)]="departureCityId" ngModel>
                                                         <option value="{{key}}" *ngFor="let key of objectKeys(question.data)">{{question.data[key]}}</option>
-                                                    </select><br>-->
-                                            <!-- </div> -->
+                                                    </select><br>
+                                            </div>
+                                            <div *ngIf="question.id == 'dropdownlist1.dropdownlist-countries-action-dropdown-list'">
+                                                    <select name="{{question.id}}" #select [(ngModel)]="destinationCountryId" ngModel>
+                                                        <option value="{{key}}" *ngFor="let key of objectKeys(question.data)">{{question.data[key]}}</option>
+                                                    </select><br>
+                                            </div>
+                                            <div *ngIf="question.id == 'dropdownlist1.dropdownlist-citiesByCountryId-action-dropdown-list'">
+                                                    <select name="{{question.id}}" #select [(ngModel)]="destinationCityId" ngModel>
+                                                        <option value="{{key}}" *ngFor="let key of objectKeys(question.data)">{{question.data[key]}}</option>
+                                                    </select><br>
+                                            </div>
+                                            <div *ngIf="question.id != 'dropdownlist1.dropdownlist-departure-country-action-dropdown-list' &&
+                                                        question.id != 'dropdownlist1.dropdownlist-departure-city-action-dropdown-list' &&
+                                                        question.id != 'dropdownlist1.dropdownlist-countries-action-dropdown-list' &&
+                                                        question.id != 'dropdownlist1.dropdownlist-citiesByCountryId-action-dropdown-list'">
+                                                    <select name="{{question.id}}" #select [(ngModel)]="defaultId" ngModel>
+                                                        <option value="{{key}}" *ngFor="let key of objectKeys(question.data)">{{question.data[key]}}</option>
+                                                    </select><br>
+                                            </div>
                                         </div>
             <!-- ************************************************************************ -->                                     
 
@@ -59,7 +77,7 @@
                                                 <div *ngSwitchCase="'checkbox'">
                                                     <div class="btn-group btn-group-vertical">
                                                         <label class="btn">
-                                                            <input type="checkbox"(change)="putCheckId(question.id)"/><i class="fa fa-square-o fa-2x"></i><i class="fa fa-check-square-o fa-2x"></i> <span> {{question.data}}</span>
+                                                            <input type="checkbox" (change)="putCheckId(question.id)"/><i class="fa fa-square-o fa-2x"></i><i class="fa fa-check-square-o fa-2x"></i> <span> {{question.data}}</span>
                                                         </label>
                                                     </div>
                                                 </div>
@@ -88,23 +106,61 @@
             <!-- ************************************************************************ -->
                                         <div *ngSwitchCase="'text_input'">
                                             <div *ngIf="question.id == 'textbox1.textinput-numberOfPersons-action'">
-                                                <input type="text" placeholder="2" name="{{question.id}}" #text="ngModel" ngModel required pattern="[1-8]" />
+                                                <input type="text" name="{{question.id}}" #text="ngModel" [(ngModel)]="numValue" ngModel required pattern="[1-8]" />
                                                 <div [hidden]="myForm.valid || text.untouched" class="alert alert-danger" id="hid">
                                                     Некорректный ввод 
                                                 </div>
                                             </div>
                                             <div *ngIf="question.id == 'textbox1.textinput-nameOfTravel-action'">
-                                                    <input type="text" placeholder="Berlin_10/04_14/04" name="{{question.id}}" ngModel required/>
+                                                    <input type="text" name="{{question.id}}" [(ngModel)]="textValue" ngModel required/>
                                             </div>
                                         </div>
             
-                                        <p *ngSwitchCase="'date_picker'">
-                                            <input type="date" name="{{question.id}}" [min]="today" onkeydown="return false" ngModel required/>                                                                                      
-                                        </p>
+                                        <div *ngSwitchCase="'date_picker'">
+                                            <div *ngIf="question.id == 'datepicker.1.dateIntervalInput-travelPeriod-action'">
+                                                <input type="date" name="{{question.id}}" [min]="today" onkeydown="return false" [(ngModel)] ="defaultStartDate" ngModel required/>                                                                                      
+                                            </div>
+                                            <div *ngIf="question.id == 'datepicker.2.dateIntervalInput-travelPeriod-action'">
+                                                    <input type="date" name="{{question.id}}" [min]="today" onkeydown="return false" [(ngModel)] ="defaultEndDate" ngModel required/>                                                                                      
+                                            </div>
+
+                                        </div>
 
                                         
                                         <div class="table-block">                                        
                                         <div *ngSwitchCase="'table_picker'"> 
+                                            <div *ngIf="question.id == 'table.1.coast-of-living-action-Table'">
+                                                <div class="costOfLiving">                                          
+                                                        <div *ngFor="let item of question.data.rows">                                                                
+                                                                <table>
+                                                                <tr *ngFor="let defs of question.data.columnDefs.columns; let i = index">                                       
+                                                                    <td>{{defs.value}}</td>                                      
+                                                                    <td *ngIf="isLink(question.data, defs.name); else elseTextBlock"><a href="{{item.columns[i+1].value}}" target="_blank">Перейти</a></td>  
+                                                                    <ng-template #elseTextBlock><td>{{item.columns[i+1].value}}</td></ng-template>            
+                                                                </tr> 
+                                                                </table>
+                                                        </div>
+                                                                    <!-- <br>  --> 
+                                                    </div>
+                                            </div>
+                                            <div *ngIf="question.data.multiPick == true">
+                                                    <div class="btn-group btn-group-toggle" >                                          
+                                                            <div *ngFor="let item of question.data.rows">                                               
+                                                                <label class="btn">
+                                                                    <input type="checkbox" (change)="putCheckId(item.columns[0].value)"/>                                            
+                                                                    <table>
+                                                                    <tr *ngFor="let defs of question.data.columnDefs.columns; let i = index">                                       
+                                                                        <td>{{defs.value}}</td>                                      
+                                                                        <td *ngIf="isLink(question.data, defs.name); else elseTextBlock"><a href="{{item.columns[i+1].value}}" target="_blank">Перейти</a></td>  
+                                                                        <ng-template #elseTextBlock><td>{{item.columns[i+1].value}}</td></ng-template>            
+                                                                    </tr> 
+                                                                    </table>
+                                                                </label> 
+                                                            </div>
+                                                                <!-- <br>  --> 
+                                                    </div>
+                                            </div>
+                                            <div *ngIf="question.data.multiPick == false">
                                             <div class="btn-group btn-group-toggle" >                                          
                                             <div *ngFor="let item of question.data.rows">                                               
                                                 <label class="btn">
@@ -120,6 +176,7 @@
                                                 </div>
                                                 <!-- <br>  --> 
                                             </div>
+                                            </div>
                                         </div>                                         
                                         
                                         </div>
@@ -133,49 +190,248 @@
                                     </form> 
                                     </div>        
                         <div *ngIf="result == true">
-                            <div class="result-table-block">
+                            <div class="result-table-block">                               
                             <table>
-                                    <tr>
-                                     <th>Вопрос</th>
-                                     <th>Ответ</th>
-                                    </tr>
+                                    <caption>Общая информация</caption>
                                     <tr>
                                     <td>Название путешествия</td>
-                                    <td>{{questions.travelName}}</td>
+                                    <td>{{questions.name}}</td>
                                     </tr>
                                     <tr>
                                      <td>Страна отправления</td>
-                                     <td>{{questions.from.countryName}}</td>
+                                     <td>{{questions.fromCheckpoint.countryName}}</td>
                                      </tr>
                                      <tr>
                                      <td>Город отправления</td>
-                                     <td>{{questions.from.cityName}}</td>
+                                     <td>{{questions.fromCheckpoint.cityName}}</td>
                                      </tr>
                                      <tr>
                                      <td>Страна назначения</td>
-                                     <td>{{questions.to.countryName}}</td>
+                                     <td>{{questions.toCheckpoint.countryName}}</td>
                                      </tr>
                                      <tr>
                                      <td>Город назначения</td>
-                                     <td>{{questions.to.cityName}}</td>
-                                     </tr>
-                                     <tr>
-                                     <td>Бюджет</td>
-                                     <td>{{questions.budget.name}}</td>
-                                     </tr>
+                                     <td>{{questions.toCheckpoint.cityName}}</td>
+                                     </tr>                                     
                                      <tr>
                                      <td>Дата отъезда</td>
-                                     <td>{{questions.dateIntervalStart}}</td>
+                                     <td>{{questions.dateStart}}</td>
                                      </tr>
                                      <tr>
                                      <td>Дата приезда</td>
-                                     <td>{{questions.dateIntervalEnd}}</td>
+                                     <td>{{questions.dateEnd}}</td>
                                      </tr>
                                      <tr>
-                                     <td>Экскурсии</td>
-                                     <td>{{questions.excursion.name}}</td>
-                                     </tr>
+                                        <td>Количество человек</td>
+                                        <td>{{questions.numberOfPersons}}</td>
+                                        </tr>
+                                     <tr>
+                                    <tr>
+                                        <td>Бюджет</td>
+                                        <td>{{questions.budgetType}}</td>
+                                    </tr>
+                                </table>
+                                
+                                <table>
+                                    <caption>Проживание</caption>
+                                    <tr>
+                                        <td>Отель</td>
+                                        <td>{{questions.hotel.name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Адрес</td>
+                                        <td>{{questions.hotel.address}}</td>
+                                    </tr>                                                                      
+                                    <tr>
+                                    <tr>
+                                        <td>Стоимость</td>
+                                        <td>{{questions.hotel.price}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Период</td>
+                                        <td>{{questions.hotel.pricePeriod}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Информация</td>
+                                        <td>{{questions.hotel.priceInfo}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Просмотр</td>
+                                        <td><a href="{{questions.hotel.booking}}" target="_blank">Перейти</a></td>  
+                                    </tr>
+                                </table>
+                                
+                                <table>
+                                    <caption>Путь туда</caption>
+                                <tr>                                                                                                                  
+                                    <td>Самолет</td>
+                                    <td>{{questions.twoWayFlight.flightTo.aircraft}}</td>
+                                </tr>
+                                <tr>                                                                                                                 
+                                    <td>Авиакомпания</td>
+                                    <td>{{questions.twoWayFlight.flightTo.companyName}}</td>
+                                </tr>
+                                <tr>                                                                                                                  
+                                    <td>Аэропорт вылета</td>
+                                    <td>{{questions.twoWayFlight.flightTo.departureName}}</td>
+                                </tr>
+                                <tr>                                                                                                                  
+                                    <td>Аэропорт прилета</td>
+                                    <td>{{questions.twoWayFlight.flightTo.arrivalName}}</td>
+                                </tr>
+                                <tr>                                                                                                                  
+                                    <td>Класс обслуживания</td>
+                                    <td>{{questions.twoWayFlight.flightTo.classType}}</td>
+                                </tr>
+                                <tr>                                                                                                                  
+                                    <td>Дата вылета</td>
+                                    <td>{{questions.twoWayFlight.flightTo.departureDate}}</td>
+                                 </tr>
+                                <tr>                                                                                                                  
+                                    <td>Время вылета</td>
+                                    <td>{{questions.twoWayFlight.flightTo.departureTime}}</td>
+                                </tr>
+                                <tr>                                                                                                                  
+                                    <td>Время в пути</td>
+                                    <td>{{questions.twoWayFlight.flightTo.timeInPath}}</td>
+                                </tr>                                                                                                                                  
+                               </table>
+                              
+                               <table>
+                                    <caption>Путь обратно</caption>
+                               <tr>                                                                                                                  
+                                   <td>Самолет</td>
+                                   <td>{{questions.twoWayFlight.flightFrom.aircraft}}</td>
+                               </tr>
+                               <tr>                                                                                                                  
+                                   <td>Авиакомпания</td>
+                                   <td>{{questions.twoWayFlight.flightFrom.companyName}}</td>
+                               </tr>                               
+                               <tr>                                                                                                                  
+                                    <td>Аэропорт вылета</td>
+                                    <td>{{questions.twoWayFlight.flightFrom.departureName}}</td>
+                                </tr>
+                                <tr>                                                                                                                  
+                                    <td>Аэропорт прилета</td>
+                                    <td>{{questions.twoWayFlight.flightFrom.arrivalName}}</td>
+                                </tr>
+                                <tr>                                                                                                                  
+                                   <td>Класс обслуживания</td>
+                                   <td>{{questions.twoWayFlight.flightFrom.classType}}</td>
+                               </tr>
+                               <tr>                                                                                                                  
+                                   <td>Дата вылета</td>
+                                   <td>{{questions.twoWayFlight.flightFrom.departureDate}}</td>
+                                </tr>
+                               <tr>                                                                                                                  
+                                   <td>Время вылета</td>
+                                   <td>{{questions.twoWayFlight.flightFrom.departureTime}}</td>
+                               </tr>
+                               <tr>                                                                                                                  
+                                    <td>Время в пути</td>
+                                    <td>{{questions.twoWayFlight.flightFrom.timeInPath}}</td>
+                                </tr>                                                                                                                                                                
+                              </table>
+                                                    
+                              <table>   
+                                    <caption>Билеты</caption> 
+                                  <tr>                                                                                                        
+                                       <td>Общая стоимость</td>
+                                       <td>{{questions.twoWayFlight.price}}</td>
+                                  </tr>
+                                  <tr>                                                                                                        
+                                        <td>Просмотр</td>
+                                        <td><a href="{{questions.twoWayFlight.booking}}" target="_blank">Перейти</a></td>  
+                                   </tr>
+                              </table> 
+                            
+                            <div *ngIf="questions.excursions != null">
+                             <div *ngFor="let item of questions.excursions; let i = index">                 
+                            <table>   
+                                    <caption>Экскурсия №{{i+1}}</caption> 
+                                <tr>                                                                                                        
+                                     <td>Название</td>
+                                     <td>{{item.name}}</td>
+                                </tr>
+                                <tr>                                                                                                        
+                                    <td>Описание</td>
+                                    <td>{{item.description}}</td>
+                                </tr>
+                                <tr>                                                                                                        
+                                    <td>Цена</td>
+                                    <td>{{item.price}}</td>
+                                </tr>
+                                <tr>                                                                                                        
+                                    <td>Продолжительность</td>
+                                    <td>{{item.time}}</td>
+                                </tr>
+                                <tr>                                                                                                        
+                                    <td>Просмотр</td>
+                                    <td><a href="{{item.booking}}" target="_blank">Перейти</a></td>  
+                                </tr>                                                                                                    
                             </table>
+                            </div>  
+                        </div>   
+                        <div *ngIf="questions.carRent != null">
+                            <table>   
+                                    <caption>Аренда автомобиля</caption> 
+                                <tr>                                                                                                        
+                                     <td>Марка авто</td>
+                                     <td>{{questions.carRent.name}}</td>
+                                </tr>
+                                <tr>                                                                                                        
+                                    <td>Срок аренды</td>
+                                    <td>{{questions.carRent.pricePeriod}}</td>
+                                </tr>
+                                <tr>                                                                                                        
+                                    <td>Стоимость</td>
+                                    <td>{{questions.carRent.price}}</td>
+                                </tr>
+                                <tr>                                                                                                        
+                                    <td>Количество пассажиров</td>
+                                    <td>{{questions.carRent.seats}}</td>
+                                </tr>
+                                <tr>                                                                                                        
+                                    <td>Количество дверей</td>
+                                    <td>{{questions.carRent.doors}}</td>
+                                </tr>
+                                <tr>                                                                                                        
+                                    <td>Тип коробки передач</td>
+                                    <td>{{questions.carRent.transmission}}</td>
+                                </tr>
+                                <tr>                                                                                                        
+                                    <td>Класс</td>
+                                    <td>{{questions.carRent.classType}}</td>
+                                </tr>
+                                <tr>                                                                                                        
+                                    <td>Пробег</td>
+                                    <td>{{questions.carRent.mileage}}</td>
+                                </tr>
+                                <tr>                                                                                                        
+                                    <td>Просмотр</td>
+                                    <td><a href="{{questions.carRent.booking}}" target="_blank">Перейти</a></td>  
+                                </tr>
+                            </table>
+                        </div>                           
+                            <div class="googlemap">
+                                <agm-map
+                                        [latitude]="55.41030689999999"
+                                        [longitude]="37.90245129999994"
+                                        [zoom]="2">
+                                    <div class="markers" *ngFor="let i of locations">
+                                        <agm-marker
+                                                [latitude]="i.lat"
+                                                [longitude]="i.lng"></agm-marker>
+                                    </div>
+                                    <agm-polyline>
+                                        <ng-container *ngFor="let i of locations">
+                                            <agm-polyline-point
+                                                    [latitude]="i.lat"
+                                                    [longitude]="i.lng"></agm-polyline-point>
+                                        </ng-container>
+                                    </agm-polyline>
+                                </agm-map>
+                            </div>
                             <input class="newTravel" type="button" (click)="onReset()" value="Новое путешествие"/>
                             </div>
                         </div>
@@ -189,6 +445,6 @@
         </div>
         </div>
     </div>
-    
+</div>
     
     

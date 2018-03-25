@@ -8,6 +8,7 @@ import edu.nc.travelplanner.model.action.*;
 import edu.nc.travelplanner.model.factory.tree.ActionTreeFactory;
 import edu.nc.travelplanner.model.factory.tree.ActionTreeParseException;
 import edu.nc.travelplanner.model.response.*;
+import edu.nc.travelplanner.model.resultsMapper.ResultsMapper;
 import edu.nc.travelplanner.model.resultsMapper.ResultsMapperReader;
 import edu.nc.travelplanner.service.travel.TravelSaveService;
 import org.springframework.aop.scope.ScopedObject;
@@ -28,21 +29,12 @@ import java.io.IOException;
 @Component
 public class SimpleTreeOrchestrator implements TreeOrchestrator {
 
-    @Autowired
-    private ApplicationContext context;
-
-    @Autowired
-    AuthenticationFacade authenticationFacade;
-
-    @Autowired
-    ClientDao clientDao;
-
-    @Autowired
-    TravelSaveService travelSaveService;
+   // @Autowired
+   // TravelSaveService travelSaveService;
 
     private ActionTree actionTree;
 
-    @Value( "${travelplanner.maintree}" )
+    @Value("${travelplanner.maintree}")
     private String treeName;
 
     @Value("${travelplanner.requestAttemptsCount}")
@@ -51,20 +43,22 @@ public class SimpleTreeOrchestrator implements TreeOrchestrator {
     @Value("${travelplanner.requestWaitAfterFailSecs}")
     private String requestWaitAfterFailSecs;
 
-    ResultsMapperReader resultsMapperReader;
+    @Autowired
+    ResultsMapper resultsMapper;
+
+    //ResultsMapperReader resultsMapperReader;
 
     private TravelAfterPickTreeDto travelAfterPickTreeDto;
     private ActionTreeFactory treeFactory;
 
-    public SimpleTreeOrchestrator(@Autowired ActionTreeFactory treeFactory, @Autowired ResultsMapperReader resultsMapperReader){
+    public SimpleTreeOrchestrator(@Autowired ActionTreeFactory treeFactory) {
         this.treeFactory = treeFactory;
-        this.resultsMapperReader=resultsMapperReader;
     }
 
-    private ActionTree getActionTree(){
-        if (actionTree==null) {
+    private ActionTree getActionTree() {
+        if (actionTree == null) {
             try {
-                this.actionTree=treeFactory.createByName(treeName);
+                this.actionTree = treeFactory.createByName(treeName);
                 this.actionTree.setRequestAttemptParams(Integer.valueOf(requestAttemtsCount), Integer.valueOf(requestWaitAfterFailSecs));
             } catch (ActionTreeParseException e) {
                 e.printStackTrace();
@@ -84,20 +78,15 @@ public class SimpleTreeOrchestrator implements TreeOrchestrator {
 
     @Override
     public Response execute(ActionArgs args) throws CustomParseException {
-        if (travelAfterPickTreeDto!=null)
+        if (travelAfterPickTreeDto != null)
             return new TravelResultResponse(travelAfterPickTreeDto);
-        else if (getActionTree().isEnded())
-        {
-            try {
-                travelAfterPickTreeDto = resultsMapperReader.read(treeName).map(getActionTree().getPickResults());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            saveTravelToDb(travelAfterPickTreeDto);
+        else if (getActionTree().isEnded()) {
+            travelAfterPickTreeDto = resultsMapper.map(getActionTree().getPickResults());
+
             return new TravelResultResponse(travelAfterPickTreeDto);
         }
 
-        if (args.getActionState()== ActionState.DECISION)
+        if (args.getActionState() == ActionState.DECISION)
             return executeDecision(args);
         else
             return executePresentation(args);
@@ -111,14 +100,20 @@ public class SimpleTreeOrchestrator implements TreeOrchestrator {
 
     @Override
     public void reset() {
-        this.travelAfterPickTreeDto=null;
-        this.actionTree=null;
+        this.travelAfterPickTreeDto = null;
+        this.actionTree = null;
+    }
+
+    @Override
+    public void save() {
+        if (travelAfterPickTreeDto==null)
+            return;
+
+        saveTravelToDb(travelAfterPickTreeDto);
     }
 
     private void saveTravelToDb(TravelAfterPickTreeDto travelAfterPickTreeDto) {
-        travelAfterPickTreeDto.setClientId(clientDao.getClientByLogin(authenticationFacade.getAuthentication().getName()).getClientId());
-
-        travelSaveService.saveTravelAfterPick(travelAfterPickTreeDto);
+        //travelSaveService.saveTravelAfterPick(travelAfterPickTreeDto);
     }
 
 
