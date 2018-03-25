@@ -54,8 +54,6 @@ public class UserProfileDto {
         client.setLastName(userProfileDto.getLastName());
         client.setEmail(userProfileDto.getEmail());
         client.setAge(userProfileDto.getAge());
-        client.setCityId(userProfileDto.getCityId());
-        client.setCountryId(userProfileDto.getCountryId());
 
         return client;
     }

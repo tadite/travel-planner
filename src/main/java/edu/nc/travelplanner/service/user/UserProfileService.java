@@ -1,11 +1,13 @@
 package edu.nc.travelplanner.service.user;
 
+import com.google.common.base.Optional;
 import com.vk.api.sdk.exceptions.ApiException;
 import com.vk.api.sdk.exceptions.ClientException;
-import edu.nc.travelplanner.dao.ClientDao;
-import edu.nc.travelplanner.dao.CountryDao;
 import edu.nc.travelplanner.dto.profile.UserProfileDto;
 import edu.nc.travelplanner.model.factory.dataproducer.DataProducerParseException;
+import edu.nc.travelplanner.repository.CityRepository;
+import edu.nc.travelplanner.repository.ClientRepository;
+import edu.nc.travelplanner.repository.CountryRepository;
 import edu.nc.travelplanner.service.travel.GeoNamesDbFiller;
 import edu.nc.travelplanner.table.City;
 import edu.nc.travelplanner.table.Client;
@@ -20,10 +22,13 @@ import javax.transaction.Transactional;
 public class UserProfileService {
 
     @Autowired
-    ClientDao clientDao;
+    ClientRepository clientRepository;
 
     @Autowired
-    CountryDao countryDao;
+    CountryRepository countryRepository;
+
+    @Autowired
+    CityRepository cityRepository;
 
     @Autowired
     GeoNamesDbFiller geoNamesDbFiller;
@@ -32,7 +37,7 @@ public class UserProfileService {
     PasswordEncoder passwordEncoder;
 
     public UserProfileDto getUserProfileById(Long userId){
-        Client clientById = clientDao.getClientById(userId);
+        Client clientById = clientRepository.findOne(userId);
         if (clientById==null)
             return new UserProfileDto();
 
@@ -40,7 +45,7 @@ public class UserProfileService {
     }
 
     public UserProfileDto getUserProfileByName(String username){
-        Client clientById = clientDao.getClientByLogin(username);
+        Client clientById = clientRepository.findByLogin(username);
         if (clientById==null)
             return new UserProfileDto();
 
@@ -54,20 +59,22 @@ public class UserProfileService {
                 Country country = geoNamesDbFiller.addOrGetCountryToDb(userProfileDto.getCountryId());
                 City city = geoNamesDbFiller.addOrGetCityToDb(userProfileDto.getCityId(), country.getCountryId());
             }
-            Client client = clientDao.getClientByLogin(userProfileDto.getLogin());
+            Client client = clientRepository.findByLogin(userProfileDto.getLogin());
             client = UserProfileDto.toClient(client, userProfileDto);
+            client.setCountry(countryRepository.findOptionalByName(userProfileDto.getLogin()).orNull());
+            client.setCity(cityRepository.findOne(userProfileDto.getCityId()));
 
             if (userProfileDto.getPassword()!=null)
                 client.setPassword(passwordEncoder.encode(userProfileDto.getPassword()));
 
-            clientDao.saveClient(client);
+            clientRepository.save(client);
             return UserProfileDto.fromClient(client);
 
         } catch (ClientException e) {
             e.printStackTrace();
-        } catch (ApiException e) {
-            e.printStackTrace();
         } catch (DataProducerParseException e) {
+            e.printStackTrace();
+        } catch (ApiException e) {
             e.printStackTrace();
         }
 

@@ -1,14 +1,8 @@
 package edu.nc.travelplanner.config;
 
-import edu.nc.travelplanner.dao.ClientDao;
-import edu.nc.travelplanner.dao.TypeOfResidenceDao;
-import edu.nc.travelplanner.dto.afterPickTree.CheckpointAfterPickTreeDto;
-import edu.nc.travelplanner.dto.afterPickTree.TravelAfterPickTreeDto;
-import edu.nc.travelplanner.service.travel.TravelSaveService;
 import edu.nc.travelplanner.service.user.UserService;
 import edu.nc.travelplanner.table.Client;
 import edu.nc.travelplanner.table.Roles;
-import edu.nc.travelplanner.table.TypeOfResidence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;

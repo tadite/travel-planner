@@ -1,13 +1,13 @@
 package edu.nc.travelplanner.model.resultsMapper;
 
 import com.google.common.collect.Iterables;
-import com.google.common.reflect.TypeToken;
 import edu.nc.travelplanner.config.AuthenticationFacade;
 import edu.nc.travelplanner.dao.ClientDao;
 import edu.nc.travelplanner.dto.afterPickTree.*;
 import edu.nc.travelplanner.model.action.PickResult;
 import edu.nc.travelplanner.model.action.tableUtil.Column;
 import edu.nc.travelplanner.model.action.tableUtil.TablePickResult;
+import edu.nc.travelplanner.table.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,8 +25,8 @@ public class SimpleResultsMapper implements ResultsMapper {
     ClientDao clientDao;
 
     @Override
-    public TravelAfterPickTreeDto map(List<PickResult> pickResults) {
-        TravelAfterPickTreeDto travelPickDto = new TravelAfterPickTreeDto();
+    public TravelDto map(List<PickResult> pickResults) {
+        TravelDto travelPickDto = new TravelDto();
 
         setTravelClientId(travelPickDto);
         setCheckpoints(travelPickDto, pickResults);
@@ -41,10 +41,10 @@ public class SimpleResultsMapper implements ResultsMapper {
         return travelPickDto;
     }
 
-    private void setExcursions(TravelAfterPickTreeDto travelDto, List<PickResult> picks) {
+    private void setExcursions(TravelDto travelDto, List<PickResult> picks) {
         Optional<PickResult> excursionsResultOptional = getSingleResultFromPicks(picks, "checklist-choosingTheExcursion-action-NEW-TABLE");
 
-        List<ExcursionAfterPickTreeDto> excursionDtos = new LinkedList<>();
+        List<ExcursionDto> excursionDtos = new LinkedList<>();
         excursionsResultOptional.ifPresent(flightPick -> {
             if (!(flightPick.getValue() instanceof LinkedList))
                 return;
@@ -63,7 +63,7 @@ public class SimpleResultsMapper implements ResultsMapper {
         travelDto.setExcursions(excursionDtos);
     }
 
-    private void setTwoWayFlight(TravelAfterPickTreeDto travelDto, List<PickResult> picks) {
+    private void setTwoWayFlight(TravelDto travelDto, List<PickResult> picks) {
         Optional<PickResult> twoWayFlightResultOptional = getSingleResultFromPicks(picks, "radioButton-typeOfTransport-action-NEW-TABLE");
 
         twoWayFlightResultOptional.ifPresent(flightPick -> {
@@ -72,12 +72,12 @@ public class SimpleResultsMapper implements ResultsMapper {
 
             List<Column> columns = ((TablePickResult) flightPick.getValue()).getRow().getColumns();
 
-            FlightAfterPickTreeDto toFlightDto = createFlightDto(columns, "flight_to__aircraft", "flight_to__company__name",
+            FlightDto toFlightDto = createFlightDto(columns, "flight_to__aircraft", "flight_to__company__name",
                     "flight_to__class", "flight_to__departure_date", "flight_to__departure_time",
                     "flight_to__time_in_path", "flight_to__departure__place_code", "flight_to__departure__place_name",
                     "flight_to__arrival__place_code", "flight_to__arrival__place_name");
 
-            FlightAfterPickTreeDto fromFlightDto = createFlightDto(columns, "flight_from__aircraft", "flight_from__company__name",
+            FlightDto fromFlightDto = createFlightDto(columns, "flight_from__aircraft", "flight_from__company__name",
                     "flight_from__class", "flight_from__departure_date", "flight_from__departure_time",
                     "flight_from__time_in_path", "flight_from__departure__place_code", "flight_from__departure__place_name",
                     "flight_from__arrival__place_code", "flight_from__arrival__place_name");
@@ -85,24 +85,24 @@ public class SimpleResultsMapper implements ResultsMapper {
             String price = getColumnValueOrEmpty(columns, "price__RUB");
             String booking = getColumnValueOrEmpty(columns, "booking");
 
-            travelDto.setTwoWayFlight(new TwoWayFlightAfterPickTreeDto(toFlightDto, fromFlightDto, price, booking));
+            travelDto.setTwoWayFlight(new TwoWayFlightDto(toFlightDto, fromFlightDto, price, booking));
         });
     }
 
-    private ExcursionAfterPickTreeDto createExcursionDto(List<Column> columns, String title, String description, String price,
-                                                         String time, String booking) {
+    private ExcursionDto createExcursionDto(List<Column> columns, String title, String description, String price,
+                                            String time, String booking) {
         String titleVal = getColumnValueOrEmpty(columns, title);
         String descriptionVal = getColumnValueOrEmpty(columns, description);
         String priceVal = getColumnValueOrEmpty(columns, price);
         String timeVal = getColumnValueOrEmpty(columns, time);
         String bookingVal = getColumnValueOrEmpty(columns, booking);
 
-        return new ExcursionAfterPickTreeDto(titleVal, descriptionVal, priceVal, timeVal, bookingVal);
+        return new ExcursionDto(titleVal, descriptionVal, priceVal, timeVal, bookingVal);
     }
 
-    private FlightAfterPickTreeDto createFlightDto(List<Column> columns, String aircraft, String companyName, String classType,
-                                                   String departureDate, String departureTime, String timeInPath, String departureCode,
-                                                   String departureName, String arrivalCode, String arrivalName) {
+    private FlightDto createFlightDto(List<Column> columns, String aircraft, String companyName, String classType,
+                                      String departureDate, String departureTime, String timeInPath, String departureCode,
+                                      String departureName, String arrivalCode, String arrivalName) {
         String aircraftVal = getColumnValueOrEmpty(columns, aircraft);
         String companyNameVal = getColumnValueOrEmpty(columns, companyName);
         String classTypeVal = getColumnValueOrEmpty(columns, classType);
@@ -114,12 +114,12 @@ public class SimpleResultsMapper implements ResultsMapper {
         String arrivalCodeVal = getColumnValueOrEmpty(columns, arrivalCode);
         String arrivalNameVal = getColumnValueOrEmpty(columns, arrivalName);
 
-        return new FlightAfterPickTreeDto(aircraftVal, companyNameVal, classTypeVal, departureDateVal,
+        return new FlightDto(aircraftVal, companyNameVal, classTypeVal, departureDateVal,
                 departureTimeVal, timeInPathVal, departureCodeVal, departureNameVal,
                 arrivalCodeVal, arrivalNameVal);
     }
 
-    private void setHotel(TravelAfterPickTreeDto travelDto, List<PickResult> picks) {
+    private void setHotel(TravelDto travelDto, List<PickResult> picks) {
         Optional<PickResult> hotelResultOptional = getSingleResultFromPicks(picks, "radioButton-hotels-find-hotels-action-NEW-TABLE");
 
         hotelResultOptional.ifPresent(hotelPick -> {
@@ -134,11 +134,11 @@ public class SimpleResultsMapper implements ResultsMapper {
             String priceInfo = getColumnValueOrEmpty(columns, "price_info");
             String booking = getColumnValueOrEmpty(columns, "booking");
 
-            travelDto.setHotel(new HotelAfterPickTreeDto(name, address, price, pricePeriod, priceInfo, booking));
+            travelDto.setHotel(new HotelDto(name, address, price, pricePeriod, priceInfo, booking));
         });
     }
 
-    private void setHumanData(TravelAfterPickTreeDto travelDto, List<PickResult> picks) {
+    private void setHumanData(TravelDto travelDto, List<PickResult> picks) {
         getSingleResultFromPicks(picks, "textinput-numberOfPersons-action")
                 .ifPresent(pick -> travelDto.setNumberOfPersons(String.valueOf(pick.getValue())));
         getSingleResultFromPicks(picks, "dropdownlist-budget-action.Value")
@@ -146,7 +146,7 @@ public class SimpleResultsMapper implements ResultsMapper {
 
     }
 
-    private void setDates(TravelAfterPickTreeDto travelDto, List<PickResult> picks) {
+    private void setDates(TravelDto travelDto, List<PickResult> picks) {
         getSingleResultFromPicks(picks, "dateIntervalInput-travelPeriod-action1")
                 .ifPresent(pick -> travelDto.setDateStart(String.valueOf(pick.getValue())));
         getSingleResultFromPicks(picks, "dateIntervalInput-travelPeriod-action2")
@@ -154,12 +154,12 @@ public class SimpleResultsMapper implements ResultsMapper {
 
     }
 
-    private void setName(TravelAfterPickTreeDto travelDto, List<PickResult> picks) {
+    private void setName(TravelDto travelDto, List<PickResult> picks) {
         getSingleResultFromPicks(picks, "textinput-nameOfTravel-action")
                 .ifPresent(pick -> travelDto.setName(String.valueOf(pick.getValue())));
     }
 
-    private void setCarRent(TravelAfterPickTreeDto travelDto, List<PickResult> picks) {
+    private void setCarRent(TravelDto travelDto, List<PickResult> picks) {
         Optional<PickResult> carRentResultOptional = getSingleResultFromPicks(picks, "radioButton-rentCar-action-NEW-TABLE");
 
         carRentResultOptional.ifPresent(carRentPick -> {
@@ -178,12 +178,12 @@ public class SimpleResultsMapper implements ResultsMapper {
             String mileage = getColumnValueOrEmpty(columns, "mileage");
             String booking = getColumnValueOrEmpty(columns, "booking");
 
-            travelDto.setCarRent(new CarRentAfterPickTreeDto(name, pricePeriod, price, seats, doors, climate,
+            travelDto.setCarRent(new CarRentDto(name, pricePeriod, price, seats, doors, climate,
                     transmission, classType, mileage, booking));
         });
     }
 
-    private void setCheckpoints(TravelAfterPickTreeDto travelDto, List<PickResult> picks) {
+    private void setCheckpoints(TravelDto travelDto, List<PickResult> picks) {
         travelDto.setFromCheckpoint(createCheckpointDto(picks,
                 "dropdownlist-departure-country-action.Value",
                 "dropdownlist-departure-city-action.Value"));
@@ -193,8 +193,10 @@ public class SimpleResultsMapper implements ResultsMapper {
                 "dropdownlist-citiesByCountryId-action.Value"));
     }
 
-    private void setTravelClientId(TravelAfterPickTreeDto travelPickDto) {
-        travelPickDto.setClientId(clientDao.getClientByLogin(authenticationFacade.getAuthentication().getName()).getClientId());
+    private void setTravelClientId(TravelDto travelPickDto) {
+        Client clientByLogin = clientDao.getClientByLogin(authenticationFacade.getAuthentication().getName());
+        travelPickDto.setClientId(clientByLogin.getClientId());
+        travelPickDto.setClientUsername(clientByLogin.getLogin());
     }
 
     private Optional<PickResult> getSingleResultFromPicks(List<PickResult> picks, String key) {
@@ -203,11 +205,11 @@ public class SimpleResultsMapper implements ResultsMapper {
                 .findFirst();
     }
 
-    private CheckpointAfterPickTreeDto createCheckpointDto(List<PickResult> picks, String keyCountry, String keyCity) {
+    private CheckpointDto createCheckpointDto(List<PickResult> picks, String keyCountry, String keyCity) {
         String countryName = getSingleStringFromPicksOrEmpty(picks, keyCountry);
         String cityName = getSingleStringFromPicksOrEmpty(picks, keyCity);
 
-        return new CheckpointAfterPickTreeDto(countryName, cityName);
+        return new CheckpointDto(countryName, cityName);
     }
 
     private String getSingleStringFromPicksOrEmpty(List<PickResult> picks, String key) {

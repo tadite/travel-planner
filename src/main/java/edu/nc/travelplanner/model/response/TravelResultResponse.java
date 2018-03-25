@@ -2,7 +2,7 @@ package edu.nc.travelplanner.model.response;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.nc.travelplanner.dto.afterPickTree.TravelAfterPickTreeDto;
+import edu.nc.travelplanner.dto.afterPickTree.TravelDto;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class TravelResultResponse implements Response {
@@ -10,16 +10,16 @@ public class TravelResultResponse implements Response {
     @Autowired
     ObjectMapper objectMapper = new ObjectMapper();
 
-    private TravelAfterPickTreeDto travelAfterPickTreeDto;
+    private TravelDto travelDto;
 
-    public TravelResultResponse(TravelAfterPickTreeDto travelAfterPickTreeDto) {
-        this.travelAfterPickTreeDto = travelAfterPickTreeDto;
+    public TravelResultResponse(TravelDto travelDto) {
+        this.travelDto = travelDto;
     }
 
     @Override
     public String getRawData() {
         try {
-            return objectMapper.writeValueAsString(travelAfterPickTreeDto);
+            return objectMapper.writeValueAsString(travelDto);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

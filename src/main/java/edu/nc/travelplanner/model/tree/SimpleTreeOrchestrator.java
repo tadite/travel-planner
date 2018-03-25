@@ -1,29 +1,18 @@
 package edu.nc.travelplanner.model.tree;
 
-import edu.nc.travelplanner.config.AuthenticationFacade;
-import edu.nc.travelplanner.dao.ClientDao;
-import edu.nc.travelplanner.dto.afterPickTree.TravelAfterPickTreeDto;
+import edu.nc.travelplanner.dto.afterPickTree.TravelDto;
 import edu.nc.travelplanner.exception.CustomParseException;
 import edu.nc.travelplanner.model.action.*;
 import edu.nc.travelplanner.model.factory.tree.ActionTreeFactory;
 import edu.nc.travelplanner.model.factory.tree.ActionTreeParseException;
 import edu.nc.travelplanner.model.response.*;
 import edu.nc.travelplanner.model.resultsMapper.ResultsMapper;
-import edu.nc.travelplanner.model.resultsMapper.ResultsMapperReader;
-import edu.nc.travelplanner.service.travel.TravelSaveService;
-import org.springframework.aop.scope.ScopedObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
-import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
-
-import java.io.IOException;
 
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Component
@@ -48,7 +37,7 @@ public class SimpleTreeOrchestrator implements TreeOrchestrator {
 
     //ResultsMapperReader resultsMapperReader;
 
-    private TravelAfterPickTreeDto travelAfterPickTreeDto;
+    private TravelDto travelDto;
     private ActionTreeFactory treeFactory;
 
     public SimpleTreeOrchestrator(@Autowired ActionTreeFactory treeFactory) {
@@ -78,12 +67,12 @@ public class SimpleTreeOrchestrator implements TreeOrchestrator {
 
     @Override
     public Response execute(ActionArgs args) throws CustomParseException {
-        if (travelAfterPickTreeDto != null)
-            return new TravelResultResponse(travelAfterPickTreeDto);
+        if (travelDto != null)
+            return new TravelResultResponse(travelDto);
         else if (getActionTree().isEnded()) {
-            travelAfterPickTreeDto = resultsMapper.map(getActionTree().getPickResults());
+            travelDto = resultsMapper.map(getActionTree().getPickResults());
 
-            return new TravelResultResponse(travelAfterPickTreeDto);
+            return new TravelResultResponse(travelDto);
         }
 
         if (args.getActionState() == ActionState.DECISION)
@@ -100,20 +89,20 @@ public class SimpleTreeOrchestrator implements TreeOrchestrator {
 
     @Override
     public void reset() {
-        this.travelAfterPickTreeDto = null;
+        this.travelDto = null;
         this.actionTree = null;
     }
 
     @Override
     public void save() {
-        if (travelAfterPickTreeDto==null)
+        if (travelDto ==null)
             return;
 
-        saveTravelToDb(travelAfterPickTreeDto);
+        saveTravelToDb(travelDto);
     }
 
-    private void saveTravelToDb(TravelAfterPickTreeDto travelAfterPickTreeDto) {
-        //travelSaveService.saveTravelAfterPick(travelAfterPickTreeDto);
+    private void saveTravelToDb(TravelDto travelDto) {
+        //travelSaveService.saveTravelAfterPick(travelDto);
     }
 
 
