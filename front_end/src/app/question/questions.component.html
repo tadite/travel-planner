@@ -27,8 +27,9 @@
             <!-- <hr> -->
             <div align="center" class="form-inline">
                     <div>                  
-                        <ngx-loading [show]="loading" [config]="{ backdropBackgroundColour: 'rgba(0,0,0,0)', backdropBorderRadius: '10px',
-                        primaryColour: 'rgb(161, 160, 160)', secondaryColour: 'rgb(161, 160, 160)', tertiaryColour: 'rgb(161, 160, 160)' }"></ngx-loading>      
+                    <ngx-loading [show]="loading" [config]="{ backdropBackgroundColour: 'rgba(0,0,0,0)', backdropBorderRadius: '10px',
+                        primaryColour: 'rgb(161, 160, 160)', secondaryColour: 'rgb(161, 160, 160)', tertiaryColour: 'rgb(161, 160, 160)' }">
+                    </ngx-loading>      
                             <div *ngIf="result == false">                                
                                     <form [hidden]="loading" #f="ngForm" #elseBlock (ngSubmit)="onSubmit(f)" #myForm="ngForm" novalidate>
             
@@ -343,7 +344,8 @@
                                         <td><a href="{{questions.twoWayFlight.booking}}" target="_blank">Перейти</a></td>  
                                    </tr>
                               </table> 
-
+                            
+                            <div *ngIf="questions.excursions != null">
                              <div *ngFor="let item of questions.excursions; let i = index">                 
                             <table>   
                                     <caption>Экскурсия №{{i+1}}</caption> 
@@ -369,7 +371,8 @@
                                 </tr>                                                                                                    
                             </table>
                             </div>  
-                                                   
+                        </div>   
+                        <div *ngIf="questions.carRent != null">
                             <table>   
                                     <caption>Аренда автомобиля</caption> 
                                 <tr>                                                                                                        
@@ -408,7 +411,8 @@
                                     <td>Просмотр</td>
                                     <td><a href="{{questions.carRent.booking}}" target="_blank">Перейти</a></td>  
                                 </tr>
-                            </table>                           
+                            </table>
+                        </div>                           
                             <div class="googlemap">
                                 <agm-map
                                         [latitude]="55.41030689999999"
