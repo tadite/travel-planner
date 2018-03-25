@@ -162,32 +162,30 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
     ngOnInit(){
         this.login = this.getLogin();              
         this.getNextActionView();
-      
     }
 
     onRollback() { 
         this.loading = true; 
-        var self = this;
         this.http.deleteObs(this.actionUrl).subscribe(result => {
             this.checks={};
-            self.getNextActionView();
+            this.getNextActionView();
         },
-        error => {console.log(error);self.loading=false;}
+        error => {console.log(error); this.loading=false;}
         );
     }
 
     onReset() {  
-      
-        this.result=false;
-        var self = this;
-        this.http.deleteObs(this.actionUrl+'/reset').subscribe(result => {
+        this.loading = true;        
+        this.result = false;
+        this.questions = null;
+        this.http.deleteObs(this.actionUrl + '/reset').subscribe(result => {
+            console.log('questions onReset' + this.questions);
             this.checks={};
-            self.getNextActionView();
-            self.loading=false;
+            this.getNextActionView();
+            this.loading = false;
         },
-        error => {console.log(error);self.loading=false;}
+        error => {console.log('error in onReset'+ error); this.loading=false;}
         );
-       
     }
 
     onSubmit(f: NgForm) {
@@ -205,24 +203,24 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
         }
               
         console.log(map);   
-        var self = this;
         this.http.postObs(this.actionUrl, map).subscribe(result => {
             this.checks={};
-            self.getNextActionView();
+            this.getNextActionView();
         },
-        error => {console.log(error);}
+        error => {console.log('error in onSubmit'+ error); }
         );
+       
     }
     
 
     getNextActionView(){
         this.loading = true;
-        var self = this;
         this.http.get(this.actionUrl).subscribe(value => {            
-            self.loading = false;    
+            this.loading = false;    
             this.questions = value;
             console.log('.from: ' + typeof this.questions.fromCheckpoint);
-            console.log('[from]: '  + typeof this.questions['from']);
+            console.log('[from]: '  + typeof this.questions['from']);           
+
             if (typeof this.questions.fromCheckpoint !== 'undefined') {
                 this.mapsApiLoader.load();
                 this.buildRoute();
@@ -231,8 +229,9 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
             console.log('result: ' + this.result);  
             console.log(this.questions);    
         },
-        error => { self.loading = false; }
+        error => { console.log('error in nextView'+ error); this.loading = false; }
         );
+       
     }
 
     putCheckId(id: any) {

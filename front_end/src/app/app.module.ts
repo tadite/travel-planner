@@ -26,7 +26,7 @@ import { SourseComponent }   from './sourse/sourse.component';
 import { ConfigComponent }   from './config/config.component';
 import {ProfilesComponent} from "./profiles/profiles.component";
 import {DataProducerComponent} from "./dataProducer/dataProducer.component";
-
+   
 
 // определение маршрутов
 const appRoutes: Routes =[
