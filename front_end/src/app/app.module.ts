@@ -26,7 +26,7 @@ import { SourseComponent }   from './sourse/sourse.component';
 import { ConfigComponent }   from './config/config.component';
 import {ProfilesComponent} from "./profiles/profiles.component";
 import {DataProducerComponent} from "./dataProducer/dataProducer.component";
-   
+import { MyTravelsComponent }   from './myTravels/myTravels.component';   
 
 // определение маршрутов
 const appRoutes: Routes =[
@@ -40,6 +40,7 @@ const appRoutes: Routes =[
     { path: 'profiles', component: ProfilesComponent, canActivate: [AuthGuardService]},
     { path: 'sourse', component: SourseComponent/*, canActivate: [AuthGuardService]*/},
     { path: 'producer', component: DataProducerComponent/*, canActivate: [AuthGuardService]*/},
+    { path: 'myTravels', component: MyTravelsComponent/*, canActivate: [AuthGuardService]*/},
     { path: '**', component: NotFoundComponent }
     
 ];
@@ -48,7 +49,7 @@ const appRoutes: Routes =[
     imports:      [ BrowserModule, RouterModule.forRoot(appRoutes, { useHash: true }), FormsModule, BrowserAnimationsModule, HttpClientModule, NgbModule.forRoot(), LoadingModule, CdkTableModule, MatTableModule, MatPaginatorModule, LoadingModule, AgmCoreModule.forRoot({
         apiKey: 'AIzaSyD28p35CCvhDbiAPL7u96KayO36U6Ny84o'
     })],
-    declarations: [ AppComponent, HomeComponent, LoginComponent, UserComponent, NotFoundComponent, QuestionsComponent, ProfileComponent, AdminComponent, ConfigComponent, ProfilesComponent, SourseComponent, DataProducerComponent],
+    declarations: [ AppComponent, HomeComponent, LoginComponent, UserComponent, NotFoundComponent, QuestionsComponent, ProfileComponent, AdminComponent, ConfigComponent, ProfilesComponent, SourseComponent, DataProducerComponent, MyTravelsComponent],
 
    providers: [
     {
