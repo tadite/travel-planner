@@ -1,6 +1,6 @@
 <div class="page-header">
     <img class="img" src="http://upload.akusherstvo.ru/image1482617.jpg">
-    <div class="title">ПЛАНИРОВЩИК ПУТЕШЕСТВИЙ</div>
+    <div class="title">TRAVEL PLANNER</div>
     <nav class="fixed-nav-bar">
         <ul id="navbar">
             <li><a>{{login}} <span class="glyphicon glyphicon-menu-down"></span></a>
@@ -17,16 +17,21 @@
 
     <div class="col-xs-3 col-md-3"  style= "background: rgba(255, 255, 255, .5); height:100%;margin-top: 20px">
         <ul class="list-group list-unstyled" >
-            <a [routerLink]="['/admin']" class="list-group-item"style="background: rgba(255, 255, 255, .5);margin-top: 10px"><li><span class="glyphicon glyphicon-picture" style="cursor: pointer;"></span><span style="cursor: pointer"> Просмотр путешествий</span></li></a>
-            <a class="list-group-item"style="background: rgba(255, 255, 255, .5)"><li><span class="glyphicon glyphicon-user" style="cursor: pointer"></span><span style="cursor: pointer"> Просмотр профилей</span></li></a>
 
-            <a [routerLink]="['/config']" class="list-group-item"style="background: rgba(255, 255, 255, .5)"><li><span class="glyphicon glyphicon-dashboard" style="cursor: pointer"></span><span style="cursor: pointer"> Дерево конфигурации</span></li></a>
+            <a class="list-group-item" style="background:rgba(255, 255, 255, .5) ; margin-top: 20px"><li><span class="glyphicon glyphicon-user" style="cursor: pointer"></span><span style="cursor: pointer"> Просмотр профилей</span></li></a>
+
+            <a [routerLink]="['/config']" routerLinkActive="active" class="list-group-item" style="background: #f7f8f9"><li><span class="glyphicon glyphicon-dashboard" style="cursor: pointer"></span><span style="cursor: pointer"> Дерево конфигурации</span></li></a>
         </ul>
     </div>
 
     <div class="col-xs-9 col-md-9" style= "  margin-top: 20px">
         <div class="row">
+
+
             <div class="example-container mat-elevation-z8">
+                <ngx-loading [show]="loading" [config]="{ backdropBackgroundColour: 'rgba(0,0,0,0)', backdropBorderRadius: '10px',
+                        primaryColour: 'rgb(161, 160, 160)', secondaryColour: 'rgb(161, 160, 160)', tertiaryColour: 'rgb(161, 160, 160)' }">
+                </ngx-loading>
                 <mat-table #table [dataSource]="dataSource">
 
                     <ng-container matColumnDef="clientId">

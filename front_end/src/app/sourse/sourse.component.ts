@@ -16,6 +16,7 @@ import {Observable} from 'rxjs/Observable';
 })
 
 export class SourseComponent implements OnInit{
+    public loading = false;
     login: string;
     actionUrl: string = '/api/manage/action';
     dataProducerUrl: string = '/api/manage/producer';
@@ -41,7 +42,9 @@ export class SourseComponent implements OnInit{
 
     //загрузка
     private loadActions() {
+        this.loading = true;
         this.http.get(this.sourceUrl).subscribe((data: Sourse[]) => {
+                this.loading = false;
                 this.actions = data;
                 console.log(this.actions);
             },

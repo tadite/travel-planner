@@ -36,13 +36,12 @@ const appRoutes: Routes =[
     { path: 'user', component: UserComponent},
     { path: 'questions', component: QuestionsComponent, canActivate: [AuthGuardService]},   
     { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService]}, 
-	{ path: 'admin', component: AdminComponent, canActivate: [AuthGuardService]},
+	{ path: 'admin', component: ProfilesComponent, canActivate: [AuthGuardService]},
     { path: 'config', component: ConfigComponent, canActivate: [AuthGuardService]},
-    { path: 'profiles', component: ProfilesComponent, canActivate: [AuthGuardService]},
-    { path: 'sourse', component: SourseComponent/*, canActivate: [AuthGuardService]*/},
-    { path: 'producer', component: DataProducerComponent/*, canActivate: [AuthGuardService]*/},
-    { path: 'sourceForm', component: SourceFormComponent/*, canActivate: [AuthGuardService]*/},
-    { path: 'myTravels', component: MyTravelsComponent/*, canActivate: [AuthGuardService]*/},
+    { path: 'sourse', component: SourseComponent, canActivate: [AuthGuardService]},
+    { path: 'producer', component: DataProducerComponent, canActivate: [AuthGuardService]},
+    { path: 'sourceForm', component: SourceFormComponent, canActivate: [AuthGuardService]},
+    { path: 'myTravels', component: MyTravelsComponent, canActivate: [AuthGuardService]},
     { path: '**', component: NotFoundComponent }
     
 ];
