@@ -1,6 +1,6 @@
 <div class="page-header">
     <img class="img" src="http://upload.akusherstvo.ru/image1482617.jpg">
-    <div class="title">ПЛАНИРОВЩИК ПУТЕШЕСТВИЙ</div>
+    <div class="title">TRAVEL PLANNER</div>
     <nav class="fixed-nav-bar">
         <ul id="navbar">
             <li><a>{{login}} <span class="glyphicon glyphicon-menu-down"></span></a>
@@ -17,11 +17,11 @@
 
     <div class="col-xs-3 col-md-3"  style="  height:100%;margin-top: 30px; background: rgba(255, 255, 255, .5)">
         <ul class="list-group list-unstyled">
-            <a [routerLink]="['/config']" class="list-group-item" style="background: rgba(255, 255, 255, .5); margin-top: 10px" ><li><span class="glyphicon glyphicon-dashboard" style="cursor: pointer;"></span><span style="cursor: pointer"> type Action</span></li></a>
-            <a [routerLink]="['/producer']" class="list-group-item"style="background: rgba(255, 255, 255, .5)"><li><span class="glyphicon glyphicon-dashboard" style="cursor: pointer"></span><span style="cursor: pointer"> type DataProducer</span></li></a>
-            <a class="list-group-item"style="background: rgba(255, 255, 255, .5)"><li><span class="glyphicon glyphicon-dashboard" style="cursor: pointer"></span><span style="cursor: pointer"> type Source</span></li></a>
+            <a [routerLink]="['/config']" class="list-group-item" style="background: #f7f8f9; margin-top: 10px" ><li><span class="glyphicon glyphicon-dashboard" style="cursor: pointer;"></span><span style="cursor: pointer"> type Action</span></li></a>
+            <a [routerLink]="['/producer']" class="list-group-item"style="background: #f7f8f9"><li><span class="glyphicon glyphicon-dashboard" style="cursor: pointer"></span><span style="cursor: pointer"> type DataProducer</span></li></a>
+            <a class="list-group-item" style="background: rgba(255, 255, 255, .5)"><li><span class="glyphicon glyphicon-dashboard" style="cursor: pointer"></span><span style="cursor: pointer"> type Source</span></li></a>
             <hr>
-            <a [routerLink]="['/admin']" class="list-group-item"style="background: rgba(255, 255, 255, .5)"><li><span class="glyphicon glyphicon-home" style="cursor: pointer"></span><span style="cursor: pointer"> Назад</span></li></a>
+            <a [routerLink]="['/admin']" class="list-group-item"style="background: #f7f8f9"><li><span class="glyphicon glyphicon-home" style="cursor: pointer"></span><span style="cursor: pointer"> Назад</span></li></a>
         </ul>
     </div>
 
@@ -37,7 +37,11 @@
                 </style>
 
                     <table class="table table-responsive table-hover table-condensed">
-                    <thead>
+                        <ngx-loading [show]="loading" [config]="{ backdropBackgroundColour: 'rgba(0,0,0,0)', backdropBorderRadius: '10px',
+                        primaryColour: 'rgb(161, 160, 160)', secondaryColour: 'rgb(161, 160, 160)', tertiaryColour: 'rgb(161, 160, 160)' }">
+                        </ngx-loading>
+
+                        <thead>
                     <tr>
                         <td width="13%"> Name</td>
                         <td width="8%"> Type</td>
