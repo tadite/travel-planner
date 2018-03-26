@@ -63,12 +63,8 @@ public class Client implements UserDetails {
         this.travels = travels;
     }
 
-    public long getClientId() {
+    public Long getClientId() {
         return clientId;
-    }
-
-    public void setClientId(long clientId) {
-        this.clientId  = clientId;
     }
 
     public String getFirstName() {

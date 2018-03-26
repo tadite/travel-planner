@@ -17,15 +17,15 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = TravelplannerApplication.class)
-@WebAppConfiguration
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(classes = TravelplannerApplication.class)
+//@WebAppConfiguration
 public class SpringDataTests {
 
-    @Autowired
+    //@Autowired
     TravelSaveService travelSaveService;
 
-    @Test
+    //@Test
     public void canAddTravel() throws ParseException, NotSupportedException {
         CheckpointDto checkpointDtoFrom = new CheckpointDto("Russia", "Voronezh");
         CheckpointDto checkpointDtoTo = new CheckpointDto("Russia", "Moscow");
@@ -57,7 +57,7 @@ public class SpringDataTests {
         savedTravelDto.getCarRent();
     }
 
-    @Test
+   // @Test
     public void canUpdateProfile(){
 
     }
