@@ -433,7 +433,7 @@
                                 </agm-map>
                             </div>
                             <input class="newTravel" type="button" (click)="onReset()" value="Новое путешествие"/>
-                            <input class="newTravel" type="button" (click)="onSave()" value="Сохранить"/>
+                            <input class="newTravel" type="button" [disabled]="!isSaveButtonEnabled()" (click)="onSave()" value="Сохранить"/>
                             </div>
                         </div>
                     </div>

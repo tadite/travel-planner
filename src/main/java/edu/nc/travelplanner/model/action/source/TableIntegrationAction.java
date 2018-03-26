@@ -1,7 +1,9 @@
 package edu.nc.travelplanner.model.action.source;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.nc.travelplanner.exception.CustomParseException;
 import edu.nc.travelplanner.exception.DataProducerSendException;
+import edu.nc.travelplanner.exception.NotEnoughParamsException;
 import edu.nc.travelplanner.model.action.ActionArgs;
 import edu.nc.travelplanner.model.action.ActionType;
 import edu.nc.travelplanner.model.action.IntegrationAction;
@@ -55,7 +57,7 @@ public class TableIntegrationAction implements IntegrationAction {
     }
 
     @Override
-    public Response executePresentation(ActionArgs args, List<PickResult> pickResults) throws DataProducerSendException {
+    public Response executePresentation(ActionArgs args, List<PickResult> pickResults) throws DataProducerSendException, CustomParseException, NotEnoughParamsException {
 
         try {
             Response response = dataProducer.send(pickResults);
@@ -64,8 +66,8 @@ public class TableIntegrationAction implements IntegrationAction {
             return new ViewResponseBuilder().addTitleElement("question", viewName).addTable(getTableId(), rows, columnDefs, links, multiPick, canPick).build();
         } catch (IOException e) {
             e.printStackTrace();
+            throw new CustomParseException();
         }
-        return null;
     }
 
     private String getTableId() {

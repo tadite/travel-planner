@@ -96,16 +96,15 @@ public class SimpleTreeOrchestrator implements TreeOrchestrator {
     }
 
     @Override
-    public void save() throws ParseException, NotSupportedException {
+    public TravelDto save() throws ParseException, NotSupportedException {
         if (travelDto ==null)
-            return;
+            throw new NotSupportedException();
 
-        saveTravelToDb(travelDto);
+        return saveTravelToDb(travelDto);
     }
 
-    private void saveTravelToDb(TravelDto travelDto) throws ParseException, NotSupportedException {
-        travelSaveService.save(travelDto);
+    private TravelDto saveTravelToDb(TravelDto travelDto) throws ParseException, NotSupportedException {
+        return travelSaveService.save(travelDto);
     }
-
 
 }
