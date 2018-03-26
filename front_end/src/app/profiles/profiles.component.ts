@@ -21,7 +21,7 @@ import 'rxjs/add/operator/map';
 
 export class ProfilesComponent implements OnInit{
     displayedColumns = ['clientId', 'login', 'firstName', 'lastName', 'email', 'age', 'countryName', 'isBlocked'];
-
+    public loading = false;
     login: string;
     profilesUrl: string = '/api/manage/user';
     blocProfilesUrl: string = '/api/manage/user/block';
@@ -53,8 +53,10 @@ export class ProfilesComponent implements OnInit{
 
 
     getProfiles(){
+        this.loading = true;
         this.http.get(this.profilesUrl).subscribe(value => {
-           this.ELEMENT_DATA=value;
+            this.loading = false;
+            this.ELEMENT_DATA=value;
                 console.log(value);
                 console.log(this.ELEMENT_DATA);
                 this.dataSource = new MatTableDataSource<Element>(this.ELEMENT_DATA);

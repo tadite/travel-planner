@@ -19,6 +19,11 @@
     {
       "from": "dropdownlist-citiesByCountryId-action.Value",
       "to": "city"
+    },
+    {
+      "from": "",
+      "to": "currency",
+      "default":"RUB"
     }
   ],
   "source": "coast-of-living"

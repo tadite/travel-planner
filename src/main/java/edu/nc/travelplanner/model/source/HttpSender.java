@@ -22,11 +22,13 @@ public class HttpSender implements Sender {
         //String urlWithParameterValues = URLEncoder.encode(source.getUrlWithParameterValues(), "UTF-8");
         String urlWithParameterValues = source.getUrlWithParameterValues();
         System.out.println(urlWithParameterValues);
-        URL obj = new URL(urlWithParameterValues);
-        String responseStr = Resources.toString(obj, Charsets.UTF_8);
+       URL obj = new URL(urlWithParameterValues);
 /*
+        String responseStr = Resources.toString(obj, Charsets.UTF_8);*/
+
 
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+        con.setConnectTimeout(10000);
 
         con.setRequestMethod("GET");
 
@@ -41,7 +43,7 @@ public class HttpSender implements Sender {
             response.append(inputLine);
         }
         in.close();
-        String responseStr = response.toString();*/
+        String responseStr = response.toString();
 
         System.out.println(responseStr);
         return new TextResponse(responseStr);

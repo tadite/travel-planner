@@ -14,7 +14,7 @@ import java.util.Map;
 public class FilterUtilTests {
 
 
-    @Test
+    //@Test
     public void canGetCityFromJsonIfContainsInArray(){
         GetValueListIfContainsInPropertyFromJsonArray filter =
                 new GetValueListIfContainsInPropertyFromJsonArray("/json/other/places_en.json",

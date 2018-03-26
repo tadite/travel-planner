@@ -10,6 +10,7 @@ import edu.nc.travelplanner.table.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.transaction.NotSupportedException;
 import java.text.ParseException;
@@ -57,6 +58,7 @@ public class TravelSaveService {
     @Autowired
     private DtoMapper dtoMapper;
 
+    @Transactional
     public TravelDto save(TravelDto travelDto) throws ParseException, NotSupportedException {
         if (travelDto.getToCheckpoint() == null
                 || travelDto.getToCheckpoint().getCityName() == null
@@ -177,7 +179,6 @@ public class TravelSaveService {
         }
         excursionRepository.save(excursions);
         travel = travelRepository.save(tempTravel);
-
 
         return dtoMapper.map(travel);
     }

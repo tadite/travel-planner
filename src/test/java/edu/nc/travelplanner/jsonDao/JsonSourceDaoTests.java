@@ -25,7 +25,7 @@ public class JsonSourceDaoTests {
     private String jsonSourceName;
     private String jsonSourceJson;
 
-    @Before
+    //@Before
     public void init() throws IOException {
         mockSourceJsonReader = Mockito.mock(SourceJsonReader.class);
 
@@ -37,7 +37,7 @@ public class JsonSourceDaoTests {
         jsonSourceDao= new JsonSourceDao(mockSourceJsonReader, new PathMapper(), new ObjectMapper());
     }
 
-    @Test
+    //@Test
     public void canGet() throws IOException {
         //Array
 
@@ -52,7 +52,7 @@ public class JsonSourceDaoTests {
         Assert.assertEquals("country_id", sourceApiDto.getParams().get(0));
     }
 
-    @Test
+    //@Test
     public void canGetAll() throws IOException {
         //Array
 
