@@ -24,6 +24,7 @@ public class Excursion {
 
     private String time;
 
+    @Column(columnDefinition="text")
     private String booking;
 
     @ManyToMany

@@ -25,6 +25,7 @@ public class Hotel {
 
     private String priceInfo;
 
+    @Column(columnDefinition="text")
     private String booking;
 
     public Hotel() {
