@@ -49,7 +49,6 @@ public class UserProfileDto {
     }
 
     public static Client toClient(Client client, UserProfileDto userProfileDto){
-        client.setClientId(userProfileDto.getClientId());
         client.setFirstName(userProfileDto.getFirstName());
         client.setLastName(userProfileDto.getLastName());
         client.setEmail(userProfileDto.getEmail());

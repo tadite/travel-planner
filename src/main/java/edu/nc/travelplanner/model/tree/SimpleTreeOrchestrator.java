@@ -7,6 +7,7 @@ import edu.nc.travelplanner.model.factory.tree.ActionTreeFactory;
 import edu.nc.travelplanner.model.factory.tree.ActionTreeParseException;
 import edu.nc.travelplanner.model.response.*;
 import edu.nc.travelplanner.model.resultsMapper.ResultsMapper;
+import edu.nc.travelplanner.service.travel.TravelSaveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -14,12 +15,15 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
+import javax.transaction.NotSupportedException;
+import java.text.ParseException;
+
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Component
 public class SimpleTreeOrchestrator implements TreeOrchestrator {
 
-   // @Autowired
-   // TravelSaveService travelSaveService;
+    @Autowired
+    TravelSaveService travelSaveService;
 
     private ActionTree actionTree;
 
@@ -34,8 +38,6 @@ public class SimpleTreeOrchestrator implements TreeOrchestrator {
 
     @Autowired
     ResultsMapper resultsMapper;
-
-    //ResultsMapperReader resultsMapperReader;
 
     private TravelDto travelDto;
     private ActionTreeFactory treeFactory;
@@ -94,15 +96,15 @@ public class SimpleTreeOrchestrator implements TreeOrchestrator {
     }
 
     @Override
-    public void save() {
+    public void save() throws ParseException, NotSupportedException {
         if (travelDto ==null)
             return;
 
         saveTravelToDb(travelDto);
     }
 
-    private void saveTravelToDb(TravelDto travelDto) {
-        //travelSaveService.saveTravelAfterPick(travelDto);
+    private void saveTravelToDb(TravelDto travelDto) throws ParseException, NotSupportedException {
+        travelSaveService.save(travelDto);
     }
 
 

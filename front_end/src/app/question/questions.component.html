@@ -9,7 +9,7 @@
                     <li><a>{{login}} <span class="glyphicon glyphicon-menu-down"></span></a> 
                       <ul>
                         <li><a routerLink="/profile" routerLinkActive="active"><span class="glyphicon glyphicon-user"></span> Мой профиль</a></li>
-                        <!-- <li><a href="#"><span class="glyphicon glyphicon-picture"></span> История путешествий</a></li>                     -->
+                        <li><a routerLink="/myTravels" routerLinkActive="active"><span class="glyphicon glyphicon-picture"></span> История путешествий</a></li>
                        
                         <li><a routerLink="/questions" routerLinkActive="active"><span class="glyphicon glyphicon-plane"></span> Мое путешествие</a></li>
                         <hr>
@@ -433,6 +433,7 @@
                                 </agm-map>
                             </div>
                             <input class="newTravel" type="button" (click)="onReset()" value="Новое путешествие"/>
+                            <input class="newTravel" type="button" (click)="onSave()" value="Сохранить"/>
                             </div>
                         </div>
                     </div>
