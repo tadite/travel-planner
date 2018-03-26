@@ -25,8 +25,9 @@ export class HttpService{
     public postObs(url: string, body: any) : Observable<any>{
         return this.httpClient.post(url, JSON.stringify(body), {headers:{'Content-Type': 'application/json'}});
     }
+
     public postData( url: string, body: any){
-        return this.httpClient.post(url, body);
+        return this.httpClient.post(url, body, {headers:{'Content-Type': 'application/json'}});
     }
 
     public deleteDate(url: string){

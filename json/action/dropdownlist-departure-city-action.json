@@ -1,4 +1,6 @@
-{"name":"dropdownlist-departure-city-action",
-  "viewName":"Выберите город отправления",
+{
+  "name":"dropdownlist-departure-city-action",
+  "viewName":"Город отправления",
   "type":"dropdown_integration",
-  "dataProducer": "cities-map-producer"}
+  "dataProducer": "cities-map-producer"
+}

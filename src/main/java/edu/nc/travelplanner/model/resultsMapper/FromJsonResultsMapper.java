@@ -1,17 +1,7 @@
 package edu.nc.travelplanner.model.resultsMapper;
 
-import edu.nc.travelplanner.dto.afterPickTree.CheckpointAfterPickTreeDto;
-import edu.nc.travelplanner.dto.afterPickTree.TravelAfterPickTreeDto;
-import edu.nc.travelplanner.model.action.DateInterval;
-import edu.nc.travelplanner.model.action.PickResult;
-
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
-public class FromJsonResultsMapper implements ResultsMapper {
-
+public class FromJsonResultsMapper /*implements ResultsMapper */{
+/*
     private List<MapNode> mapNodes;
     private final List<String> travelParams =new LinkedList<String>(){{
         push("from.cityId");
@@ -37,10 +27,10 @@ public class FromJsonResultsMapper implements ResultsMapper {
     }
 
     @Override
-    public TravelAfterPickTreeDto map(List<PickResult> pickResults) {
-        TravelAfterPickTreeDto travelAfterPickTreeDto = new TravelAfterPickTreeDto();
+    public TravelDto map(List<PickResult> pickResults) {
+        TravelDto travelAfterPickTreeDto = new TravelDto();
 
-        CheckpointAfterPickTreeDto from = new CheckpointAfterPickTreeDto();
+        CheckpointDto from = new CheckpointDto();
 
         for (MapNode node : mapNodes) {
             if (!travelParams.contains(node.getTo()))
@@ -59,34 +49,8 @@ public class FromJsonResultsMapper implements ResultsMapper {
         return travelAfterPickTreeDto;
     }
 
-    private void setTravelDtoParam(TravelAfterPickTreeDto travelDto, PickResult pick, MapNode node){
+    private void setTravelDtoParam(TravelDto travelDto, PickResult pick, MapNode node){
 
-        if (node.getTo().equals("from.countryId"))
-            travelDto.getFrom().setCountryId(Integer.valueOf((String)getPickValue(pick,node)));
-        else if (node.getTo().equals("from.cityId"))
-            travelDto.getFrom().setCityId(Long.valueOf((String)getPickValue(pick,node)));
-        else if (node.getTo().equals("to.countryId"))
-            travelDto.getTo().setCountryId(Integer.valueOf((String)getPickValue(pick,node)));
-        else if (node.getTo().equals("to.cityId"))
-            travelDto.getTo().setCityId(Long.valueOf((String)getPickValue(pick,node)));
-        else if (node.getTo().equals("travelPeriodStart"))
-            travelDto.setDateIntervalStart((String)getPickValue(pick,node));
-        else if (node.getTo().equals("travelPeriodEnd"))
-            travelDto.setDateIntervalEnd((String)getPickValue(pick,node));
-        else if (node.getTo().equals("excursion.id"))
-            travelDto.getExcursion().setId((String)getPickValue(pick,node));
-        else if (node.getTo().equals("excursion.typeId"))
-            travelDto.getExcursion().setTypeId((String)getPickValue(pick,node));
-        else if (node.getTo().equals("excursion.name"))
-            travelDto.getExcursion().setName((String)getPickValue(pick,node));
-        else if (node.getTo().equals("budget.id"))
-            travelDto.getBudget().setId((String)getPickValue(pick,node));
-        else if (node.getTo().equals("travelName"))
-            travelDto.setTravelName((String)getPickValue(pick,node));
-        else if (node.getTo().equals("numberOfPersons"))
-            travelDto.setNumberOfPersons((String)getPickValue(pick,node));
-        else if (node.getTo().equals("rentCarId"))
-            travelDto.setRentCar((String)getPickValue(pick,node));
 
 
 
@@ -99,5 +63,5 @@ public class FromJsonResultsMapper implements ResultsMapper {
             default:
                 return pick.getValue();
         }
-    }
+    }*/
 }

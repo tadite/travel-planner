@@ -1,166 +1,184 @@
 package edu.nc.travelplanner.service.travel;
 
-import com.vk.api.sdk.exceptions.ApiException;
-import com.vk.api.sdk.exceptions.ClientException;
-import edu.nc.travelplanner.dao.*;
-import edu.nc.travelplanner.dto.afterPickTree.CheckpointAfterPickTreeDto;
-import edu.nc.travelplanner.dto.afterPickTree.TravelAfterPickTreeDto;
-import edu.nc.travelplanner.model.factory.dataproducer.DataProducerParseException;
+import com.google.common.base.Optional;
+import edu.nc.travelplanner.dto.afterPickTree.ExcursionDto;
+import edu.nc.travelplanner.dto.afterPickTree.TravelDto;
+import edu.nc.travelplanner.mapper.DtoMapper;
+import edu.nc.travelplanner.mapper.EntityMapper;
+import edu.nc.travelplanner.repository.*;
 import edu.nc.travelplanner.table.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Component;
+
+import javax.transaction.NotSupportedException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class TravelSaveService {
 
     @Autowired
-    VkGeoNamesProvider vkGeoNamesProvider;
+    private ClientRepository clientRepository;
 
     @Autowired
-    TravelDao travelDao;
+    private CityRepository cityRepository;
+
     @Autowired
-    CityDao cityDao;
+    private CountryRepository countryRepository;
+
     @Autowired
-    CountryDao countryDao;
+    private HotelRepository hotelRepository;
+
     @Autowired
-    PlaceOfResidenceDao placeOfResidenceDao;
+    private CarRentRepository carRentRepository;
+
     @Autowired
-    TypeOfResidenceDao typeOfResidenceDao;
+    private ExcursionRepository excursionRepository;
+
     @Autowired
-    ClientDao clientDao;
+    private FlightRepository flightRepository;
+
     @Autowired
-    CheckPointDao checkPointDao;
+    private TwoWayFlightRepository twoWayFlightRepository;
 
-    public void saveTravelAfterPick(TravelAfterPickTreeDto pickDto){
-        try {
-            Travel travel = mapTravelAfterPickToTravel(pickDto);
-            saveTravelUserLink(pickDto, travel);
-            travelDao.saveTravel(travel);
+    @Autowired
+    private TravelRepository travelRepository;
 
-            //set User
-        } catch (ClientException | ApiException | DataProducerParseException e) {
-            e.printStackTrace();
-        }
-    }
+    @Autowired
+    private SimpleDateFormat dateFormat;
 
-    private void saveTravelUserLink(TravelAfterPickTreeDto pickDto, Travel travel) {
-        Client client =clientDao.getClientById(pickDto.getClientId());
-        if (client!=null){
-            TravelForClient travelForClient = new TravelForClient();
-            travelForClient.setClient(client);
-            travelForClient.setTravel(travel);
+    @Autowired
+    private EntityMapper entityMapper;
 
-            travel.addTravelForClient(travelForClient);
-        }
-    }
+    @Autowired
+    private DtoMapper dtoMapper;
 
-    private Travel mapTravelAfterPickToTravel(TravelAfterPickTreeDto pickDto) throws ClientException, ApiException, DataProducerParseException {
-        Travel travel = new Travel();
+    public TravelDto save(TravelDto travelDto) throws ParseException, NotSupportedException {
+        if (travelDto.getToCheckpoint() == null
+                || travelDto.getToCheckpoint().getCityName() == null
+                || travelDto.getToCheckpoint().getCountryName() == null
+                || travelDto.getFromCheckpoint() == null
+                || travelDto.getFromCheckpoint().getCountryName() == null
+                || travelDto.getFromCheckpoint().getCityName() == null)
+            throw new NotSupportedException();
 
-        //from CheckPoint
-        CheckpointAfterPickTreeDto from = pickDto.getFrom();
-        if (from!=null && from.getCityId()!=null && from.getCountryId()!=null){
-            CheckPoint fromCheckPoint = saveAndGetFromCheckPoint(pickDto);
-            travel.addCheckPoint(fromCheckPoint);
-        }
-        //name
-        travel.setName(pickDto.getTravelName());
+        Travel tempTravel = new Travel();
+        tempTravel.setName(travelDto.getName());
+        tempTravel.setDateStart(dateFormat.parse(travelDto.getDateStart()));
+        tempTravel.setDateEnd(dateFormat.parse(travelDto.getDateEnd()));
+        tempTravel.setNumberOfPersons(Integer.valueOf(travelDto.getNumberOfPersons()));
+        tempTravel.setBudgetType(travelDto.getBudgetType());
 
-        switch (pickDto.getBudget().getId()) {
-            case "1":
-                pickDto.getBudget().setName("Economy");
-                break;
-            case "2":
-                pickDto.getBudget().setName("Medium");
-                break;
-            case "3":
-                pickDto.getBudget().setName("Premium");
-                break;
-        }
+        //save from city
+        Country countryFrom = countryRepository.findOptionalByName(travelDto.getFromCheckpoint().getCountryName())
+                .or(countryRepository.save(new Country(travelDto.getFromCheckpoint().getCountryName())));
 
-        return travel;
-    }
+        City cityFrom = cityRepository.findOptionalByName(travelDto.getFromCheckpoint().getCityName())
+                .or(cityRepository.save(new City(travelDto.getFromCheckpoint().getCityName(), countryFrom)));
+        countryFrom.getCities().add(cityFrom);
+        countryFrom = countryRepository.save(countryFrom);
 
-    private CheckPoint saveAndGetFromCheckPoint(TravelAfterPickTreeDto pickDto) throws ClientException, ApiException, DataProducerParseException {
-        CheckPoint fromCheckPoint = new CheckPoint();
+        //save to city
+        Country countryTo = countryRepository.findOptionalByName(travelDto.getToCheckpoint().getCountryName())
+                .or(countryRepository.save(new Country(travelDto.getToCheckpoint().getCountryName())));
 
-        Country countryById = saveAndGetCountry(pickDto);
-        City cityById = saveAndGetCity(pickDto, countryById);
+        City cityTo = cityRepository.findOptionalByName(travelDto.getToCheckpoint().getCityName())
+                .or(cityRepository.save(new City(travelDto.getToCheckpoint().getCityName(), countryTo)));
 
-        PlaceOfResidence placeOfResidence = new PlaceOfResidence();
-        placeOfResidence.setCity(cityById);
-        placeOfResidence.setCountry(countryById);
-        typeOfResidenceDao.saveTypeOfResidence(new TypeOfResidence());
-
-        TypeOfResidence typeOfResidenceById = typeOfResidenceDao.getTypeOfResidenceById(TypeOfResidence.FROM_PLACE_ID);
-        placeOfResidence.setTypeOfResidence(typeOfResidenceById);
-
-        fromCheckPoint.setPlaceOfResidence(placeOfResidence);
-
-        placeOfResidenceDao.savePlaceOfResidence(placeOfResidence);
-        checkPointDao.saveCheckPoint(fromCheckPoint);
-
-
-        return fromCheckPoint;
-    }
-
-    private City saveAndGetCity(TravelAfterPickTreeDto pickDto, Country countryById) throws DataProducerParseException {
-        Long cityId = pickDto.getFrom().getCityId();
-        City cityById = cityDao.getCityById(cityId);
-        if (cityById==null){
-            cityById = new City();
-            cityById.setCityId(cityId);
-            cityById.setCountryId(countryById.getCountryId());
-            cityById.setName(vkGeoNamesProvider.getCityNameById(cityId.intValue()));
-
-            cityDao.saveCity(cityById);
+        //save hotel
+        Hotel hotel = null;
+        if (travelDto.getHotel() != null) {
+            hotel = hotelRepository.save(new Hotel(cityTo,
+                    travelDto.getHotel().getName(),
+                    travelDto.getHotel().getAddress(),
+                    travelDto.getHotel().getPrice(),
+                    travelDto.getHotel().getPricePeriod(),
+                    travelDto.getHotel().getPriceInfo(),
+                    travelDto.getHotel().getBooking()
+            ));
         }
 
-        pickDto.getFrom().setCityName(cityById.getName());
-
-
-        cityId = pickDto.getTo().getCityId();
-        cityById = cityDao.getCityById(cityId);
-        if (cityById==null){
-            cityById = new City();
-            cityById.setCityId(cityId);
-            cityById.setCountryId(countryById.getCountryId());
-            cityById.setName(vkGeoNamesProvider.getCityNameById(cityId.intValue()));
-
-            cityDao.saveCity(cityById);
+        //save rent
+        CarRent carRent = null;
+        if (travelDto.getCarRent() != null) {
+            carRent = carRentRepository.save(new CarRent(cityTo,
+                    travelDto.getCarRent().getName(),
+                    travelDto.getCarRent().getPricePeriod(),
+                    travelDto.getCarRent().getPrice(),
+                    travelDto.getCarRent().getSeats(),
+                    travelDto.getCarRent().getDoors(),
+                    travelDto.getCarRent().getClimate(),
+                    travelDto.getCarRent().getTransmission(),
+                    travelDto.getCarRent().getClassType(),
+                    travelDto.getCarRent().getMileage(),
+                    travelDto.getCarRent().getBooking()
+            ));
         }
 
-        pickDto.getTo().setCityName(cityById.getName());
-
-        return cityById;
-    }
-
-    private Country saveAndGetCountry(TravelAfterPickTreeDto pickDto) throws ClientException, ApiException, DataProducerParseException {
-        Integer countryId = pickDto.getFrom().getCountryId();
-        Country countryById = countryDao.getCountryById(countryId);
-        if (countryById==null){
-            countryById = new Country();
-            countryById.setCountryId(countryId);
-            countryById.setName(vkGeoNamesProvider.getCountryNameById(countryId));
-
-            countryDao.saveCountry(countryById);
+        //save excursions
+        List<Excursion> excursions = new LinkedList<>();
+        if (travelDto.getExcursions() != null && travelDto.getExcursions().size() != 0) {
+            for (ExcursionDto excursionDto : travelDto.getExcursions()) {
+                Excursion excursion = excursionRepository.save(new Excursion(cityTo,
+                        excursionDto.getName(),
+                        excursionDto.getDescription(),
+                        excursionDto.getPrice(),
+                        excursionDto.getTime(),
+                        excursionDto.getBooking()
+                ));
+                excursion.setCity(cityTo);
+                excursions.add(excursion);
+            }
         }
 
-        pickDto.getFrom().setCountryName(countryById.getName());
+        //save two way flight
+        TwoWayFlight twoWayFlight = null;
+        if (travelDto.getTwoWayFlight() != null && travelDto.getTwoWayFlight().getFlightTo() != null && travelDto.getTwoWayFlight().getFlightFrom() != null) {
 
+            Flight tempFlightTo = new Flight(travelDto.getTwoWayFlight().getFlightTo().getAircraft(), travelDto.getTwoWayFlight().getFlightTo().getCompanyName(), travelDto.getTwoWayFlight().getFlightTo().getClassType(), travelDto.getTwoWayFlight().getFlightTo().getDepartureDate(), travelDto.getTwoWayFlight().getFlightTo().getDepartureTime(),
+                    travelDto.getTwoWayFlight().getFlightTo().getTimeInPath(), travelDto.getTwoWayFlight().getFlightTo().getDepartureCode(), travelDto.getTwoWayFlight().getFlightTo().getDepartureName(), travelDto.getTwoWayFlight().getFlightTo().getArrivalCode(), travelDto.getTwoWayFlight().getFlightTo().getArrivalName());
+            tempFlightTo.setToCity(cityTo);
+            tempFlightTo.setFromCity(cityFrom);
+            Flight flightTo = flightRepository.save(tempFlightTo);
 
-        countryId = pickDto.getTo().getCountryId();
-        countryById = countryDao.getCountryById(countryId);
-        if (countryById==null){
-            countryById = new Country();
-            countryById.setCountryId(countryId);
-            countryById.setName(vkGeoNamesProvider.getCountryNameById(countryId));
+            Flight tempFlightFrom = new Flight(travelDto.getTwoWayFlight().getFlightFrom().getAircraft(), travelDto.getTwoWayFlight().getFlightFrom().getCompanyName(), travelDto.getTwoWayFlight().getFlightFrom().getClassType(), travelDto.getTwoWayFlight().getFlightFrom().getDepartureDate(), travelDto.getTwoWayFlight().getFlightFrom().getDepartureTime(),
+                    travelDto.getTwoWayFlight().getFlightFrom().getTimeInPath(), travelDto.getTwoWayFlight().getFlightFrom().getDepartureCode(), travelDto.getTwoWayFlight().getFlightFrom().getDepartureName(), travelDto.getTwoWayFlight().getFlightFrom().getArrivalCode(), travelDto.getTwoWayFlight().getFlightFrom().getArrivalName());
+            tempFlightFrom.setToCity(cityFrom);
+            tempFlightFrom.setFromCity(cityTo);
+            Flight flightFrom = flightRepository.save(tempFlightFrom);
 
-            countryDao.saveCountry(countryById);
+            twoWayFlight = twoWayFlightRepository.save(new TwoWayFlight(flightTo, flightFrom,
+                    travelDto.getTwoWayFlight().getPrice(),
+                    travelDto.getTwoWayFlight().getBooking()));
         }
 
-        pickDto.getTo().setCountryName(countryById.getName());
+        //save travel
+        tempTravel.setTwoWayFlight(twoWayFlight);
+        //tempTravel.setExcursions(excursions);
+        //excursions.forEach(excursion -> tempTravel.getExcursions().add(excursion));
+        tempTravel.setCarRent(carRent);
+        tempTravel.setHotel(hotel);
+        tempTravel.setFromCity(cityFrom);
+        tempTravel.setToCity(cityTo);
 
-        return countryById;
+        Travel travel = travelRepository.save(tempTravel);
+
+        Client client = clientRepository.findOne(travelDto.getClientId());
+        client.getTravels().add(travel);
+        travel.setClient(client);
+
+        for (Excursion excursion : excursions) {
+            excursion.getTravels().add(travel);
+            travel.getExcursions().add(excursion);
+        }
+        excursionRepository.save(excursions);
+        travel = travelRepository.save(tempTravel);
+
+
+        return dtoMapper.map(travel);
     }
 }

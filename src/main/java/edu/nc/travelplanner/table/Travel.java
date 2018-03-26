@@ -1,10 +1,9 @@
 package edu.nc.travelplanner.table;
 
+import edu.nc.travelplanner.dto.afterPickTree.CheckpointDto;
+
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "travel")
@@ -14,45 +13,67 @@ public class Travel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long travelId;
 
-    @Column(name = "name")
+    @ManyToOne
+    private Client client;
+
+    @ManyToOne
+    private City fromCity;
+
+    @ManyToOne
+    private City toCity;
+
     private String name;
 
-    @Column(name = "number_of_days")
-    private Integer numberOfDays;
+    private Date dateStart;
 
-    @Column(name = "description")
-    private String description;
+    private Date dateEnd;
 
-    @Column(name = "cost")
-    private String cost;
+    private Integer numberOfPersons;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "travel")
-    private Set<TravelForClient> travelForClients = new HashSet<>();
+    private String budgetType;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "travel")
-    private List<CheckPoint> checkPoints = new LinkedList<>();
+    @ManyToOne
+    private CarRent carRent;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "travel")
-    private Set<OptionForTravel> optionForTravels = new HashSet<>();
+    @ManyToOne
+    private Hotel hotel;
 
-    public CheckPoint getFromCheckPoint(){
-        if (checkPoints.isEmpty())
-            return null;
-        return checkPoints.get(0);
-    }
+    @ManyToOne
+    private TwoWayFlight twoWayFlight;
 
-    public CheckPoint getToCheckPoint(){
-        if (checkPoints.isEmpty())
-            return null;
-        return checkPoints.get(checkPoints.size() - 1);
-    }
+    @ManyToMany(mappedBy = "travels")
+    private List<Excursion> excursions = new LinkedList<>();
 
     public long getTravelId() {
         return travelId;
     }
 
     public void setTravelId(long travelId) {
-        this.travelId  = travelId;
+        this.travelId = travelId;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public City getFromCity() {
+        return fromCity;
+    }
+
+    public void setFromCity(City fromCity) {
+        this.fromCity = fromCity;
+    }
+
+    public City getToCity() {
+        return toCity;
+    }
+
+    public void setToCity(City toCity) {
+        this.toCity = toCity;
     }
 
     public String getName() {
@@ -60,78 +81,70 @@ public class Travel {
     }
 
     public void setName(String name) {
-        this.name  = name;
+        this.name = name;
     }
 
-    public Integer getNumberOfDays() {
-        return numberOfDays;
+    public Date getDateStart() {
+        return dateStart;
     }
 
-    public void setNumberOfDays(Integer numberOfDays) {
-        this.numberOfDays  = numberOfDays;
+    public void setDateStart(Date dateStart) {
+        this.dateStart = dateStart;
     }
 
-    public String getDescription() {
-        return description;
+    public Date getDateEnd() {
+        return dateEnd;
     }
 
-    public void setDescription(String description) {
-        this.description  = description;
+    public void setDateEnd(Date dateEnd) {
+        this.dateEnd = dateEnd;
     }
 
-    public String getCost() {
-        return cost;
+    public Integer getNumberOfPersons() {
+        return numberOfPersons;
     }
 
-    public void setCost(String cost) {
-        this.cost  = cost;
+    public void setNumberOfPersons(Integer numberOfPersons) {
+        this.numberOfPersons = numberOfPersons;
     }
 
-    public void setTravelForClients(Set<TravelForClient> travelForClients) {
-        this.travelForClients = travelForClients;
+    public String getBudgetType() {
+        return budgetType;
     }
 
-    public void setCheckPoints(List<CheckPoint> checkPoints) {
-        this.checkPoints = checkPoints;
+    public void setBudgetType(String budgetType) {
+        this.budgetType = budgetType;
     }
 
-    public void setOptionForTravels(Set<OptionForTravel> optionForTravels) {
-        this.optionForTravels = optionForTravels;
+    public CarRent getCarRent() {
+        return carRent;
     }
 
-    public void addCheckPoint(CheckPoint checkPoint) {
-        this.checkPoints.add(checkPoint);
+    public void setCarRent(CarRent carRent) {
+        this.carRent = carRent;
     }
 
-    public void removeCheckPoint(CheckPoint checkPoint) {
-        checkPoints.remove(checkPoint);
+    public Hotel getHotel() {
+        return hotel;
     }
 
-    public void addOptionForTravel(OptionForTravel optionForTravel) {
-        this.optionForTravels.add(optionForTravel);
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
     }
 
-    public void removeOptionForTravel(OptionForTravel optionForTravel) {
-        optionForTravels.remove(optionForTravel);
+    public TwoWayFlight getTwoWayFlight() {
+        return twoWayFlight;
     }
 
-    public void addTravelForClient(TravelForClient travelForClient) {
-        this.travelForClients.add(travelForClient);
+    public void setTwoWayFlight(TwoWayFlight twoWayFlight) {
+        this.twoWayFlight = twoWayFlight;
     }
 
-    public void removeTravelForClient(TravelForClient travelForClient) {
-        travelForClients.remove(travelForClient);
+    public List<Excursion> getExcursions() {
+        return excursions;
     }
 
-    public Set<TravelForClient> getTravelForClients() {
-        return travelForClients;
-    }
-
-    public List<CheckPoint> getCheckPoints() {
-        return checkPoints;
-    }
-
-    public Set<OptionForTravel> getOptionForTravels() {
-        return optionForTravels;
+    public void setExcursions(List<Excursion> excursions) {
+        this.excursions = excursions;
     }
 }

@@ -8,7 +8,7 @@ import edu.nc.travelplanner.model.action.IntegrationAction;
 import edu.nc.travelplanner.model.action.PickResult;
 import edu.nc.travelplanner.model.action.tableUtil.Column;
 import edu.nc.travelplanner.model.action.tableUtil.Row;
-import edu.nc.travelplanner.model.factory.dataproducer.DataProducerParseException;
+import edu.nc.travelplanner.model.action.tableUtil.TablePickResult;
 import edu.nc.travelplanner.model.response.EmptyResponse;
 import edu.nc.travelplanner.model.response.Response;
 import edu.nc.travelplanner.model.response.ViewResponseBuilder;
@@ -16,16 +16,21 @@ import edu.nc.travelplanner.model.source.dataproducer.DataProducer;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Stream;
 
 public class TableIntegrationAction implements IntegrationAction {
 
     private List<Row> rows = new LinkedList<>();
+    private List<Row> fullRows = new LinkedList<>();
+
     private List<String> links = new LinkedList<>();
     private LinkedHashMap<String, String> columnDefs = new LinkedHashMap<>();
     private String name;
     private String viewName;
     private ActionType type = ActionType.TABLE_INTEGRATION;
     private DataProducer dataProducer;
+    private Boolean multiPick = false;
+    private Boolean canPick = true;
 
     ObjectMapper objectMapper = new ObjectMapper();
 
@@ -56,7 +61,7 @@ public class TableIntegrationAction implements IntegrationAction {
             Response response = dataProducer.send(pickResults);
             parseTable(response);
 
-            return new ViewResponseBuilder().addTitleElement("question", viewName).addTable(getTableId(), rows, columnDefs, links).build();
+            return new ViewResponseBuilder().addTitleElement("question", viewName).addTable(getTableId(), rows, columnDefs, links, multiPick, canPick).build();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -71,11 +76,21 @@ public class TableIntegrationAction implements IntegrationAction {
         rows.clear();
 
         List<LinkedHashMap<String, String>> jsonObjs = objectMapper.readValue(response.getRawData(), List.class);
-        int id = 100;
+        int id = 99;
         for (LinkedHashMap<String, String> jsonObj : jsonObjs) {
+            String idVal = String.valueOf(id++);
+
+            Row currentFullRow = new Row();
+            currentFullRow.addColumn(new Column("id", idVal));
+            jsonObj.entrySet()
+                    .forEach(entry -> {
+                        if (entry.getKey() != "id")
+                            currentFullRow.addColumn(new Column(entry.getKey(), entry.getValue()));
+                    });
+            fullRows.add(currentFullRow);
+
             Row currentRow = new Row();
-            // currentRow.addColumn(new Column("id", jsonObj.getOrDefault("id", null)));
-            currentRow.addColumn(new Column("id", String.valueOf(id++)));
+            currentRow.addColumn(new Column("id", idVal));
             columnDefs.forEach((key, value) -> {
                 currentRow.addColumn(new Column(
                         key,
@@ -87,40 +102,61 @@ public class TableIntegrationAction implements IntegrationAction {
 
     @Override
     public void getResult(Map<String, String> decisionArgs, List<PickResult> picks) {
-        /*Optional<Map.Entry<String, String>> argOptional = decisionArgs.entrySet().stream()
-                .filter((entry) -> rows.stream()
-                        .filter(row -> row.getColumns()
-                                .stream().filter(tRow -> tRow.getName().equals("id")).)))
-                .findFirst();
+        if (multiPick)
+            saveMultipleResults(decisionArgs, picks);
+        else
+            saveOneResult(decisionArgs, picks);
+    }
 
+    private void saveMultipleResults(Map<String, String> decisionArgs, List<PickResult> picks) {
+        List<TablePickResult> tablePickResults = new LinkedList<>();
+        getArgsStreamForThisAction(decisionArgs)
+                .forEach(arg1 -> {
+                    String pickedId = arg1.getKey();
 
+                    fullRows.stream().filter(
+                            row -> row.getColumns()
+                                    .stream()
+                                    .anyMatch(column -> column.getName().equals("id") && column.getValue().equals(pickedId))
+                    )
+                            .forEach(row -> tablePickResults.add(
+                                    new TablePickResult(row,
+                                            new LinkedList<>(links),
+                                            new LinkedHashMap<>(columnDefs))));
+                });
 
-        if (argOptional.isPresent()) {
-            String pickedId = argOptional.get().getValue();
+        picks.add(new PickResult(getName(), tablePickResults, tablePickResults.getClass()));
+    }
 
-            rows.stream().filter(row -> row.getColumns()
-                    .stream()
-                    .anyMatch(column -> column.equals("id")))
-                    .forEach(row -> row.getColumns().stream()
-                            .forEach(column -> picks.add(new PickResult(getName() + "." + column.getName(), column.getValue()))));
-        }*/
-
-        decisionArgs.entrySet()
-                .stream()
-                .filter(arg -> arg.getValue().substring(arg.getValue().lastIndexOf('.'),
-                        arg.getValue().length() - 1)
-                        .equals(this.getName())
-                )
+    private void saveOneResult(Map<String, String> decisionArgs, List<PickResult> picks) {
+        getArgsStreamForThisAction(decisionArgs)
                 .findFirst()
                 .ifPresent(arg1 -> {
                     String pickedId = arg1.getKey();
 
-                    rows.stream().filter(row -> row.getColumns()
-                            .stream()
-                            .anyMatch(column -> column.getName().equals("id") && column.getValue().equals(pickedId)))
-                            .forEach(row -> row.getColumns().stream()
-                                    .forEach(column -> picks.add(new PickResult(getName() + "." + column.getName(), column.getValue()))));
+                    fullRows.stream().filter(
+                            row -> row.getColumns()
+                                    .stream()
+                                    .anyMatch(column -> column.getName().equals("id") && column.getValue().equals(pickedId))
+                    )
+                            .findFirst()
+                            .ifPresent(row -> picks.add(new PickResult(getName(), new TablePickResult(row,
+                                    new LinkedList<>(links),
+                                    new LinkedHashMap<>(columnDefs)), TablePickResult.class)));
                 });
+    }
+
+    private Stream<Map.Entry<String, String>> getArgsStreamForThisAction(Map<String, String> decisionArgs) {
+        return decisionArgs.entrySet()
+                .stream()
+                .filter(arg -> {
+                            if (arg.getValue() == null)
+                                return false;
+                            String value = arg.getValue().substring(arg.getValue().lastIndexOf('.') + 1,
+                                    arg.getValue().length());
+                            return value.equals(this.getName()) || value.equals("checked");
+                        }
+                );
     }
 
     public DataProducer getDataProducer() {

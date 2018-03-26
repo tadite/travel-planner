@@ -1,7 +1,9 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:300|Roboto+Condensed');
+@import url(https://fonts.googleapis.com/css?family=PT+Sans+Caption); 
+
 * {
-  font-family: "Open Sans", Arial, sans-serif; 
+  font-family: 'PT Sans Caption', arial; 
 }
+
 
 .background-image{
     position: absolute;
@@ -10,4 +12,7 @@
     width: 100%;
     height: 100%;
     z-index:-2;
+    background-image : url('http://upload.akusherstvo.ru/image1458482.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
   }

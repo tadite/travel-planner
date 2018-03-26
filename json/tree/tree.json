@@ -1,18 +1,7 @@
 {
   "name": "tree",
-  "headActionName": "radioButton-doYouKnowYourFullTravel-action",
+  "headActionName": "dropdownlist-departure-country-action",
   "jumps": [
-    {
-      "fromActionName": "radioButton-doYouKnowYourFullTravel-action",
-      "toActionName": "dropdownlist-departure-country-action",
-      "type": "logic-condition-on-pick-result",
-      "params": {
-        "conditionType": "=s",
-        "pickResultName": "radioButton-doYouKnowYourFullTravel-action",
-        "pickResultCheck": "key",
-        "conditionValue": "2"
-      }
-    },
     {
       "fromActionName": "dropdownlist-departure-country-action",
       "toActionName": "dropdownlist-departure-city-action",
@@ -45,6 +34,12 @@
     },
     {
       "fromActionName": "dropdownlist-citiesByCountryId-action",
+      "toActionName": "coast-of-living-action-Table",
+      "type": "without-condition",
+      "params": {}
+    },
+    {
+      "fromActionName": "coast-of-living-action-Table",
       "toActionName": "dropdownlist-budget-action",
       "type": "without-condition",
       "params": {}
@@ -75,7 +70,7 @@
     },
     {
       "fromActionName": "radioButton-visitOfExcursions-action",
-      "toActionName": "checklist-typeOfExcursion-action",
+      "toActionName": "checklist-choosingTheExcursion-action-NEW-TABLE",
       "type": "logic-condition-on-pick-result",
       "params": {
         "conditionType": "=s",
@@ -86,7 +81,7 @@
     },
     {
       "fromActionName": "radioButton-visitOfExcursions-action",
-      "toActionName": "checklist-option-action",
+      "toActionName": "radioButton-doYouWantRentCar-action",
       "type": "logic-condition-on-pick-result",
       "params": {
         "conditionType": "=s",
@@ -96,46 +91,29 @@
       }
     },
     {
-      "fromActionName": "checklist-typeOfExcursion-action",
-      "toActionName": "checklist-choosingTheExcursion-action-NEW-TABLE",
-      "type": "without-condition",
-      "params": {}
-    },
-    {
       "fromActionName": "checklist-choosingTheExcursion-action-NEW-TABLE",
-      "toActionName": "checklist-option-action",
+      "toActionName": "radioButton-doYouWantRentCar-action",
       "type": "without-condition",
       "params": {}
     },
     {
-      "fromActionName": "checklist-option-action",
-      "toActionName": "textinput-nameOfTravel-action",
-      "type": "logic-condition-on-pick-result",
-      "params": {
-        "conditionType": "=l",
-        "pickResultName": "checklist-option-action",
-        "pickResultCheck": "key",
-        "conditionValue": "3"
-      }
-    },
-    {
-      "fromActionName": "checklist-option-action",
+      "fromActionName": "radioButton-doYouWantRentCar-action",
       "toActionName": "noview-auto-tickets-get-id-action",
       "type": "logic-condition-on-pick-result",
       "params": {
-        "conditionType": "=l",
-        "pickResultName": "checklist-option-action",
+        "conditionType": "=s",
+        "pickResultName": "radioButton-doYouWantRentCar-action",
         "pickResultCheck": "key",
         "conditionValue": "1"
       }
     },
     {
-      "fromActionName": "checklist-option-action",
-      "toActionName": "coast-of-living-action-Table",
+      "fromActionName": "radioButton-doYouWantRentCar-action",
+      "toActionName": "textinput-nameOfTravel-action",
       "type": "logic-condition-on-pick-result",
       "params": {
-        "conditionType": "=l",
-        "pickResultName": "checklist-option-action",
+        "conditionType": "=s",
+        "pickResultName": "radioButton-doYouWantRentCar-action",
         "pickResultCheck": "key",
         "conditionValue": "2"
       }
@@ -148,12 +126,6 @@
     },
     {
       "fromActionName": "radioButton-rentCar-action-NEW-TABLE",
-      "toActionName": "textinput-nameOfTravel-action",
-      "type": "without-condition",
-      "params": {}
-    },
-    {
-      "fromActionName": "coast-of-living-action-Table",
       "toActionName": "textinput-nameOfTravel-action",
       "type": "without-condition",
       "params": {}

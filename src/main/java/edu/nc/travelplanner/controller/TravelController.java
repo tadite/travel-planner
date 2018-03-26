@@ -2,7 +2,6 @@ package edu.nc.travelplanner.controller;
 
 import edu.nc.travelplanner.dao.TravelDao;
 import edu.nc.travelplanner.dto.manage.UserManageDto;
-import edu.nc.travelplanner.dto.travel.TravelPreviewDto;
 import edu.nc.travelplanner.model.action.ActionArgs;
 import edu.nc.travelplanner.model.action.ActionArgsBuilder;
 import edu.nc.travelplanner.model.action.ActionState;
@@ -21,16 +20,5 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/client/travel")
 public class TravelController {
 
-    @Autowired
-    TravelService travelService;
 
-    @GetMapping(path = "/preview/page/{pageNum}")
-    public ResponseEntity<List<TravelPreviewDto>> getTravelPreviewsByPage(@PathVariable(value = "pageNum") int pageNum){
-        return new ResponseEntity<>(travelService.getTravelsByPage(pageNum).stream().map(TravelPreviewDto::fromTravel).collect(Collectors.toList()), HttpStatus.OK);
-    }
-
-    @GetMapping(path = "/preview")
-    public ResponseEntity<List<TravelPreviewDto>> getTravelPreviews(){
-        return new ResponseEntity<>(travelService.getAllTravels().stream().map(TravelPreviewDto::fromTravel).collect(Collectors.toList()), HttpStatus.OK);
-    }
 }

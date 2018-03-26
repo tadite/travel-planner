@@ -20,4 +20,8 @@ public class RollbackMaster {
     public void addStep(HistoryState step){
         this.stateHistory.push(step);
     }
+
+    public boolean isEmpty(){
+        return stateHistory.isEmpty();
+    }
 }

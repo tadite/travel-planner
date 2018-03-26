@@ -49,13 +49,10 @@ public class UserProfileDto {
     }
 
     public static Client toClient(Client client, UserProfileDto userProfileDto){
-        client.setClientId(userProfileDto.getClientId());
         client.setFirstName(userProfileDto.getFirstName());
         client.setLastName(userProfileDto.getLastName());
         client.setEmail(userProfileDto.getEmail());
         client.setAge(userProfileDto.getAge());
-        client.setCityId(userProfileDto.getCityId());
-        client.setCountryId(userProfileDto.getCountryId());
 
         return client;
     }

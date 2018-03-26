@@ -1,6 +1,6 @@
 {
   "name": "dropdownlist-budget-action",
-  "viewName": "Выберите бюджет",
+  "viewName": "Бюджет",
   "type": "dropdown_input",
   "parameters": {
     "optionsMap": {

@@ -1,6 +1,6 @@
 {
   "name": "checklist-choosingTheExcursion-action-NEW-TABLE",
-  "viewName": "Выберите экскурсию",
+  "viewName": "Экскурсии",
   "type": "table_integration",
   "dataProducer" : "tripster-excursion-producer-NEW-TABLE",
   "parameters": {
@@ -12,6 +12,7 @@
       "time": "Время",
       "experience_id":"Сайт"
     },
-    "links":["experience_id"]
+    "links":["experience_id"],
+    "multiPick":true
   }
 }

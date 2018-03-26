@@ -6,13 +6,16 @@
   "parameters": {
     "columnDefs":
     {
-      "flight_to__aircraft": "",
-      "flight_to__company__name": "Компания в одну сторону",
+      "flight_to__aircraft": "Самолет туда",
+      "flight_to__company__name": "Компания туда",
+      "flight_to__departure__place_name": "Аэропорт туда",
       "flight_to__class": "Класс",
       "flight_to__departure_date": "Дата полета",
       "flight_to__departure_time": "Время полета",
       "flight_to__time_in_path": "Время в пути",
-      "flight_from__company__name": "Компания в другую сторону",
+      "flight_from__aircraft": "Самолет обратно",
+      "flight_from__company__name": "Компания обратно",
+      "flight_from__departure__place_name": "Аэропорт обратно",
       "flight_from__class": "Класс",
       "flight_from__departure_date": "Дата полета",
       "flight_from__departure_time": "Время полета",

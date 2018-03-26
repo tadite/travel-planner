@@ -1,6 +1,6 @@
 {
   "name": "radioButton-hotels-find-hotels-action-NEW-TABLE",
-  "viewName": "Выберите место проживания",
+  "viewName": "Место проживания",
   "type": "table_integration",
   "dataProducer": "hotels-find-hotels-producer-NEW-TABLE",
   "parameters": {
