@@ -10,6 +10,7 @@ import edu.nc.travelplanner.model.response.Response;
 import edu.nc.travelplanner.model.response.ViewResponseBuilder;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class SimpleActionTree implements ActionTree {
 
@@ -100,6 +101,8 @@ public class SimpleActionTree implements ActionTree {
         LinkedList<PickResult> currentStepPicks = new LinkedList<>(this.pickResults);
 
         currentAction.getResult(args.getArgs(), this.pickResults);
+        pickResults = this.pickResults.stream().filter(pick -> pick.getValue()!=null && pick.getKey()!=null).collect(Collectors.toList());
+
         Response response = null;
         try {
             response = currentAction.executeDecision(args, this.pickResults);
@@ -117,6 +120,7 @@ public class SimpleActionTree implements ActionTree {
             boolean result = tryGetResultForNoViewAction(args, this.pickResults);
             if (result) {
                 currentAction.getResult(args.getArgs(), this.pickResults);
+                pickResults = this.pickResults.stream().filter(pick -> pick.getValue()!=null && pick.getKey()!=null).collect(Collectors.toList());
                 executeJumps(args, response, false);
             } else
                 executeJumps(args, response, true);

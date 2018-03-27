@@ -57,7 +57,7 @@ public class DefaultDataProducer implements DataProducer{
         }
     }
 
-    private void mapParameters(List<PickResult> pickResults) {
+    private void mapParameters(List<PickResult> pickResults) throws IOException {
         Map<String, String> tempParameterValues = new LinkedHashMap<>();
         for (ParameterMapper parameterMapper : parameterMappers) {
             if (tempParameterValues.containsKey(parameterMapper.getToKey())) {
