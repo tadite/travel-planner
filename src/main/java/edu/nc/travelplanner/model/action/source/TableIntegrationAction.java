@@ -10,6 +10,7 @@ import edu.nc.travelplanner.model.action.IntegrationAction;
 import edu.nc.travelplanner.model.action.PickResult;
 import edu.nc.travelplanner.model.action.tableUtil.Column;
 import edu.nc.travelplanner.model.action.tableUtil.Row;
+import edu.nc.travelplanner.model.action.tableUtil.SubTableDef;
 import edu.nc.travelplanner.model.action.tableUtil.TablePickResult;
 import edu.nc.travelplanner.model.response.EmptyResponse;
 import edu.nc.travelplanner.model.response.Response;
@@ -26,6 +27,9 @@ public class TableIntegrationAction implements IntegrationAction {
     private List<Row> fullRows = new LinkedList<>();
 
     private List<String> links = new LinkedList<>();
+    private List<Map<String, Object>> subtables = new LinkedList<>();
+
+    private List<SubTableDef> subtableDefs;
     private LinkedHashMap<String, String> columnDefs = new LinkedHashMap<>();
     private String name;
     private String viewName;
@@ -61,6 +65,7 @@ public class TableIntegrationAction implements IntegrationAction {
 
         try {
             Response response = dataProducer.send(pickResults);
+            parseSubtableDefs(response);
             parseTable(response);
 
             return new ViewResponseBuilder().addTitleElement("question", viewName).addTable(getTableId(), rows, columnDefs, links, multiPick, canPick).build();
@@ -68,6 +73,11 @@ public class TableIntegrationAction implements IntegrationAction {
             e.printStackTrace();
             throw new CustomParseException();
         }
+    }
+
+    private void parseSubtableDefs(Response response) {
+        List<SubTableDef> tempSubTableDefs = new LinkedList<>();
+
     }
 
     private String getTableId() {
