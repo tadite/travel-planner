@@ -229,7 +229,7 @@
     display: none; 
   }
 
-  .table-block table{
+  .table-block .multiSelection table{
     background: white;
     min-width: 500px;   
     border-collapse:separate;
@@ -242,7 +242,25 @@
   .table-block .costOfLiving table{
     margin-top: 10px;
     margin-bottom: 10px;
-    width: 450px; 
+    width: 450px;
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+    background-color: white;
+    border: solid #6678b1 1px;
+    border-collapse: separate;
+  }
+
+  .table-block .costOfLiving caption{
+    padding-top: 8px;
+    padding-bottom: 8px;
+    color: #669;
+    text-align: center;
+    border: solid #6678b1 1px;
+    border-bottom: none;
+    border-collapse: collapse;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    background: white;
   }
 
   .table-block a{   

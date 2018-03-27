@@ -131,19 +131,20 @@
                                         <div *ngSwitchCase="'table_picker'"> 
                                             <div *ngIf="question.id == 'table.1.coast-of-living-action-Table'">
                                                 <div class="costOfLiving">                                          
-                                                        <div *ngFor="let item of pagedItems">                                                                
-                                                                <table>
-                                                                <tr *ngFor="let defs of question.data.columnDefs.columns; let i = index">                                       
+                                                        <div *ngFor="let item of question.data.rows">                                                                
+                                                                <table> 
+                                                                    <caption>{{item.columns[1].value}}</caption>                                                                      
+                                                                <tr *ngFor="let defs of question.data.columnDefs.columns; let i = index">                                                                                                                                                                          
                                                                     <td>{{defs.value}}</td>                                      
-                                                                    <td *ngIf="isLink(question.data, defs.name); else elseTextBlock"><a href="{{item.columns[i+1].value}}" target="_blank">Перейти</a></td>  
-                                                                    <ng-template #elseTextBlock><td>{{item.columns[i+1].value}}</td></ng-template>            
+                                                                    <td *ngIf="isLink(question.data, defs.name); else elseTextBlock"><a href="{{item.columns[i+2].value}}" target="_blank">Перейти</a></td>  
+                                                                    <ng-template #elseTextBlock><td>{{item.columns[i+2].value}}</td></ng-template>            
                                                                 </tr> 
                                                                 </table>
                                                         </div>
                                             <!-- pager -->
                                                     <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
                                                         <li [ngClass]="{disabled:pager.currentPage === 1}">
-                                                            <a (click)="setPage(1)">В начало</a>
+                                                            <a (click)="setPage(1)">Начало</a>
                                                         </li>
                                                         <li [ngClass]="{disabled:pager.currentPage === 1}">
                                                             <a (click)="setPage(pager.currentPage - 1)">Назад</a>
@@ -155,12 +156,13 @@
                                                             <a (click)="setPage(pager.currentPage + 1)">Вперед</a>
                                                         </li>
                                                         <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-                                                            <a (click)="setPage(pager.totalPages)">В конец</a>
+                                                            <a (click)="setPage(pager.totalPages)">Конец</a>
                                                         </li>
                                                     </ul>
                                                     </div>
                                             </div>
                                             <div *ngIf="question.data.multiPick == true">
+                                                <div class="multiSelection">
                                                     <div class="btn-group btn-group-toggle" >                                          
                                                             <div *ngFor="let item of pagedItems">                                               
                                                                 <label class="btn">
@@ -177,7 +179,7 @@
                                                                 <!-- pager -->
                                                     <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
                                                         <li [ngClass]="{disabled:pager.currentPage === 1}">
-                                                            <a (click)="setPage(1)">В начало</a>
+                                                            <a (click)="setPage(1)">Начало</a>
                                                         </li>
                                                         <li [ngClass]="{disabled:pager.currentPage === 1}">
                                                             <a (click)="setPage(pager.currentPage - 1)">Назад</a>
@@ -189,12 +191,14 @@
                                                             <a (click)="setPage(pager.currentPage + 1)">Вперед</a>
                                                         </li>
                                                         <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-                                                            <a (click)="setPage(pager.totalPages)">В конец</a>
+                                                            <a (click)="setPage(pager.totalPages)">Конец</a>
                                                         </li>
                                                     </ul>
                                                     </div>
+                                                    </div>
                                             </div>
                                             <div *ngIf="question.data.multiPick == false">
+                                            <div class="multiSelection">
                                             <div class="btn-group btn-group-toggle" >                                          
                                             <div *ngFor="let item of pagedItems">                                               
                                                 <label class="btn">
@@ -211,7 +215,7 @@
                                                <!-- pager -->
                                                <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
                                                 <li [ngClass]="{disabled:pager.currentPage === 1}">
-                                                    <a (click)="setPage(1)">В начало</a>
+                                                    <a (click)="setPage(1)">Начало</a>
                                                 </li>
                                                 <li [ngClass]="{disabled:pager.currentPage === 1}">
                                                     <a (click)="setPage(pager.currentPage - 1)">Назад</a>
@@ -223,9 +227,10 @@
                                                     <a (click)="setPage(pager.currentPage + 1)">Вперед</a>
                                                 </li>
                                                 <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-                                                    <a (click)="setPage(pager.totalPages)">В конец</a>
+                                                    <a (click)="setPage(pager.totalPages)">Конец</a>
                                                 </li>
                                             </ul>
+                                            </div>
                                             </div>
                                             </div>
                                         </div>                                         
@@ -484,7 +489,10 @@
                                 </agm-map>
                             </div>
                             <input class="newTravel" type="button" (click)="onReset()" value="Новое путешествие"/>
-                            <input class="newTravel" type="button" [class.disabled]="!isSaveButtonEnabled()" [disabled]="!isSaveButtonEnabled()" (click)="onSave()" value="Сохранить"/>
+                            <input class="newTravel" type="button" [class.disabled]="!isSaveButtonEnabled()" [disabled]="!isSaveButtonEnabled()" (click)="onSave()" value="Сохранить"/>                                                     
+                            <div *ngIf="!isSaveButtonEnabled()">
+                                <input class="newTravel" type="button" (click)="printPDF()" value="Распечатать результат в формате PDF"/>
+                            </div> 
                             </div>
                         </div>
                     </div>
