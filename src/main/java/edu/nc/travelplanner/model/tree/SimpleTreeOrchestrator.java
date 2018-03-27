@@ -104,7 +104,8 @@ public class SimpleTreeOrchestrator implements TreeOrchestrator {
     }
 
     private TravelDto saveTravelToDb(TravelDto travelDto) throws ParseException, NotSupportedException {
-        return travelSaveService.save(travelDto);
+        travelDto=travelSaveService.save(travelDto);
+        return travelDto;
     }
 
 }

@@ -22,7 +22,6 @@ public class HttpSender implements Sender {
 /*
         String responseStr = Resources.toString(obj, Charsets.UTF_8);*/
 
-
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         con.setConnectTimeout(10000);
 

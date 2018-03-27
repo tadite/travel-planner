@@ -1,5 +1,6 @@
 package edu.nc.travelplanner.model.tree;
 
+import edu.nc.travelplanner.dto.afterPickTree.TravelDto;
 import edu.nc.travelplanner.exception.CustomParseException;
 import edu.nc.travelplanner.exception.DataProducerSendException;
 import edu.nc.travelplanner.exception.NotEnoughParamsException;
