@@ -131,7 +131,7 @@
                                         <div *ngSwitchCase="'table_picker'"> 
                                             <div *ngIf="question.id == 'table.1.coast-of-living-action-Table'">
                                                 <div class="costOfLiving">                                          
-                                                        <div *ngFor="let item of question.data.rows">                                                                
+                                                        <div *ngFor="let item of pagedItems">                                                                
                                                                 <table> 
                                                                     <caption>{{item.columns[1].value}}</caption>                                                                      
                                                                 <tr *ngFor="let defs of question.data.columnDefs.columns; let i = index">                                                                                                                                                                          
