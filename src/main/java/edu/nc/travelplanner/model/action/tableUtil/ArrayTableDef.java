@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public class SubTableDef {
+public class ArrayTableDef {
     private List<String> columnDefs;
     private String pick;
     private String name;

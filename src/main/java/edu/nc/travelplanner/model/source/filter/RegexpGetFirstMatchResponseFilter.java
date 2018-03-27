@@ -25,7 +25,7 @@ public class RegexpGetFirstMatchResponseFilter implements ResponseFilter {
     }
 
     @Override
-    public String filter(String sourceResult, Map<String, String> results) {
+    public String filter(String sourceResult, Map<String, Object> results) {
         Matcher matcher = Pattern.compile(regex).matcher(sourceResult);
         return matcher.group(1);
     }

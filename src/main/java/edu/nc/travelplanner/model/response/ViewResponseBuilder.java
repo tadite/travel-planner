@@ -119,6 +119,7 @@ public class ViewResponseBuilder {
         columnDefs.forEach((key, value) -> {
             if (value != "") columnsDefsRow.addColumn(new Column(key, value));
         });
+
         viewResponse.addElement(new TableViewElement(elementsPostfixHolder.tablePostfix + "." + indexCounter.getTableIndex() + "." + id, rows, columnsDefsRow, links, multiPick, canPick));
         return this;
     }

@@ -36,7 +36,7 @@ public class ListToJsonObjectListResponseFilter implements ResponseFilter {
     }
 
     @Override
-    public String filter(String sourceResult, Map<String, String> results) throws IOException {
+    public String filter(String sourceResult, Map<String, Object> results) throws IOException {
 
         JsonNode node = mapper.readTree(sourceResult);
         JsonParser parser = mapper.treeAsTokens(node);
@@ -58,15 +58,14 @@ public class ListToJsonObjectListResponseFilter implements ResponseFilter {
         }
 
         return mapper.writeValueAsString(result);
-
     }
 
-    private String getValueByPropertyPath(Map<String, Object> jsonObj, String[] propertyPathArray) {
+    private Object getValueByPropertyPath(Map<String, Object> jsonObj, String[] propertyPathArray) {
         Object currentPropertyValue = jsonObj;
         for (String nextProperty : propertyPathArray) {
             currentPropertyValue = ((Map<String, Object>) currentPropertyValue).get(nextProperty);
         }
-        return currentPropertyValue.toString();
+        return currentPropertyValue;
     }
 
     public FilterType getType() {

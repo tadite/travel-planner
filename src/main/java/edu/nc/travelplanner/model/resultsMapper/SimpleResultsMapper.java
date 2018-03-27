@@ -220,7 +220,7 @@ public class SimpleResultsMapper implements ResultsMapper {
 
     private String getColumnValueOrEmpty(List<Column> columns, String name) {
         return Iterables.tryFind(columns, col -> col.getName().equals(name))
-                .transform(Column::getValue)
+                .transform(col -> String.valueOf(col.getValue()))
                 .or("");
     }
 }

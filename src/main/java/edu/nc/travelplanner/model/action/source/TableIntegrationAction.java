@@ -10,7 +10,7 @@ import edu.nc.travelplanner.model.action.IntegrationAction;
 import edu.nc.travelplanner.model.action.PickResult;
 import edu.nc.travelplanner.model.action.tableUtil.Column;
 import edu.nc.travelplanner.model.action.tableUtil.Row;
-import edu.nc.travelplanner.model.action.tableUtil.SubTableDef;
+import edu.nc.travelplanner.model.action.tableUtil.ArrayTableDef;
 import edu.nc.travelplanner.model.action.tableUtil.TablePickResult;
 import edu.nc.travelplanner.model.response.EmptyResponse;
 import edu.nc.travelplanner.model.response.Response;
@@ -28,8 +28,9 @@ public class TableIntegrationAction implements IntegrationAction {
 
     private List<String> links = new LinkedList<>();
     private List<Map<String, Object>> subtables = new LinkedList<>();
+    private List<Map<String, Object>> arrayTables = new LinkedList<>();
 
-    private List<SubTableDef> subtableDefs;
+    private List<ArrayTableDef> subtableDefs;
     private LinkedHashMap<String, String> columnDefs = new LinkedHashMap<>();
     private String name;
     private String viewName;
@@ -76,8 +77,8 @@ public class TableIntegrationAction implements IntegrationAction {
     }
 
     private void parseSubtableDefs(Response response) {
-        List<SubTableDef> tempSubTableDefs = new LinkedList<>();
-
+        List<ArrayTableDef> tempArrayTableDefs = new LinkedList<>();
+        //subtables.forEach(cols -> subtableDefs.add(new ArrayTableDef()));
     }
 
     private String getTableId() {
@@ -86,30 +87,76 @@ public class TableIntegrationAction implements IntegrationAction {
 
     private void parseTable(Response response) throws IOException {
         rows.clear();
+        LinkedHashMap<String, String> tempColumnDefs = new LinkedHashMap<>();
 
-        List<LinkedHashMap<String, String>> jsonObjs = objectMapper.readValue(response.getRawData(), List.class);
+        List<LinkedHashMap<String, Object>> jsonObjs = objectMapper.readValue(response.getRawData(), List.class);
         int id = 99;
-        for (LinkedHashMap<String, String> jsonObj : jsonObjs) {
+        for (LinkedHashMap<String, Object> jsonObj : jsonObjs) {
             String idVal = String.valueOf(id++);
 
             Row currentFullRow = new Row();
             currentFullRow.addColumn(new Column("id", idVal));
             jsonObj.entrySet()
                     .forEach(entry -> {
-                        if (entry.getKey() != "id")
-                            currentFullRow.addColumn(new Column(entry.getKey(), entry.getValue()));
+                        if (entry.getKey() != "id") {
+                            Optional<Map<String, Object>> arrayTableOptional = arrayTables.stream().filter(tbl -> tbl.get("pick").equals(entry.getKey())).findFirst();
+                            if (arrayTableOptional.isPresent()) {
+                                String name = String.valueOf(arrayTableOptional.get().get("name"));
+                                List<String> arrayTableColumnDefs = (List<String>) arrayTableOptional.get().get("columnDefs");
+
+                                List<Map<String, Object>> arrayOfObjs = (List<Map<String, Object>>) entry.getValue();
+
+                                List<Column> insideColumnsToAdd = new LinkedList<>();
+                                for (Map<String, Object> obj : arrayOfObjs) {
+                                    Integer i = 1;
+                                    Integer finalI = i;
+                                    Row tempRow = new Row();
+                                    obj.forEach((key1, value1) -> tempRow.addColumn(new Column(key1, value1)));
+                                    insideColumnsToAdd.add(new Column(entry.getKey() + " " + i, tempRow.getColumns()));
+                                    tempColumnDefs.put(entry.getKey() + " " + i, name + " " + i);
+                                    i++;
+                                }
+                                currentFullRow.addColumn(new Column(entry.getKey(), insideColumnsToAdd));
+                            } else
+                                currentFullRow.addColumn(new Column(entry.getKey(), entry.getValue()));
+                        }
                     });
             fullRows.add(currentFullRow);
 
             Row currentRow = new Row();
             currentRow.addColumn(new Column("id", idVal));
             columnDefs.forEach((key, value) -> {
-                currentRow.addColumn(new Column(
-                        key,
-                        jsonObj.getOrDefault(key, null)));
+                Optional<Map<String, Object>> arrayTableOptional = arrayTables.stream().filter(tbl -> tbl.get("pick").equals(key)).findFirst();
+                if (arrayTableOptional.isPresent()) {
+                    String name = String.valueOf(arrayTableOptional.get().get("name"));
+
+                    List<String> arrayTableColumnDefs = (List<String>) arrayTableOptional.get().get("columnDefs");
+
+                    List<Map<String, Object>> arrayOfObjs = (List<Map<String, Object>>) jsonObj.get(key);
+
+                    List<Column> insideColumnsToAdd = new LinkedList<>();
+                    for (Map<String, Object> obj : arrayOfObjs) {
+                        Integer i = 1;
+                        Integer finalI = i;
+                        Row tempRow = new Row();
+                        obj.entrySet().forEach(objEntry -> {
+                            if (arrayTableColumnDefs.contains(objEntry.getKey()))
+                                tempRow.addColumn(new Column(objEntry.getKey(), objEntry.getValue()));
+                        });
+                        insideColumnsToAdd.add(new Column(key + " " + i, tempRow.getColumns()));
+
+                        tempColumnDefs.put(key + " " + i, name + " " + i);
+                        i++;
+                    }
+                    currentRow.addColumn(new Column(key, insideColumnsToAdd));
+                } else
+                    currentRow.addColumn(new Column(key, jsonObj.getOrDefault(key, null)));
+
             });
             rows.add(currentRow);
         }
+
+        this.columnDefs.putAll(tempColumnDefs);
     }
 
     @Override
