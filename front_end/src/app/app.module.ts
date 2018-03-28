@@ -1,7 +1,7 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {Routes, RouterModule} from '@angular/router';
-import { FormsModule }   from '@angular/forms';
+import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
@@ -24,9 +24,11 @@ import  {ProfileComponent } from './profile/profile.component';
 import { AdminComponent }   from './admin/admin.component';
 import { SourseComponent }   from './sourse/sourse.component';
 import { ConfigComponent }   from './config/config.component';
-import {ProfilesComponent} from "./profiles/profiles.component";
-import {DataProducerComponent} from "./dataProducer/dataProducer.component";
-
+import { ProfilesComponent } from "./profiles/profiles.component";
+import { DataProducerComponent } from "./dataProducer/dataProducer.component";
+import { SourceFormComponent } from "./sourceForm/sourceForm.component";
+import { MyTravelsComponent }   from './myTravels/myTravels.component';
+import { PagerService } from './service/pager.service';
 
 // определение маршрутов
 const appRoutes: Routes =[
@@ -35,20 +37,21 @@ const appRoutes: Routes =[
     { path: 'user', component: UserComponent},
     { path: 'questions', component: QuestionsComponent, canActivate: [AuthGuardService]},   
     { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService]}, 
-	{ path: 'admin', component: AdminComponent, canActivate: [AuthGuardService]},
+	{ path: 'admin', component: ProfilesComponent, canActivate: [AuthGuardService]},
     { path: 'config', component: ConfigComponent, canActivate: [AuthGuardService]},
-    { path: 'profiles', component: ProfilesComponent, canActivate: [AuthGuardService]},
-    { path: 'sourse', component: SourseComponent/*, canActivate: [AuthGuardService]*/},
-    { path: 'producer', component: DataProducerComponent/*, canActivate: [AuthGuardService]*/},
+    { path: 'sourse', component: SourseComponent, canActivate: [AuthGuardService]},
+    { path: 'producer', component: DataProducerComponent, canActivate: [AuthGuardService]},
+    { path: 'sourceForm', component: SourceFormComponent, canActivate: [AuthGuardService]},
+    { path: 'myTravels', component: MyTravelsComponent, canActivate: [AuthGuardService]},
     { path: '**', component: NotFoundComponent }
     
 ];
 
 @NgModule({
-    imports:      [ BrowserModule, RouterModule.forRoot(appRoutes, { useHash: true }), FormsModule, BrowserAnimationsModule, HttpClientModule, NgbModule.forRoot(), LoadingModule, CdkTableModule, MatTableModule, MatPaginatorModule, LoadingModule, AgmCoreModule.forRoot({
+    imports:      [ BrowserModule, RouterModule.forRoot(appRoutes, { useHash: true }), FormsModule, ReactiveFormsModule, BrowserAnimationsModule, HttpClientModule, NgbModule.forRoot(), LoadingModule, CdkTableModule, MatTableModule, MatPaginatorModule, LoadingModule, AgmCoreModule.forRoot({
         apiKey: 'AIzaSyD28p35CCvhDbiAPL7u96KayO36U6Ny84o'
     })],
-    declarations: [ AppComponent, HomeComponent, LoginComponent, UserComponent, NotFoundComponent, QuestionsComponent, ProfileComponent, AdminComponent, ConfigComponent, ProfilesComponent, SourseComponent, DataProducerComponent],
+    declarations: [ AppComponent, HomeComponent, LoginComponent, UserComponent, NotFoundComponent, QuestionsComponent, ProfileComponent, AdminComponent, ConfigComponent, ProfilesComponent, SourseComponent, DataProducerComponent, SourceFormComponent, MyTravelsComponent],
 
    providers: [
     {
@@ -59,7 +62,8 @@ const appRoutes: Routes =[
     CookieService,
     AuthGuardService,
     UnauthGuardService,
-    GoogleMapsAPIWrapper
+    GoogleMapsAPIWrapper,
+    PagerService
   ],
     bootstrap:    [ AppComponent ]
 })

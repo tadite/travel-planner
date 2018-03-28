@@ -1,0 +1,96 @@
+@import url(https://fonts.googleapis.com/css?family=PT+Sans+Caption); 
+
+* {
+  font-family: 'PT Sans Caption', arial; 
+}
+
+.glyphicon {
+  font-family: 'Glyphicons Halflings';
+}
+
+
+#navbar ul{
+    display: none;
+    background-color: #4a537a;    
+    top: 100%;   
+    border-radius: 8px;  
+   
+  }
+  #navbar li:hover ul { display: block; }
+  #navbar, #navbar ul{
+    margin: 0;
+    padding: 0;
+    margin-left: 0px;
+    list-style-type: none;    
+  }
+  #navbar {
+    height: 45px;
+    background-color: #2a2a5e;
+    padding-left: 35px;
+    min-width: 470px;
+  }
+  #navbar li {
+    float: right;
+    margin-right: 40px;  
+    width: 140px; 
+    position: relative;
+    height: 100%;
+    list-style-type: none;
+  }
+  #navbar li a {
+    display: block;
+    margin-top: 6px;    
+    padding: 7px;     
+    width: 140px;
+    color: rgb(255, 255, 255);    
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;    
+  }
+  #navbar ul li { float: none; }
+ /* #navbar li:hover { background-color: #3a3a85; }*/
+ 
+  #navbar ul li:hover { 
+    background-color: #2a2a5e;     
+    border-radius: 8px;
+
+  }
+
+  .ph {
+    margin-top: -20px;
+  }
+
+  hr{   
+    width: 125px;
+    margin-top: 7px;
+    margin-bottom: 0px;
+  }
+  
+  .img {
+    position:absolute;
+    left:45px;
+    top:2px;
+    width: 40px; 
+    height: 40px; 
+    border-radius: 40px;
+  }
+
+  .title {
+    position:absolute; 
+    left:105px; 
+    top:13px; 
+    color: white; 
+    letter-spacing: 1px
+  }
+
+  .background-image{
+     background-image : url('http://upload.akusherstvo.ru/image1488681.jpg');
+     position: absolute;
+     top: 0px;
+     left: 0px;
+     width: 100%;
+     height: 100%;  
+     z-index:-2;
+     background-size: cover;
+     background-repeat: no-repeat;
+   }

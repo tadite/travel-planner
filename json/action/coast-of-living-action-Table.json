@@ -1,12 +1,12 @@
 {
   "name": "coast-of-living-action-Table",
-  "viewName": "Стоимость жизни",
+  "viewName": "Информация о ценах",
   "type": "table_integration",
   "dataProducer": "coast-of-living-producer",
   "parameters": {
     "columnDefs":
     {
-      "title":"Название",
+      "title":"",
       "price":"Средняя цена",
       "price_range__from":"Минимальная цена",
       "price_range__to":"Максимальная цена"

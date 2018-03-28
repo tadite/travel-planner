@@ -1,6 +1,7 @@
 package edu.nc.travelplanner.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import edu.nc.travelplanner.dto.afterPickTree.TravelDto;
 import edu.nc.travelplanner.exception.CustomParseException;
 import edu.nc.travelplanner.model.action.ActionArgs;
 import edu.nc.travelplanner.model.action.ActionArgsBuilder;
@@ -58,10 +59,9 @@ public class ActionTreeController {
     }
 
     @PostMapping(path = "/action/save")
-    public ResponseEntity<String> saveTree() {
+    public ResponseEntity<TravelDto> saveTree() {
         try {
-            orchestrator.save();
-            return new ResponseEntity<>(HttpStatus.OK) ;
+            return new ResponseEntity<>(orchestrator.save(), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }

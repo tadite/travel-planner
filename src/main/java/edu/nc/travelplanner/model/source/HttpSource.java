@@ -1,6 +1,7 @@
 package edu.nc.travelplanner.model.source;
 
 import com.google.common.base.Joiner;
+import edu.nc.travelplanner.exception.NotEnoughParamsException;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -37,9 +38,12 @@ public class HttpSource implements Source {
     }
 
     @Override
-    public String getUrlWithParameterValues() {
+    public String getUrlWithParameterValues() throws NotEnoughParamsException {
         if (paramValuesMap.size() == 0)
             return url;
+
+        if ((params.stream().anyMatch(param -> paramValuesMap.get(param)==null)))
+            throw new NotEnoughParamsException();
 
         String outputUrl = url;
 
@@ -78,5 +82,11 @@ public class HttpSource implements Source {
     @Override
     public void addParameterValue(String name, String value) {
         paramValuesMap.put(name, value);
+    }
+
+    @Override
+    public Boolean isAllParamsHaveValue() {
+
+        return null;
     }
 }

@@ -1,9 +1,9 @@
 package edu.nc.travelplanner.model.source.dataproducer;
 
 import edu.nc.travelplanner.exception.DataProducerSendException;
+import edu.nc.travelplanner.exception.NotEnoughParamsException;
 import edu.nc.travelplanner.model.action.PickResult;
 import edu.nc.travelplanner.model.response.Response;
-import edu.nc.travelplanner.model.factory.dataproducer.DataProducerParseException;
 import edu.nc.travelplanner.model.source.parametermapper.ParameterMapper;
 import edu.nc.travelplanner.model.source.Sender;
 import edu.nc.travelplanner.model.source.Source;
@@ -40,7 +40,7 @@ public class DefaultDataProducer implements DataProducer{
     }
 
     @Override
-    public Response send(List<PickResult> pickResults) throws DataProducerSendException {
+    public Response send(List<PickResult> pickResults) throws DataProducerSendException, NotEnoughParamsException {
         try {
             mapParameters(pickResults);
 
@@ -57,7 +57,7 @@ public class DefaultDataProducer implements DataProducer{
         }
     }
 
-    private void mapParameters(List<PickResult> pickResults) {
+    private void mapParameters(List<PickResult> pickResults) throws IOException {
         Map<String, String> tempParameterValues = new LinkedHashMap<>();
         for (ParameterMapper parameterMapper : parameterMappers) {
             if (tempParameterValues.containsKey(parameterMapper.getToKey())) {

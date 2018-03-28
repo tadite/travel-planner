@@ -9,7 +9,7 @@
                     <li><a>{{login}} <span class="glyphicon glyphicon-menu-down"></span></a> 
                       <ul>
                         <li><a routerLink="/profile" routerLinkActive="active"><span class="glyphicon glyphicon-user"></span> Мой профиль</a></li>
-                        <!-- <li><a href="#"><span class="glyphicon glyphicon-picture"></span> История путешествий</a></li>                     -->
+                        <li><a routerLink="/myTravels" routerLinkActive="active"><span class="glyphicon glyphicon-picture"></span> История путешествий</a></li>
                        
                         <li><a routerLink="/questions" routerLinkActive="active"><span class="glyphicon glyphicon-plane"></span> Мое путешествие</a></li>
                         <hr>
@@ -27,8 +27,9 @@
             <!-- <hr> -->
             <div align="center" class="form-inline">
                     <div>                  
-                        <ngx-loading [show]="loading" [config]="{ backdropBackgroundColour: 'rgba(0,0,0,0)', backdropBorderRadius: '10px',
-                        primaryColour: 'rgb(161, 160, 160)', secondaryColour: 'rgb(161, 160, 160)', tertiaryColour: 'rgb(161, 160, 160)' }"></ngx-loading>      
+                    <ngx-loading [show]="loading" [config]="{ backdropBackgroundColour: 'rgba(0,0,0,0)', backdropBorderRadius: '10px',
+                        primaryColour: 'rgb(161, 160, 160)', secondaryColour: 'rgb(161, 160, 160)', tertiaryColour: 'rgb(161, 160, 160)' }">
+                    </ngx-loading>      
                             <div *ngIf="result == false">                                
                                     <form [hidden]="loading" #f="ngForm" #elseBlock (ngSubmit)="onSubmit(f)" #myForm="ngForm" novalidate>
             
@@ -130,21 +131,40 @@
                                         <div *ngSwitchCase="'table_picker'"> 
                                             <div *ngIf="question.id == 'table.1.coast-of-living-action-Table'">
                                                 <div class="costOfLiving">                                          
-                                                        <div *ngFor="let item of question.data.rows">                                                                
-                                                                <table>
-                                                                <tr *ngFor="let defs of question.data.columnDefs.columns; let i = index">                                       
+                                                        <div *ngFor="let item of pagedItems">                                                                
+                                                                <table> 
+                                                                    <caption>{{item.columns[1].value}}</caption>                                                                      
+                                                                <tr *ngFor="let defs of question.data.columnDefs.columns; let i = index">                                                                                                                                                                          
                                                                     <td>{{defs.value}}</td>                                      
-                                                                    <td *ngIf="isLink(question.data, defs.name); else elseTextBlock"><a href="{{item.columns[i+1].value}}" target="_blank">Перейти</a></td>  
-                                                                    <ng-template #elseTextBlock><td>{{item.columns[i+1].value}}</td></ng-template>            
+                                                                    <td *ngIf="isLink(question.data, defs.name); else elseTextBlock"><a href="{{item.columns[i+2].value}}" target="_blank">Перейти</a></td>  
+                                                                    <ng-template #elseTextBlock><td>{{item.columns[i+2].value}}</td></ng-template>            
                                                                 </tr> 
                                                                 </table>
                                                         </div>
-                                                                    <!-- <br>  --> 
+                                            <!-- pager -->
+                                                    <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                                                        <li [ngClass]="{disabled:pager.currentPage === 1}">
+                                                            <a (click)="setPage(1)">Начало</a>
+                                                        </li>
+                                                        <li [ngClass]="{disabled:pager.currentPage === 1}">
+                                                            <a (click)="setPage(pager.currentPage - 1)">Назад</a>
+                                                        </li>
+                                                        <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                                                            <a (click)="setPage(page)">{{page}}</a>
+                                                        </li>
+                                                        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                                            <a (click)="setPage(pager.currentPage + 1)">Вперед</a>
+                                                        </li>
+                                                        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                                            <a (click)="setPage(pager.totalPages)">Конец</a>
+                                                        </li>
+                                                    </ul>
                                                     </div>
                                             </div>
                                             <div *ngIf="question.data.multiPick == true">
+                                                <div class="multiSelection">
                                                     <div class="btn-group btn-group-toggle" >                                          
-                                                            <div *ngFor="let item of question.data.rows">                                               
+                                                            <div *ngFor="let item of pagedItems">                                               
                                                                 <label class="btn">
                                                                     <input type="checkbox" (change)="putCheckId(item.columns[0].value)"/>                                            
                                                                     <table>
@@ -156,12 +176,31 @@
                                                                     </table>
                                                                 </label> 
                                                             </div>
-                                                                <!-- <br>  --> 
+                                                                <!-- pager -->
+                                                    <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                                                        <li [ngClass]="{disabled:pager.currentPage === 1}">
+                                                            <a (click)="setPage(1)">Начало</a>
+                                                        </li>
+                                                        <li [ngClass]="{disabled:pager.currentPage === 1}">
+                                                            <a (click)="setPage(pager.currentPage - 1)">Назад</a>
+                                                        </li>
+                                                        <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                                                            <a (click)="setPage(page)">{{page}}</a>
+                                                        </li>
+                                                        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                                            <a (click)="setPage(pager.currentPage + 1)">Вперед</a>
+                                                        </li>
+                                                        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                                            <a (click)="setPage(pager.totalPages)">Конец</a>
+                                                        </li>
+                                                    </ul>
+                                                    </div>
                                                     </div>
                                             </div>
                                             <div *ngIf="question.data.multiPick == false">
+                                            <div class="multiSelection">
                                             <div class="btn-group btn-group-toggle" >                                          
-                                            <div *ngFor="let item of question.data.rows">                                               
+                                            <div *ngFor="let item of pagedItems">                                               
                                                 <label class="btn">
                                                     <input type="radio" name="{{question.id}}" value="{{item.columns[0].value}}" ngModel/>                                            
                                                     <table>
@@ -173,7 +212,25 @@
                                                     </table>
                                                 </label> 
                                                 </div>
-                                                <!-- <br>  --> 
+                                               <!-- pager -->
+                                               <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                                                <li [ngClass]="{disabled:pager.currentPage === 1}">
+                                                    <a (click)="setPage(1)">Начало</a>
+                                                </li>
+                                                <li [ngClass]="{disabled:pager.currentPage === 1}">
+                                                    <a (click)="setPage(pager.currentPage - 1)">Назад</a>
+                                                </li>
+                                                <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                                                    <a (click)="setPage(page)">{{page}}</a>
+                                                </li>
+                                                <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                                    <a (click)="setPage(pager.currentPage + 1)">Вперед</a>
+                                                </li>
+                                                <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                                    <a (click)="setPage(pager.totalPages)">Конец</a>
+                                                </li>
+                                            </ul>
+                                            </div>
                                             </div>
                                             </div>
                                         </div>                                         
@@ -189,8 +246,7 @@
                                     </form> 
                                     </div>        
                         <div *ngIf="result == true">
-                            <div class="result-table-block">
-                                <!-- <p>Общая информация</p> -->
+                            <div class="result-table-block">                               
                             <table>
                                     <caption>Общая информация</caption>
                                     <tr>
@@ -256,7 +312,7 @@
                                         <td>{{questions.hotel.priceInfo}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Покупка/бронь</td>
+                                        <td>Просмотр</td>
                                         <td><a href="{{questions.hotel.booking}}" target="_blank">Перейти</a></td>  
                                     </tr>
                                 </table>
@@ -267,9 +323,17 @@
                                     <td>Самолет</td>
                                     <td>{{questions.twoWayFlight.flightTo.aircraft}}</td>
                                 </tr>
-                                <tr>                                                                                                                  
+                                <tr>                                                                                                                 
                                     <td>Авиакомпания</td>
                                     <td>{{questions.twoWayFlight.flightTo.companyName}}</td>
+                                </tr>
+                                <tr>                                                                                                                  
+                                    <td>Аэропорт вылета</td>
+                                    <td>{{questions.twoWayFlight.flightTo.departureName}}</td>
+                                </tr>
+                                <tr>                                                                                                                  
+                                    <td>Аэропорт прилета</td>
+                                    <td>{{questions.twoWayFlight.flightTo.arrivalName}}</td>
                                 </tr>
                                 <tr>                                                                                                                  
                                     <td>Класс обслуживания</td>
@@ -298,8 +362,16 @@
                                <tr>                                                                                                                  
                                    <td>Авиакомпания</td>
                                    <td>{{questions.twoWayFlight.flightFrom.companyName}}</td>
-                               </tr>
+                               </tr>                               
                                <tr>                                                                                                                  
+                                    <td>Аэропорт вылета</td>
+                                    <td>{{questions.twoWayFlight.flightFrom.departureName}}</td>
+                                </tr>
+                                <tr>                                                                                                                  
+                                    <td>Аэропорт прилета</td>
+                                    <td>{{questions.twoWayFlight.flightFrom.arrivalName}}</td>
+                                </tr>
+                                <tr>                                                                                                                  
                                    <td>Класс обслуживания</td>
                                    <td>{{questions.twoWayFlight.flightFrom.classType}}</td>
                                </tr>
@@ -324,26 +396,79 @@
                                        <td>{{questions.twoWayFlight.price}}</td>
                                   </tr>
                                   <tr>                                                                                                        
-                                        <td>Покупка/бронь</td>
+                                        <td>Просмотр</td>
                                         <td><a href="{{questions.twoWayFlight.booking}}" target="_blank">Перейти</a></td>  
                                    </tr>
-                              </table>                              
-                                                     
+                              </table> 
+                            
+                            <div *ngIf="questions.excursions != null">
+                             <div *ngFor="let item of questions.excursions; let i = index">                 
                             <table>   
-                                    <caption>Экскурсии</caption> 
+                                    <caption>Экскурсия №{{i+1}}</caption> 
                                 <tr>                                                                                                        
-                                     <td></td>
-                                     <td></td>
+                                     <td>Название</td>
+                                     <td>{{item.name}}</td>
+                                </tr>
+                                <tr>                                                                                                        
+                                    <td>Описание</td>
+                                    <td>{{item.description}}</td>
+                                </tr>
+                                <tr>                                                                                                        
+                                    <td>Цена</td>
+                                    <td>{{item.price}}</td>
+                                </tr>
+                                <tr>                                                                                                        
+                                    <td>Продолжительность</td>
+                                    <td>{{item.time}}</td>
+                                </tr>
+                                <tr>                                                                                                        
+                                    <td>Просмотр</td>
+                                    <td><a href="{{item.booking}}" target="_blank">Перейти</a></td>  
+                                </tr>                                                                                                    
+                            </table>
+                            </div>  
+                        </div>   
+                        <div *ngIf="questions.carRent != null">
+                            <table>   
+                                    <caption>Аренда автомобиля</caption> 
+                                <tr>                                                                                                        
+                                     <td>Марка авто</td>
+                                     <td>{{questions.carRent.name}}</td>
+                                </tr>
+                                <tr>                                                                                                        
+                                    <td>Срок аренды</td>
+                                    <td>{{questions.carRent.pricePeriod}}</td>
+                                </tr>
+                                <tr>                                                                                                        
+                                    <td>Стоимость</td>
+                                    <td>{{questions.carRent.price}}</td>
+                                </tr>
+                                <tr>                                                                                                        
+                                    <td>Количество пассажиров</td>
+                                    <td>{{questions.carRent.seats}}</td>
+                                </tr>
+                                <tr>                                                                                                        
+                                    <td>Количество дверей</td>
+                                    <td>{{questions.carRent.doors}}</td>
+                                </tr>
+                                <tr>                                                                                                        
+                                    <td>Тип коробки передач</td>
+                                    <td>{{questions.carRent.transmission}}</td>
+                                </tr>
+                                <tr>                                                                                                        
+                                    <td>Класс</td>
+                                    <td>{{questions.carRent.classType}}</td>
+                                </tr>
+                                <tr>                                                                                                        
+                                    <td>Пробег</td>
+                                    <td>{{questions.carRent.mileage}}</td>
+                                </tr>
+                                <tr>                                                                                                        
+                                    <td>Просмотр</td>
+                                    <td><a href="{{questions.carRent.booking}}" target="_blank">Перейти</a></td>  
                                 </tr>
                             </table>
-                                                   
-                            <table>   
-                                    <caption>Аренда авто</caption> 
-                                <tr>                                                                                                        
-                                     <td></td>
-                                     <td></td>
-                                </tr>
-                            </table>                           
+                        </div>                           
                             <div class="googlemap">
                                 <agm-map
                                         [latitude]="defaultLat"
@@ -366,6 +491,10 @@
                                 </agm-map>
                             </div>
                             <input class="newTravel" type="button" (click)="onReset()" value="Новое путешествие"/>
+                            <input class="newTravel" type="button" [class.disabled]="!isSaveButtonEnabled()" [disabled]="!isSaveButtonEnabled()" (click)="onSave()" value="Сохранить"/>                                                     
+                            <div *ngIf="!isSaveButtonEnabled()">
+                                <input class="newTravel" type="button" (click)="printPDF()" value="Распечатать результат в формате PDF"/>
+                            </div> 
                             </div>
                         </div>
                     </div>

@@ -1,10 +1,9 @@
 package edu.nc.travelplanner.table;
 
 
-
-import org.springframework.transaction.annotation.Transactional;
-
 import javax.persistence.*;
+import java.util.LinkedList;
+import java.util.List;
 
 @Entity
 @Table(name = "excursion")
@@ -14,34 +13,58 @@ public class Excursion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long excursionId;
 
-    @Column(name = "name")
-    private String name;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "city_id")
     private City city;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "country_id")
-    private Country country;
+    private String name;
 
-    @Column(name = "duration")
-    private String duration;
+    private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "check_point_id")
-    private CheckPoint checkPoint;
+    private String price;
 
-    @Column(name = "cost")
-    private String cost;
+    private String time;
 
+    @Column(columnDefinition="text")
+    private String booking;
+
+    @ManyToMany
+    @JoinTable(name = "excursion_travel", joinColumns = {@JoinColumn(name = "excursion_id")}, inverseJoinColumns = {@JoinColumn(name = "travel_id")})
+    private List<Travel> travels=new LinkedList<>();
+
+    public Excursion() {
+    }
+
+    public Excursion(City city, String name, String description, String price, String time, String booking) {
+        this.city = city;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.time = time;
+        this.booking = booking;
+    }
 
     public long getExcursionId() {
         return excursionId;
     }
 
+    public List<Travel> getTravels() {
+        return travels;
+    }
+
+    public void setTravels(List<Travel> travels) {
+        this.travels = travels;
+    }
+
     public void setExcursionId(long excursionId) {
-        this.excursionId  = excursionId;
+        this.excursionId = excursionId;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 
     public String getName() {
@@ -49,51 +72,39 @@ public class Excursion {
     }
 
     public void setName(String name) {
-        this.name  = name;
+        this.name = name;
     }
 
-    @Transactional
-    public City getCity() {
-        return city;
+    public String getDescription() {
+        return description;
     }
 
-    public void setCity(City city) {
-        this.city  = city;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    @Transactional
-    public Country getCountry() {
-        return country;
+    public String getPrice() {
+        return price;
     }
 
-    public void setCountry (Country country) {
-        this.country  = country;
+    public void setPrice(String price) {
+        this.price = price;
     }
 
-    public String getDuration() {
-        return duration;
+    public String getTime() {
+        return time;
     }
 
-    public void setDuration(String duration) {
-        this.duration  = duration;
+    public void setTime(String time) {
+        this.time = time;
     }
 
-    @Transactional
-    public CheckPoint getCheckPoint() {
-        return checkPoint;
+    public String getBooking() {
+        return booking;
     }
 
-    public void setCheckPoint(CheckPoint checkPoint) {
-        this.checkPoint  = checkPoint;
+    public void setBooking(String booking) {
+        this.booking = booking;
     }
-
-    public String getCost() {
-        return cost;
-    }
-
-    public void setCost(String cost) {
-        this.cost  = cost;
-    }
-
 }
 

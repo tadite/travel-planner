@@ -52,7 +52,7 @@ public class VkGeoNamesDbFiller implements GeoNamesDbFiller {
             cityById = new City();
             cityById.setName(vkGeoNamesProvider.getCityNameById(cityId.intValue()));
             cityById.setCityId(cityId);
-            cityById.setCountryId(countryId);
+            cityById.setCountry(countryDao.getCountryById(countryId));
             cityDao.saveCity(cityById);
         }
 

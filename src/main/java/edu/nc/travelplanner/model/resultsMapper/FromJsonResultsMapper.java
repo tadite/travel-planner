@@ -1,15 +1,5 @@
 package edu.nc.travelplanner.model.resultsMapper;
 
-import edu.nc.travelplanner.dto.afterPickTree.CheckpointAfterPickTreeDto;
-import edu.nc.travelplanner.dto.afterPickTree.TravelAfterPickTreeDto;
-import edu.nc.travelplanner.model.action.DateInterval;
-import edu.nc.travelplanner.model.action.PickResult;
-
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
 public class FromJsonResultsMapper /*implements ResultsMapper */{
 /*
     private List<MapNode> mapNodes;
@@ -37,10 +27,10 @@ public class FromJsonResultsMapper /*implements ResultsMapper */{
     }
 
     @Override
-    public TravelAfterPickTreeDto map(List<PickResult> pickResults) {
-        TravelAfterPickTreeDto travelAfterPickTreeDto = new TravelAfterPickTreeDto();
+    public TravelDto map(List<PickResult> pickResults) {
+        TravelDto travelAfterPickTreeDto = new TravelDto();
 
-        CheckpointAfterPickTreeDto from = new CheckpointAfterPickTreeDto();
+        CheckpointDto from = new CheckpointDto();
 
         for (MapNode node : mapNodes) {
             if (!travelParams.contains(node.getTo()))
@@ -59,7 +49,7 @@ public class FromJsonResultsMapper /*implements ResultsMapper */{
         return travelAfterPickTreeDto;
     }
 
-    private void setTravelDtoParam(TravelAfterPickTreeDto travelDto, PickResult pick, MapNode node){
+    private void setTravelDtoParam(TravelDto travelDto, PickResult pick, MapNode node){
 
 
 

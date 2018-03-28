@@ -5,10 +5,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "client")
@@ -17,7 +14,7 @@ public class Client implements UserDetails {
     @Id
     @Column(name = "client_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long clientId;
+    private Long clientId;
 
     @Column(name = "first_name")
     private String firstName;
@@ -37,38 +34,37 @@ public class Client implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    @OneToMany
+    private List<Travel> travels = new LinkedList<>();
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "city_id", insertable=false, updatable=false)
     private City city;
-
-    @Column(name = "city_id")
-    private Long cityId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "country_id", insertable=false, updatable=false)
     private Country country;
 
-    @Column(name = "country_id")
-    private Integer countryId;
-
     @Column(name = "role")
     private String role;
 
     @Column(name = "is_blocked")
-    private Boolean isBlocked;
+    private Boolean isBlocked=false;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "client")
-    private Set<SocialNetwork> socialNetworks = new HashSet<>();
-
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "client")
-    private Set<TravelForClient> travelForClients = new HashSet<>();
-
-    public long getClientId() {
-        return clientId;
+    public void setClientId(Long clientId) {
+        this.clientId = clientId;
     }
 
-    public void setClientId(long clientId) {
-        this.clientId  = clientId;
+    public List<Travel> getTravels() {
+        return travels;
+    }
+
+    public void setTravels(List<Travel> travels) {
+        this.travels = travels;
+    }
+
+    public Long getClientId() {
+        return clientId;
     }
 
     public String getFirstName() {
@@ -115,7 +111,6 @@ public class Client implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(role));
-        authorities.add(new SimpleGrantedAuthority(role));
         return authorities;
     }
 
@@ -148,8 +143,16 @@ public class Client implements UserDetails {
         return !isBlocked;
     }
 
+    public void setIsBlocked(boolean isBlocked) {
+        this.isBlocked=isBlocked;
+    }
+
+    public boolean getIsBlocked() {
+        return this.isBlocked;
+    }
+
     public void setPassword(String password) {
-        this.password  = password;
+        this.password = password;
     }
 
     public City getCity() {
@@ -157,15 +160,15 @@ public class Client implements UserDetails {
     }
 
     public void setCity(City city) {
-        this.city  = city;
+        this.city = city;
     }
 
     public Country getCountry() {
         return country;
     }
 
-    public void setCountry (Country country) {
-        this.country  = country;
+    public void setCountry(Country country) {
+        this.country = country;
     }
 
     public String getRole() {
@@ -173,66 +176,14 @@ public class Client implements UserDetails {
     }
 
     public void setRole(String role) {
-        this.role  = role;
-    }
-
-    public Boolean getIsBlocked() {
-        return isBlocked;
-    }
-
-    public void setIsBlocked(Boolean isBlocked) {
-        this.isBlocked  = isBlocked;
-    }
-
-    public void setSocialNetworks(Set<SocialNetwork> socialNetworks) {
-        this.socialNetworks = socialNetworks;
-    }
-
-    public void setTravelForClients(Set<TravelForClient> travelForClients) {
-        this.travelForClients = travelForClients;
-    }
-
-    public void addSocialNetwork(SocialNetwork socialNetwork) {
-        this.socialNetworks.add(socialNetwork);
-    }
-
-    public void removeSocialNetwork(SocialNetwork socialNetwork) {
-        socialNetworks.remove(socialNetwork);
-    }
-
-    public void addTravelForClient(TravelForClient travelForClient) {
-        this.travelForClients.add(travelForClient);
-    }
-
-    public void removeTravelForClient(TravelForClient travelForClient) {
-        travelForClients.remove(travelForClient);
-    }
-
-    public Set<SocialNetwork> getSocialNetworks() {
-        return socialNetworks;
+        this.role = role;
     }
 
     public Boolean getBlocked() {
         return isBlocked;
     }
 
-    public Set<TravelForClient> getTravelForClients() {
-        return travelForClients;
-    }
-
-    public Long getCityId() {
-        return cityId;
-    }
-
-    public void setCityId(Long cityId) {
-        this.cityId = cityId;
-    }
-
-    public Integer getCountryId() {
-        return countryId;
-    }
-
-    public void setCountryId(Integer countryId) {
-        this.countryId = countryId;
+    public void setBlocked(Boolean blocked) {
+        isBlocked = blocked;
     }
 }
