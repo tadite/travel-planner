@@ -115,7 +115,8 @@ public class DtoMapper {
             dto.setTwoWayFlight(map(travel.getTwoWayFlight()));
         if (travel.getExcursions() != null)
             dto.setExcursions(travel.getExcursions().stream().map(this::map).collect(Collectors.toList()));
-        dto.setCarRent(map(travel.getCarRent()));
+        if (travel.getCarRent() != null)
+            dto.setCarRent(map(travel.getCarRent()));
         return dto;
     }
 }

@@ -2,6 +2,7 @@ package edu.nc.travelplanner.model.main;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.nc.travelplanner.exception.DataProducerSendException;
+import edu.nc.travelplanner.exception.NotEnoughParamsException;
 import edu.nc.travelplanner.model.action.PickResult;
 import edu.nc.travelplanner.model.factory.dataproducer.DataProducerFactory;
 import edu.nc.travelplanner.model.factory.dataproducer.DataProducerParseException;
@@ -32,6 +33,8 @@ public class DataProducerManager {
                             dataProducerConfig.getAllCountriesDataProducerName()).send(new ArrayList<>()).getRawData(), HashMap.class);
         } catch (DataProducerSendException e) {
             e.printStackTrace();
+        } catch (NotEnoughParamsException e) {
+            e.printStackTrace();
         }
         return null;
     }
@@ -46,6 +49,8 @@ public class DataProducerManager {
                     }}).getRawData(), HashMap.class);
         } catch (DataProducerSendException e) {
             e.printStackTrace();
+        } catch (NotEnoughParamsException e) {
+            e.printStackTrace();
         }
         return null;
     }
@@ -58,6 +63,8 @@ public class DataProducerManager {
             }}).getRawData();
         } catch (DataProducerSendException e) {
             e.printStackTrace();
+        } catch (NotEnoughParamsException e) {
+            e.printStackTrace();
         }
         return null;
     }
@@ -69,6 +76,8 @@ public class DataProducerManager {
                 this.add(new PickResult("country_id", id));
             }}).getRawData();
         } catch (DataProducerSendException e) {
+            e.printStackTrace();
+        } catch (NotEnoughParamsException e) {
             e.printStackTrace();
         }
         return null;

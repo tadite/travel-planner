@@ -1,14 +1,16 @@
 package edu.nc.travelplanner.model.tree;
 
+import edu.nc.travelplanner.dto.afterPickTree.TravelDto;
+import edu.nc.travelplanner.exception.CustomParseException;
 import edu.nc.travelplanner.exception.DataProducerSendException;
+import edu.nc.travelplanner.exception.NotEnoughParamsException;
 import edu.nc.travelplanner.model.action.*;
 import edu.nc.travelplanner.model.jump.Jump;
-import edu.nc.travelplanner.model.response.ErrorResponse;
 import edu.nc.travelplanner.model.response.Response;
 import edu.nc.travelplanner.model.response.ViewResponseBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class SimpleActionTree implements ActionTree {
 
@@ -23,9 +25,9 @@ public class SimpleActionTree implements ActionTree {
     private Integer attemptsCount;
     private Integer waitAfterFail;
 
-    private RollbackMaster rollbackMaster=new RollbackMaster();
+    private RollbackMaster rollbackMaster = new RollbackMaster();
 
-    private boolean failedAtPresent=false;
+    private boolean failedAtPresent = false;
 
     public SimpleActionTree() {
     }
@@ -56,19 +58,19 @@ public class SimpleActionTree implements ActionTree {
             return;
 
         HistoryState previousState = rollbackMaster.rollback();
-        this.pickResults=previousState.getPicks();
-        this.currentAction=previousState.getJastJump().getCurrentAction();
+        this.pickResults = previousState.getPicks();
+        this.currentAction = previousState.getJastJump().getCurrentAction();
     }
 
     @Override
     public Response executePresentation(ActionArgs args) {
         int triesLeft = attemptsCount;
-        failedAtPresent=false;
+        failedAtPresent = false;
 
         while (triesLeft > 0) {
             try {
                 return currentAction.executePresentation(args, pickResults);
-            } catch (Exception e) {
+            } catch (DataProducerSendException | CustomParseException e) {
                 e.printStackTrace();
                 triesLeft--;
                 try {
@@ -76,19 +78,21 @@ public class SimpleActionTree implements ActionTree {
                 } catch (InterruptedException e1) {
                     e1.printStackTrace();
                 }
+            } catch (NotEnoughParamsException e) {
+                e.printStackTrace();
+                return new ViewResponseBuilder().addTitleElement("errorResult", "Недостаточно исходных данных для запроса..").build();
             }
         }
 
-        failedAtPresent=true;
-        return new ViewResponseBuilder().addTitleElement("question", currentAction.getViewName()).addTitleElement("errorResult", "Данные по запросу не найдены.").build();
+        failedAtPresent = true;
+        return new ViewResponseBuilder().addTitleElement("errorResult", "Данные по запросу не найдены.").build();
     }
 
     @Override
     public Response executeDecision(ActionArgs args) {
-        if (failedAtPresent)
-        {
+        if (failedAtPresent) {
             Jump forcedJump = executeJumps(null, null, true);
-            if (forcedJump!=null)
+            if (forcedJump != null)
                 rollbackMaster.addStep(new HistoryState(this.pickResults, forcedJump));
         }
 
@@ -97,29 +101,43 @@ public class SimpleActionTree implements ActionTree {
         LinkedList<PickResult> currentStepPicks = new LinkedList<>(this.pickResults);
 
         currentAction.getResult(args.getArgs(), this.pickResults);
-        Response response = currentAction.executeDecision(args, this.pickResults);
+        pickResults = this.pickResults.stream().filter(pick -> pick.getValue()!=null && pick.getKey()!=null).collect(Collectors.toList());
+
+        Response response = null;
+        try {
+            response = currentAction.executeDecision(args, this.pickResults);
+        } catch (DataProducerSendException e) {
+            e.printStackTrace();
+        } catch (CustomParseException e) {
+            e.printStackTrace();
+        }
         currentStepJump = executeJumps(args, response, false);
 
-        if (currentStepJump!=null)
+        if (currentStepJump != null)
             rollbackMaster.addStep(new HistoryState(currentStepPicks, currentStepJump));
 
         while (currentAction.getType() == ActionType.NO_VIEW_TEXT_INTEGRAION) {
-            tryGetResultForNoViewAction(args, this.pickResults);
-            currentAction.getResult(args.getArgs(), this.pickResults);
-            executeJumps(args, response, false);
+            boolean result = tryGetResultForNoViewAction(args, this.pickResults);
+            if (result) {
+                currentAction.getResult(args.getArgs(), this.pickResults);
+                pickResults = this.pickResults.stream().filter(pick -> pick.getValue()!=null && pick.getKey()!=null).collect(Collectors.toList());
+                executeJumps(args, response, false);
+            } else
+                executeJumps(args, response, true);
+
         }
 
         return response;
     }
 
-    private void tryGetResultForNoViewAction(ActionArgs args, List<PickResult> picks) {
+    private boolean tryGetResultForNoViewAction(ActionArgs args, List<PickResult> picks) {
         int triesLeft = attemptsCount;
 
         while (triesLeft > 0) {
             try {
                 currentAction.executePresentation(args, picks);
-                return;
-            } catch (Exception e) {
+                return true;
+            } catch (DataProducerSendException | CustomParseException e) {
                 e.printStackTrace();
                 triesLeft--;
                 try {
@@ -127,8 +145,12 @@ public class SimpleActionTree implements ActionTree {
                 } catch (InterruptedException e1) {
                     e1.printStackTrace();
                 }
+            } catch (NotEnoughParamsException e) {
+                e.printStackTrace();
+                return false;
             }
         }
+        return false;
     }
 
     private Jump executeJumps(ActionArgs args, Response response, Boolean force) {

@@ -118,10 +118,10 @@
             
                                         <div *ngSwitchCase="'date_picker'">
                                             <div *ngIf="question.id == 'datepicker.1.dateIntervalInput-travelPeriod-action'">
-                                                <input type="date" name="{{question.id}}" [min]="today" onkeydown="return false" [(ngModel)] ="defaultStartDate" ngModel required/>                                                                                      
+                                                <input type="date" name="{{question.id}}" [min]="startDate" onkeydown="return false" [(ngModel)] ="defaultStartDate" ngModel required/>
                                             </div>
                                             <div *ngIf="question.id == 'datepicker.2.dateIntervalInput-travelPeriod-action'">
-                                                    <input type="date" name="{{question.id}}" [min]="today" onkeydown="return false" [(ngModel)] ="defaultEndDate" ngModel required/>                                                                                      
+                                                    <input type="date" name="{{question.id}}" [min]="endDate" onkeydown="return false" [(ngModel)] ="defaultEndDate" ngModel required/>
                                             </div>
 
                                         </div>
@@ -131,21 +131,40 @@
                                         <div *ngSwitchCase="'table_picker'"> 
                                             <div *ngIf="question.id == 'table.1.coast-of-living-action-Table'">
                                                 <div class="costOfLiving">                                          
-                                                        <div *ngFor="let item of question.data.rows">                                                                
-                                                                <table>
-                                                                <tr *ngFor="let defs of question.data.columnDefs.columns; let i = index">                                       
+                                                        <div *ngFor="let item of pagedItems">                                                                
+                                                                <table> 
+                                                                    <caption>{{item.columns[1].value}}</caption>                                                                      
+                                                                <tr *ngFor="let defs of question.data.columnDefs.columns; let i = index">                                                                                                                                                                          
                                                                     <td>{{defs.value}}</td>                                      
-                                                                    <td *ngIf="isLink(question.data, defs.name); else elseTextBlock"><a href="{{item.columns[i+1].value}}" target="_blank">Перейти</a></td>  
-                                                                    <ng-template #elseTextBlock><td>{{item.columns[i+1].value}}</td></ng-template>            
+                                                                    <td *ngIf="isLink(question.data, defs.name); else elseTextBlock"><a href="{{item.columns[i+2].value}}" target="_blank">Перейти</a></td>  
+                                                                    <ng-template #elseTextBlock><td>{{item.columns[i+2].value}}</td></ng-template>            
                                                                 </tr> 
                                                                 </table>
                                                         </div>
-                                                                    <!-- <br>  --> 
+                                            <!-- pager -->
+                                                    <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                                                        <li [ngClass]="{disabled:pager.currentPage === 1}">
+                                                            <a (click)="setPage(1)">Начало</a>
+                                                        </li>
+                                                        <li [ngClass]="{disabled:pager.currentPage === 1}">
+                                                            <a (click)="setPage(pager.currentPage - 1)">Назад</a>
+                                                        </li>
+                                                        <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                                                            <a (click)="setPage(page)">{{page}}</a>
+                                                        </li>
+                                                        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                                            <a (click)="setPage(pager.currentPage + 1)">Вперед</a>
+                                                        </li>
+                                                        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                                            <a (click)="setPage(pager.totalPages)">Конец</a>
+                                                        </li>
+                                                    </ul>
                                                     </div>
                                             </div>
                                             <div *ngIf="question.data.multiPick == true">
+                                                <div class="multiSelection">
                                                     <div class="btn-group btn-group-toggle" >                                          
-                                                            <div *ngFor="let item of question.data.rows">                                               
+                                                            <div *ngFor="let item of pagedItems">                                               
                                                                 <label class="btn">
                                                                     <input type="checkbox" (change)="putCheckId(item.columns[0].value)"/>                                            
                                                                     <table>
@@ -157,12 +176,31 @@
                                                                     </table>
                                                                 </label> 
                                                             </div>
-                                                                <!-- <br>  --> 
+                                                                <!-- pager -->
+                                                    <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                                                        <li [ngClass]="{disabled:pager.currentPage === 1}">
+                                                            <a (click)="setPage(1)">Начало</a>
+                                                        </li>
+                                                        <li [ngClass]="{disabled:pager.currentPage === 1}">
+                                                            <a (click)="setPage(pager.currentPage - 1)">Назад</a>
+                                                        </li>
+                                                        <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                                                            <a (click)="setPage(page)">{{page}}</a>
+                                                        </li>
+                                                        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                                            <a (click)="setPage(pager.currentPage + 1)">Вперед</a>
+                                                        </li>
+                                                        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                                            <a (click)="setPage(pager.totalPages)">Конец</a>
+                                                        </li>
+                                                    </ul>
+                                                    </div>
                                                     </div>
                                             </div>
                                             <div *ngIf="question.data.multiPick == false">
+                                            <div class="multiSelection">
                                             <div class="btn-group btn-group-toggle" >                                          
-                                            <div *ngFor="let item of question.data.rows">                                               
+                                            <div *ngFor="let item of pagedItems">                                               
                                                 <label class="btn">
                                                     <input type="radio" name="{{question.id}}" value="{{item.columns[0].value}}" ngModel/>                                            
                                                     <table>
@@ -174,7 +212,25 @@
                                                     </table>
                                                 </label> 
                                                 </div>
-                                                <!-- <br>  --> 
+                                               <!-- pager -->
+                                               <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                                                <li [ngClass]="{disabled:pager.currentPage === 1}">
+                                                    <a (click)="setPage(1)">Начало</a>
+                                                </li>
+                                                <li [ngClass]="{disabled:pager.currentPage === 1}">
+                                                    <a (click)="setPage(pager.currentPage - 1)">Назад</a>
+                                                </li>
+                                                <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                                                    <a (click)="setPage(page)">{{page}}</a>
+                                                </li>
+                                                <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                                    <a (click)="setPage(pager.currentPage + 1)">Вперед</a>
+                                                </li>
+                                                <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                                    <a (click)="setPage(pager.totalPages)">Конец</a>
+                                                </li>
+                                            </ul>
+                                            </div>
                                             </div>
                                             </div>
                                         </div>                                         
@@ -415,25 +471,30 @@
                         </div>                           
                             <div class="googlemap">
                                 <agm-map
-                                        [latitude]="55.41030689999999"
-                                        [longitude]="37.90245129999994"
+                                        [latitude]="defaultLat"
+                                        [longitude]="defaultLng"
                                         [zoom]="2">
-                                    <div class="markers" *ngFor="let i of locations">
-                                        <agm-marker
-                                                [latitude]="i.lat"
-                                                [longitude]="i.lng"></agm-marker>
-                                    </div>
+                                    <agm-marker
+                                            *ngFor="let i of locations"
+                                            [latitude]="i.lat"
+                                            [longitude]="i.lng">
+                                            <agm-info-window [disableAutoPan]="true">
+                                                {{i.name}}
+                                            </agm-info-window>
+                                    </agm-marker>
                                     <agm-polyline>
-                                        <ng-container *ngFor="let i of locations">
-                                            <agm-polyline-point
-                                                    [latitude]="i.lat"
-                                                    [longitude]="i.lng"></agm-polyline-point>
-                                        </ng-container>
+                                        <agm-polyline-point
+                                                *ngFor="let i of locations"
+                                                [latitude]="i.lat"
+                                                [longitude]="i.lng"></agm-polyline-point>
                                     </agm-polyline>
                                 </agm-map>
                             </div>
                             <input class="newTravel" type="button" (click)="onReset()" value="Новое путешествие"/>
-                            <input class="newTravel" type="button" (click)="onSave()" value="Сохранить"/>
+                            <input class="newTravel" type="button" [class.disabled]="!isSaveButtonEnabled()" [disabled]="!isSaveButtonEnabled()" (click)="onSave()" value="Сохранить"/>                                                     
+                            <div *ngIf="!isSaveButtonEnabled()">
+                                <input class="newTravel" type="button" (click)="printPDF()" value="Распечатать результат в формате PDF"/>
+                            </div> 
                             </div>
                         </div>
                     </div>
@@ -447,5 +508,4 @@
         </div>
     </div>
 </div>
-    
     

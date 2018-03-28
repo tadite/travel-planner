@@ -24,10 +24,11 @@ import  {ProfileComponent } from './profile/profile.component';
 import { AdminComponent }   from './admin/admin.component';
 import { SourseComponent }   from './sourse/sourse.component';
 import { ConfigComponent }   from './config/config.component';
-import {ProfilesComponent} from "./profiles/profiles.component";
-import {DataProducerComponent} from "./dataProducer/dataProducer.component";
-import {SourceFormComponent} from "./sourceForm/sourceForm.component";
+import { ProfilesComponent } from "./profiles/profiles.component";
+import { DataProducerComponent } from "./dataProducer/dataProducer.component";
+import { SourceFormComponent } from "./sourceForm/sourceForm.component";
 import { MyTravelsComponent }   from './myTravels/myTravels.component';
+import { PagerService } from './service/pager.service';
 
 // определение маршрутов
 const appRoutes: Routes =[
@@ -56,12 +57,13 @@ const appRoutes: Routes =[
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true
+      multi: true,
     }, 
     CookieService,
     AuthGuardService,
     UnauthGuardService,
-    GoogleMapsAPIWrapper
+    GoogleMapsAPIWrapper,
+    PagerService
   ],
     bootstrap:    [ AppComponent ]
 })
