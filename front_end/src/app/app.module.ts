@@ -54,7 +54,7 @@ const appRoutes: Routes =[
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true
+      multi: true,
     }, 
     CookieService,
     AuthGuardService,

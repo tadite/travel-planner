@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { trigger, state, style, transition, animate, keyframes, query, stagger } from '@angular/animations';
 import { HttpService } from '../http/http.service';
 import { Question } from './question';
@@ -30,7 +30,7 @@ import { Observable } from 'rxjs';
    providers: [HttpService, AuthService, GoogleMapsAPIWrapper]
 })
 
-export class QuestionsComponent implements OnInit
+export class QuestionsComponent implements OnInit, AfterViewInit
 {      
     
 states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
@@ -98,8 +98,10 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
     
     actionUrl: string = '/action';
 
-    public today: any;
-    public currentDate: Date;
+    public startDate: any;
+    public endDate: any;
+    public currentDate: Date = new Date();
+    oneDay: number = 24*60*60*1000;
     
     login: string;
 
@@ -112,8 +114,11 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
     numValue = '2';
     textValue = 'Paris_24/04/18-28/04/18';
 
-    defaultStartDate = '2018-04-24';
-    defaultEndDate = '2018-04-28'; 
+    defaultStartDate: any;
+    defaultEndDate: any;
+
+    defaultLat = 51.6754966;
+    defaultLng = 39.2088823;
 
     departureCountryId = 'dropdownlist1.1';
     departureCityId = 'dropdownlist1.42';
@@ -121,11 +126,27 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
     destinationCityId = 'dropdownlist1.1937764';
     defaultId = 'dropdownlist1.1';
 
-    constructor(private http: HttpService, private cookieService: CookieService, private router: Router, private authService: AuthService, private mapsApiLoader: MapsAPILoader) {
-        this.currentDate = new Date();
-        let year: any = this.currentDate.getFullYear();
-        let month: any = this.currentDate.getMonth() + 1;
-        let day: any = this.currentDate.getDate();
+    constructor(private http: HttpService, private cookieService: CookieService, private router: Router,
+                private authService: AuthService, private mapsApiLoader: MapsAPILoader) {
+
+        this.startDate = this.calculateDate(new Date(
+            this.currentDate.getTime() + this.oneDay
+        ));
+        this.defaultStartDate = this.startDate;
+
+        this.endDate = this.calculateDate(new Date(
+            this.currentDate.getTime() + this.oneDay * 2
+        ));
+
+        this.defaultEndDate = this.calculateDate(new Date(
+            this.currentDate.getTime() + this.oneDay * 4
+        ));
+    }
+
+    calculateDate(date: Date): any{
+        let year: any = date.getFullYear();
+        let month: any = date.getMonth() + 1;
+        let day: any = date.getDate();
 
         if (month < 10){
             month = '0' + month;
@@ -134,8 +155,7 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
             day = '0' + day;
         }
 
-        this.today = year + "-" + month + "-" + day;
-        this.mapsApiLoader.load();
+        return year + "-" + month + "-" + day;
     }
 
     isLink(questionData : any, defName : String) {     
@@ -151,6 +171,10 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
     ngOnInit(){
         this.login = this.getLogin();              
         this.getNextActionView();
+    }
+
+    ngAfterViewInit(): void {
+        this.mapsApiLoader.load();
     }
 
     onRollback() { 
@@ -212,7 +236,6 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
             console.log('.from: ' + typeof this.questions.fromCheckpoint);
             console.log('[from]: '  + typeof this.questions['from']);
             if (typeof this.questions.fromCheckpoint !== 'undefined') {
-                this.mapsApiLoader.load();
                 this.buildRoute();
                 this.result = true;
             }
@@ -246,19 +269,25 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
     }
 
     buildRoute(){
-        this.mapsApiLoader.load();
-        if (this.questions.fromCheckpoint.countryName != null && this.questions.fromCheckpoint.cityName != null){
-            this.setLocationCoords(this.questions.fromCheckpoint.cityName + ' ' + this.questions.fromCheckpoint.countryName);
-        }
-        if (this.questions.toCheckpoint.countryName != null && this.questions.toCheckpoint.cityName != null){
-            this.setLocationCoords(this.questions.toCheckpoint.cityName + ' ' + this.questions.toCheckpoint.countryName);
-        }
+        //if (this.questions.twoWayFlight.flightFrom.departureCode != null){
+            this.setLocationCoords(this.questions.twoWayFlight.flightFrom.arrivalName,
+                this.questions.twoWayFlight.flightFrom.arrivalName + ', ' +
+                this.questions.twoWayFlight.flightFrom.arrivalCode);
+        //}
+        //if (this.questions.twoWayFlight.flightTo.departureCode != null){
+            this.setLocationCoords(this.questions.twoWayFlight.flightFrom.departureName,
+                this.questions.twoWayFlight.flightFrom.departureName + ', ' +
+                this.questions.twoWayFlight.flightFrom.departureCode);
+        //}
+        //if (this.questions.hotel.address != null){
+            this.setLocationCoords(this.questions.hotel.name, this.questions.hotel.address);
+        //}
     }
 
-    setLocationCoords(address: string){
+    setLocationCoords(name: string, address: string){
         this.getCoordinates(address)
             .subscribe(result => {
-                this.locations.push(new Location(result.lat(), result.lng()))
+                this.locations.push(new Location(name, result.lat(), result.lng()))
             });
     }
 
@@ -278,10 +307,12 @@ states: string[] = ['shown', 'hidden', 'hidden', 'hidden'];
 }
 
 export class Location{
+    name: any;
     lat: any;
     lng: any;
 
-    constructor(lat: number, lng: number){
+    constructor(name: string, lat: number, lng: number){
+        this.name = name;
         this.lat = lat;
         this.lng = lng;
     }
