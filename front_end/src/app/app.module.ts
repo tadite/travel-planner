@@ -29,6 +29,7 @@ import { DataProducerComponent } from "./dataProducer/dataProducer.component";
 import { SourceFormComponent } from "./sourceForm/sourceForm.component";
 import { MyTravelsComponent }   from './myTravels/myTravels.component';
 import { PagerService } from './service/pager.service';
+import { TravelPagerService } from './service/travel.pager.service'
 
 // определение маршрутов
 const appRoutes: Routes =[
@@ -63,7 +64,8 @@ const appRoutes: Routes =[
     AuthGuardService,
     UnauthGuardService,
     GoogleMapsAPIWrapper,
-    PagerService
+    PagerService,
+    TravelPagerService
   ],
     bootstrap:    [ AppComponent ]
 })
