@@ -31,7 +31,7 @@ public class TravelController {
         try {
             return new ResponseEntity(travelService
                     .getAllTravelsByUser((
-                            getCurrentUserId())), HttpStatus.OK);
+                            getCurrentUser().getClientId())), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
@@ -42,7 +42,7 @@ public class TravelController {
     public ResponseEntity<List<TravelDao>> getAllTravelsByPageAndUser(@PathVariable Integer pageNum) {
         try {
             return new ResponseEntity(travelService
-                    .getAllTravelsByUserAndPage(getCurrentUserId(), pageNum), HttpStatus.OK);
+                    .getAllTravelsByUserAndPage(getCurrentUser().getClientId(), pageNum), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
@@ -85,7 +85,7 @@ public class TravelController {
     @DeleteMapping(path = "/api/travel/{travelId}")
     public ResponseEntity deleteTravelById(@PathVariable Long travelId) {
         try {
-            travelService.deleteTravelById(travelId, getCurrentUserId());
+            travelService.deleteTravelById(travelId, getCurrentUser().getClientId());
             return new ResponseEntity(HttpStatus.OK);
         } catch (AccessDeniedException e) {
             e.printStackTrace();
@@ -96,10 +96,16 @@ public class TravelController {
         }
     }
 
-    private Long getCurrentUserId() {
-        return ((JwtUser) authenticationFacade
+    private String getCurrentUserName() {
+        return ((Client) authenticationFacade
                 .getAuthentication()
-                .getDetails())
-                .getId();
+                .getPrincipal())
+                .getLogin();
+    }
+
+    private Client getCurrentUser() {
+        return (Client) authenticationFacade
+                .getAuthentication()
+                .getPrincipal();
     }
 }

@@ -25,7 +25,7 @@ public class RegexpReplaceAllResponseFilter implements ResponseFilter {
     }
 
     @Override
-    public String filter(String sourceResult, Map<String, String> results) {
+    public String filter(String sourceResult, Map<String, Object> results) {
         return sourceResult.replaceAll(regex,replacement);
     }
 }

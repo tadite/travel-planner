@@ -46,7 +46,7 @@ public class PickResultParameterMapper implements ParameterMapper {
     }
 
     @Override
-    public String filterValue(String value, Map<String, String> params) throws IOException {
+    public String filterValue(String value, Map<String, Object> params) throws IOException {
         if (filter!=null && value!=null)
             return filter.filter(value, params);
         return value;

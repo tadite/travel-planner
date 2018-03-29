@@ -8,6 +8,6 @@ import java.util.Map;
 
 public interface ResponseFilter {
     Response filter(Response sourceResult) throws IOException;
-    String filter(String sourceResult, Map<String, String> results) throws IOException;
+    String filter(String sourceResult, Map<String, Object> results) throws IOException;
 }
 
