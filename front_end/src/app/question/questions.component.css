@@ -104,6 +104,11 @@
     margin-top: 10px;
   }
 
+  .separator{
+    background: rgba(102, 120, 177,0.3);
+  }
+
+
   .newTravel{
     border: 1px solid rgb(175, 175, 175);
   	background: #fff;

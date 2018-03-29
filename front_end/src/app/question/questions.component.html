@@ -40,34 +40,34 @@
                                             {{question.data}}<br>
                                         </p>
                                         <div *ngSwitchCase="'dropdown_list'">
-                                             <div *ngIf="question.id == 'dropdownlist1.dropdownlist-departure-country-action-dropdown-list'">
-                                             <select name="{{question.id}}" #select [(ngModel)]="departureCountryId" ngModel>                                                                                                 
-                                                    <option value="{{key}}" *ngFor="let key of objectKeys(question.data)" >{{question.data[key]}}</option>
-                                                </select><br>                                             
-                                             </div>
-                                             <div *ngIf="question.id == 'dropdownlist1.dropdownlist-departure-city-action-dropdown-list'">
-                                                    <select name="{{question.id}}" #select [(ngModel)]="departureCityId" ngModel>
-                                                        <option value="{{key}}" *ngFor="let key of objectKeys(question.data)">{{question.data[key]}}</option>
-                                                    </select><br>
-                                            </div>
-                                            <div *ngIf="question.id == 'dropdownlist1.dropdownlist-countries-action-dropdown-list'">
-                                                    <select name="{{question.id}}" #select [(ngModel)]="destinationCountryId" ngModel>
-                                                        <option value="{{key}}" *ngFor="let key of objectKeys(question.data)">{{question.data[key]}}</option>
-                                                    </select><br>
-                                            </div>
-                                            <div *ngIf="question.id == 'dropdownlist1.dropdownlist-citiesByCountryId-action-dropdown-list'">
-                                                    <select name="{{question.id}}" #select [(ngModel)]="destinationCityId" ngModel>
-                                                        <option value="{{key}}" *ngFor="let key of objectKeys(question.data)">{{question.data[key]}}</option>
-                                                    </select><br>
-                                            </div>
-                                            <div *ngIf="question.id != 'dropdownlist1.dropdownlist-departure-country-action-dropdown-list' &&
-                                                        question.id != 'dropdownlist1.dropdownlist-departure-city-action-dropdown-list' &&
-                                                        question.id != 'dropdownlist1.dropdownlist-countries-action-dropdown-list' &&
-                                                        question.id != 'dropdownlist1.dropdownlist-citiesByCountryId-action-dropdown-list'">
-                                                    <select name="{{question.id}}" #select [(ngModel)]="defaultId" ngModel>
-                                                        <option value="{{key}}" *ngFor="let key of objectKeys(question.data)">{{question.data[key]}}</option>
-                                                    </select><br>
-                                            </div>
+                                            <div *ngIf="question.id == 'dropdownlist1.dropdownlist-departure-country-action-dropdown-list'">
+                                                <select name="{{question.id}}" #select [(ngModel)]="question.data[departureCountryId] == null ? objectKeys(question.data)[0] : departureCountryId" ngModel>                                                                                                 
+                                                       <option value="{{key}}" *ngFor="let key of objectKeys(question.data)" >{{question.data[key]}}</option>
+                                                   </select><br>                                             
+                                                </div>
+                                                <div *ngIf="question.id == 'dropdownlist1.dropdownlist-departure-city-action-dropdown-list'">
+                                                       <select name="{{question.id}}" #select [(ngModel)]="question.data[departureCityId] == null ? objectKeys(question.data)[0] : departureCityId" ngModel>
+                                                           <option value="{{key}}" *ngFor="let key of objectKeys(question.data)">{{question.data[key]}}</option>
+                                                       </select><br>
+                                               </div>
+                                               <div *ngIf="question.id == 'dropdownlist1.dropdownlist-countries-action-dropdown-list'">
+                                                       <select name="{{question.id}}" #select [(ngModel)]="question.data[destinationCountryId] == null ? objectKeys(question.data)[0] : destinationCountryId" ngModel>
+                                                           <option value="{{key}}" *ngFor="let key of objectKeys(question.data)">{{question.data[key]}}</option>
+                                                       </select><br>
+                                               </div>
+                                               <div *ngIf="question.id == 'dropdownlist1.dropdownlist-citiesByCountryId-action-dropdown-list'">
+                                                       <select name="{{question.id}}" #select [(ngModel)]="question.data[destinationCityId] == null ? objectKeys(question.data)[0] : destinationCityId" ngModel>
+                                                           <option value="{{key}}" *ngFor="let key of objectKeys(question.data)">{{question.data[key]}}</option>
+                                                       </select><br>
+                                               </div>
+                                               <div *ngIf="question.id != 'dropdownlist1.dropdownlist-departure-country-action-dropdown-list' &&
+                                                           question.id != 'dropdownlist1.dropdownlist-departure-city-action-dropdown-list' &&
+                                                           question.id != 'dropdownlist1.dropdownlist-countries-action-dropdown-list' &&
+                                                           question.id != 'dropdownlist1.dropdownlist-citiesByCountryId-action-dropdown-list'">
+                                                       <select name="{{question.id}}" #select [(ngModel)]="objectKeys(question.data)[0]" ngModel>
+                                                           <option value="{{key}}" *ngFor="let key of objectKeys(question.data)">{{question.data[key]}}</option>
+                                                       </select><br>
+                                               </div>
                                         </div>
             <!-- ************************************************************************ -->                                     
 
@@ -198,20 +198,65 @@
                                                     </div>
                                             </div>
                                             <div *ngIf="question.data.multiPick == false">
-                                            <div class="multiSelection">
-                                            <div class="btn-group btn-group-toggle" >                                          
-                                            <div *ngFor="let item of pagedItems">                                               
-                                                <label class="btn">
-                                                    <input type="radio" name="{{question.id}}" value="{{item.columns[0].value}}" ngModel/>                                            
-                                                    <table>
-                                                    <tr *ngFor="let defs of question.data.columnDefs.columns; let i = index">                                       
-                                                        <td>{{defs.value}}</td>                                      
-                                                        <td *ngIf="isLink(question.data, defs.name); else elseTextBlock"><a href="{{item.columns[i+1].value}}" target="_blank">Перейти</a></td>  
-                                                        <ng-template #elseTextBlock><td>{{item.columns[i+1].value}}</td></ng-template>            
-                                                    </tr> 
-                                                    </table>
-                                                </label> 
+                                                <div *ngIf="question.id == 'table.1.radioButton-typeOfTransport-action-NEW-TABLE'; else elseTableBlock">
+                                                        <div class="multiSelection">
+                                                            <div class="btn-group btn-group-toggle" >                                          
+                                                            <div *ngFor="let item of pagedItems; let i = index">                                                                                                             
+                                                                <label class="btn">
+                                                                    <input type="radio" name="{{question.id}}" value="{{item.columns[0].value}}" ngModel/>  
+                                                                    <table>
+                                                                            <tr *ngFor="let defs of question.data.columnDefs[i].columns; let j = index">                                       
+                                                                                <td *ngIf="defs.value == null; else elseDefsBlock" class="separator"></td>
+                                                                                <ng-template #elseDefsBlock>
+                                                                                    <td>{{defs.value}}</td>
+                                                                                </ng-template>                                      
+                                                                                <td *ngIf="isLink(question.data, defs.name); else elseTextBlock">
+                                                                                    <a href="{{item.columns[j+1].value}}" target="_blank">Перейти</a>
+                                                                                </td>  
+                                                                                <ng-template #elseTextBlock>
+                                                                                    <td *ngIf="item.columns[j+1].value == null; else elseColumnBlock" class="separator"></td>
+                                                                                    <ng-template #elseColumnBlock><td>{{item.columns[j+1].value}}</td></ng-template>
+                                                                                </ng-template>            
+                                                                            </tr> 
+                                                                        </table>                                                                                                                             
+                                                                </label> 
+                                                            </div>
+                                                                       <!-- pager -->
+                                                            <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                                                                <li [ngClass]="{disabled:pager.currentPage === 1}">
+                                                                    <a (click)="setPage(1)">Начало</a>
+                                                                </li>
+                                                                <li [ngClass]="{disabled:pager.currentPage === 1}">
+                                                                    <a (click)="setPage(pager.currentPage - 1)">Назад</a>
+                                                                </li>
+                                                                <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                                                                    <a (click)="setPage(page)">{{page}}</a>
+                                                                </li>
+                                                                <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                                                    <a (click)="setPage(pager.currentPage + 1)">Вперед</a>
+                                                                </li>
+                                                                <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                                                    <a (click)="setPage(pager.totalPages)">Конец</a>
+                                                                </li>
+                                                            </ul>
+                                                            </div>
+                                                        </div>
                                                 </div>
+                                            <ng-template #elseTableBlock>
+                                            <div class="multiSelection">
+                                                <div class="btn-group btn-group-toggle" >                                          
+                                                    <div *ngFor="let item of pagedItems">                                               
+                                                        <label class="btn">
+                                                            <input type="radio" name="{{question.id}}" value="{{item.columns[0].value}}" ngModel/>                                            
+                                                            <table>
+                                                                <tr *ngFor="let defs of question.data.columnDefs.columns; let i = index">                                       
+                                                                    <td>{{defs.value}}</td>                                      
+                                                                    <td *ngIf="isLink(question.data, defs.name); else elseTextBlock"><a href="{{item.columns[i+1].value}}" target="_blank">Перейти</a></td>  
+                                                                    <ng-template #elseTextBlock><td>{{item.columns[i+1].value}}</td></ng-template>            
+                                                                </tr> 
+                                                            </table>
+                                                        </label> 
+                                                    </div>
                                                <!-- pager -->
                                                <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
                                                 <li [ngClass]="{disabled:pager.currentPage === 1}">
@@ -232,6 +277,7 @@
                                             </ul>
                                             </div>
                                             </div>
+                                            </ng-template>  
                                             </div>
                                         </div>                                         
                                         
