@@ -10,6 +10,7 @@ import { LoadingModule} from 'ngx-loading';
 import { CdkTableModule } from '@angular/cdk/table';
 import { MatTableModule, MatPaginatorModule } from '@angular/material';
 import { AgmCoreModule, GoogleMapsAPIWrapper } from '@agm/core';
+import { ModalModule } from 'ngx-bootstrap';
 
 import { AppComponent }   from './app.component';
 import { LoginComponent }   from './login/login.component';
@@ -40,7 +41,7 @@ const appRoutes: Routes =[
     { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService]}, 
 	{ path: 'admin', component: ProfilesComponent, canActivate: [AuthGuardService]},
     { path: 'config', component: ConfigComponent, canActivate: [AuthGuardService]},
-    { path: 'sourse', component: SourseComponent, canActivate: [AuthGuardService]},
+    { path: 'sourse', component: SourseComponent/*, canActivate: [AuthGuardService]*/},
     { path: 'producer', component: DataProducerComponent, canActivate: [AuthGuardService]},
     { path: 'sourceForm', component: SourceFormComponent, canActivate: [AuthGuardService]},
     { path: 'myTravels', component: MyTravelsComponent, canActivate: [AuthGuardService]},
@@ -49,11 +50,10 @@ const appRoutes: Routes =[
 ];
 
 @NgModule({
-    imports:      [ BrowserModule, RouterModule.forRoot(appRoutes, { useHash: true }), FormsModule, ReactiveFormsModule, BrowserAnimationsModule, HttpClientModule, NgbModule.forRoot(), LoadingModule, CdkTableModule, MatTableModule, MatPaginatorModule, LoadingModule, AgmCoreModule.forRoot({
+    imports:      [ BrowserModule, RouterModule.forRoot(appRoutes, { useHash: true }), FormsModule, ReactiveFormsModule, BrowserAnimationsModule, HttpClientModule, NgbModule.forRoot(), LoadingModule, CdkTableModule, MatTableModule, MatPaginatorModule, LoadingModule, ModalModule.forRoot(), AgmCoreModule.forRoot({
         apiKey: 'AIzaSyD28p35CCvhDbiAPL7u96KayO36U6Ny84o'
     })],
     declarations: [ AppComponent, HomeComponent, LoginComponent, UserComponent, NotFoundComponent, QuestionsComponent, ProfileComponent, AdminComponent, ConfigComponent, ProfilesComponent, SourseComponent, DataProducerComponent, SourceFormComponent, MyTravelsComponent],
-
    providers: [
     {
       provide: HTTP_INTERCEPTORS,

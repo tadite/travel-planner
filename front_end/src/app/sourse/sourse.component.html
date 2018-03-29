@@ -13,6 +13,7 @@
     </nav>
 </div>
 
+
 <div class="row" style=" margin-top: 10px; margin-left: 30px; margin-right: 50px">
 
     <div class="col-xs-3 col-md-3"  style="  height:100%;margin-top: 30px; background: rgba(255, 255, 255, .5)">
@@ -28,7 +29,7 @@
     <div class="col-xs-9 col-md-9">
         <div class="row" style="margin-left: 30px">
             <h2>Список конфигураций</h2>
-            <input type="button" value="Добавить" class="btn btn-default" (click)="addAction()" />
+            <input type="button" value="Добавить" class="btn btn-default" (click)="openModalNew()" />
             <div class="span3" style="margin-top: 10px">
                 <style type="text/css">
                     TABLE {
@@ -71,7 +72,7 @@
                     <td>{{action.description}}</td>
                     <td>{{action.params | json}}</td>
                     <td>
-                        <input type="button" value="Изменить" class="btn btn-default" (click)="editAction(action)" />
+                        <input type="button" value="Изменить" class="btn btn-default" (click)="openModalEdit(action)" />
                     </td>
                     <td>
                         <input type="button" value="Удалить" (click)="deleteAction(action)" class="btn btn-default" />
@@ -80,30 +81,7 @@
                 </ng-template>
 
                 <!--шаблон для редактирования-->
-                <ng-template #editTemplate>
-                    <td>
-                        <input type="text" [(ngModel)]="editedAction.name"  class="form-control" />
-                    </td>
-                    <td>
-                        <input type="text" [(ngModel)]="editedAction.type"  class="form-control" />
-                    </td>
-                    <td>
-                        <input type="text" [(ngModel)]="editedAction.url" class="form-control" />
-                    </td>
-                    <td>
-                        <input type="text" [(ngModel)]="editedAction.description" class="form-control" />
-                    </td>
-                    <td>
-                        <input type="text" [(ngModel)]="editedAction.params" class="form-control" />
-                    </td>
-                    <td>
-                        <input type="button" value="Сохранить" (click)="saveAction()" class="btn btn-default" />
-                    </td>
-                    <td>
-                        <input type="button" value="Отмена" (click)="cancel()" class="btn btn-default" />
-                    </td>
 
-                </ng-template>
 
             </div>
         </div>
