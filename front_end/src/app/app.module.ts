@@ -10,6 +10,7 @@ import { LoadingModule} from 'ngx-loading';
 import { CdkTableModule } from '@angular/cdk/table';
 import { MatTableModule, MatPaginatorModule } from '@angular/material';
 import { AgmCoreModule, GoogleMapsAPIWrapper } from '@agm/core';
+import { ModalModule } from 'ngx-bootstrap';
 
 import { AppComponent }   from './app.component';
 import { LoginComponent }   from './login/login.component';
@@ -29,7 +30,10 @@ import { DataProducerComponent } from "./dataProducer/dataProducer.component";
 import { SourceFormComponent } from "./sourceForm/sourceForm.component";
 import { MyTravelsComponent }   from './myTravels/myTravels.component';
 import { PagerService } from './service/pager.service';
-import { TravelPagerService } from './service/travel.pager.service'
+import { TravelPagerService } from './service/travel.pager.service';
+import { AdminGuardService} from "./auth/admin-guard.service";
+import { AuthService} from "./auth/auth.service"; 
+
 
 // определение маршрутов
 const appRoutes: Routes =[
@@ -38,34 +42,35 @@ const appRoutes: Routes =[
     { path: 'user', component: UserComponent},
     { path: 'questions', component: QuestionsComponent, canActivate: [AuthGuardService]},   
     { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService]}, 
-	{ path: 'admin', component: ProfilesComponent, canActivate: [AuthGuardService]},
-    { path: 'config', component: ConfigComponent, canActivate: [AuthGuardService]},
-    { path: 'sourse', component: SourseComponent, canActivate: [AuthGuardService]},
-    { path: 'producer', component: DataProducerComponent, canActivate: [AuthGuardService]},
-    { path: 'sourceForm', component: SourceFormComponent, canActivate: [AuthGuardService]},
+	{ path: 'admin', component: ProfilesComponent, canActivate: [AdminGuardService]},
+    { path: 'config', component: ConfigComponent, canActivate: [AdminGuardService]},
+    { path: 'sourse', component: SourseComponent, canActivate: [AdminGuardService]},
+    { path: 'producer', component: DataProducerComponent, canActivate: [AdminGuardService]},
+    { path: 'sourceForm', component: SourceFormComponent, canActivate: [AdminGuardService]},
     { path: 'myTravels', component: MyTravelsComponent, canActivate: [AuthGuardService]},
     { path: '**', component: NotFoundComponent }
     
 ];
 
 @NgModule({
-    imports:      [ BrowserModule, RouterModule.forRoot(appRoutes, { useHash: true }), FormsModule, ReactiveFormsModule, BrowserAnimationsModule, HttpClientModule, NgbModule.forRoot(), LoadingModule, CdkTableModule, MatTableModule, MatPaginatorModule, LoadingModule, AgmCoreModule.forRoot({
+    imports:      [ BrowserModule, RouterModule.forRoot(appRoutes, { useHash: true }), FormsModule, ReactiveFormsModule, BrowserAnimationsModule, HttpClientModule, NgbModule.forRoot(), LoadingModule, CdkTableModule, MatTableModule, MatPaginatorModule, LoadingModule, ModalModule.forRoot(), AgmCoreModule.forRoot({
         apiKey: 'AIzaSyD28p35CCvhDbiAPL7u96KayO36U6Ny84o'
     })],
     declarations: [ AppComponent, HomeComponent, LoginComponent, UserComponent, NotFoundComponent, QuestionsComponent, ProfileComponent, AdminComponent, ConfigComponent, ProfilesComponent, SourseComponent, DataProducerComponent, SourceFormComponent, MyTravelsComponent],
-
    providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true,
-    }, 
-    CookieService,
-    AuthGuardService,
-    UnauthGuardService,
-    GoogleMapsAPIWrapper,
-    PagerService,
-    TravelPagerService
+    },
+       CookieService,
+       AuthService,
+       AuthGuardService,
+       AdminGuardService,
+       UnauthGuardService,
+       GoogleMapsAPIWrapper,
+       PagerService,
+       TravelPagerService
   ],
     bootstrap:    [ AppComponent ]
 })

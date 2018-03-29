@@ -34,7 +34,7 @@ export class MyTravelsComponent {
 
     public loading = false;
     travelUrl: string = '/api/client/travel';
-    deleteTravelUrl: string = '/api/travel/';
+    deleteTravelUrl: string = '/api/travel';
     constructor(private authService: AuthService, private http: HttpService, private pagerService: TravelPagerService){      
      
     }

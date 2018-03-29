@@ -21,9 +21,7 @@
     </div>
     <div class="container"> 
     <div class="table-block"> 
-      <div *ngFor="let travel of travels; let i = index">
-        <p>Путешествие №{{i+1}}</p>
-        <input class="delete" type="button" (click)="onDelete(i+1)" value="Удалить путешествие"/>                   
+      <div *ngFor="let travel of pagedItems; let i = index"> 
         <table>
                 <caption>Общая информация</caption>
                 <tr>
@@ -36,6 +34,8 @@
                 <td>Дата приезда</td>
                 <td>Количество человек</td>
                 <td>Бюджет</td>
+                <td>Общая стоимость билетов</td>
+                <td>Просмотр билетов</td> 
                 </tr>
                 <tr>
                   <td>{{travel.name}}</td>
@@ -47,6 +47,8 @@
                  <td>{{travel.dateEnd}}</td>
                  <td>{{travel.numberOfPersons}}</td>
                  <td>{{travel.budgetType}}</td>
+                 <td>{{travel.twoWayFlight.price}}</td>
+                 <td><a href="{{travel.twoWayFlight.booking}}" target="_blank">Перейти</a></td>  
                  </tr>                
             </table>
             
@@ -71,7 +73,7 @@
             </table>
             
             <table>
-                <caption>Путь туда</caption>
+                <caption>Путь до пункта назначения</caption>
             <tr>                                                                                                                  
                 <td>Самолет</td>
                 <td>Авиакомпания</td>
@@ -91,10 +93,28 @@
                 <td>{{travel.twoWayFlight.flightTo.departureDate}}</td>
                 <td>{{travel.twoWayFlight.flightTo.departureTime}}</td>
                 <td>{{travel.twoWayFlight.flightTo.timeInPath}}</td>
-            </tr>
-                                                                                                                                             
+            </tr>                                                                                                                                             
            </table>
-          
+
+           <div *ngIf="travel.twoWayFlight.flightTo.transfers != null">
+            <div *ngFor="let item of travel.twoWayFlight.flightTo.transfers; let i = index">                 
+           <table>   
+                   <caption>Пересадка №{{i+1}} на пути в пункт назначения</caption> 
+               <tr>                                                                                                        
+                    <td>Аэропорт</td>
+                    <td>Время пересадки</td>
+                    <td>Время прибытия</td>
+                    <td>Время вылета</td>                   
+               </tr>
+               <tr> 
+                   <td>{{item.placeName}}</td>
+                   <td>{{item.transferTime}}</td>
+                   <td>{{item.arrivalDate}}</td>
+                   <td>{{item.departureDate}}</td>                  
+               </tr>                                                                                             
+           </table>
+           </div>  
+       </div>   
            <table>
                 <caption>Путь обратно</caption>
                 <tr>                                                                                                                  
@@ -118,19 +138,26 @@
                     <td>{{travel.twoWayFlight.flightFrom.timeInPath}}</td>
                 </tr>                                                                                                                                             
           </table>
-                                
-          <table>   
-                <caption>Билеты</caption> 
-              <tr>                                                                                                        
-                   <td>Общая стоимость</td>
-                   <td>Просмотр</td>                   
-              </tr>
-              <tr>                                                                                                       
-                  <td>{{travel.twoWayFlight.price}}</td>
-                  <td><a href="{{travel.twoWayFlight.booking}}" target="_blank">Перейти</a></td>  
+          <div *ngIf="travel.twoWayFlight.flightFrom.transfers != null">
+            <div *ngFor="let item of travel.twoWayFlight.flightFrom.transfers; let i = index">                 
+           <table>   
+                   <caption>Пересадка №{{i+1}} на пути обратно</caption> 
+               <tr>                                                                                                        
+                    <td>Аэропорт</td>
+                    <td>Время пересадки</td>
+                    <td>Время прибытия</td>
+                    <td>Время вылета</td>                   
                </tr>
-          </table> 
-        
+               <tr> 
+                   <td>{{item.placeName}}</td>
+                   <td>{{item.transferTime}}</td>
+                   <td>{{item.arrivalDate}}</td>
+                   <td>{{item.departureDate}}</td>                  
+               </tr>                                                                                             
+           </table>
+           </div>  
+       </div>   
+
         <div *ngIf="travel.excursions != null">
          <div *ngFor="let item of travel.excursions; let i = index">                 
         <table>   
@@ -179,6 +206,7 @@
             </tr>            
         </table>
     </div>
+    <input class="delete" type="button" (click)="onDelete(i+1)" value="Удалить путешествие"/>
     </div>
        <!-- pager -->
        <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
