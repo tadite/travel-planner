@@ -45,9 +45,8 @@ export class AuthService {
         this.router.navigate(['/login']);        
     }
 
-    getLogin(){        
+    getLogin(){
         return this.cookieService.get("login");
     }
 
-   
 }

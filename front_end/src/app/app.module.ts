@@ -30,7 +30,10 @@ import { DataProducerComponent } from "./dataProducer/dataProducer.component";
 import { SourceFormComponent } from "./sourceForm/sourceForm.component";
 import { MyTravelsComponent }   from './myTravels/myTravels.component';
 import { PagerService } from './service/pager.service';
-import { TravelPagerService } from './service/travel.pager.service'
+import { TravelPagerService } from './service/travel.pager.service';
+import { AdminGuardService} from "./auth/admin-guard.service";
+import { AuthService} from "./auth/auth.service"; 
+
 
 // определение маршрутов
 const appRoutes: Routes =[
@@ -39,11 +42,11 @@ const appRoutes: Routes =[
     { path: 'user', component: UserComponent},
     { path: 'questions', component: QuestionsComponent, canActivate: [AuthGuardService]},   
     { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService]}, 
-	{ path: 'admin', component: ProfilesComponent, canActivate: [AuthGuardService]},
-    { path: 'config', component: ConfigComponent, canActivate: [AuthGuardService]},
-    { path: 'sourse', component: SourseComponent/*, canActivate: [AuthGuardService]*/},
-    { path: 'producer', component: DataProducerComponent, canActivate: [AuthGuardService]},
-    { path: 'sourceForm', component: SourceFormComponent, canActivate: [AuthGuardService]},
+	{ path: 'admin', component: ProfilesComponent, canActivate: [AdminGuardService]},
+    { path: 'config', component: ConfigComponent, canActivate: [AdminGuardService]},
+    { path: 'sourse', component: SourseComponent, canActivate: [AdminGuardService]},
+    { path: 'producer', component: DataProducerComponent, canActivate: [AdminGuardService]},
+    { path: 'sourceForm', component: SourceFormComponent, canActivate: [AdminGuardService]},
     { path: 'myTravels', component: MyTravelsComponent, canActivate: [AuthGuardService]},
     { path: '**', component: NotFoundComponent }
     
@@ -59,13 +62,15 @@ const appRoutes: Routes =[
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true,
-    }, 
-    CookieService,
-    AuthGuardService,
-    UnauthGuardService,
-    GoogleMapsAPIWrapper,
-    PagerService,
-    TravelPagerService
+    },
+       CookieService,
+       AuthService,
+       AuthGuardService,
+       AdminGuardService,
+       UnauthGuardService,
+       GoogleMapsAPIWrapper,
+       PagerService,
+       TravelPagerService
   ],
     bootstrap:    [ AppComponent ]
 })
