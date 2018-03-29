@@ -3,6 +3,7 @@ package edu.nc.travelplanner.model.source.parametermapper;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import edu.nc.travelplanner.model.source.filter.ResponseFilter;
 
+import java.io.IOException;
 import java.util.Map;
 
 public class PickResultParameterMapper implements ParameterMapper {
@@ -45,7 +46,7 @@ public class PickResultParameterMapper implements ParameterMapper {
     }
 
     @Override
-    public String filterValue(String value, Map<String, String> params) {
+    public String filterValue(String value, Map<String, Object> params) throws IOException {
         if (filter!=null && value!=null)
             return filter.filter(value, params);
         return value;

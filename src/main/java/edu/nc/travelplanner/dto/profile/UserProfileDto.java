@@ -31,13 +31,13 @@ public class UserProfileDto {
 
         Country country = client.getCountry();
         if (country!=null){
-            dto.setCountryId(country.getCountryId());
+            dto.setCountryId(country.getOtherCountryId());
             dto.setCountryName(country.getName());
         }
 
         City city = client.getCity();
         if (city!=null){
-            dto.setCityId(city.getCityId());
+            dto.setCityId(city.getOtherCityId());
             dto.setCityName(city.getName());
         }
         return dto;

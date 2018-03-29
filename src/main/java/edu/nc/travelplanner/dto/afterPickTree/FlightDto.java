@@ -1,5 +1,7 @@
 package edu.nc.travelplanner.dto.afterPickTree;
 
+import java.util.List;
+
 public class FlightDto {
     private Long flightId;
     private String aircraft;
@@ -12,13 +14,14 @@ public class FlightDto {
     private String departureName;
     private String arrivalCode;
     private String arrivalName;
+    private List<FlightTransferDto> transfers;
 
     public FlightDto() {
     }
 
     public FlightDto(String aircraft, String companyName, String classType, String departureDate,
                      String departureTime, String timeInPath, String departureCode,
-                     String departureName, String arrivalCode, String arrivalName) {
+                     String departureName, String arrivalCode, String arrivalName, List<FlightTransferDto> transfers) {
         this.aircraft = aircraft;
         this.companyName = companyName;
         this.classType = classType;
@@ -29,6 +32,7 @@ public class FlightDto {
         this.departureName = departureName;
         this.arrivalCode = arrivalCode;
         this.arrivalName = arrivalName;
+        this.transfers = transfers;
     }
 
     public Long getFlightId() {
@@ -117,5 +121,13 @@ public class FlightDto {
 
     public void setTimeInPath(String timeInPath) {
         this.timeInPath = timeInPath;
+    }
+
+    public List<FlightTransferDto> getTransfers() {
+        return transfers;
+    }
+
+    public void setTransfers(List<FlightTransferDto> transfers) {
+        this.transfers = transfers;
     }
 }

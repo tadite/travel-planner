@@ -41,7 +41,7 @@ public class GetValueListIfContainsInPropertyFromJsonArray implements ResponseFi
     }
 
     @Override
-    public String filter(String sourceResult, Map<String, String> results) {
+    public String filter(String sourceResult, Map<String, Object> results) {
         createMappersIfNull();
         try {
             String result = sourceResult.toLowerCase();

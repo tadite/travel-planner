@@ -71,8 +71,8 @@ public class UserProfileService {
             String countryName = getCountryNameById(userProfileDto.getCountryId());
             String cityName = getCityNameById(userProfileDto.getCityId().intValue());
             if (countryName != null && cityName != null) {
-                country = countryRepository.findOptionalByName(countryName).or(countryRepository.save(new Country(countryName)));
-                city = cityRepository.findOptionalByName(cityName).or(cityRepository.save(new City(cityName, country)));
+                country = countryRepository.save(new Country(countryName, userProfileDto.getCountryId()));
+                city = cityRepository.save(new City(cityName, country, userProfileDto.getCityId()));
             }
         }
         Client client = clientRepository.findByLogin(userProfileDto.getLogin());
@@ -82,8 +82,9 @@ public class UserProfileService {
 
         if (userProfileDto.getPassword() != null)
             client.setPassword(passwordEncoder.encode(userProfileDto.getPassword()));
+        Client savedClient = clientRepository.save(client);
 
-        return UserProfileDto.fromClient(clientRepository.save(client));
+        return UserProfileDto.fromClient(savedClient);
     }
 
     private String getCityNameById(Integer cityId) {

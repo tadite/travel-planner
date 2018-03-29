@@ -74,6 +74,16 @@ public class DtoMapper {
         dto.setDepartureName(flight.getDepartureName());
         dto.setDepartureTime(flight.getDepartureTime());
         dto.setTimeInPath(flight.getTimeInPath());
+
+        dto.setTransfers(flight.getTransfers().stream().map(transfer -> new FlightTransferDto() {{
+            this.setArrivalDate(transfer.getArrivalDate());
+            this.setDepartureDate(transfer.getDepartureDate());
+            this.setFlightTransferId(transfer.getFlightTransferId());
+            this.setPlaceCode(transfer.getPlaceCode());
+            this.setPlaceName(transfer.getPlaceName());
+            this.setTransferTime(transfer.getTransferTime());
+        }}).collect(Collectors.toList()));
+
         return dto;
     }
 
@@ -115,7 +125,8 @@ public class DtoMapper {
             dto.setTwoWayFlight(map(travel.getTwoWayFlight()));
         if (travel.getExcursions() != null)
             dto.setExcursions(travel.getExcursions().stream().map(this::map).collect(Collectors.toList()));
-        dto.setCarRent(map(travel.getCarRent()));
+        if (travel.getCarRent() != null)
+            dto.setCarRent(map(travel.getCarRent()));
         return dto;
     }
 }

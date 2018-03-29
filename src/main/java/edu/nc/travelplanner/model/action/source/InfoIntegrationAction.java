@@ -1,6 +1,7 @@
 package edu.nc.travelplanner.model.action.source;
 
 import edu.nc.travelplanner.exception.DataProducerSendException;
+import edu.nc.travelplanner.exception.NotEnoughParamsException;
 import edu.nc.travelplanner.model.action.ActionArgs;
 import edu.nc.travelplanner.model.action.ActionType;
 import edu.nc.travelplanner.model.action.IntegrationAction;
@@ -9,7 +10,6 @@ import edu.nc.travelplanner.model.response.EmptyResponse;
 import edu.nc.travelplanner.model.response.Response;
 import edu.nc.travelplanner.model.response.ViewResponseBuilder;
 import edu.nc.travelplanner.model.source.dataproducer.DataProducer;
-import edu.nc.travelplanner.model.factory.dataproducer.DataProducerParseException;
 
 import java.util.List;
 import java.util.Map;
@@ -53,7 +53,7 @@ public class InfoIntegrationAction implements IntegrationAction {
     }
 
     @Override
-    public Response executePresentation(ActionArgs args, List<PickResult> pickResults) throws DataProducerSendException {
+    public Response executePresentation(ActionArgs args, List<PickResult> pickResults) throws DataProducerSendException, NotEnoughParamsException {
 
             Response response = dataProducer.send(pickResults);
             return new ViewResponseBuilder().addTitleElement("question", viewName).addTitleElement(getTitleId(), response.getRawData()).build();

@@ -26,7 +26,7 @@ public class JsonPathResponseFilter implements ResponseFilter{
     }
 
     @Override
-    public String filter(String sourceResult, Map<String, String> results) {
+    public String filter(String sourceResult, Map<String, Object> results) {
         DocumentContext document = JsonPath.parse(sourceResult);
         return document.read(expression).toString();
     }

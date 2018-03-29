@@ -6,7 +6,7 @@
   "parameters": {
     "columnDefs":
     {
-      "title":"Название",
+      "title":"",
       "price":"Средняя цена",
       "price_range__from":"Минимальная цена",
       "price_range__to":"Максимальная цена"

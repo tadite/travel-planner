@@ -37,12 +37,11 @@ public class Client implements UserDetails {
     @OneToMany
     private List<Travel> travels = new LinkedList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "city_id", insertable=false, updatable=false)
+    @ManyToOne
+    @JoinColumn
     private City city;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "country_id", insertable=false, updatable=false)
+    @ManyToOne
     private Country country;
 
     @Column(name = "role")
@@ -63,12 +62,8 @@ public class Client implements UserDetails {
         this.travels = travels;
     }
 
-    public long getClientId() {
+    public Long getClientId() {
         return clientId;
-    }
-
-    public void setClientId(long clientId) {
-        this.clientId  = clientId;
     }
 
     public String getFirstName() {

@@ -1,9 +1,9 @@
 package edu.nc.travelplanner.model.source.dataproducer;
 
 import edu.nc.travelplanner.exception.DataProducerSendException;
+import edu.nc.travelplanner.exception.NotEnoughParamsException;
 import edu.nc.travelplanner.model.action.PickResult;
 import edu.nc.travelplanner.model.response.Response;
-import edu.nc.travelplanner.model.factory.dataproducer.DataProducerParseException;
 import edu.nc.travelplanner.model.source.parametermapper.ParameterMapper;
 import edu.nc.travelplanner.model.source.Sender;
 import edu.nc.travelplanner.model.source.Source;
@@ -12,7 +12,7 @@ import edu.nc.travelplanner.model.source.filter.ResponseFilter;
 import java.io.IOException;
 import java.util.*;
 
-public class DefaultDataProducer implements DataProducer{
+public class DefaultDataProducer implements DataProducer {
 
     private String name;
     private Source source;
@@ -31,22 +31,22 @@ public class DefaultDataProducer implements DataProducer{
 
     public DefaultDataProducer(Sender sender, Source source, List<ResponseFilter> responseFilters) {
         this.sender = sender;
-        this.source=source;
-        this.responseFilters=responseFilters;
+        this.source = source;
+        this.responseFilters = responseFilters;
     }
 
-    private Sender getSender(){
+    private Sender getSender() {
         return sender;
     }
 
     @Override
-    public Response send(List<PickResult> pickResults) throws DataProducerSendException {
+    public Response send(List<PickResult> pickResults) throws DataProducerSendException, NotEnoughParamsException {
         try {
             mapParameters(pickResults);
 
             Response response = getSender().send(source);
 
-            for (ResponseFilter filter : responseFilters){
+            for (ResponseFilter filter : responseFilters) {
                 filter.filter(response);
             }
 
@@ -57,11 +57,11 @@ public class DefaultDataProducer implements DataProducer{
         }
     }
 
-    private void mapParameters(List<PickResult> pickResults) {
-        Map<String, String> tempParameterValues = new LinkedHashMap<>();
+    private void mapParameters(List<PickResult> pickResults) throws IOException {
+        Map<String, Object> tempParameterValues = new LinkedHashMap<>();
         for (ParameterMapper parameterMapper : parameterMappers) {
             if (tempParameterValues.containsKey(parameterMapper.getToKey())) {
-                source.addParameterValue(parameterMapper.getToKey(), tempParameterValues.get(parameterMapper.getToKey()));
+                source.addParameterValue(parameterMapper.getToKey(), String.valueOf(tempParameterValues.get(parameterMapper.getToKey())));
                 continue;
             }
 
@@ -73,7 +73,7 @@ public class DefaultDataProducer implements DataProducer{
                 source.addParameterValue(parameterMapper.getToKey(), parameterMapper.filterValue(
                         String.valueOf(pickResultOptional.get().getValue()),
                         tempParameterValues));
-            else if (parameterMapper.getDefaultValue()!=null)
+            else if (parameterMapper.getDefaultValue() != null)
                 source.addParameterValue(parameterMapper.getToKey(), parameterMapper.getDefaultValue());
 
         }
@@ -91,11 +91,11 @@ public class DefaultDataProducer implements DataProducer{
         return responseFilters;
     }
 
-    public void addResponseFilter(ResponseFilter responseFilter){
+    public void addResponseFilter(ResponseFilter responseFilter) {
         this.responseFilters.add(responseFilter);
     }
 
-    public void addParameterMapper(ParameterMapper parameterMapper){
+    public void addParameterMapper(ParameterMapper parameterMapper) {
         this.parameterMappers.add(parameterMapper);
     }
 }

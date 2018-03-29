@@ -1,7 +1,9 @@
 package edu.nc.travelplanner.model.action.source;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.nc.travelplanner.exception.CustomParseException;
 import edu.nc.travelplanner.exception.DataProducerSendException;
+import edu.nc.travelplanner.exception.NotEnoughParamsException;
 import edu.nc.travelplanner.model.action.ActionArgs;
 import edu.nc.travelplanner.model.action.ActionType;
 import edu.nc.travelplanner.model.action.IntegrationAction;
@@ -10,7 +12,6 @@ import edu.nc.travelplanner.model.response.EmptyResponse;
 import edu.nc.travelplanner.model.response.Response;
 import edu.nc.travelplanner.model.response.ViewResponseBuilder;
 import edu.nc.travelplanner.model.source.dataproducer.DataProducer;
-import edu.nc.travelplanner.model.factory.dataproducer.DataProducerParseException;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -63,7 +64,7 @@ public class DropDownListIntegrationAction implements IntegrationAction {
     }
 
     @Override
-    public Response executePresentation(ActionArgs args, List<PickResult> pickResults) throws DataProducerSendException {
+    public Response executePresentation(ActionArgs args, List<PickResult> pickResults) throws DataProducerSendException, CustomParseException, NotEnoughParamsException {
 
         try {
             Response response = dataProducer.send(pickResults);
@@ -71,8 +72,8 @@ public class DropDownListIntegrationAction implements IntegrationAction {
             return new ViewResponseBuilder().addTitleElement("question", viewName).addDropdownList(getDropdownElementName(), optionsMap).build();
         } catch (IOException e) {
             e.printStackTrace();
+            throw new CustomParseException();
         }
-        return null;
     }
 
     private void saveOptionsMap(Response response) throws IOException {

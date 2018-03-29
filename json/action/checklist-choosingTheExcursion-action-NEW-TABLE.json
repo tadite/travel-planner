@@ -6,7 +6,7 @@
   "parameters": {
     "columnDefs":
     {
-      "title": "Назание",
+      "title": "",
       "description":"Описание",
       "price": "Цена",
       "time": "Время",

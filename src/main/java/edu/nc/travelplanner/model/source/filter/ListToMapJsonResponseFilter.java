@@ -38,7 +38,7 @@ public class ListToMapJsonResponseFilter implements ResponseFilter {
     }
 
     @Override
-    public String filter(String sourceResult, Map<String, String> results) {
+    public String filter(String sourceResult, Map<String, Object> results) {
         try {
             JsonNode node = mapper.readTree(sourceResult);
             JsonParser parser = mapper.treeAsTokens(node);

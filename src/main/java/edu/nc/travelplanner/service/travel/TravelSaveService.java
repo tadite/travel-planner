@@ -1,7 +1,9 @@
 package edu.nc.travelplanner.service.travel;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.Lists;
 import edu.nc.travelplanner.dto.afterPickTree.ExcursionDto;
+import edu.nc.travelplanner.dto.afterPickTree.FlightTransferDto;
 import edu.nc.travelplanner.dto.afterPickTree.TravelDto;
 import edu.nc.travelplanner.mapper.DtoMapper;
 import edu.nc.travelplanner.mapper.EntityMapper;
@@ -10,6 +12,7 @@ import edu.nc.travelplanner.table.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.transaction.NotSupportedException;
 import java.text.ParseException;
@@ -49,6 +52,9 @@ public class TravelSaveService {
     private TravelRepository travelRepository;
 
     @Autowired
+    private FlightTransferRepository flightTransferRepository;
+
+    @Autowired
     private SimpleDateFormat dateFormat;
 
     @Autowired
@@ -57,6 +63,7 @@ public class TravelSaveService {
     @Autowired
     private DtoMapper dtoMapper;
 
+    @Transactional
     public TravelDto save(TravelDto travelDto) throws ParseException, NotSupportedException {
         if (travelDto.getToCheckpoint() == null
                 || travelDto.getToCheckpoint().getCityName() == null
@@ -139,17 +146,49 @@ public class TravelSaveService {
         TwoWayFlight twoWayFlight = null;
         if (travelDto.getTwoWayFlight() != null && travelDto.getTwoWayFlight().getFlightTo() != null && travelDto.getTwoWayFlight().getFlightFrom() != null) {
 
+            List<FlightTransfer> tempTransfersTo = new LinkedList<>();
+            if (travelDto.getTwoWayFlight().getFlightTo().getTransfers()!=null){
+                for (FlightTransferDto transferDto : travelDto.getTwoWayFlight().getFlightTo().getTransfers()) {
+                    tempTransfersTo.add(new FlightTransfer(transferDto.getPlaceCode(), transferDto.getPlaceName(), transferDto.getTransferTime(),
+                            transferDto.getArrivalDate(), transferDto.getDepartureDate()));
+                }
+            }
+            List<FlightTransfer> savedTransfersTo = Lists.newArrayList(flightTransferRepository.save(tempTransfersTo));
+
             Flight tempFlightTo = new Flight(travelDto.getTwoWayFlight().getFlightTo().getAircraft(), travelDto.getTwoWayFlight().getFlightTo().getCompanyName(), travelDto.getTwoWayFlight().getFlightTo().getClassType(), travelDto.getTwoWayFlight().getFlightTo().getDepartureDate(), travelDto.getTwoWayFlight().getFlightTo().getDepartureTime(),
                     travelDto.getTwoWayFlight().getFlightTo().getTimeInPath(), travelDto.getTwoWayFlight().getFlightTo().getDepartureCode(), travelDto.getTwoWayFlight().getFlightTo().getDepartureName(), travelDto.getTwoWayFlight().getFlightTo().getArrivalCode(), travelDto.getTwoWayFlight().getFlightTo().getArrivalName());
             tempFlightTo.setToCity(cityTo);
             tempFlightTo.setFromCity(cityFrom);
+            savedTransfersTo.forEach(savedTransfer -> tempFlightTo.getTransfers().add(savedTransfer));
             Flight flightTo = flightRepository.save(tempFlightTo);
+
+            for (FlightTransfer flightTransfer : savedTransfersTo)
+                flightTransfer.setFlight(flightTo);
+
+            tempFlightTo.setTransfers(Lists.newArrayList(flightTransferRepository.save(savedTransfersTo)));
+            flightTo = flightRepository.save(tempFlightTo);
+
+            List<FlightTransfer> tempTransfersFrom = new LinkedList<>();
+            if (travelDto.getTwoWayFlight().getFlightFrom().getTransfers()!=null){
+                for (FlightTransferDto transferDto : travelDto.getTwoWayFlight().getFlightFrom().getTransfers()) {
+                    tempTransfersFrom.add(new FlightTransfer(transferDto.getPlaceCode(), transferDto.getPlaceName(), transferDto.getTransferTime(),
+                            transferDto.getArrivalDate(), transferDto.getDepartureDate()));
+                }
+            }
+            List<FlightTransfer> savedTransfersFrom = Lists.newArrayList(flightTransferRepository.save(tempTransfersFrom));
 
             Flight tempFlightFrom = new Flight(travelDto.getTwoWayFlight().getFlightFrom().getAircraft(), travelDto.getTwoWayFlight().getFlightFrom().getCompanyName(), travelDto.getTwoWayFlight().getFlightFrom().getClassType(), travelDto.getTwoWayFlight().getFlightFrom().getDepartureDate(), travelDto.getTwoWayFlight().getFlightFrom().getDepartureTime(),
                     travelDto.getTwoWayFlight().getFlightFrom().getTimeInPath(), travelDto.getTwoWayFlight().getFlightFrom().getDepartureCode(), travelDto.getTwoWayFlight().getFlightFrom().getDepartureName(), travelDto.getTwoWayFlight().getFlightFrom().getArrivalCode(), travelDto.getTwoWayFlight().getFlightFrom().getArrivalName());
             tempFlightFrom.setToCity(cityFrom);
             tempFlightFrom.setFromCity(cityTo);
+            savedTransfersFrom.forEach(savedTransfer -> tempFlightFrom.getTransfers().add(savedTransfer));
             Flight flightFrom = flightRepository.save(tempFlightFrom);
+
+            for (FlightTransfer flightTransfer : savedTransfersFrom) {
+                flightTransfer.setFlight(flightFrom);
+            }
+            tempFlightFrom.setTransfers(Lists.newArrayList(flightTransferRepository.save(savedTransfersFrom)));
+            flightFrom = flightRepository.save(tempFlightFrom);
 
             twoWayFlight = twoWayFlightRepository.save(new TwoWayFlight(flightTo, flightFrom,
                     travelDto.getTwoWayFlight().getPrice(),
@@ -177,7 +216,6 @@ public class TravelSaveService {
         }
         excursionRepository.save(excursions);
         travel = travelRepository.save(tempTravel);
-
 
         return dtoMapper.map(travel);
     }

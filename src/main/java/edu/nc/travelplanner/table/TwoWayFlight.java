@@ -19,6 +19,7 @@ public class TwoWayFlight {
 
     private String price;
 
+    @Column(columnDefinition="text")
     private String booking;
 
     public TwoWayFlight() {

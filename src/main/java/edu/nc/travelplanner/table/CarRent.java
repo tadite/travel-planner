@@ -33,6 +33,7 @@ public class CarRent {
 
     private String mileage;
 
+    @Column(columnDefinition="text")
     private String booking;
 
     public CarRent() {

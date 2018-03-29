@@ -30,47 +30,42 @@ public class ListToJsonObjectListResponseFilter implements ResponseFilter {
     }
 
     @Override
-    public Response filter(Response sourceResult) {
+    public Response filter(Response sourceResult) throws IOException {
         sourceResult.setRawData(filter(sourceResult.getRawData(), null));
         return sourceResult;
     }
 
     @Override
-    public String filter(String sourceResult, Map<String, String> results) {
-        try {
+    public String filter(String sourceResult, Map<String, Object> results) throws IOException {
 
-            JsonNode node = mapper.readTree(sourceResult);
-            JsonParser parser = mapper.treeAsTokens(node);
+        JsonNode node = mapper.readTree(sourceResult);
+        JsonParser parser = mapper.treeAsTokens(node);
 
-            Map<String, Object>[] jsonObjectsInArray = parser.readValueAs(new TypeReference<Map<String, Object>[]>() {
-            });
-            List<Map<String, Object>> result = new LinkedList<>();
+        Map<String, Object>[] jsonObjectsInArray = parser.readValueAs(new TypeReference<Map<String, Object>[]>() {
+        });
+        List<Map<String, Object>> result = new LinkedList<>();
 
-            String[] keyPropertyPath = keyName.split("__");
+        String[] keyPropertyPath = keyName.split("__");
 
-            for (Map<String, Object> jsonObj : jsonObjectsInArray) {
-                Map<String, Object> properties = new LinkedHashMap<>();
+        for (Map<String, Object> jsonObj : jsonObjectsInArray) {
+            Map<String, Object> properties = new LinkedHashMap<>();
 
-                properties.put("id", getValueByPropertyPath(jsonObj, keyPropertyPath));
-                valueNames.stream()
-                        .forEach(str -> properties.put(str, getValueByPropertyPath(jsonObj, str.split("__"))));
+            properties.put("id", getValueByPropertyPath(jsonObj, keyPropertyPath));
+            valueNames.stream()
+                    .forEach(str -> properties.put(str, getValueByPropertyPath(jsonObj, str.split("__"))));
 
-                result.add(properties);
-            }
-
-            return mapper.writeValueAsString(result);
-        } catch (IOException e) {
-            e.printStackTrace();
+            result.add(properties);
         }
-        return null;
+
+        return mapper.writeValueAsString(result);
     }
 
-    private String getValueByPropertyPath(Map<String, Object> jsonObj, String[] propertyPathArray) {
+    private Object getValueByPropertyPath(Map<String, Object> jsonObj, String[] propertyPathArray) {
         Object currentPropertyValue = jsonObj;
         for (String nextProperty : propertyPathArray) {
             currentPropertyValue = ((Map<String, Object>) currentPropertyValue).get(nextProperty);
         }
-        return currentPropertyValue.toString();
+        return currentPropertyValue;
     }
 
     public FilterType getType() {
