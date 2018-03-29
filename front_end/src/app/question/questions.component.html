@@ -118,10 +118,10 @@
             
                                         <div *ngSwitchCase="'date_picker'">
                                             <div *ngIf="question.id == 'datepicker.1.dateIntervalInput-travelPeriod-action'">
-                                                <input type="date" name="{{question.id}}" [min]="today" onkeydown="return false" [(ngModel)] ="defaultStartDate" ngModel required/>                                                                                      
+                                                <input type="date" name="{{question.id}}" [min]="startDate" onkeydown="return false" [(ngModel)] ="defaultStartDate" ngModel required/>
                                             </div>
                                             <div *ngIf="question.id == 'datepicker.2.dateIntervalInput-travelPeriod-action'">
-                                                    <input type="date" name="{{question.id}}" [min]="today" onkeydown="return false" [(ngModel)] ="defaultEndDate" ngModel required/>                                                                                      
+                                                    <input type="date" name="{{question.id}}" [min]="endDate" onkeydown="return false" [(ngModel)] ="defaultEndDate" ngModel required/>
                                             </div>
 
                                         </div>
@@ -471,20 +471,22 @@
                         </div>                           
                             <div class="googlemap">
                                 <agm-map
-                                        [latitude]="55.41030689999999"
-                                        [longitude]="37.90245129999994"
+                                        [latitude]="defaultLat"
+                                        [longitude]="defaultLng"
                                         [zoom]="2">
-                                    <div class="markers" *ngFor="let i of locations">
-                                        <agm-marker
-                                                [latitude]="i.lat"
-                                                [longitude]="i.lng"></agm-marker>
-                                    </div>
+                                    <agm-marker
+                                            *ngFor="let i of locations"
+                                            [latitude]="i.lat"
+                                            [longitude]="i.lng">
+                                            <agm-info-window [disableAutoPan]="true">
+                                                {{i.name}}
+                                            </agm-info-window>
+                                    </agm-marker>
                                     <agm-polyline>
-                                        <ng-container *ngFor="let i of locations">
-                                            <agm-polyline-point
-                                                    [latitude]="i.lat"
-                                                    [longitude]="i.lng"></agm-polyline-point>
-                                        </ng-container>
+                                        <agm-polyline-point
+                                                *ngFor="let i of locations"
+                                                [latitude]="i.lat"
+                                                [longitude]="i.lng"></agm-polyline-point>
                                     </agm-polyline>
                                 </agm-map>
                             </div>
@@ -506,5 +508,4 @@
         </div>
     </div>
 </div>
-    
     
