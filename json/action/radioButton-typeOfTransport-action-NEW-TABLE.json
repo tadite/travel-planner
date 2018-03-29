@@ -12,6 +12,9 @@
       "flight_to__departure_date": "Дата вылета",
       "flight_to__departure_time": "Время вылета",
       "flight_to__time_in_path": "Время в пути",
+      "flight_to__arrival_time": "Время прибытия",
+      "flight_to__arrival_date": "Дата прибытия",
+      "flight_to__transfer": "Пересадка",
       "flight_from__aircraft": "Самолет",
       "flight_from__company__name": "Компания",
       "flight_from__departure__place_name": "Аэропорт",
@@ -19,42 +22,41 @@
       "flight_from__departure_date": "Дата вылета",
       "flight_from__departure_time": "Время вылета",
       "flight_from__time_in_path": "Время в пути",
+      "flight_from__arrival_time": "Время прибытия",
+      "flight_from__arrival_date": "Дата прибытия",
+      "flight_from__transfer": "Пересадка",
       "price__RUB": "Цена",
       "booking": "Ссылка"
+    },
+    "otherColumnDefs": {
+      "place_name": "Аэропорт",
+      "transfer_time": "Время пересадки",
+      "arrival_date": "Время прибытия",
+      "departure_date": "Время вылета"
     },
     "links": [
       "booking"
     ],
     "subtables": [
-      [
-        "flight_to__aircraft",
-        "flight_to__company__name",
-        "flight_to__departure__place_name",
-        "flight_to__class",
-        "flight_to__departure_date",
-        "flight_to__departure_time",
-        "flight_to__time_in_path"
-      ],
-      [
-        "flight_from__aircraft",
-        "flight_from__company__name",
-        "flight_from__departure__place_name",
-        "flight_from__class",
-        "flight_from__departure_date",
-        "flight_from__departure_time",
-        "flight_from__time_in_path"
-      ],
-      [
-        "price__RUB",
-        "booking"
-      ]
+      "flight_to__arrival_date",
+      "flight_from__arrival_date",
+      "departure_date"
     ],
-    "subtables": [
+    "arrayTables": [
       {
-        "pick": "transfer",
-        "name": "Перелет",
+        "pick": "flight_to__transfer",
+        "name": "Пересадка",
         "columnDefs": [
-          "place_code",
+          "place_name",
+          "transfer_time",
+          "arrival_date",
+          "departure_date"
+        ]
+      },
+      {
+        "pick": "flight_from__transfer",
+        "name": "Пересадка",
+        "columnDefs": [
           "place_name",
           "transfer_time",
           "arrival_date",

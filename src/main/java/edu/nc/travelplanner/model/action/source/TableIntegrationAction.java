@@ -27,11 +27,12 @@ public class TableIntegrationAction implements IntegrationAction {
     private List<Row> fullRows = new LinkedList<>();
 
     private List<String> links = new LinkedList<>();
-    private List<Map<String, Object>> subtables = new LinkedList<>();
+    private List<String> subtables = new LinkedList<>();
     private List<Map<String, Object>> arrayTables = new LinkedList<>();
 
     private List<ArrayTableDef> subtableDefs;
     private LinkedHashMap<String, String> columnDefs = new LinkedHashMap<>();
+    private LinkedHashMap<String, String> otherColumnDefs = new LinkedHashMap<>();
     private String name;
     private String viewName;
     private ActionType type = ActionType.TABLE_INTEGRATION;
@@ -66,19 +67,89 @@ public class TableIntegrationAction implements IntegrationAction {
 
         try {
             Response response = dataProducer.send(pickResults);
-            parseSubtableDefs(response);
             parseTable(response);
+            List<Row> rowsToReturn = this.rows;
 
-            return new ViewResponseBuilder().addTitleElement("question", viewName).addTable(getTableId(), rows, columnDefs, links, multiPick, canPick).build();
+            Row columnDefsRow = new Row();
+
+
+            LinkedHashMap<String, String> colDefs = this.columnDefs;
+            if (subtables != null && subtables.size() > 0) {
+                rowsToReturn = parseSubTables();
+                columnDefsRow = getNewColumnDefsRow(rowsToReturn);
+            }else
+            {
+                Row finalColumnDefsRow = columnDefsRow;
+                columnDefs.forEach((key, value) -> {
+                    if (value != "") finalColumnDefsRow.addColumn(new Column(key, value));
+                });
+            }
+
+            return new ViewResponseBuilder().addTitleElement("question", viewName).addTable(getTableId(), rowsToReturn, columnDefsRow, links, multiPick, canPick).build();
         } catch (IOException e) {
             e.printStackTrace();
             throw new CustomParseException();
         }
     }
 
-    private void parseSubtableDefs(Response response) {
-        List<ArrayTableDef> tempArrayTableDefs = new LinkedList<>();
-        //subtables.forEach(cols -> subtableDefs.add(new ArrayTableDef()));
+    private Row getNewColumnDefsRow(List<Row> rowsToReturn) {
+        Row newColumnsDefsRow = new Row();
+        for (Column col : rowsToReturn.get(0).getColumns()) {
+            if (columnDefs.containsKey(col.getName()))
+                newColumnsDefsRow.addColumn(new Column(col.getName(), columnDefs.get(col.getName())));
+            else if (otherColumnDefs.containsKey(col.getName()))
+                newColumnsDefsRow.addColumn(new Column(col.getName(), otherColumnDefs.get(col.getName())));
+            else if (col.getName().equals("separator"))
+                newColumnsDefsRow.addColumn(separatorColumn);
+            else if (col.getName().equals("booking"))
+                newColumnsDefsRow.addColumn(separatorColumn);
+        }
+        return newColumnsDefsRow;
+    }
+
+    Column separatorColumn = new Column("separator", null);
+
+    private List<Row> parseSubTables() {
+        List<Row> subtabledRows = new LinkedList<>();
+        List<String> currentSubtable = null;
+        Map<String, Object> currentArrayTable = null;
+        for (Row row : rows) {
+            Row newRow = new Row();
+            for (Column col : row.getColumns()) {
+                newRow.addColumn(col);
+                if (subtables.stream().anyMatch(subtable -> col.getName().equals(subtable)))
+                    newRow.addColumn(separatorColumn);
+
+                /*if (currentArrayTable != null)
+                    if (currentArrayTable.containsKey(col.getName())) {
+                        newRow.addColumn(col);
+                        continue;
+                    } else {
+                        newRow.addColumn(separatorColumn);
+                        currentArrayTable = null;
+                    }
+
+                Optional<List<String>> subtableFirstOptional = subtables.stream().filter(subTable -> subTable.get(0).equals(col.getName())).findFirst();
+                Optional<List<String>> subtableLastOptional = subtables.stream().filter(subTable -> subTable.get(subTable.size() - 1).equals(col.getName())).findFirst();
+                if (currentSubtable == null && subtableFirstOptional.isPresent()) {
+                    currentSubtable = subtableFirstOptional.get();
+
+                } else if (subtableLastOptional.isPresent()) {
+                    currentSubtable = subtableLastOptional.get();
+                    String lastItemOfCurrentSubtable = currentSubtable.get(currentSubtable.size() - 1);
+                    Optional<Map<String, Object>> arrayTableOptional = arrayTables.stream().filter(arrayTable -> arrayTable.get("pick").equals(lastItemOfCurrentSubtable)).findFirst();
+                    if (arrayTableOptional.isPresent())
+                        currentArrayTable = arrayTableOptional.get();
+                    newRow.addColumn(separatorColumn);
+                } else {
+                    newRow.addColumn(col);
+                }*/
+            }
+
+            //newRow.getColumns().remove(newRow.getColumns().size() - 1);
+            subtabledRows.add(newRow);
+        }
+        return subtabledRows;
     }
 
     private String getTableId() {
@@ -116,7 +187,9 @@ public class TableIntegrationAction implements IntegrationAction {
                                     tempColumnDefs.put(entry.getKey() + " " + i, name + " " + i);
                                     i++;
                                 }
-                                currentFullRow.addColumn(new Column(entry.getKey(), insideColumnsToAdd));
+                                insideColumnsToAdd.forEach(col -> currentFullRow.addColumn(col));
+                                //currentFullRow.addColumn(new Column(entry.getKey(), insideColumnsToAdd));
+
                             } else
                                 currentFullRow.addColumn(new Column(entry.getKey(), entry.getValue()));
                         }
@@ -143,12 +216,15 @@ public class TableIntegrationAction implements IntegrationAction {
                             if (arrayTableColumnDefs.contains(objEntry.getKey()))
                                 tempRow.addColumn(new Column(objEntry.getKey(), objEntry.getValue()));
                         });
-                        insideColumnsToAdd.add(new Column(key + " " + i, tempRow.getColumns()));
+                        insideColumnsToAdd.add(new Column(key + " " + i, ""));
+                        tempRow.getColumns().forEach(col -> insideColumnsToAdd.add(col));
+                        tempRow.addColumn(separatorColumn);
 
-                        tempColumnDefs.put(key + " " + i, name + " " + i);
+                        tempColumnDefs.put(key + " " + i, name + " №" + i);
                         i++;
                     }
-                    currentRow.addColumn(new Column(key, insideColumnsToAdd));
+                    insideColumnsToAdd.forEach(col -> currentRow.addColumn(col));
+                    //currentRow.addColumn(new Column(key, insideColumnsToAdd));
                 } else
                     currentRow.addColumn(new Column(key, jsonObj.getOrDefault(key, null)));
 
@@ -156,7 +232,7 @@ public class TableIntegrationAction implements IntegrationAction {
             rows.add(currentRow);
         }
 
-        this.columnDefs.putAll(tempColumnDefs);
+        this.otherColumnDefs.putAll(tempColumnDefs);
     }
 
     @Override

@@ -114,12 +114,12 @@ public class ViewResponseBuilder {
         return this;
     }
 
-    public ViewResponseBuilder addTable(String id, List<Row> rows, LinkedHashMap<String, String> columnDefs, List<String> links, Boolean multiPick, Boolean canPick) {
-        Row columnsDefsRow = new Row();
+    public ViewResponseBuilder addTable(String id, List<Row> rows, Row columnsDefsRow, List<String> links, Boolean multiPick, Boolean canPick) {
+        /*Row columnsDefsRow = new Row();
         columnDefs.forEach((key, value) -> {
             if (value != "") columnsDefsRow.addColumn(new Column(key, value));
         });
-
+*/
         viewResponse.addElement(new TableViewElement(elementsPostfixHolder.tablePostfix + "." + indexCounter.getTableIndex() + "." + id, rows, columnsDefsRow, links, multiPick, canPick));
         return this;
     }
