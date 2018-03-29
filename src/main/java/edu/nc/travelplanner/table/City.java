@@ -13,15 +13,31 @@ public class City {
     @Column(name = "name")
     private String name;
 
+    private Long otherCityId;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Country country;
 
     public City() {
     }
 
+    public City(String name, Country country, Long otherCityId) {
+        this.name = name;
+        this.otherCityId = otherCityId;
+        this.country = country;
+    }
+
     public City(String name, Country country) {
         this.name = name;
         this.country = country;
+    }
+
+    public Long getOtherCityId() {
+        return otherCityId;
+    }
+
+    public void setOtherCityId(Long otherCityId) {
+        this.otherCityId = otherCityId;
     }
 
     public Long getCityId() {
