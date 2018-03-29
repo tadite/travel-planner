@@ -24,10 +24,12 @@ import  {ProfileComponent } from './profile/profile.component';
 import { AdminComponent }   from './admin/admin.component';
 import { SourseComponent }   from './sourse/sourse.component';
 import { ConfigComponent }   from './config/config.component';
-import {ProfilesComponent} from "./profiles/profiles.component";
-import {DataProducerComponent} from "./dataProducer/dataProducer.component";
-import {SourceFormComponent} from "./sourceForm/sourceForm.component";
+import { ProfilesComponent} from "./profiles/profiles.component";
+import { DataProducerComponent} from "./dataProducer/dataProducer.component";
+import { SourceFormComponent} from "./sourceForm/sourceForm.component";
 import { MyTravelsComponent }   from './myTravels/myTravels.component';
+import { AdminGuardService} from "./auth/admin-guard.service";
+import { AuthService} from "./auth/auth.service";
 
 // определение маршрутов
 const appRoutes: Routes =[
@@ -36,11 +38,11 @@ const appRoutes: Routes =[
     { path: 'user', component: UserComponent},
     { path: 'questions', component: QuestionsComponent, canActivate: [AuthGuardService]},   
     { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService]}, 
-	{ path: 'admin', component: ProfilesComponent, canActivate: [AuthGuardService]},
-    { path: 'config', component: ConfigComponent, canActivate: [AuthGuardService]},
-    { path: 'sourse', component: SourseComponent, canActivate: [AuthGuardService]},
-    { path: 'producer', component: DataProducerComponent, canActivate: [AuthGuardService]},
-    { path: 'sourceForm', component: SourceFormComponent, canActivate: [AuthGuardService]},
+	{ path: 'admin', component: ProfilesComponent, canActivate: [AdminGuardService]},
+    { path: 'config', component: ConfigComponent, canActivate: [AdminGuardService]},
+    { path: 'sourse', component: SourseComponent, canActivate: [AdminGuardService]},
+    { path: 'producer', component: DataProducerComponent, canActivate: [AdminGuardService]},
+    { path: 'sourceForm', component: SourceFormComponent, canActivate: [AdminGuardService]},
     { path: 'myTravels', component: MyTravelsComponent, canActivate: [AuthGuardService]},
     { path: '**', component: NotFoundComponent }
     
@@ -58,10 +60,12 @@ const appRoutes: Routes =[
       useClass: AuthInterceptor,
       multi: true
     }, 
-    CookieService,
-    AuthGuardService,
-    UnauthGuardService,
-    GoogleMapsAPIWrapper
+       CookieService,
+       AuthService,
+       AuthGuardService,
+       AdminGuardService,
+       UnauthGuardService,
+       GoogleMapsAPIWrapper
   ],
     bootstrap:    [ AppComponent ]
 })
