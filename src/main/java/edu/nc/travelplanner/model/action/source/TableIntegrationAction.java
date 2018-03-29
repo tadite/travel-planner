@@ -1,6 +1,7 @@
 package edu.nc.travelplanner.model.action.source;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import edu.nc.travelplanner.exception.CustomParseException;
 import edu.nc.travelplanner.exception.DataProducerSendException;
 import edu.nc.travelplanner.exception.NotEnoughParamsException;
@@ -74,7 +75,9 @@ public class TableIntegrationAction implements IntegrationAction {
 
             List<Row> columnDefRows = new LinkedList<>();
             LinkedHashMap<String, String> colDefs = this.columnDefs;
+            Boolean oneLine = true;
             if (subtables != null && subtables.size() > 0) {
+                oneLine=false;
                 rowsToReturn = parseSubTables();
                 for (Row row : rowsToReturn) {
                     columnDefRows.add(getNewColumnDefsRow(row));
@@ -89,7 +92,7 @@ public class TableIntegrationAction implements IntegrationAction {
                 rows.forEach(row -> columnDefRows.add(finalColumnDefsRow));
             }
 
-            return new ViewResponseBuilder().addTitleElement("question", viewName).addTable(getTableId(), rowsToReturn, columnDefRows, links, multiPick, canPick).build();
+            return new ViewResponseBuilder().addTitleElement("question", viewName).addTable(getTableId(), rowsToReturn, columnDefRows, links, multiPick, canPick, oneLine).build();
         } catch (IOException e) {
             e.printStackTrace();
             throw new CustomParseException();
@@ -124,33 +127,8 @@ public class TableIntegrationAction implements IntegrationAction {
                 if (subtables.stream().anyMatch(subtable -> col.getName().equals(subtable)))
                     newRow.addColumn(separatorColumn);
 
-                /*if (currentArrayTable != null)
-                    if (currentArrayTable.containsKey(col.getName())) {
-                        newRow.addColumn(col);
-                        continue;
-                    } else {
-                        newRow.addColumn(separatorColumn);
-                        currentArrayTable = null;
-                    }
-
-                Optional<List<String>> subtableFirstOptional = subtables.stream().filter(subTable -> subTable.get(0).equals(col.getName())).findFirst();
-                Optional<List<String>> subtableLastOptional = subtables.stream().filter(subTable -> subTable.get(subTable.size() - 1).equals(col.getName())).findFirst();
-                if (currentSubtable == null && subtableFirstOptional.isPresent()) {
-                    currentSubtable = subtableFirstOptional.get();
-
-                } else if (subtableLastOptional.isPresent()) {
-                    currentSubtable = subtableLastOptional.get();
-                    String lastItemOfCurrentSubtable = currentSubtable.get(currentSubtable.size() - 1);
-                    Optional<Map<String, Object>> arrayTableOptional = arrayTables.stream().filter(arrayTable -> arrayTable.get("pick").equals(lastItemOfCurrentSubtable)).findFirst();
-                    if (arrayTableOptional.isPresent())
-                        currentArrayTable = arrayTableOptional.get();
-                    newRow.addColumn(separatorColumn);
-                } else {
-                    newRow.addColumn(col);
-                }*/
             }
 
-            //newRow.getColumns().remove(newRow.getColumns().size() - 1);
             subtabledRows.add(newRow);
         }
         return subtabledRows;
@@ -223,11 +201,11 @@ public class TableIntegrationAction implements IntegrationAction {
                             if (arrayTableColumnDefs.contains(objEntry.getKey()))
                                 tempRow.addColumn(new Column(objEntry.getKey(), objEntry.getValue()));
                         });
-                        insideColumnsToAdd.add(new Column(key + " " + i[0], ""));
+                        insideColumnsToAdd.add(new Column(key + " " + i[0], name + " №" + i[0]));
                         tempRow.getColumns().forEach(col -> insideColumnsToAdd.add(col));
                         tempRow.addColumn(separatorColumn);
 
-                        tempColumnDefs.put(key + " " + i[0], name + " №" + i[0]);
+                        tempColumnDefs.put(key + " " + i[0], " ");
                         i[0]++;
                     }
                     insideColumnsToAdd.forEach(col -> currentRow.addColumn(col));

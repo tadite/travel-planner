@@ -114,13 +114,13 @@ public class ViewResponseBuilder {
         return this;
     }
 
-    public ViewResponseBuilder addTable(String id, List<Row> rows, List<Row> columnsDefsRowList, List<String> links, Boolean multiPick, Boolean canPick) {
+    public ViewResponseBuilder addTable(String id, List<Row> rows, List<Row> columnsDefsRowList, List<String> links, Boolean multiPick, Boolean canPick, Boolean oneLine) {
         /*Row columnsDefsRow = new Row();
         columnDefs.forEach((key, value) -> {
             if (value != "") columnsDefsRow.addColumn(new Column(key, value));
         });
 */
-        viewResponse.addElement(new TableViewElement(elementsPostfixHolder.tablePostfix + "." + indexCounter.getTableIndex() + "." + id, rows, columnsDefsRowList, links, multiPick, canPick));
+        viewResponse.addElement(new TableViewElement(elementsPostfixHolder.tablePostfix + "." + indexCounter.getTableIndex() + "." + id, rows, columnsDefsRowList, links, multiPick, canPick, oneLine));
         return this;
     }
 

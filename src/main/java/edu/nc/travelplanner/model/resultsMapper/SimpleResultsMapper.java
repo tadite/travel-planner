@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class SimpleResultsMapper implements ResultsMapper {
@@ -75,15 +76,15 @@ public class SimpleResultsMapper implements ResultsMapper {
             FlightDto toFlightDto = createFlightDto(columns, "flight_to__aircraft", "flight_to__company__name",
                     "flight_to__class", "flight_to__departure_date", "flight_to__departure_time",
                     "flight_to__time_in_path", "flight_to__departure__place_code", "flight_to__departure__place_name",
-                    "flight_to__arrival__place_code", "flight_to__arrival__place_name");
+                    "flight_to__arrival__place_code", "flight_to__arrival__place_name", "flight_from__transfer");
 
             FlightDto fromFlightDto = createFlightDto(columns, "flight_from__aircraft", "flight_from__company__name",
                     "flight_from__class", "flight_from__departure_date", "flight_from__departure_time",
                     "flight_from__time_in_path", "flight_from__departure__place_code", "flight_from__departure__place_name",
-                    "flight_from__arrival__place_code", "flight_from__arrival__place_name");
+                    "flight_from__arrival__place_code", "flight_from__arrival__place_name", "flight_from__transfer");
 
-            String price = getColumnValueOrEmpty(columns, "price__RUB");
-            String booking = getColumnValueOrEmpty(columns, "booking");
+            String price = getColumnStringValueOrEmpty(columns, "price__RUB");
+            String booking = getColumnStringValueOrEmpty(columns, "booking");
 
             travelDto.setTwoWayFlight(new TwoWayFlightDto(toFlightDto, fromFlightDto, price, booking));
         });
@@ -91,32 +92,48 @@ public class SimpleResultsMapper implements ResultsMapper {
 
     private ExcursionDto createExcursionDto(List<Column> columns, String title, String description, String price,
                                             String time, String booking) {
-        String titleVal = getColumnValueOrEmpty(columns, title);
-        String descriptionVal = getColumnValueOrEmpty(columns, description);
-        String priceVal = getColumnValueOrEmpty(columns, price);
-        String timeVal = getColumnValueOrEmpty(columns, time);
-        String bookingVal = getColumnValueOrEmpty(columns, booking);
+        String titleVal = getColumnStringValueOrEmpty(columns, title);
+        String descriptionVal = getColumnStringValueOrEmpty(columns, description);
+        String priceVal = getColumnStringValueOrEmpty(columns, price);
+        String timeVal = getColumnStringValueOrEmpty(columns, time);
+        String bookingVal = getColumnStringValueOrEmpty(columns, booking);
 
         return new ExcursionDto(titleVal, descriptionVal, priceVal, timeVal, bookingVal);
     }
 
     private FlightDto createFlightDto(List<Column> columns, String aircraft, String companyName, String classType,
                                       String departureDate, String departureTime, String timeInPath, String departureCode,
-                                      String departureName, String arrivalCode, String arrivalName) {
-        String aircraftVal = getColumnValueOrEmpty(columns, aircraft);
-        String companyNameVal = getColumnValueOrEmpty(columns, companyName);
-        String classTypeVal = getColumnValueOrEmpty(columns, classType);
-        String departureDateVal = getColumnValueOrEmpty(columns, departureDate);
-        String departureTimeVal = getColumnValueOrEmpty(columns, departureTime);
-        String timeInPathVal = getColumnValueOrEmpty(columns, timeInPath);
-        String departureCodeVal = getColumnValueOrEmpty(columns, departureCode);
-        String departureNameVal = getColumnValueOrEmpty(columns, departureName);
-        String arrivalCodeVal = getColumnValueOrEmpty(columns, arrivalCode);
-        String arrivalNameVal = getColumnValueOrEmpty(columns, arrivalName);
+                                      String departureName, String arrivalCode, String arrivalName, String transferName) {
+        String aircraftVal = getColumnStringValueOrEmpty(columns, aircraft);
+        String companyNameVal = getColumnStringValueOrEmpty(columns, companyName);
+        String classTypeVal = getColumnStringValueOrEmpty(columns, classType);
+        String departureDateVal = getColumnStringValueOrEmpty(columns, departureDate);
+        String departureTimeVal = getColumnStringValueOrEmpty(columns, departureTime);
+        String timeInPathVal = getColumnStringValueOrEmpty(columns, timeInPath);
+        String departureCodeVal = getColumnStringValueOrEmpty(columns, departureCode);
+        String departureNameVal = getColumnStringValueOrEmpty(columns, departureName);
+        String arrivalCodeVal = getColumnStringValueOrEmpty(columns, arrivalCode);
+        String arrivalNameVal = getColumnStringValueOrEmpty(columns, arrivalName);
+
+        List<FlightTransferDto> transferDtos = new LinkedList<>();
+        List<Column> tempTransferColumns = getColumnsStartWithNameObjectValueOrEmpty(columns, transferName);
+        if (tempTransferColumns!=null && tempTransferColumns.size()>0){
+
+            for (Column transferColumn : tempTransferColumns) {
+                String transferColName = transferColumn.getName();
+                List<Column> transferColumnsValue = (List<Column>)transferColumn.getValue();
+                String transferPlaceCode = getColumnStringValueOrEmpty(transferColumnsValue, "place_code");
+                String transferPlaceName = getColumnStringValueOrEmpty(transferColumnsValue, "place_name");
+                String transferTime = getColumnStringValueOrEmpty(transferColumnsValue, "transfer_time");
+                String transferArrivalDate = getColumnStringValueOrEmpty(transferColumnsValue, "arrival_date");
+                String transferDepartureDate = getColumnStringValueOrEmpty(transferColumnsValue, "departure_date");
+                transferDtos.add(new FlightTransferDto(transferPlaceCode, transferPlaceName, transferTime, transferArrivalDate, transferDepartureDate));
+            }
+        }
 
         return new FlightDto(aircraftVal, companyNameVal, classTypeVal, departureDateVal,
                 departureTimeVal, timeInPathVal, departureCodeVal, departureNameVal,
-                arrivalCodeVal, arrivalNameVal);
+                arrivalCodeVal, arrivalNameVal, transferDtos);
     }
 
     private void setHotel(TravelDto travelDto, List<PickResult> picks) {
@@ -127,12 +144,12 @@ public class SimpleResultsMapper implements ResultsMapper {
                 return;
 
             List<Column> columns = ((TablePickResult) hotelPick.getValue()).getRow().getColumns();
-            String name = getColumnValueOrEmpty(columns, "name");
-            String address = getColumnValueOrEmpty(columns, "address");
-            String price = getColumnValueOrEmpty(columns, "price");
-            String pricePeriod = getColumnValueOrEmpty(columns, "price_period");
-            String priceInfo = getColumnValueOrEmpty(columns, "price_info");
-            String booking = getColumnValueOrEmpty(columns, "booking");
+            String name = getColumnStringValueOrEmpty(columns, "name");
+            String address = getColumnStringValueOrEmpty(columns, "address");
+            String price = getColumnStringValueOrEmpty(columns, "price");
+            String pricePeriod = getColumnStringValueOrEmpty(columns, "price_period");
+            String priceInfo = getColumnStringValueOrEmpty(columns, "price_info");
+            String booking = getColumnStringValueOrEmpty(columns, "booking");
 
             travelDto.setHotel(new HotelDto(name, address, price, pricePeriod, priceInfo, booking));
         });
@@ -167,16 +184,16 @@ public class SimpleResultsMapper implements ResultsMapper {
                 return;
 
             List<Column> columns = ((TablePickResult) carRentPick.getValue()).getRow().getColumns();
-            String name = getColumnValueOrEmpty(columns, "name");
-            String pricePeriod = getColumnValueOrEmpty(columns, "price-period");
-            String price = getColumnValueOrEmpty(columns, "price");
-            String seats = getColumnValueOrEmpty(columns, "seats");
-            String doors = getColumnValueOrEmpty(columns, "doors");
-            String climate = getColumnValueOrEmpty(columns, "climate");
-            String transmission = getColumnValueOrEmpty(columns, "transmission");
-            String classType = getColumnValueOrEmpty(columns, "class");
-            String mileage = getColumnValueOrEmpty(columns, "mileage");
-            String booking = getColumnValueOrEmpty(columns, "booking");
+            String name = getColumnStringValueOrEmpty(columns, "name");
+            String pricePeriod = getColumnStringValueOrEmpty(columns, "price-period");
+            String price = getColumnStringValueOrEmpty(columns, "price");
+            String seats = getColumnStringValueOrEmpty(columns, "seats");
+            String doors = getColumnStringValueOrEmpty(columns, "doors");
+            String climate = getColumnStringValueOrEmpty(columns, "climate");
+            String transmission = getColumnStringValueOrEmpty(columns, "transmission");
+            String classType = getColumnStringValueOrEmpty(columns, "class");
+            String mileage = getColumnStringValueOrEmpty(columns, "mileage");
+            String booking = getColumnStringValueOrEmpty(columns, "booking");
 
             travelDto.setCarRent(new CarRentDto(name, pricePeriod, price, seats, doors, climate,
                     transmission, classType, mileage, booking));
@@ -218,9 +235,13 @@ public class SimpleResultsMapper implements ResultsMapper {
                 .orElse("");
     }
 
-    private String getColumnValueOrEmpty(List<Column> columns, String name) {
+    private String getColumnStringValueOrEmpty(List<Column> columns, String name) {
         return Iterables.tryFind(columns, col -> col.getName().equals(name))
                 .transform(col -> String.valueOf(col.getValue()))
                 .or("");
+    }
+
+    private List<Column> getColumnsStartWithNameObjectValueOrEmpty(List<Column> columns, String name) {
+        return columns.stream().filter(col -> col.getName().startsWith(name)).collect(Collectors.toList());
     }
 }
