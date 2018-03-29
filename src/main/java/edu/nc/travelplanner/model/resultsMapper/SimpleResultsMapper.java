@@ -76,7 +76,7 @@ public class SimpleResultsMapper implements ResultsMapper {
             FlightDto toFlightDto = createFlightDto(columns, "flight_to__aircraft", "flight_to__company__name",
                     "flight_to__class", "flight_to__departure_date", "flight_to__departure_time",
                     "flight_to__time_in_path", "flight_to__departure__place_code", "flight_to__departure__place_name",
-                    "flight_to__arrival__place_code", "flight_to__arrival__place_name", "flight_from__transfer");
+                    "flight_to__arrival__place_code", "flight_to__arrival__place_name", "flight_to__transfer");
 
             FlightDto fromFlightDto = createFlightDto(columns, "flight_from__aircraft", "flight_from__company__name",
                     "flight_from__class", "flight_from__departure_date", "flight_from__departure_time",

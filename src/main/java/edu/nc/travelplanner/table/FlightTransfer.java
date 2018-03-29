@@ -19,6 +19,9 @@ public class FlightTransfer {
     @ManyToOne
     private Flight flight;
 
+    public FlightTransfer() {
+    }
+
     public FlightTransfer(String placeCode, String placeName, String transferTime, String arrivalDate, String departureDate) {
         this.placeCode = placeCode;
         this.placeName = placeName;

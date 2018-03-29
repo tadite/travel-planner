@@ -159,7 +159,7 @@ public class TravelSaveService {
                     travelDto.getTwoWayFlight().getFlightTo().getTimeInPath(), travelDto.getTwoWayFlight().getFlightTo().getDepartureCode(), travelDto.getTwoWayFlight().getFlightTo().getDepartureName(), travelDto.getTwoWayFlight().getFlightTo().getArrivalCode(), travelDto.getTwoWayFlight().getFlightTo().getArrivalName());
             tempFlightTo.setToCity(cityTo);
             tempFlightTo.setFromCity(cityFrom);
-            tempFlightTo.setTransfers(savedTransfersTo);
+            savedTransfersTo.forEach(savedTransfer -> tempFlightTo.getTransfers().add(savedTransfer));
             Flight flightTo = flightRepository.save(tempFlightTo);
 
             for (FlightTransfer flightTransfer : savedTransfersTo)
@@ -171,7 +171,7 @@ public class TravelSaveService {
             List<FlightTransfer> tempTransfersFrom = new LinkedList<>();
             if (travelDto.getTwoWayFlight().getFlightFrom().getTransfers()!=null){
                 for (FlightTransferDto transferDto : travelDto.getTwoWayFlight().getFlightFrom().getTransfers()) {
-                    tempTransfersTo.add(new FlightTransfer(transferDto.getPlaceCode(), transferDto.getPlaceName(), transferDto.getTransferTime(),
+                    tempTransfersFrom.add(new FlightTransfer(transferDto.getPlaceCode(), transferDto.getPlaceName(), transferDto.getTransferTime(),
                             transferDto.getArrivalDate(), transferDto.getDepartureDate()));
                 }
             }
@@ -181,7 +181,7 @@ public class TravelSaveService {
                     travelDto.getTwoWayFlight().getFlightFrom().getTimeInPath(), travelDto.getTwoWayFlight().getFlightFrom().getDepartureCode(), travelDto.getTwoWayFlight().getFlightFrom().getDepartureName(), travelDto.getTwoWayFlight().getFlightFrom().getArrivalCode(), travelDto.getTwoWayFlight().getFlightFrom().getArrivalName());
             tempFlightFrom.setToCity(cityFrom);
             tempFlightFrom.setFromCity(cityTo);
-            tempFlightTo.setTransfers(savedTransfersFrom);
+            savedTransfersFrom.forEach(savedTransfer -> tempFlightFrom.getTransfers().add(savedTransfer));
             Flight flightFrom = flightRepository.save(tempFlightFrom);
 
             for (FlightTransfer flightTransfer : savedTransfersFrom) {
