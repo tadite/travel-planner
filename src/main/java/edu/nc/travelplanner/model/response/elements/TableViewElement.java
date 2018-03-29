@@ -15,9 +15,9 @@ public class TableViewElement implements ViewElement{
     private Boolean canPick;
     private String id;
     private final List<Row> rows;
-    private final Row columnDefs;
+    private final List<Row> columnDefs;
 
-    public TableViewElement(String id, List<Row> rows, Row columnDefs, List<String> links, Boolean multiPick, Boolean canPick) {
+    public TableViewElement(String id, List<Row> rows, List<Row> columnDefs, List<String> links, Boolean multiPick, Boolean canPick) {
         this.id = id;
         this.rows = rows;
         this.columnDefs = columnDefs;
