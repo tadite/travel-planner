@@ -10,6 +10,7 @@ import { LoadingModule} from 'ngx-loading';
 import { CdkTableModule } from '@angular/cdk/table';
 import { MatTableModule, MatPaginatorModule } from '@angular/material';
 import { AgmCoreModule, GoogleMapsAPIWrapper } from '@agm/core';
+import { ModalModule } from 'ngx-bootstrap';
 
 import { AppComponent }   from './app.component';
 import { LoginComponent }   from './login/login.component';
@@ -31,7 +32,7 @@ import { MyTravelsComponent }   from './myTravels/myTravels.component';
 import { PagerService } from './service/pager.service';
 import { TravelPagerService } from './service/travel.pager.service';
 import { AdminGuardService} from "./auth/admin-guard.service";
-import { AuthService} from "./auth/auth.service";
+import { AuthService} from "./auth/auth.service"; 
 
 
 // определение маршрутов
@@ -52,11 +53,10 @@ const appRoutes: Routes =[
 ];
 
 @NgModule({
-    imports:      [ BrowserModule, RouterModule.forRoot(appRoutes, { useHash: true }), FormsModule, ReactiveFormsModule, BrowserAnimationsModule, HttpClientModule, NgbModule.forRoot(), LoadingModule, CdkTableModule, MatTableModule, MatPaginatorModule, LoadingModule, AgmCoreModule.forRoot({
+    imports:      [ BrowserModule, RouterModule.forRoot(appRoutes, { useHash: true }), FormsModule, ReactiveFormsModule, BrowserAnimationsModule, HttpClientModule, NgbModule.forRoot(), LoadingModule, CdkTableModule, MatTableModule, MatPaginatorModule, LoadingModule, ModalModule.forRoot(), AgmCoreModule.forRoot({
         apiKey: 'AIzaSyD28p35CCvhDbiAPL7u96KayO36U6Ny84o'
     })],
     declarations: [ AppComponent, HomeComponent, LoginComponent, UserComponent, NotFoundComponent, QuestionsComponent, ProfileComponent, AdminComponent, ConfigComponent, ProfilesComponent, SourseComponent, DataProducerComponent, SourceFormComponent, MyTravelsComponent],
-
    providers: [
     {
       provide: HTTP_INTERCEPTORS,
