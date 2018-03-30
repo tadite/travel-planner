@@ -27,6 +27,7 @@ import { SourseComponent }   from './sourse/sourse.component';
 import { ConfigComponent }   from './config/config.component';
 import { ProfilesComponent } from "./profiles/profiles.component";
 import { DataProducerComponent } from "./dataProducer/dataProducer.component";
+import { DataProducerFormComponent } from "./dataProducerForm/dataProducerForm.component";
 import { SourceFormComponent } from "./sourceForm/sourceForm.component";
 import { MyTravelsComponent }   from './myTravels/myTravels.component';
 import { PagerService } from './service/pager.service';
@@ -41,12 +42,13 @@ const appRoutes: Routes =[
     { path: 'login', component: LoginComponent, canActivate: [UnauthGuardService]},    
     { path: 'user', component: UserComponent},
     { path: 'questions', component: QuestionsComponent, canActivate: [AuthGuardService]},   
-    { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService]}, 
+    { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService]},
 	{ path: 'admin', component: ProfilesComponent, canActivate: [AdminGuardService]},
     { path: 'config', component: ConfigComponent, canActivate: [AdminGuardService]},
     { path: 'sourse', component: SourseComponent, canActivate: [AdminGuardService]},
-    { path: 'producer', component: DataProducerComponent, canActivate: [AdminGuardService]},
+    { path: 'producer', component: DataProducerComponent/*, canActivate: [AdminGuardService]*/},
     { path: 'sourceForm', component: SourceFormComponent, canActivate: [AdminGuardService]},
+    { path: 'dataProducerForm', component: DataProducerFormComponent/*, canActivate: [AdminGuardService]*/},
     { path: 'myTravels', component: MyTravelsComponent, canActivate: [AuthGuardService]},
     { path: '**', component: NotFoundComponent }
     
@@ -56,7 +58,7 @@ const appRoutes: Routes =[
     imports:      [ BrowserModule, RouterModule.forRoot(appRoutes, { useHash: true }), FormsModule, ReactiveFormsModule, BrowserAnimationsModule, HttpClientModule, NgbModule.forRoot(), LoadingModule, CdkTableModule, MatTableModule, MatPaginatorModule, LoadingModule, ModalModule.forRoot(), AgmCoreModule.forRoot({
         apiKey: 'AIzaSyD28p35CCvhDbiAPL7u96KayO36U6Ny84o'
     })],
-    declarations: [ AppComponent, HomeComponent, LoginComponent, UserComponent, NotFoundComponent, QuestionsComponent, ProfileComponent, AdminComponent, ConfigComponent, ProfilesComponent, SourseComponent, DataProducerComponent, SourceFormComponent, MyTravelsComponent],
+    declarations: [ AppComponent, HomeComponent, LoginComponent, UserComponent, NotFoundComponent, QuestionsComponent, ProfileComponent, AdminComponent, ConfigComponent, ProfilesComponent, SourseComponent, DataProducerComponent, SourceFormComponent, DataProducerFormComponent, MyTravelsComponent],
    providers: [
     {
       provide: HTTP_INTERCEPTORS,

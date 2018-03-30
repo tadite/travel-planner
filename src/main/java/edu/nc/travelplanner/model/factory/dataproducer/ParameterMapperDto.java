@@ -9,7 +9,7 @@ public class ParameterMapperDto {
     @JsonProperty("to")
     private String toKey;
 
-    @JsonProperty("default")
+    @JsonProperty("def")
     private String defaultValue;
 
     @JsonProperty("filter")

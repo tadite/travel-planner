@@ -5,7 +5,10 @@ import { AuthService} from "../auth/auth.service";
 import { CookieService } from 'ngx-cookie-service';
 import 'rxjs/Rx';
 import {Observable} from 'rxjs/Observable';
-
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { DataProducerFormComponent} from '../dataProducerForm/dataProducerForm.component'
+import {DataProducer} from './dataProducer';
 
 @Component({
     selector: 'dataProducer-app',
@@ -22,7 +25,7 @@ export class DataProducerComponent implements OnInit{
     dataProducerUrl: string = '/api/manage/producer';
     sourceUrl: string = '/api/manage/source';
     ELEMENT_DATA: any;
-    constructor(private http: HttpService, private cookieService: CookieService, private router: Router, private authService: AuthService) {
+    constructor(private http: HttpService, private cookieService: CookieService, private router: Router, private authService: AuthService, private modalService: BsModalService) {
         this.actions = new Array<DataProducer>();
     }
 
@@ -40,6 +43,20 @@ export class DataProducerComponent implements OnInit{
         this.loadActions();
     }
 
+    bsModalRef: BsModalRef;
+
+    openModalNew() {
+        this.bsModalRef = this.modalService.show(DataProducerFormComponent, {});
+        this.bsModalRef.content.closeBtnName = 'Close';
+        this.bsModalRef.content.onClose.subscribe((result :DataProducer)=> {
+            if (result){
+                console.log('value', this.bsModalRef.content.getFormValue());
+                //this.editedAction=this.bsModalRef.content.getFormValue();
+                this.saveAction(this.bsModalRef.content.getFormValue());
+            }
+        })
+    }
+
     //загрузка
     private loadActions() {
         this.loading = true;
@@ -54,45 +71,28 @@ export class DataProducerComponent implements OnInit{
 
     // добавление
     addAction() {
-        this.editedAction = new DataProducer("",null,null,"");
-        this.actions.unshift(this.editedAction);
-        this.isNewRecord = true;
+
     }
 
     // редактирование
     editAction(action: DataProducer) {
-        this.editedAction = new DataProducer(action.name, action.filters, action.mappers, action.source);
+        //this.editedAction = new DataProducer(action.name, action.filters, action.mappers, action.source);
     }
     // загружаем один из двух шаблонов
     loadTemplate(action: DataProducer) {
-        if (this.editedAction && this.editedAction.name == action.name) {
-            return this.editTemplate;
-        } else {
+       // if (this.editedAction && this.editedAction.name == action.name) {
+        //    return this.editTemplate;
+        //} else {
             return this.readOnlyTemplate;
-        }
+        //}
     }
     // сохраняем
-    saveAction() {
-        if (this.isNewRecord) {
-            // добавляем
-            this.http.postData(this.dataProducerUrl,this.editedAction).subscribe(data => {
+    saveAction(dataProducer : DataProducer) {
+        console.log(dataProducer);
+            this.http.postData(this.dataProducerUrl,dataProducer).subscribe(data => {
                 this.statusMessage = 'Данные успешно добавлены',
                     this.loadActions();
             });
-            this.isNewRecord = false;
-            this.editedAction = null;
-        } else {
-            // изменяем
-            let url: string = '/api/manage/producer' + '/' + this.editedAction.name;
-            this.http.get(url).subscribe((data: DataProducer) => {
-                this.editedAction = data;
-            });
-            this.http.postData(this.dataProducerUrl,this.editedAction).subscribe(data => {
-                this.statusMessage = 'Данные успешно обновлены',
-                    this.loadActions();
-            });
-            this.editedAction = null;
-        }
     }
     // отмена редактирования
     cancel() {
@@ -119,9 +119,8 @@ export class DataProducerComponent implements OnInit{
     getLogin(): string {
         return this.authService.getLogin();
     }
-
 }
-
+/*
 export class DataProducer{
     constructor(
         public name: string,
@@ -129,6 +128,6 @@ export class DataProducer{
         public mappers:  any,
         public source: string) { }
 
-}
+}*/
 
 
