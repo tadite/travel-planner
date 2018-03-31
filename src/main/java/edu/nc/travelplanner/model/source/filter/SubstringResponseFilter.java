@@ -23,7 +23,7 @@ public class SubstringResponseFilter implements ResponseFilter{
     }
 
     @Override
-    public String filter(String sourceResult, Map<String, String> results) {
+    public String filter(String sourceResult, Map<String, Object> results) {
         return sourceResult
                 .substring(sourceResult.indexOf(firstIndexStr)+1,
                         sourceResult.indexOf(lastIndexStr));

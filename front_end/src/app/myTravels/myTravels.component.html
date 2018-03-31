@@ -19,4 +19,212 @@
             </ul>
     </nav>
     </div>
+    <div class="container"> 
+    <div class="table-block"> 
+      <div *ngFor="let travel of pagedItems; let i = index"> 
+        <table>
+                <caption>Общая информация</caption>
+                <tr>
+                <td>Название путешествия</td>
+                <td>Страна отправления</td>
+                <td>Город отправления</td>
+                <td>Страна назначения</td>
+                <td>Город назначения</td>
+                <td>Дата отъезда</td>
+                <td>Дата приезда</td>
+                <td>Количество человек</td>
+                <td>Бюджет</td>
+                <td>Общая стоимость билетов</td>
+                <td>Просмотр билетов</td> 
+                </tr>
+                <tr>
+                  <td>{{travel.name}}</td>
+                 <td>{{travel.fromCheckpoint.countryName}}</td>
+                 <td>{{travel.fromCheckpoint.cityName}}</td>
+                 <td>{{travel.toCheckpoint.countryName}}</td>
+                 <td>{{travel.toCheckpoint.cityName}}</td>
+                 <td>{{travel.dateStart}}</td>
+                 <td>{{travel.dateEnd}}</td>
+                 <td>{{travel.numberOfPersons}}</td>
+                 <td>{{travel.budgetType}}</td>
+                 <td>{{travel.twoWayFlight.price}}</td>
+                 <td><a href="{{travel.twoWayFlight.booking}}" target="_blank">Перейти</a></td>  
+                 </tr>                
+            </table>
+            
+            <table>
+                <caption>Проживание</caption>
+                <tr>
+                    <td>Отель</td>
+                    <td>Адрес</td>
+                    <td>Стоимость</td>
+                    <td>Период</td>
+                    <td>Информация</td>
+                    <td>Просмотр</td>
+                </tr>
+                <tr>                   
+                    <td>{{travel.hotel.name}}</td>
+                    <td>{{travel.hotel.address}}</td>
+                    <td>{{travel.hotel.price}}</td>
+                    <td>{{travel.hotel.pricePeriod}}</td>
+                    <td>{{travel.hotel.priceInfo}}</td>
+                    <td><a href="{{travel.hotel.booking}}" target="_blank">Перейти</a></td>  
+                </tr> 
+            </table>
+            
+            <table>
+                <caption>Путь до пункта назначения</caption>
+            <tr>                                                                                                                  
+                <td>Самолет</td>
+                <td>Авиакомпания</td>
+                <td>Аэропорт вылета</td>
+                <td>Аэропорт прилета</td>
+                <td>Класс обслуживания</td>
+                <td>Дата вылета</td>
+                <td>Время вылета</td>
+                <td>Время в пути</td>
+            </tr>
+            <tr>
+                <td>{{travel.twoWayFlight.flightTo.aircraft}}</td>
+                <td>{{travel.twoWayFlight.flightTo.companyName}}</td>
+                <td>{{travel.twoWayFlight.flightTo.departureName}}</td>
+                <td>{{travel.twoWayFlight.flightTo.arrivalName}}</td>
+                <td>{{travel.twoWayFlight.flightTo.classType}}</td>
+                <td>{{travel.twoWayFlight.flightTo.departureDate}}</td>
+                <td>{{travel.twoWayFlight.flightTo.departureTime}}</td>
+                <td>{{travel.twoWayFlight.flightTo.timeInPath}}</td>
+            </tr>                                                                                                                                             
+           </table>
+
+           <div *ngIf="travel.twoWayFlight.flightTo.transfers != null">
+            <div *ngFor="let item of travel.twoWayFlight.flightTo.transfers; let i = index">                 
+           <table>   
+                   <caption>Пересадка №{{i+1}} на пути в пункт назначения</caption> 
+               <tr>                                                                                                        
+                    <td>Аэропорт</td>
+                    <td>Время пересадки</td>
+                    <td>Время прибытия</td>
+                    <td>Время вылета</td>                   
+               </tr>
+               <tr> 
+                   <td>{{item.placeName}}</td>
+                   <td>{{item.transferTime}}</td>
+                   <td>{{item.arrivalDate}}</td>
+                   <td>{{item.departureDate}}</td>                  
+               </tr>                                                                                             
+           </table>
+           </div>  
+       </div>   
+           <table>
+                <caption>Путь обратно</caption>
+                <tr>                                                                                                                  
+                    <td>Самолет</td>
+                    <td>Авиакомпания</td>
+                    <td>Аэропорт вылета</td>
+                    <td>Аэропорт прилета</td>
+                    <td>Класс обслуживания</td>
+                    <td>Дата вылета</td>
+                    <td>Время вылета</td>
+                    <td>Время в пути</td>
+                </tr>
+                <tr>
+                    <td>{{travel.twoWayFlight.flightFrom.aircraft}}</td>
+                    <td>{{travel.twoWayFlight.flightFrom.companyName}}</td>
+                    <td>{{travel.twoWayFlight.flightFrom.departureName}}</td>
+                    <td>{{travel.twoWayFlight.flightFrom.arrivalName}}</td>
+                    <td>{{travel.twoWayFlight.flightFrom.classType}}</td>
+                    <td>{{travel.twoWayFlight.flightFrom.departureDate}}</td>
+                    <td>{{travel.twoWayFlight.flightFrom.departureTime}}</td>
+                    <td>{{travel.twoWayFlight.flightFrom.timeInPath}}</td>
+                </tr>                                                                                                                                             
+          </table>
+          <div *ngIf="travel.twoWayFlight.flightFrom.transfers != null">
+            <div *ngFor="let item of travel.twoWayFlight.flightFrom.transfers; let i = index">                 
+           <table>   
+                   <caption>Пересадка №{{i+1}} на пути обратно</caption> 
+               <tr>                                                                                                        
+                    <td>Аэропорт</td>
+                    <td>Время пересадки</td>
+                    <td>Время прибытия</td>
+                    <td>Время вылета</td>                   
+               </tr>
+               <tr> 
+                   <td>{{item.placeName}}</td>
+                   <td>{{item.transferTime}}</td>
+                   <td>{{item.arrivalDate}}</td>
+                   <td>{{item.departureDate}}</td>                  
+               </tr>                                                                                             
+           </table>
+           </div>  
+       </div>   
+
+        <div *ngIf="travel.excursions != null">
+         <div *ngFor="let item of travel.excursions; let i = index">                 
+        <table>   
+                <caption>Экскурсия №{{i+1}}</caption> 
+            <tr>                                                                                                        
+                 <td>Название</td>
+                 <td>Описание</td>
+                 <td>Цена</td>
+                 <td>Продолжительность</td>
+                 <td>Просмотр</td>
+            </tr>
+            <tr> 
+                <td>{{item.name}}</td>
+                <td>{{item.description}}</td>
+                <td>{{item.price}}</td>
+                <td>{{item.time}}</td>
+                <td><a href="{{item.booking}}" target="_blank">Перейти</a></td> 
+            </tr>                                                                                             
+        </table>
+        </div>  
+    </div>   
+    <div *ngIf="travel.carRent != null">
+        <table>   
+                <caption>Аренда автомобиля</caption> 
+            <tr>                                                                                                        
+                 <td>Марка авто</td>
+                 <td>Срок аренды</td>
+                 <td>Стоимость</td>
+                 <td>Количество пассажиров</td>
+                 <td>Количество дверей</td>
+                 <td>Тип коробки передач</td>
+                 <td>Класс</td>
+                 <td>Пробег</td>
+                 <td>Просмотр</td>
+            </tr>
+            <tr>
+                <td>{{travel.carRent.name}}</td>
+                <td>{{travel.carRent.pricePeriod}}</td>
+                <td>{{travel.carRent.price}}</td>
+                <td>{{travel.carRent.seats}}</td>
+                <td>{{travel.carRent.doors}}</td>
+                <td>{{travel.carRent.transmission}}</td>
+                <td>{{travel.carRent.classType}}</td>
+                <td>{{travel.carRent.mileage}}</td>
+                <td><a href="{{travel.carRent.booking}}" target="_blank">Перейти</a></td>  
+            </tr>            
+        </table>
+    </div>
+    <input class="delete" type="button" (click)="onDelete(i+1)" value="Удалить путешествие"/>
+    </div>
+       <!-- pager -->
+       <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+          <li [ngClass]="{disabled:pager.currentPage === 1}">
+              <a (click)="setPage(1)">Начало</a>
+          </li>
+          <li [ngClass]="{disabled:pager.currentPage === 1}">
+              <a (click)="setPage(pager.currentPage - 1)">Назад</a>
+          </li>
+          <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+              <a (click)="setPage(page)">Путешествие №{{page}}</a>
+          </li>
+          <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+              <a (click)="setPage(pager.currentPage + 1)">Вперед</a>
+          </li>
+          <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+              <a (click)="setPage(pager.totalPages)">Конец</a>
+          </li>
+      </ul>            
+</div>
 </div>

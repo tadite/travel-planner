@@ -2,9 +2,9 @@ package edu.nc.travelplanner.model.action.tableUtil;
 
 public class Column{
     private String name;
-    private String value;
+    private Object value;
 
-    public Column(String name, String value) {
+    public Column(String name, Object value) {
         this.name = name;
         this.value = value;
     }
@@ -17,11 +17,11 @@ public class Column{
         this.name = name;
     }
 
-    public String getValue() {
+    public Object getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(Object value) {
         this.value = value;
     }
 }

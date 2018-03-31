@@ -10,9 +10,98 @@
     top: 0px;
     left: 0px;
     width: 100%;
-    height: 100%;
+    height: 200%;
     z-index:-2;
-    background-image : url('http://upload.akusherstvo.ru/image1458482.jpg');
+    background-image : url('http://bbntaxiservices.com/bbntaxiservices11/2017/08/TRAVEL-3.jpg');
     background-size: cover;
-    background-repeat: no-repeat;
+    background-repeat: repeat;
   }
+
+
+ul.main_list {
+  list-style: none;
+  padding: 0px 0px 0px 0px;
+  display: block;
+  margin: 5px 10px 5px 45px;
+}
+.main_img {
+  display: block;
+  border-radius: 6px;
+  width: 400px;
+  height: 350px;
+  overflow: hidden;
+  position: relative;
+  z-index: 90;
+}
+
+.main_list li {
+  float: left;
+  padding-left: 0 !important;
+  background-image: none !important;
+  margin: 0 20px 20px 0 !important;
+}
+
+.text {
+  position: relative;
+  border-radius: 6px;
+  width: 380px;
+  height: 350px;
+  overflow: hidden;
+  z-index: 90;
+  text-align: center;
+  margin: 10px;
+}
+
+.main {
+  position: relative;
+  border-radius: 6px;
+  background-color: #69a1e0;
+  z-index: 100;
+  margin: 5px;
+  height: 30px;
+  width: 390px;
+}
+.main_list .main p {
+  font-weight: bolder;
+  font-size: 18px;
+  text-align: center;
+}
+
+.main p {
+  color: #fff;
+  text-transform: uppercase;
+  display: block;
+}
+img{
+  width: 100%;
+  height: 100%;
+}
+
+
+.main-button-zayvka{
+
+  background: #69a1e0 none repeat scroll 0 0;
+  color: #fff;
+  display: block;
+  font-family: "ProximaNova-Extrabld",sans-serif;
+  font-size: 14px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  width: 210px;
+  border: none;
+  margin-top: 10px;
+  margin-left: 330px;
+  border-radius: 6px;
+}
+#form div:before
+{
+  color: red;
+  content: " *";
+}
+
+.quon_phone{
+  color: #69a1e0;
+}

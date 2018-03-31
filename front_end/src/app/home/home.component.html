@@ -1,13 +1,67 @@
 <div class="page-header">
-    <h1 align="center"> Планировщик путешествий </h1>   
-</div>
+    <h1 style="color: #fff; font-family: ProximaNova-Extrabld,sans-serif;" align="center"> Планировщик путешествий </h1>
+  </div>
+
+<div style="margin: 0px 0px 0px 0px;padding: 6px;background-color: rgba(255,255,255,0.8);">
 
 <div class="">
     <div align="center" class="form-inline">           
         <div class="form-group">           
-             <button class="btn btn-lg center-block" routerLink="./login" routerLinkActive="active">Попробовать планировщик!</button>                                     
+             <button class="btn btn-lg center-block" style="background-color: #69a1e0;  color: #fff" routerLink="./login" routerLinkActive="active">Попробовать планировщик!</button>
            <br>
         </div>
+    </div>
+
+
+        <ul class="main_list">
+            <li>
+                <div class="main_img">
+                    <img src="https://3pulse.com/uploads/photo/11/79/07/2016/11/15/64ce499051_medium.jpg" alt="berlin" title="berlin"[@visibilityChanged]='img_stateBerlin'(click)="animateBerlin()">
+                    <div class="text"  [@visibilityChanged]='txt_stateBerlin'(click)="animateBerlin()"> <a style="color:#69a1e0; font-family: ProximaNova-Extrabld,sans-serif; font-size: 14px" align="center">Германия неспроста является страной, где туристический сезон не оканчивается круглый год.
+                        Именно она – одна из самых красивых стран Центральной Европы, поэтому воспоминания от поездки будут еще долгое время свежи в вашей памяти.</a></div>
+                </div>
+                <div class="main"><p>berlin</p></div>
+            </li>
+            <li>
+                <div class="main_img">
+                    <img src="https://i1.sndcdn.com/avatars-000109838688-7g6c1j-t500x500.jpg" alt="london" title="london"[@visibilityChanged]='img_stateLondon'(click)="animateLondon()">
+                    <div class="text"[@visibilityChanged]='txt_stateLondon'(click)="animateLondon()">  <a style="color:#69a1e0; font-family: ProximaNova-Extrabld,sans-serif;" align="center">Великобритания – неповторимая страна, которая не может никого оставить равнодушными.
+                        Откройте для себя Великобританию с ее незабываемыми мероприятиями, тайнами британских сокровищ, памятниками архитектуры и прочими достопримечательностями.</a></div>
+                </div>
+                <div class="main"><p>london</p></div>
+            </li>
+            <li>
+            <div class="main_img">
+                <img src="http://madenetwork.org/old/wp-content/uploads/2015/05/Sultan-Ahmed-Mosque-Istanbul-1024x1024.jpg" alt="stambul" title="stambul"[@visibilityChanged]='img_stateStambul'(click)="animateStambul()">
+                <div class="text" [@visibilityChanged]='txt_stateStambul'(click)="animateStambul()" > <a style="color: #69a1e0; font-family: ProximaNova-Extrabld,sans-serif;" align="center">Турция – удивительная страна, где сплелись воедино культура Востока и Запада, настоящая страна контрастов.</a></div>
+            </div>
+            <div class="main"><p>stambul</p></div>
+        </li>
+            <li>
+                <div class="main_img">
+                    <img src="http://www.abanasafaris.com/wp-content/uploads/2017/02/Santorini-Greece-kenya-600x600.jpg" alt="greece" title="greece"[@visibilityChanged]='img_stateGreece'(click)="animateGreece()">
+                    <div class="text" [@visibilityChanged]='txt_stateGreece'(click)="animateGreece()"> <a  style="color:#69a1e0; font-family: ProximaNova-Extrabld,sans-serif;" align="center">Греция – неповторимая страна, где каждый городок имеет свою красивую легенду, где на вершине самой высокой горы обитают боги, где современность тесно переплетена с прошлым.</a></div>
+                </div>
+                <div class="main"><p>greece</p></div>
+            </li>
+            <li>
+                <div class="main_img">
+                    <img src="https://www.v-transfers.com/image/urlaubstransfers/images/transferziele/barcelona/kacheln/sagrada-familia_S.jpg" alt="spain" title="spain"[@visibilityChanged]='img_stateSpain'(click)="animateSpain()">
+                    <div class="text" [@visibilityChanged]='txt_stateSpain'(click)="animateSpain()"> <a  style="color:#69a1e0; font-family: ProximaNova-Extrabld,sans-serif;" align="center">Испания — удивительно притягательная страна. Посетив ее однажды, глотнув хоть раз энергии, красоты и колорита, отведав блюда национальной кухни, насладившись атмосферой праздника и веселья, непременно захочешь вернуться сюда снова. </a> </div>
+                </div>
+                <div class="main"><p>spain</p></div>
+            </li>
+            <li>
+                <div class="main_img">
+                    <img src="http://modainterio.ru/images/photooboi/3-045.jpg" alt="italy" title="italy"[@visibilityChanged]='img_stateItaly'(click)="animateItaly()">
+                    <div class="text" [@visibilityChanged]='txt_stateItaly'(click)="animateItaly()" > <a style="color:#69a1e0; font-family: ProximaNova-Extrabld,sans-serif;" align="center">Италия — романтическая страна с богатой культурой и удивительными странностями.</a></div>
+                </div>
+                <div class="main"><p>italy</p></div>
+            </li>
+
+        </ul>
+        <div style="clear: both;"></div>
+
     </div>
     <div class="background-image"> </div>
 </div>

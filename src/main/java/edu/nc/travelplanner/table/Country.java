@@ -18,14 +18,29 @@ public class Country {
     @Column(name = "name")
     private String name;
 
+    private Integer otherCountryId;
+
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "country")
     private List<City> cities = new LinkedList<>();
 
     public Country() {
     }
 
+    public Integer getOtherCountryId() {
+        return otherCountryId;
+    }
+
+    public void setOtherCountryId(Integer otherCountryId) {
+        this.otherCountryId = otherCountryId;
+    }
+
     public Country(String name) {
         this.name = name;
+    }
+
+    public Country(String name, Integer otherCountryId) {
+        this.name = name;
+        this.otherCountryId = otherCountryId;
     }
 
     public Integer getCountryId() {

@@ -4,8 +4,7 @@
   "type": "table_integration",
   "dataProducer": "air-tickets-search-producer-NEW-TABLE",
   "parameters": {
-    "columnDefs":
-    {
+    "columnDefs": {
       "flight_to__aircraft": "Самолет",
       "flight_to__company__name": "Компания",
       "flight_to__departure__place_name": "Аэропорт",
@@ -13,6 +12,9 @@
       "flight_to__departure_date": "Дата вылета",
       "flight_to__departure_time": "Время вылета",
       "flight_to__time_in_path": "Время в пути",
+      "flight_to__arrival_time": "Время прибытия",
+      "flight_to__arrival_date": "Дата прибытия",
+      "flight_to__transfer": "Пересадка",
       "flight_from__aircraft": "Самолет",
       "flight_from__company__name": "Компания",
       "flight_from__departure__place_name": "Аэропорт",
@@ -20,9 +22,47 @@
       "flight_from__departure_date": "Дата вылета",
       "flight_from__departure_time": "Время вылета",
       "flight_from__time_in_path": "Время в пути",
+      "flight_from__arrival_time": "Время прибытия",
+      "flight_from__arrival_date": "Дата прибытия",
+      "flight_from__transfer": "Пересадка",
       "price__RUB": "Цена",
-      "booking":"Ссылка"
+      "booking": "Ссылка"
     },
-    "links":["booking"]
+    "otherColumnDefs": {
+      "place_name": "Аэропорт",
+      "transfer_time": "Время пересадки",
+      "arrival_date": "Время прибытия",
+      "departure_date": "Время вылета"
+    },
+    "links": [
+      "booking"
+    ],
+    "subtables": [
+      "flight_to__arrival_date",
+      "flight_from__arrival_date",
+      "departure_date"
+    ],
+    "arrayTables": [
+      {
+        "pick": "flight_to__transfer",
+        "name": "Пересадка",
+        "columnDefs": [
+          "place_name",
+          "transfer_time",
+          "arrival_date",
+          "departure_date"
+        ]
+      },
+      {
+        "pick": "flight_from__transfer",
+        "name": "Пересадка",
+        "columnDefs": [
+          "place_name",
+          "transfer_time",
+          "arrival_date",
+          "departure_date"
+        ]
+      }
+    ]
   }
 }

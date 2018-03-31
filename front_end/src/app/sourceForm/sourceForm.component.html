@@ -1,47 +1,58 @@
 <!--suppress ALL -->
-<form novalidate
-      [formGroup]="myform">
-  
-    <div class="form-group">
-      <label>Name</label>
-      <input type="text"
-             class="form-control"
-             formControlName="name">
+<div class="alert-box">
+    <div class="modal-header">
+        <h4 class="modal-title">Source edit</h4>
+        <button type="button" class="close" aria-label="Close" (click)="onCancel()">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
+    <div class="modal-body">
+        <form novalidate
+              [formGroup]="myform">
 
-  <div class="form-group">
-    <label>Description</label>
-    <input type="text"
-           class="form-control"
-           formControlName="description">
-  </div>
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text"
+                       class="form-control"
+                       formControlName="name">
+            </div>
 
-  <div class="form-group">
-    <label>Url</label>
-    <input type="text"
-           class="form-control"
-           formControlName="url">
-  </div>
+            <div class="form-group">
+                <label>Description</label>
+                <input type="text"
+                       class="form-control"
+                       formControlName="description">
+            </div>
 
-  <div class="form-group">
-    <label>Type</label>
-    <select class="form-control"
-            formControlName="type">
-      <option value="">Please select a type</option>
-      <option *ngFor="let type of types"
-              [value]="type">{{type}}
-      </option>
-    </select>
-  </div>
+            <div class="form-group">
+                <label>Url</label>
+                <input type="text"
+                       class="form-control"
+                       formControlName="url">
+            </div>
 
-  <div class="form-group" formArrayName="params">
-    <label>Params</label>
-    <div class="form-inline" *ngFor="let param of myform.controls.params.controls; index as i">
-        <input class="form-control" type="text" [formControlName]="i">
-        <button type="button" class="btn btn-default" (click)="removeParam(i);">X</button>
+            <div class="form-group">
+                <label>Type</label>
+                <select class="form-control"
+                        formControlName="type">
+                    <option value="">Please select a type</option>
+                    <option *ngFor="let type of types"
+                            [value]="type">{{type}}
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group" formArrayName="params">
+                <label>Params</label>
+                <div class="form-inline" *ngFor="let param of myform.controls.params.controls; index as i">
+                    <input class="form-control" type="text" [formControlName]="i">
+                    <button type="button" class="btn btn-default" (click)="removeParam(i);">X</button>
+                </div>
+            </div>
+            <button type="button" class="btn btn-default" (click)="addParam();">Add</button>
+        </form>
     </div>
-  </div>
-  <button type="button" class="btn btn-default" (click)="addParam();">Save</button>
-
-  <pre>{{myform.value | json}}</pre>
-</form>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="onConfirm()">Save</button>
+    </div>
+</div>

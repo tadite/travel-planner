@@ -1,6 +1,7 @@
 package edu.nc.travelplanner.table;
 
 import javax.persistence.*;
+import java.util.LinkedList;
 import java.util.List;
 
 @Entity
@@ -39,7 +40,7 @@ public class Flight {
     private String arrivalName;
 
     @OneToMany
-    private List<Client> clients;
+    private List<FlightTransfer> transfers = new LinkedList<>();
 
     public Flight() {
     }
@@ -72,12 +73,12 @@ public class Flight {
         this.arrivalName = arrivalName;
     }
 
-    public List<Client> getClients() {
-        return clients;
+    public List<FlightTransfer> getTransfers() {
+        return transfers;
     }
 
-    public void setClients(List<Client> clients) {
-        this.clients = clients;
+    public void setTransfers(List<FlightTransfer> transfers) {
+        this.transfers = transfers;
     }
 
     public Long getFlightId() {
