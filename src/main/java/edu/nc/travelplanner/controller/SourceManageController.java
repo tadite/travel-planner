@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController()
 @RequestMapping("/api/manage/source")
@@ -24,7 +25,7 @@ public class SourceManageController {
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public SourceApiDto save(@RequestBody SourceApiDto sourceApiDto){
+    public SourceApiDto save(@RequestBody SourceApiDto sourceApiDto) {
         return sourceDao.save(sourceApiDto);
     }
 
@@ -42,8 +43,16 @@ public class SourceManageController {
 
     @RequestMapping(value = "/{name}", method = RequestMethod.DELETE)
     @ResponseBody
-    public SourceApiDto delete(@PathVariable(value = "name") String name){
+    public SourceApiDto delete(@PathVariable(value = "name") String name) {
         return sourceDao.delete(name);
+    }
+
+    @RequestMapping(value = "/namesOnly", method = RequestMethod.GET)
+    @ResponseBody
+    public List<String> getAllNames() {
+        return sourceDao.getAll().stream()
+                .filter(sourceApiDto -> sourceApiDto.getName() != null)
+                .map(sourceApiDto -> sourceApiDto.getName()).collect(Collectors.toList());
     }
 
 }

@@ -60,6 +60,7 @@ export class DataProducerFormComponent implements OnInit {
 
     public onClose: Subject<boolean> = new Subject<boolean>();
 
+    constructor(public bsModalRef: BsModalRef){}
 
     public getFormValue(): DataProducer {
         return this.myform.getRawValue();
@@ -67,6 +68,7 @@ export class DataProducerFormComponent implements OnInit {
 
     ngOnInit() {
         console.log(this.dataProducer);
+        //this.loadSourceNames();
         this.myform = new FormGroup({
             name: new FormControl(this.dataProducer.name, [
                 Validators.required,

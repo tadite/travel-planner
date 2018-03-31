@@ -1,5 +1,6 @@
 package edu.nc.travelplanner.model.tree;
 
+import edu.nc.travelplanner.config.AuthenticationFacade;
 import edu.nc.travelplanner.dto.afterPickTree.TravelDto;
 import edu.nc.travelplanner.exception.CustomParseException;
 import edu.nc.travelplanner.model.action.*;
@@ -25,7 +26,12 @@ public class SimpleTreeOrchestrator implements TreeOrchestrator {
     @Autowired
     TravelSaveService travelSaveService;
 
+    @Autowired
+    AuthenticationFacade authenticationFacade;
+
     private ActionTree actionTree;
+
+    private String treeUsername;
 
     @Value("${travelplanner.maintree}")
     private String treeName;
@@ -47,6 +53,7 @@ public class SimpleTreeOrchestrator implements TreeOrchestrator {
     }
 
     private ActionTree getActionTree() {
+
         if (actionTree == null) {
             try {
                 this.actionTree = treeFactory.createByName(treeName);
@@ -67,8 +74,20 @@ public class SimpleTreeOrchestrator implements TreeOrchestrator {
         return getActionTree().executeDecision(args);
     }
 
+    private void checkUser(){
+        String currentUsername = authenticationFacade.getAuthentication().getName();
+        if (treeUsername == null)
+            treeUsername = currentUsername;
+        else if (!treeUsername.equals(currentUsername)) {
+            treeUsername = currentUsername;
+            this.actionTree = null;
+        }
+    }
+
     @Override
     public Response execute(ActionArgs args) throws CustomParseException {
+        checkUser();
+
         if (travelDto != null)
             return new TravelResultResponse(travelDto);
         else if (getActionTree().isEnded()) {
@@ -97,14 +116,14 @@ public class SimpleTreeOrchestrator implements TreeOrchestrator {
 
     @Override
     public TravelDto save() throws ParseException, NotSupportedException {
-        if (travelDto ==null)
+        if (travelDto == null)
             throw new NotSupportedException();
 
         return saveTravelToDb(travelDto);
     }
 
     private TravelDto saveTravelToDb(TravelDto travelDto) throws ParseException, NotSupportedException {
-        travelDto=travelSaveService.save(travelDto);
+        travelDto = travelSaveService.save(travelDto);
         return travelDto;
     }
 

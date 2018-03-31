@@ -4,7 +4,7 @@
     {
       "type": "list_to_map_multiple",
       "parameters": {
-        "valueNames": ["title", "price", "time"],
+        "valueNames": ["title", "price", "time", "experience_id"],
         "keyName": "experience_id"
       }
     }

@@ -9,8 +9,11 @@ public class ParameterMapperDto {
     @JsonProperty("to")
     private String toKey;
 
-    @JsonProperty("def")
+    @JsonProperty("default")
     private String defaultValue;
+
+    @JsonProperty("def")
+    private String defValue;
 
     @JsonProperty("filter")
     private ResponseFilterDto filterDto;
@@ -21,6 +24,14 @@ public class ParameterMapperDto {
     public ParameterMapperDto(String fromKey, String toKey) {
         this.fromKey = fromKey;
         this.toKey = toKey;
+    }
+
+    public String getDefValue() {
+        return defValue;
+    }
+
+    public void setDefValue(String defValue) {
+        this.defValue = defValue;
     }
 
     public String getFromKey() {

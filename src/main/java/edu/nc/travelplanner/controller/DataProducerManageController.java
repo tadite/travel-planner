@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/manage/producer")
@@ -23,6 +24,11 @@ public class DataProducerManageController {
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public DataProducerApiDto save(@RequestBody DataProducerApiDto dataProducerApiDto){
+        dataProducerApiDto.getParameterMappers().forEach(mapper -> mapper.setDefaultValue(mapper.getDefValue()));
+        dataProducerApiDto.getParameterMappers().forEach(mapper -> {
+            if (mapper.getFilterDto()==null || mapper.getFilterDto().getType()==null || mapper.getFilterDto().getParameters()==null)
+                mapper.setFilterDto(null);
+        });
         return dataProducerDao.save(dataProducerApiDto);
     }
 
@@ -44,5 +50,12 @@ public class DataProducerManageController {
         return dataProducerDao.delete(name);
     }
 
+    @RequestMapping(value = "/namesOnly", method = RequestMethod.GET)
+    @ResponseBody
+    public List<String> getAllNames() {
+        return dataProducerDao.getAll().stream()
+                .filter(sourceApiDto -> sourceApiDto.getName() != null)
+                .map(sourceApiDto -> sourceApiDto.getName()).collect(Collectors.toList());
+    }
 
 }

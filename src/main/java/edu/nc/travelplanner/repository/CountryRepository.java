@@ -5,5 +5,5 @@ import edu.nc.travelplanner.table.Country;
 import org.springframework.data.repository.CrudRepository;
 
 public interface CountryRepository extends CrudRepository<Country, Long> {
-    Optional<Country> findOptionalByName(String name);
+    Optional<Country> findFirstOptionalByName(String name);
 }

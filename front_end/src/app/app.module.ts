@@ -29,6 +29,7 @@ import { ProfilesComponent } from "./profiles/profiles.component";
 import { DataProducerComponent } from "./dataProducer/dataProducer.component";
 import { DataProducerFormComponent } from "./dataProducerForm/dataProducerForm.component";
 import { SourceFormComponent } from "./sourceForm/sourceForm.component";
+import { ActionFormComponent } from "./actionForm/actionForm.component";
 import { MyTravelsComponent }   from './myTravels/myTravels.component';
 import { PagerService } from './service/pager.service';
 import { TravelPagerService } from './service/travel.pager.service';
@@ -48,6 +49,7 @@ const appRoutes: Routes =[
     { path: 'sourse', component: SourseComponent, canActivate: [AdminGuardService]},
     { path: 'producer', component: DataProducerComponent/*, canActivate: [AdminGuardService]*/},
     { path: 'sourceForm', component: SourceFormComponent, canActivate: [AdminGuardService]},
+    { path: 'actionForm', component: ActionFormComponent/*, canActivate: [AdminGuardService]*/},
     { path: 'dataProducerForm', component: DataProducerFormComponent/*, canActivate: [AdminGuardService]*/},
     { path: 'myTravels', component: MyTravelsComponent, canActivate: [AuthGuardService]},
     { path: '**', component: NotFoundComponent }
@@ -58,7 +60,7 @@ const appRoutes: Routes =[
     imports:      [ BrowserModule, RouterModule.forRoot(appRoutes, { useHash: true }), FormsModule, ReactiveFormsModule, BrowserAnimationsModule, HttpClientModule, NgbModule.forRoot(), LoadingModule, CdkTableModule, MatTableModule, MatPaginatorModule, LoadingModule, ModalModule.forRoot(), AgmCoreModule.forRoot({
         apiKey: 'AIzaSyD28p35CCvhDbiAPL7u96KayO36U6Ny84o'
     })],
-    declarations: [ AppComponent, HomeComponent, LoginComponent, UserComponent, NotFoundComponent, QuestionsComponent, ProfileComponent, AdminComponent, ConfigComponent, ProfilesComponent, SourseComponent, DataProducerComponent, SourceFormComponent, DataProducerFormComponent, MyTravelsComponent],
+    declarations: [ AppComponent, HomeComponent, LoginComponent, UserComponent, NotFoundComponent, QuestionsComponent, ProfileComponent, AdminComponent, ConfigComponent, ProfilesComponent, SourseComponent, DataProducerComponent, SourceFormComponent, DataProducerFormComponent, ActionFormComponent, MyTravelsComponent],
    providers: [
     {
       provide: HTTP_INTERCEPTORS,

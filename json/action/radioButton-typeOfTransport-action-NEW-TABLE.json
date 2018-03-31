@@ -38,8 +38,6 @@
       "booking"
     ],
     "subtables": [
-      "flight_to__arrival_date",
-      "flight_from__arrival_date",
       "departure_date"
     ],
     "arrayTables": [
