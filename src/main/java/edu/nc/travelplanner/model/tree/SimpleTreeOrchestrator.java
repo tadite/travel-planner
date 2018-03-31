@@ -1,5 +1,7 @@
 package edu.nc.travelplanner.model.tree;
 
+import com.itextpdf.text.DocumentException;
+import edu.nc.travelplanner.converter.pdf.PdfFactory;
 import edu.nc.travelplanner.dto.afterPickTree.TravelDto;
 import edu.nc.travelplanner.exception.CustomParseException;
 import edu.nc.travelplanner.model.action.*;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
 import javax.transaction.NotSupportedException;
+import java.io.IOException;
 import java.text.ParseException;
 
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
@@ -38,6 +41,9 @@ public class SimpleTreeOrchestrator implements TreeOrchestrator {
 
     @Autowired
     ResultsMapper resultsMapper;
+
+    @Autowired
+    private PdfFactory pdfFactory;
 
     private TravelDto travelDto;
     private ActionTreeFactory treeFactory;
@@ -101,6 +107,11 @@ public class SimpleTreeOrchestrator implements TreeOrchestrator {
             throw new NotSupportedException();
 
         return saveTravelToDb(travelDto);
+    }
+
+    @Override
+    public byte[] saveToPdf() throws IOException, DocumentException {
+        return pdfFactory.createPdf(this.travelDto);
     }
 
     private TravelDto saveTravelToDb(TravelDto travelDto) throws ParseException, NotSupportedException {

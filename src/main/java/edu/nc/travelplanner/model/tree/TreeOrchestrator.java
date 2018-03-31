@@ -1,5 +1,6 @@
 package edu.nc.travelplanner.model.tree;
 
+import com.itextpdf.text.DocumentException;
 import edu.nc.travelplanner.dto.afterPickTree.TravelDto;
 import edu.nc.travelplanner.exception.CustomParseException;
 import edu.nc.travelplanner.model.action.ActionArgs;
@@ -14,4 +15,5 @@ public interface TreeOrchestrator {
     Response rollback();
     void reset();
     TravelDto save() throws ParseException, NotSupportedException;
+    byte[] saveToPdf() throws IOException, DocumentException;
 }

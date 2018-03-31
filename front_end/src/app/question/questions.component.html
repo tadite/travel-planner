@@ -492,9 +492,7 @@
                             </div>
                             <input class="newTravel" type="button" (click)="onReset()" value="Новое путешествие"/>
                             <input class="newTravel" type="button" [class.disabled]="!isSaveButtonEnabled()" [disabled]="!isSaveButtonEnabled()" (click)="onSave()" value="Сохранить"/>                                                     
-                            <div *ngIf="!isSaveButtonEnabled()">
-                                <input class="newTravel" type="button" (click)="printPDF()" value="Распечатать результат в формате PDF"/>
-                            </div> 
+                            <input class="newTravel" type="button" (click)="printPDF()" value="Распечатать результат в формате PDF"/>
                             </div>
                         </div>
                     </div>

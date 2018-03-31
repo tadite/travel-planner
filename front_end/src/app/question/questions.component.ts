@@ -97,7 +97,8 @@ export class QuestionsComponent implements OnInit, AfterViewInit {
     pagedItems: any[];
 
     constructor(private http: HttpService, private cookieService: CookieService, private router: Router,
-                private authService: AuthService, private mapsApiLoader: MapsAPILoader, private pagerService: PagerService) {
+                private authService: AuthService, private mapsApiLoader: MapsAPILoader,
+                private pagerService: PagerService, private httpClient: HttpClient) {
 
         this.startDate = this.calculateDate(new Date(
             this.currentDate.getTime() + this.oneDay
@@ -320,6 +321,26 @@ export class QuestionsComponent implements OnInit, AfterViewInit {
 
         // get current page of items
         this.pagedItems = this.allItems.slice(this.pager.startIndex, this.pager.endIndex + 1);
+    }
+
+    downloadPDF(): any{
+        let request = {
+            travelName: this.questions.name
+        }
+        return this.httpClient.post(this.actionUrl + "/saveToPdf", this.questions.name, {
+            headers:{'Content-Type': 'text/html; charset=utf-8'},
+            responseType: 'arraybuffer'
+        })
+            .map((result) => {
+                return new Blob([result], { type: 'application/pdf'});
+            });
+    }
+
+    printPDF(){
+        this.downloadPDF().subscribe((result: any) => {
+            var fileUrl = window.URL.createObjectURL(result);
+            window.open(fileUrl);
+        });
     }
 }
 
