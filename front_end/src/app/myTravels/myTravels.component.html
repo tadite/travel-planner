@@ -1,5 +1,5 @@
 <div class="myTravel-page">
-    <div class="background-image"></div>          
+    <div class="background-image">       
     <div class="ph">
                 <img class="img" src="http://upload.akusherstvo.ru/image1482617.jpg">
                 <div class="title">TRAVEL PLANNER</div>
@@ -20,6 +20,10 @@
     </nav>
     </div>
     <div class="container"> 
+        <p> </p>
+    <div *ngIf="travels?.length === 0">
+        <h1 class="default-title">Здесь будет информация о Вашем путешествии</h1>
+    </div>
     <div class="table-block"> 
       <div *ngFor="let travel of pagedItems; let i = index"> 
         <table>
@@ -226,5 +230,6 @@
               <a (click)="setPage(pager.totalPages)">Конец</a>
           </li>
       </ul>            
+</div>
 </div>
 </div>

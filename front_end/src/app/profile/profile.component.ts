@@ -97,13 +97,8 @@ export class ProfileComponent {
         );
     }
 
-   // public model: any;
-
-    /*search = (text$: Observable<string>) =>
-    text$
-      .debounceTime(200)
-      .distinctUntilChanged()
-      .map(term => term.length < 2 ? []
-        : this.cityList.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10));*/
+    logout() {
+        this.authService.logout();
+    }
 
 }
