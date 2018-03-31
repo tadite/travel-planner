@@ -1,0 +1,78 @@
+<!--suppress ALL -->
+<div class="alert-box">
+    <div class="modal-header">
+        <h4 class="modal-title">Action edit</h4>
+        <button type="button" class="close" aria-label="Close" (click)="onCancel()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form novalidate
+              [formGroup]="myform">
+
+            <div class="form-group">
+                <label>Type</label>
+                <input type="text"
+                       class="form-control"
+                       formControlName="type"
+                       readonly>
+            </div>
+
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text"
+                       class="form-control"
+                       formControlName="name">
+            </div>
+
+            <div class="form-group">
+                <label>View name</label>
+                <input type="text"
+                       class="form-control"
+                       formControlName="viewName">
+            </div>
+
+            <div class="form-group">
+                <label>Data producer</label>
+                <select class="form-control"
+                        formControlName="dataProducer">
+                    <option *ngFor="let dataProducer of dataProducers"
+                            [value]="dataProducer">{{dataProducer}}
+                    </option>
+                </select>
+            </div>
+
+            <div formGroupName="parameters">
+                <div class="form-group" formArrayName="columnDefs">
+                    <label>Columns definitions</label>
+                    <div class="form-inline"
+                         *ngFor="let columnDef of myform.controls.parameters.controls.columnDefs.controls; index as i">
+                        <div formGroupName="{{i}}">
+                            <label>Key</label>
+                            <input class="form-control" type="text" formControlName="key">
+                            <label>Title</label>
+                            <input class="form-control" type="text" formControlName="title">
+                            <button type="button" class="btn btn-default" (click)="removeDef(i);">X</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-default" (click)="addDef();">
+                            Add definition
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="checkbox" class="form-check-input" formControlName="canPick"/>
+                    Can Pick?
+                </div>
+            </div>
+
+        </form>
+
+        <pre>{{myform.value | json}}</pre>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="onConfirm()">Save</button>
+    </div>
+</div>

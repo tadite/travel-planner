@@ -1,8 +1,11 @@
 package edu.nc.travelplanner.model.tree;
 
+<<<<<<< HEAD
 import com.itextpdf.text.DocumentException;
-import edu.nc.travelplanner.config.AuthenticationFacade;
 import edu.nc.travelplanner.converter.pdf.PdfFactory;
+=======
+import edu.nc.travelplanner.config.AuthenticationFacade;
+>>>>>>> 0e24f870aa5ded50a3bfc1f1043e43e03451edbb
 import edu.nc.travelplanner.dto.afterPickTree.TravelDto;
 import edu.nc.travelplanner.exception.CustomParseException;
 import edu.nc.travelplanner.model.action.*;

@@ -81,19 +81,19 @@ public class TravelSaveService {
         tempTravel.setBudgetType(travelDto.getBudgetType());
 
         //save from city
-        Country countryFrom = countryRepository.findOptionalByName(travelDto.getFromCheckpoint().getCountryName())
+        Country countryFrom = countryRepository.findFirstOptionalByName(travelDto.getFromCheckpoint().getCountryName())
                 .or(countryRepository.save(new Country(travelDto.getFromCheckpoint().getCountryName())));
 
-        City cityFrom = cityRepository.findOptionalByName(travelDto.getFromCheckpoint().getCityName())
+        City cityFrom = cityRepository.findFirstOptionalByName(travelDto.getFromCheckpoint().getCityName())
                 .or(cityRepository.save(new City(travelDto.getFromCheckpoint().getCityName(), countryFrom)));
         countryFrom.getCities().add(cityFrom);
         countryFrom = countryRepository.save(countryFrom);
 
         //save to city
-        Country countryTo = countryRepository.findOptionalByName(travelDto.getToCheckpoint().getCountryName())
+        Country countryTo = countryRepository.findFirstOptionalByName(travelDto.getToCheckpoint().getCountryName())
                 .or(countryRepository.save(new Country(travelDto.getToCheckpoint().getCountryName())));
 
-        City cityTo = cityRepository.findOptionalByName(travelDto.getToCheckpoint().getCityName())
+        City cityTo = cityRepository.findFirstOptionalByName(travelDto.getToCheckpoint().getCityName())
                 .or(cityRepository.save(new City(travelDto.getToCheckpoint().getCityName(), countryTo)));
 
         //save hotel

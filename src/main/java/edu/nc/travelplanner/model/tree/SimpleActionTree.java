@@ -6,6 +6,7 @@ import edu.nc.travelplanner.exception.DataProducerSendException;
 import edu.nc.travelplanner.exception.NotEnoughParamsException;
 import edu.nc.travelplanner.model.action.*;
 import edu.nc.travelplanner.model.jump.Jump;
+import edu.nc.travelplanner.model.response.EmptyResponse;
 import edu.nc.travelplanner.model.response.Response;
 import edu.nc.travelplanner.model.response.ViewResponseBuilder;
 
@@ -70,7 +71,11 @@ public class SimpleActionTree implements ActionTree {
         while (triesLeft > 0) {
             try {
                 return currentAction.executePresentation(args, pickResults);
-            } catch (DataProducerSendException | CustomParseException e) {
+            } catch (NotEnoughParamsException e) {
+                e.printStackTrace();
+                return new ViewResponseBuilder().addTitleElement("errorResult", "Недостаточно исходных данных для запроса..").build();
+            }
+            catch (Exception e) {
                 e.printStackTrace();
                 triesLeft--;
                 try {
@@ -78,9 +83,6 @@ public class SimpleActionTree implements ActionTree {
                 } catch (InterruptedException e1) {
                     e1.printStackTrace();
                 }
-            } catch (NotEnoughParamsException e) {
-                e.printStackTrace();
-                return new ViewResponseBuilder().addTitleElement("errorResult", "Недостаточно исходных данных для запроса..").build();
             }
         }
 
@@ -92,8 +94,10 @@ public class SimpleActionTree implements ActionTree {
     public Response executeDecision(ActionArgs args) {
         if (failedAtPresent) {
             Jump forcedJump = executeJumps(null, null, true);
-            if (forcedJump != null)
+            if (forcedJump != null){
                 rollbackMaster.addStep(new HistoryState(this.pickResults, forcedJump));
+                return new EmptyResponse();
+            }
         }
 
         currentActionExecuted = true;
@@ -101,14 +105,12 @@ public class SimpleActionTree implements ActionTree {
         LinkedList<PickResult> currentStepPicks = new LinkedList<>(this.pickResults);
 
         currentAction.getResult(args.getArgs(), this.pickResults);
-        pickResults = this.pickResults.stream().filter(pick -> pick.getValue()!=null && pick.getKey()!=null).collect(Collectors.toList());
+        pickResults = this.pickResults.stream().filter(pick -> pick.getValue() != null && pick.getKey() != null).collect(Collectors.toList());
 
         Response response = null;
         try {
             response = currentAction.executeDecision(args, this.pickResults);
-        } catch (DataProducerSendException e) {
-            e.printStackTrace();
-        } catch (CustomParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         currentStepJump = executeJumps(args, response, false);
@@ -120,7 +122,7 @@ public class SimpleActionTree implements ActionTree {
             boolean result = tryGetResultForNoViewAction(args, this.pickResults);
             if (result) {
                 currentAction.getResult(args.getArgs(), this.pickResults);
-                pickResults = this.pickResults.stream().filter(pick -> pick.getValue()!=null && pick.getKey()!=null).collect(Collectors.toList());
+                pickResults = this.pickResults.stream().filter(pick -> pick.getValue() != null && pick.getKey() != null).collect(Collectors.toList());
                 executeJumps(args, response, false);
             } else
                 executeJumps(args, response, true);
@@ -137,7 +139,10 @@ public class SimpleActionTree implements ActionTree {
             try {
                 currentAction.executePresentation(args, picks);
                 return true;
-            } catch (DataProducerSendException | CustomParseException e) {
+            } catch (NotEnoughParamsException e) {
+                e.printStackTrace();
+                return false;
+            } catch (Exception e) {
                 e.printStackTrace();
                 triesLeft--;
                 try {
@@ -145,9 +150,6 @@ public class SimpleActionTree implements ActionTree {
                 } catch (InterruptedException e1) {
                     e1.printStackTrace();
                 }
-            } catch (NotEnoughParamsException e) {
-                e.printStackTrace();
-                return false;
             }
         }
         return false;

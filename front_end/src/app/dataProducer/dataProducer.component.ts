@@ -1,11 +1,14 @@
 import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import { Router } from "@angular/router";
-import { HttpService } from '../http/http.service';
-import { AuthService} from "../auth/auth.service";
-import { CookieService } from 'ngx-cookie-service';
+import {Router} from "@angular/router";
+import {HttpService} from '../http/http.service';
+import {AuthService} from "../auth/auth.service";
+import {CookieService} from 'ngx-cookie-service';
 import 'rxjs/Rx';
 import {Observable} from 'rxjs/Observable';
-
+import {BsModalService} from 'ngx-bootstrap/modal';
+import {BsModalRef} from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import {DataProducerFormComponent} from '../dataProducerForm/dataProducerForm.component'
+import {DataProducer} from './dataProducer';
 
 @Component({
     selector: 'dataProducer-app',
@@ -15,14 +18,16 @@ import {Observable} from 'rxjs/Observable';
 
 })
 
-export class DataProducerComponent implements OnInit{
+export class DataProducerComponent implements OnInit {
     public loading = false;
     login: string;
     actionUrl: string = '/api/manage/action';
     dataProducerUrl: string = '/api/manage/producer';
     sourceUrl: string = '/api/manage/source';
+    sourceNamesUrl: string = '/api/manage/source/namesOnly';
     ELEMENT_DATA: any;
-    constructor(private http: HttpService, private cookieService: CookieService, private router: Router, private authService: AuthService) {
+
+    constructor(private http: HttpService, private cookieService: CookieService, private router: Router, private authService: AuthService, private modalService: BsModalService) {
         this.actions = new Array<DataProducer>();
     }
 
@@ -40,6 +45,30 @@ export class DataProducerComponent implements OnInit{
         this.loadActions();
     }
 
+    bsModalRef: BsModalRef;
+
+    openModalNew() {
+        this.http.get(this.sourceNamesUrl).subscribe((data: string[]) => {
+                const initialState = {
+                    sources: data
+                };
+
+                this.bsModalRef = this.modalService.show(DataProducerFormComponent, {initialState});
+                this.bsModalRef.content.closeBtnName = 'Close';
+                this.bsModalRef.content.onClose.subscribe((result: DataProducer) => {
+                    if (result) {
+                        console.log('value', this.bsModalRef.content.getFormValue());
+                        //this.editedAction=this.bsModalRef.content.getFormValue();
+                        this.saveAction(this.bsModalRef.content.getFormValue());
+                    }
+                })
+            },
+            error => {
+                console.log(error);
+            }
+        );
+    }
+
     //загрузка
     private loadActions() {
         this.loading = true;
@@ -48,52 +77,40 @@ export class DataProducerComponent implements OnInit{
                 this.actions = data;
                 console.log(this.actions);
             },
-            error => {console.log(error); }
+            error => {
+                console.log(error);
+            }
         );
     }
 
     // добавление
     addAction() {
-        this.editedAction = new DataProducer("",null,null,"");
-        this.actions.unshift(this.editedAction);
-        this.isNewRecord = true;
+
     }
 
     // редактирование
     editAction(action: DataProducer) {
-        this.editedAction = new DataProducer(action.name, action.filters, action.mappers, action.source);
+        //this.editedAction = new DataProducer(action.name, action.filters, action.mappers, action.source);
     }
+
     // загружаем один из двух шаблонов
     loadTemplate(action: DataProducer) {
-        if (this.editedAction && this.editedAction.name == action.name) {
-            return this.editTemplate;
-        } else {
-            return this.readOnlyTemplate;
-        }
+        // if (this.editedAction && this.editedAction.name == action.name) {
+        //    return this.editTemplate;
+        //} else {
+        return this.readOnlyTemplate;
+        //}
     }
+
     // сохраняем
-    saveAction() {
-        if (this.isNewRecord) {
-            // добавляем
-            this.http.postData(this.dataProducerUrl,this.editedAction).subscribe(data => {
-                this.statusMessage = 'Данные успешно добавлены',
-                    this.loadActions();
-            });
-            this.isNewRecord = false;
-            this.editedAction = null;
-        } else {
-            // изменяем
-            let url: string = '/api/manage/producer' + '/' + this.editedAction.name;
-            this.http.get(url).subscribe((data: DataProducer) => {
-                this.editedAction = data;
-            });
-            this.http.postData(this.dataProducerUrl,this.editedAction).subscribe(data => {
-                this.statusMessage = 'Данные успешно обновлены',
-                    this.loadActions();
-            });
-            this.editedAction = null;
-        }
+    saveAction(dataProducer: DataProducer) {
+        console.log(dataProducer);
+        this.http.postData(this.dataProducerUrl, dataProducer).subscribe(data => {
+            this.statusMessage = 'Данные успешно добавлены',
+                this.loadActions();
+        });
     }
+
     // отмена редактирования
     cancel() {
         // если отмена при добавлении, удаляем последнюю запись
@@ -103,6 +120,7 @@ export class DataProducerComponent implements OnInit{
         }
         this.editedAction = null;
     }
+
     // удаление
     deleteAction(action: DataProducer) {
         let url: string = '/api/manage/producer' + '/' + action.name;
@@ -112,16 +130,16 @@ export class DataProducerComponent implements OnInit{
         });
     }
 
-    logout(){
+    logout() {
         this.authService.logout();
     }
 
     getLogin(): string {
         return this.authService.getLogin();
     }
-
 }
 
+/*
 export class DataProducer{
     constructor(
         public name: string,
@@ -129,6 +147,6 @@ export class DataProducer{
         public mappers:  any,
         public source: string) { }
 
-}
+}*/
 
 

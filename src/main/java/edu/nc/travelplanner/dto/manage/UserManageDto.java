@@ -38,8 +38,8 @@ public class UserManageDto {
         Country country = client.getCountry();
         if (country!=null)
             userManageDto.setCountryName(country.getName());
-        userManageDto.setFirstName(client.getLogin());
-        userManageDto.setLastName(client.getLogin());
+        userManageDto.setFirstName(client.getFirstName());
+        userManageDto.setLastName(client.getLastName());
         return userManageDto;
     }
 
