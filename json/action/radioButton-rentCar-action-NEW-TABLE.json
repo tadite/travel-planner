@@ -15,7 +15,7 @@
       "transmission": "Коробка передач",
       "class": "Класс",
       "mileage": "Условие пробега",
-      "booking":"Ссылка"
+      "booking":" "
     },
     "links":["booking"]
   }

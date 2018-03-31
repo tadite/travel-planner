@@ -11,7 +11,7 @@
       "price": "Стоимость",
       "price_period": "Период",
       "price_info": "Информация",
-      "booking": "Ссылка"
+      "booking": " "
     },
     "links":["booking"]
   }

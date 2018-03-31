@@ -9,7 +9,8 @@
         "in_date",
         "out_date_slash",
         "out_date",
-        "adults"
+        "adults",
+        "sorting"
     ],
     "url": "https://nc-service-bus.a3c1.starter-us-west-1.openshiftapps.com/endpoint/hotels-find-hotels"
   }

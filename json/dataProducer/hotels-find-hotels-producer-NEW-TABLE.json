@@ -60,6 +60,11 @@
     {
       "from": "textinput-numberOfPersons-action",
       "to": "adults"
+    },
+    {
+      "from": "",
+      "to": "sorting",
+      "default":"PRICE"
     }
   ],
   "source": "hotels-find-hotels"
