@@ -38,7 +38,8 @@
       "booking"
     ],
     "subtables": [
-      "departure_date"
+      "flight_from__aircraft",
+      "price__RUB"
     ],
     "arrayTables": [
       {
