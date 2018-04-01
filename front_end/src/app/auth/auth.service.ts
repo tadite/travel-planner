@@ -42,6 +42,7 @@ export class AuthService {
 
     logout(){
         this.cookieService.delete("token");
+        this.cookieService.delete("JSESSIONID");
         this.router.navigate(['/login']);        
     }
 
