@@ -50,6 +50,8 @@ public class TableViewElement implements ViewElement{
             this.put("links", links);
             if (canPick)
                 this.put("multiPick", multiPick);
+            else
+                this.put("canPick", canPick);
         }};
     }
 }

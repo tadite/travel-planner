@@ -28,7 +28,7 @@ ul.main_list {
 .main_img {
   display: block;
   border-radius: 6px;
-  width: 400px;
+ 
   height: 350px;
   overflow: hidden;
   position: relative;
@@ -45,7 +45,7 @@ ul.main_list {
 .text {
   position: relative;
   border-radius: 6px;
-  width: 380px;
+ 
   height: 350px;
   overflow: hidden;
   z-index: 90;
@@ -60,7 +60,7 @@ ul.main_list {
   z-index: 100;
   margin: 5px;
   height: 30px;
-  width: 390px;
+ 
 }
 .main_list .main p {
   font-weight: bolder;
