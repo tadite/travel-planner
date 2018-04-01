@@ -22,7 +22,7 @@ export class MyTravelsComponent {
     login: string;
 
     travels: any;
-
+  
      // array of all items to be paged
      private allItems: any[];
 
@@ -55,8 +55,7 @@ export class MyTravelsComponent {
         this.loading = true;
         this.http.get(this.travelUrl).subscribe(value => {
             this.loading = false;
-            this.travels = value; 
-
+            this.travels = value;
             console.log(this.travels);
              //for pagination
             
@@ -96,5 +95,11 @@ export class MyTravelsComponent {
         // get current page of items
         this.pagedItems = this.allItems.slice(this.pager.startIndex, this.pager.endIndex + 1);
     }
+
+    logout() {
+        this.authService.logout();
+    }
+
+   
  
 }

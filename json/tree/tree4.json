@@ -33,6 +33,12 @@
       "params": {}
     },
     {
+      "fromActionName": "dropdownlist-citiesByCountryId-action",
+      "toActionName": "dropdownlist-budget-action",
+      "type": "without-condition",
+      "params": {}
+    },
+    {
       "fromActionName": "dropdownlist-budget-action",
       "toActionName": "radioButton-hotels-find-hotels-action-NEW-TABLE",
       "type": "without-condition",
@@ -115,12 +121,6 @@
     {
       "fromActionName": "radioButton-rentCar-action-NEW-TABLE",
       "toActionName": "textinput-nameOfTravel-action",
-      "type": "without-condition",
-      "params": {}
-    },
-    {
-      "fromActionName": "dropdownlist-citiesByCountryId-action",
-      "toActionName": "dropdownlist-budget-action",
       "type": "without-condition",
       "params": {}
     }

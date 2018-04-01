@@ -23,8 +23,7 @@ export class JumpComponent implements OnInit {
     actionUrl: string = '/api/manage/action';
     dataProducerUrl: string = '/api/manage/producer';
     sourceUrl: string = '/api/manage/source';
-    sourceNamesUrl: string = '/api/manage/source/namesOnly';
-    actionNamesUrl: string = '/api/manage/source/namesOnly';
+    actionNamesUrl: string = '/api/manage/action/namesOnly';
     jumpsUrl: string = '/api/manage/jump';
     jumpsInsertUrl: string = '/api/manage/jump/insert';
     ELEMENT_DATA: any;
@@ -45,7 +44,8 @@ export class JumpComponent implements OnInit {
     bsModalRef: BsModalRef;
 
     openModalNew(action: any) {
-        this.http.get(this.actionNamesUrl).subscribe((data: string[]) => {
+        this.http.get('/api/manage/action/namesOnly').subscribe((data: string[]) => {
+            console.log(data);
                 const initialState = {
                     actions: data,
                     from: action.fromActionName,
