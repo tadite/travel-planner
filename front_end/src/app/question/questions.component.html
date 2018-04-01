@@ -522,13 +522,14 @@
                                         [zoom]="2">
                                     <agm-marker
                                             *ngFor="let i of locations"
+                                            [label]="i.marker"
                                             [latitude]="i.lat"
                                             [longitude]="i.lng">
                                             <agm-info-window [disableAutoPan]="true">
                                                 {{i.name}}
                                             </agm-info-window>
                                     </agm-marker>
-                                    <agm-polyline>
+                                    <agm-polyline [strokeColor]="00e700">
                                         <agm-polyline-point
                                                 *ngFor="let i of locations"
                                                 [latitude]="i.lat"

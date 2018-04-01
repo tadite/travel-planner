@@ -96,6 +96,19 @@ export class QuestionsComponent implements OnInit, AfterViewInit {
     // paged items
     pagedItems: any[];
 
+    markers: any[] = [
+        'A',
+        'B',
+        'C',
+        'D',
+        'E',
+        'F',
+        'G',
+        'H',
+        'I',
+        'J'
+    ];
+
     constructor(private http: HttpService, private cookieService: CookieService, private router: Router,
                 private authService: AuthService, private mapsApiLoader: MapsAPILoader,
                 private pagerService: PagerService, private httpClient: HttpClient) {
@@ -103,14 +116,17 @@ export class QuestionsComponent implements OnInit, AfterViewInit {
         this.startDate = this.calculateDate(new Date(
             this.currentDate.getTime() + this.oneDay
         ));
-        this.defaultStartDate = this.startDate;
+
+        this.defaultStartDate = this.calculateDate(new Date(
+            this.currentDate.getTime() + this.oneDay * 10
+        ));
 
         this.endDate = this.calculateDate(new Date(
             this.currentDate.getTime() + this.oneDay * 2
 		));
 		
 		this.defaultEndDate = this.calculateDate(new Date(
-            this.currentDate.getTime() + this.oneDay * 4
+            this.currentDate.getTime() + this.oneDay * 20
         ));
 	}
 
@@ -166,6 +182,7 @@ export class QuestionsComponent implements OnInit, AfterViewInit {
         this.loading = true;
         this.result = false;
         this.questions = null;
+        this.locations = null;
         this.http.deleteObs(this.actionUrl + '/reset').subscribe(result => {
                 console.log('questions onReset' + this.questions);
                 this.checks = {};
@@ -275,25 +292,42 @@ export class QuestionsComponent implements OnInit, AfterViewInit {
     }
 
     buildRoute() {
+        var i = 0;
         if (this.questions.twoWayFlight.flightFrom.departureCode != null){
-            this.setLocationCoords(this.questions.twoWayFlight.flightFrom.arrivalName,
+            this.setLocationCoords(this.markers[i],
+                this.questions.twoWayFlight.flightFrom.arrivalName,
                 this.questions.twoWayFlight.flightFrom.arrivalName + ', ' +
                 this.questions.twoWayFlight.flightFrom.arrivalCode);
+            i++;
+        }
+        if (this.questions.twoWayFlight.flightFrom.transfers != null){
+            for (var key in this.questions.twoWayFlight.flightFrom.transfers){
+                let transfer = JSON.parse(key);
+                this.setLocationCoords(this.markers[i],
+                    transfer.placeName,
+                    transfer.placeName + ', ' + transfer.placeCode);
+                i++;
+            }
         }
         if (this.questions.twoWayFlight.flightTo.departureCode != null){
-            this.setLocationCoords(this.questions.twoWayFlight.flightFrom.departureName,
+            this.setLocationCoords(this.markers[i],
+                this.questions.twoWayFlight.flightFrom.departureName,
                 this.questions.twoWayFlight.flightFrom.departureName + ', ' +
                 this.questions.twoWayFlight.flightFrom.departureCode);
+            i++;
         }
         if (this.questions.hotel.address != null){
-            this.setLocationCoords(this.questions.hotel.name, this.questions.hotel.address);
+            this.setLocationCoords(this.markers[i],
+                this.questions.hotel.name,
+                this.questions.hotel.address);
+            i++;
         }
     }
 
-    setLocationCoords(name: string, address: string){
+    setLocationCoords(marker: string, name: string, address: string){
         this.getCoordinates(address)
             .subscribe(result => {
-                this.locations.push(new Location(name, result.lat(), result.lng()))
+                this.locations.push(new Location(marker, name, result.lat(), result.lng()))
             });
     }
 
@@ -338,18 +372,20 @@ export class QuestionsComponent implements OnInit, AfterViewInit {
 
     printPDF(){
         this.downloadPDF().subscribe((result: any) => {
-            var fileUrl = window.URL.createObjectURL(result);
+            var fileUrl = URL.createObjectURL(result);
             window.open(fileUrl);
         });
     }
 }
 
 export class Location {
+    marker: any;
     name: any;
     lat: any;
     lng: any;
 
-    constructor(name: string, lat: number, lng: number){
+    constructor(marker: string, name: string, lat: number, lng: number){
+        this.marker = marker;
         this.name = name;
         this.lat = lat;
         this.lng = lng;
