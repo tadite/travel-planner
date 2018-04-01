@@ -77,13 +77,12 @@ public class TableIntegrationAction implements IntegrationAction {
             LinkedHashMap<String, String> colDefs = this.columnDefs;
             Boolean oneLine = true;
             if (subtables != null && subtables.size() > 0) {
-                oneLine=false;
+                oneLine = false;
                 rowsToReturn = parseSubTables();
                 for (Row row : rowsToReturn) {
                     columnDefRows.add(getNewColumnDefsRow(row));
                 }
-            }else
-            {
+            } else {
                 Row finalColumnDefsRow = columnDefsRow;
                 columnDefs.forEach((key, value) -> {
                     if (value != "") finalColumnDefsRow.addColumn(new Column(key, value));
@@ -122,11 +121,11 @@ public class TableIntegrationAction implements IntegrationAction {
         Map<String, Object> currentArrayTable = null;
         for (Row row : rows) {
             Row newRow = new Row();
+            int count = 0;
             for (Column col : row.getColumns()) {
-                newRow.addColumn(col);
                 if (subtables.stream().anyMatch(subtable -> col.getName().equals(subtable)))
                     newRow.addColumn(separatorColumn);
-
+                newRow.addColumn(col);
             }
 
             subtabledRows.add(newRow);
@@ -155,23 +154,25 @@ public class TableIntegrationAction implements IntegrationAction {
                         if (entry.getKey() != "id") {
                             Optional<Map<String, Object>> arrayTableOptional = arrayTables.stream().filter(tbl -> tbl.get("pick").equals(entry.getKey())).findFirst();
                             if (arrayTableOptional.isPresent()) {
-                                i[0]=1;
+                                i[0] = 1;
                                 String name = String.valueOf(arrayTableOptional.get().get("name"));
                                 List<String> arrayTableColumnDefs = (List<String>) arrayTableOptional.get().get("columnDefs");
 
-                                List<Map<String, Object>> arrayOfObjs = (List<Map<String, Object>>) entry.getValue();
+                                if (entry.getValue() != null && !entry.getValue().equals("null") && entry.getValue() instanceof List) {
+                                    List<Map<String, Object>> arrayOfObjs = (List<Map<String, Object>>) entry.getValue();
 
-                                List<Column> insideColumnsToAdd = new LinkedList<>();
-                                for (Map<String, Object> obj : arrayOfObjs) {
+                                    List<Column> insideColumnsToAdd = new LinkedList<>();
+                                    for (Map<String, Object> obj : arrayOfObjs) {
 
 
-                                    Row tempRow = new Row();
-                                    obj.forEach((key1, value1) -> tempRow.addColumn(new Column(key1, value1)));
-                                    insideColumnsToAdd.add(new Column(entry.getKey() + " " + i[0], tempRow.getColumns()));
-                                    tempColumnDefs.put(entry.getKey() + " " + i[0], name + " " + i[0]);
-                                    i[0]++;
+                                        Row tempRow = new Row();
+                                        obj.forEach((key1, value1) -> tempRow.addColumn(new Column(key1, value1)));
+                                        insideColumnsToAdd.add(new Column(entry.getKey() + " " + i[0], tempRow.getColumns()));
+                                        tempColumnDefs.put(entry.getKey() + " " + i[0], name + " " + i[0]);
+                                        i[0]++;
+                                    }
+                                    insideColumnsToAdd.forEach(col -> currentFullRow.addColumn(col));
                                 }
-                                insideColumnsToAdd.forEach(col -> currentFullRow.addColumn(col));
                                 //currentFullRow.addColumn(new Column(entry.getKey(), insideColumnsToAdd));
 
                             } else
@@ -186,29 +187,31 @@ public class TableIntegrationAction implements IntegrationAction {
             columnDefs.forEach((key, value) -> {
                 Optional<Map<String, Object>> arrayTableOptional = arrayTables.stream().filter(tbl -> tbl.get("pick").equals(key)).findFirst();
                 if (arrayTableOptional.isPresent()) {
-                    i[0]=1;
+                    i[0] = 1;
                     String name = String.valueOf(arrayTableOptional.get().get("name"));
 
                     List<String> arrayTableColumnDefs = (List<String>) arrayTableOptional.get().get("columnDefs");
 
-                    List<Map<String, Object>> arrayOfObjs = (List<Map<String, Object>>) jsonObj.get(key);
+                    if (jsonObj.get(key) != null && !jsonObj.get(key).equals("null") && jsonObj.get(key) instanceof List) {
+                        List<Map<String, Object>> arrayOfObjs = (List<Map<String, Object>>) jsonObj.get(key);
 
-                    List<Column> insideColumnsToAdd = new LinkedList<>();
-                    for (Map<String, Object> obj : arrayOfObjs) {
+                        List<Column> insideColumnsToAdd = new LinkedList<>();
+                        for (Map<String, Object> obj : arrayOfObjs) {
 
-                        Row tempRow = new Row();
-                        obj.entrySet().forEach(objEntry -> {
-                            if (arrayTableColumnDefs.contains(objEntry.getKey()))
-                                tempRow.addColumn(new Column(objEntry.getKey(), objEntry.getValue()));
-                        });
-                        insideColumnsToAdd.add(new Column(key + " " + i[0], name + " №" + i[0]));
-                        tempRow.getColumns().forEach(col -> insideColumnsToAdd.add(col));
-                        tempRow.addColumn(separatorColumn);
+                            Row tempRow = new Row();
+                            obj.entrySet().forEach(objEntry -> {
+                                if (arrayTableColumnDefs.contains(objEntry.getKey()))
+                                    tempRow.addColumn(new Column(objEntry.getKey(), objEntry.getValue()));
+                            });
+                            insideColumnsToAdd.add(new Column(key + " " + i[0], name + " №" + i[0]));
+                            tempRow.getColumns().forEach(col -> insideColumnsToAdd.add(col));
+                            tempRow.addColumn(separatorColumn);
 
-                        tempColumnDefs.put(key + " " + i[0], " ");
-                        i[0]++;
+                            tempColumnDefs.put(key + " " + i[0], " ");
+                            i[0]++;
+                        }
+                        insideColumnsToAdd.forEach(col -> currentRow.addColumn(col));
                     }
-                    insideColumnsToAdd.forEach(col -> currentRow.addColumn(col));
                     //currentRow.addColumn(new Column(key, insideColumnsToAdd));
                 } else
                     currentRow.addColumn(new Column(key, jsonObj.getOrDefault(key, null)));

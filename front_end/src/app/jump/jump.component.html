@@ -13,15 +13,14 @@
     </nav>
 </div>
 
-
 <div class="row" style=" margin-top: 10px; margin-left: 30px; margin-right: 50px">
 
     <div class="col-xs-3 col-md-3"  style="  height:100%;margin-top: 30px; background: rgba(255, 255, 255, .5)">
         <ul class="list-group list-unstyled">
             <a [routerLink]="['/config']" class="list-group-item" style="background: #f7f8f9; margin-top: 10px" ><li><span class="glyphicon glyphicon-dashboard" style="cursor: pointer;"></span><span style="cursor: pointer"> type Action</span></li></a>
-            <a [routerLink]="['/producer']" class="list-group-item"style="background: #f7f8f9"><li><span class="glyphicon glyphicon-dashboard" style="cursor: pointer"></span><span style="cursor: pointer"> type DataProducer</span></li></a>
-            <a class="list-group-item" style="background: rgba(255, 255, 255, .5)"><li><span class="glyphicon glyphicon-dashboard" style="cursor: pointer"></span><span style="cursor: pointer"> type Source</span></li></a>
-            <a [routerLink]="['/jump']"class="list-group-item"style="background: #f7f8f9"><li><span class="glyphicon glyphicon-dashboard" style="cursor: pointer"></span><span style="cursor: pointer"> type Jump</span></li></a>
+            <a [routerLink]="['/dataProducer']" class="list-group-item"style="background: #f7f8f9"><li><span class="glyphicon glyphicon-dashboard" style="cursor: pointer"></span><span style="cursor: pointer"> type DataProducer</span></li></a>
+            <a [routerLink]="['/sourse']" class="list-group-item"style="background: #f7f8f9"><li><span class="glyphicon glyphicon-dashboard" style="cursor: pointer"></span><span style="cursor: pointer"> type Source</span></li></a>
+            <a [routerLink]="['/jump']" class="list-group-item"style="background: rgba(255, 255, 255, .5)"><li><span class="glyphicon glyphicon-dashboard" style="cursor: pointer"></span><span style="cursor: pointer"> type Jump</span></li></a>
             <hr>
             <a [routerLink]="['/admin']" class="list-group-item"style="background: #f7f8f9"><li><span class="glyphicon glyphicon-home" style="cursor: pointer"></span><span style="cursor: pointer"> Назад</span></li></a>
         </ul>
@@ -38,51 +37,44 @@
                     }
                 </style>
 
-                    <table class="table table-responsive table-hover table-condensed">
-                        <ngx-loading [show]="loading" [config]="{ backdropBackgroundColour: 'rgba(0,0,0,0)', backdropBorderRadius: '10px',
+                <table class="table table-responsive table-hover table-condensed">
+                    <ngx-loading [show]="loading" [config]="{ backdropBackgroundColour: 'rgba(0,0,0,0)', backdropBorderRadius: '10px',
                         primaryColour: 'rgb(161, 160, 160)', secondaryColour: 'rgb(161, 160, 160)', tertiaryColour: 'rgb(161, 160, 160)' }">
-                        </ngx-loading>
+                    </ngx-loading>
 
-                        <thead>
+                    <thead>
                     <tr>
-                        <td width="13%"> Name</td>
-                        <td width="8%"> Type</td>
-                        <td width="20%"> URL</td>
-                        <td width="13%"> Description</td>
-                        <td width="22%"> Params</td>
-                        <td width="12%"> </td>
-                        <td width="12%"> </td>
+                        <td width="20%"> From</td>
+                        <td width="20%"> To</td>
+                        <td width="10%"> Type</td>
+                        <td width="20%"> Parameters</td>
+                        <td width="10%"> </td>
+                        <td width="10%"> </td>
+                        <td width="10%"> </td>
 
                     </tr>
                     </thead>
                     <tbody>
                     <tr *ngFor="let action of actions">
-                        <ng-template [ngTemplateOutletContext]="{ $implicit: action}"
-                                     [ngTemplateOutlet]="loadTemplate(action)">
-                        </ng-template>
+                        <td>{{action.fromActionName}}</td>
+                        <td>{{action.toActionName}}</td>
+                        <td>{{action.type}}</td>
+                        <td>{{action.params | json}}</td>
+                        <td>
+                            <input type="button" value="Вставить" class="btn btn-default" (click)="openModalNew(action)" />
+                        </td>
+                        <td>
+                            <input type="button" value="Изменить" class="btn btn-default"  />
+                        </td>
+                        <td>
+                            <input type="button" value="Удалить"  class="btn btn-default" />
+                        </td>
                     </tr>
                     </tbody>
                 </table>
 
 
                 <!--шаблон для чтения-->
-                <ng-template #readOnlyTemplate let-action>
-                    <td>{{action.name}}</td>
-                    <td>{{action.type}}</td>
-                    <td>{{action.url}}</td>
-                    <td>{{action.description}}</td>
-                    <td>{{action.params | json}}</td>
-                    <td>
-                        <input type="button" value="Изменить" class="btn btn-default" (click)="openModalEdit(action)" />
-                    </td>
-                    <td>
-                        <input type="button" value="Удалить" (click)="deleteAction(action)" class="btn btn-default" />
-                    </td>
-
-                </ng-template>
-
-                <!--шаблон для редактирования-->
-
 
             </div>
         </div>

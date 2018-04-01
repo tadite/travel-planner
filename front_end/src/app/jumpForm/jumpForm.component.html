@@ -1,0 +1,53 @@
+<!--suppress ALL -->
+<div class="alert-box">
+    <div class="modal-header">
+        <h4 class="modal-title">Вставить action</h4>
+        <button type="button" class="close" aria-label="Close" (click)="onCancel()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form novalidate
+              [formGroup]="myform">
+
+            <div class="form-group">
+                <label>From</label>
+                <input type="text"
+                       class="form-control"
+                       formControlName="from"
+                       readonly>
+            </div>
+
+            <div class="form-group">
+                <label>To</label>
+                <input type="text"
+                       class="form-control"
+                       formControlName="to"
+                       readonly>
+            </div>
+
+            <div class="form-group">
+                <label>Action</label>
+                <select class="form-control"
+                        formControlName="action">
+                    <option *ngFor="let act of actions"
+                            [value]="act">{{act}}
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Jump type</label>
+                <select class="form-control"
+                        formControlName="jumpType">
+                    <option *ngFor="let type of jumpTypes"
+                            [value]="type">{{type}}
+                    </option>
+                </select>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="onConfirm()">Save</button>
+    </div>
+</div>

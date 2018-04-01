@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController()
 @RequestMapping("/api/manage/action")
@@ -51,6 +52,12 @@ public class ActionManageContoller {
     @ResponseBody
     public List<ActionApiDto> getAll() {
         return actionDao.getAll();
+    }
+
+    @RequestMapping(value = "/namesOnly", method = RequestMethod.GET)
+    @ResponseBody
+    public List<String> getAllNames() {
+        return actionDao.getAll().stream().map(dto -> dto.getName()).collect(Collectors.toList());
     }
 
     @RequestMapping(value = "/{name}", method = RequestMethod.DELETE)

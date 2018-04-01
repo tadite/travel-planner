@@ -136,7 +136,7 @@
                                                                     <caption>{{item.columns[1].value}}</caption>                                                                      
                                                                 <tr *ngFor="let defs of question.data.columnDefs.columns; let i = index">                                                                                                                                                                          
                                                                     <td>{{defs.value}}</td>                                      
-                                                                    <td *ngIf="isLink(question.data, defs.name); else elseTextBlock"><a href="{{item.columns[i+2].value}}" target="_blank">Перейти</a></td>  
+                                                                    <td *ngIf="isLink(question.data, defs.name); else elseTextBlock"><a href="{{item.columns[i+2].value}}" target="_blank">Забронировать</a></td>  
                                                                     <ng-template #elseTextBlock><td>{{item.columns[i+2].value}}</td></ng-template>            
                                                                 </tr> 
                                                                 </table>
@@ -170,7 +170,7 @@
                                                                     <table>
                                                                     <tr *ngFor="let defs of question.data.columnDefs.columns; let i = index">                                       
                                                                         <td>{{defs.value}}</td>                                      
-                                                                        <td *ngIf="isLink(question.data, defs.name); else elseTextBlock"><a href="{{item.columns[i+1].value}}" target="_blank">Перейти</a></td>  
+                                                                        <td *ngIf="isLink(question.data, defs.name); else elseTextBlock"><a href="{{item.columns[i+1].value}}" target="_blank">Забронировать</a></td>  
                                                                         <ng-template #elseTextBlock><td>{{item.columns[i+1].value}}</td></ng-template>            
                                                                     </tr> 
                                                                     </table>
@@ -211,7 +211,7 @@
                                                                                     <td>{{defs.value}}</td>
                                                                                 </ng-template>                                      
                                                                                 <td *ngIf="isLink(question.data, defs.name); else elseTextBlock">
-                                                                                    <a href="{{item.columns[j+1].value}}" target="_blank">Перейти</a>
+                                                                                    <a href="{{item.columns[j+1].value}}" target="_blank">Забронировать</a>
                                                                                 </td>  
                                                                                 <ng-template #elseTextBlock>
                                                                                     <td *ngIf="item.columns[j+1].value == null; else elseColumnBlock" class="separator"></td>
@@ -251,7 +251,7 @@
                                                             <table>
                                                                 <tr *ngFor="let defs of question.data.columnDefs.columns; let i = index">                                       
                                                                     <td>{{defs.value}}</td>                                      
-                                                                    <td *ngIf="isLink(question.data, defs.name); else elseTextBlock"><a href="{{item.columns[i+1].value}}" target="_blank">Перейти</a></td>  
+                                                                    <td *ngIf="isLink(question.data, defs.name); else elseTextBlock"><a href="{{item.columns[i+1].value}}" target="_blank">Забронировать</a></td>  
                                                                     <ng-template #elseTextBlock><td>{{item.columns[i+1].value}}</td></ng-template>            
                                                                 </tr> 
                                                             </table>
@@ -359,7 +359,7 @@
                                     </tr>
                                     <tr>
                                         <td>Просмотр</td>
-                                        <td><a href="{{questions.hotel.booking}}" target="_blank">Перейти</a></td>  
+                                        <td><a href="{{questions.hotel.booking}}" target="_blank">Забронировать</a></td>  
                                     </tr>
                                 </table>
                                 
@@ -443,7 +443,7 @@
                                   </tr>
                                   <tr>                                                                                                        
                                         <td>Просмотр</td>
-                                        <td><a href="{{questions.twoWayFlight.booking}}" target="_blank">Перейти</a></td>  
+                                        <td><a href="{{questions.twoWayFlight.booking}}" target="_blank">Забронировать</a></td>  
                                    </tr>
                               </table> 
                             
@@ -469,7 +469,7 @@
                                 </tr>
                                 <tr>                                                                                                        
                                     <td>Просмотр</td>
-                                    <td><a href="{{item.booking}}" target="_blank">Перейти</a></td>  
+                                    <td><a href="{{item.booking}}" target="_blank">Забронировать</a></td>  
                                 </tr>                                                                                                    
                             </table>
                             </div>  
@@ -511,7 +511,7 @@
                                 </tr>
                                 <tr>                                                                                                        
                                     <td>Просмотр</td>
-                                    <td><a href="{{questions.carRent.booking}}" target="_blank">Перейти</a></td>  
+                                    <td><a href="{{questions.carRent.booking}}" target="_blank">Забронировать</a></td>  
                                 </tr>
                             </table>
                         </div>                           
