@@ -1,1 +1,1 @@
-{"name":"demo-cost-of-living","type":"http","parameters":{"description":"dasdasdas","params":["currency","city"],"url":"https://nc-service-bus.a3c1.starter-us-west-1.openshiftapps.com/endpoint/coast-of-living"}}
+{"name":"demo-cost-of-living","type":"http","parameters":{"description":"test","params":["city","currency"],"url":"https://nc-service-bus.a3c1.starter-us-west-1.openshiftapps.com/endpoint/coast-of-living"}}

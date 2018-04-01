@@ -1,1 +1,1 @@
-{"name":"demo-cost-of-living-table-action","viewName":"PRICE","type":"table_integration","parameters":{"columnDefs":{"title":"title","price":"price","price_range__from":"min price","price_range__to":"max price"},"canPick":false},"dataProducer":"demo-cost-of-living-dataproducer"}
+{"name":"demo-cost-of-living-table-action","viewName":"ЦЕНЫ","type":"table_integration","parameters":{"columnDefs":{"title":" ","price":"цена","price_range__from":"минимальная цена","price_range__to":"максимальная цена"},"canPick":false},"dataProducer":"demo-cost-of-living-dataproducer"}
