@@ -30,6 +30,8 @@ import { DataProducerComponent } from "./dataProducer/dataProducer.component";
 import { DataProducerFormComponent } from "./dataProducerForm/dataProducerForm.component";
 import { SourceFormComponent } from "./sourceForm/sourceForm.component";
 import { ActionFormComponent } from "./actionForm/actionForm.component";
+import { JumpComponent } from "./jump/jump.component";
+import { JumpFormComponent } from "./jumpForm/jumpForm.component";
 import { MyTravelsComponent }   from './myTravels/myTravels.component';
 import { PagerService } from './service/pager.service';
 import { TravelPagerService } from './service/travel.pager.service';
@@ -50,6 +52,8 @@ const appRoutes: Routes =[
     { path: 'producer', component: DataProducerComponent/*, canActivate: [AdminGuardService]*/},
     { path: 'sourceForm', component: SourceFormComponent, canActivate: [AdminGuardService]},
     { path: 'actionForm', component: ActionFormComponent/*, canActivate: [AdminGuardService]*/},
+    { path: 'jump', component: JumpComponent/*, canActivate: [AdminGuardService]*/},
+    { path: 'jumpForm', component: JumpFormComponent/*, canActivate: [AdminGuardService]*/},
     { path: 'dataProducerForm', component: DataProducerFormComponent/*, canActivate: [AdminGuardService]*/},
     { path: 'myTravels', component: MyTravelsComponent, canActivate: [AuthGuardService]},
     { path: '**', component: NotFoundComponent }
@@ -60,7 +64,7 @@ const appRoutes: Routes =[
     imports:      [ BrowserModule, RouterModule.forRoot(appRoutes, { useHash: true }), FormsModule, ReactiveFormsModule, BrowserAnimationsModule, HttpClientModule, NgbModule.forRoot(), LoadingModule, CdkTableModule, MatTableModule, MatPaginatorModule, LoadingModule, ModalModule.forRoot(), AgmCoreModule.forRoot({
         apiKey: 'AIzaSyD28p35CCvhDbiAPL7u96KayO36U6Ny84o'
     })],
-    declarations: [ AppComponent, HomeComponent, LoginComponent, UserComponent, NotFoundComponent, QuestionsComponent, ProfileComponent, AdminComponent, ConfigComponent, ProfilesComponent, SourseComponent, DataProducerComponent, SourceFormComponent, DataProducerFormComponent, ActionFormComponent, MyTravelsComponent],
+    declarations: [ AppComponent, HomeComponent, LoginComponent, UserComponent, NotFoundComponent, QuestionsComponent, ProfileComponent, AdminComponent, ConfigComponent, ProfilesComponent, SourseComponent, DataProducerComponent, SourceFormComponent, DataProducerFormComponent, ActionFormComponent, JumpFormComponent, JumpComponent, MyTravelsComponent],
    providers: [
     {
       provide: HTTP_INTERCEPTORS,

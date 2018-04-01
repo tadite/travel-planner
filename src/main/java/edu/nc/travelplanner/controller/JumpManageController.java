@@ -1,6 +1,7 @@
 package edu.nc.travelplanner.controller;
 
 import edu.nc.travelplanner.dao.json.JumpGraphDto;
+import edu.nc.travelplanner.dao.json.JumpInsertDto;
 import edu.nc.travelplanner.dao.json.SourceApiDto;
 import edu.nc.travelplanner.dao.json.interfaces.JumpDao;
 import edu.nc.travelplanner.model.factory.tree.JumpDto;
@@ -46,10 +47,12 @@ public class JumpManageController {
         return jumpDao.save(jumpDto);
     }
 
-    @RequestMapping(value = "/graph",method = RequestMethod.GET)
+
+    @RequestMapping(value = "/insert", method = RequestMethod.POST)
     @ResponseBody
-    public JumpGraphDto getGraphDto() {
-        return jumpDao.getJumpGraphDto();
+    public JumpDto save(@RequestBody JumpInsertDto jumpInsertDto) {
+        return jumpDao.insert(jumpInsertDto);
     }
+
 
 }

@@ -51,6 +51,20 @@ public class JsonJumpDao implements JumpDao {
     }
 
     @Override
+    public JumpDto insert(JumpInsertDto dto) throws UnsupportedOperationException {
+        JumpDto jumpDtoToSplit = get(dto.getFrom(), dto.getTo());
+        delete(dto.getFrom(), dto.getTo());
+
+        JumpDto newJumpDto1 = new JumpDto(jumpDtoToSplit.getFromActionName(), dto.getActionName(), jumpDtoToSplit.getType(), jumpDtoToSplit.getParams());
+        JumpDto newJumpDto2 = new JumpDto(dto.getActionName(), jumpDtoToSplit.getToActionName(), jumpDtoToSplit.getType(), jumpDtoToSplit.getParams());
+
+        save(newJumpDto1);
+        save(newJumpDto2);
+
+        return newJumpDto2;
+    }
+
+    @Override
     public JumpDto delete(String from, String to) throws UnsupportedOperationException {
         try {
             String actionTreeJson = actionTreeJsonReader.getActionTreeJson(treeName);
