@@ -1,0 +1,1 @@
+{"name":"cost-of-living-title","viewName":"Стоимость жизни","type":"table_integration","parameters":{"columnDefs":{"title":"Название","price":"Цена","price_range__from":"Мин цена","price_range__to":"Макс цена"},"canPick":false},"dataProducer":"demo-cost-of-living-dataproducer"}

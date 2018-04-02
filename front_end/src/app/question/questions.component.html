@@ -129,15 +129,15 @@
                                         
                                         <div class="table-block">                                        
                                         <div *ngSwitchCase="'table_picker'"> 
-                                            <div *ngIf="question.id == 'table.1.coast-of-living-action-Table'">
+                                            <div *ngIf="question.data.canPick == false">
                                                 <div class="costOfLiving">                                          
                                                         <div *ngFor="let item of pagedItems">                                                                
                                                                 <table> 
-                                                                    <caption>{{item.columns[1].value}}</caption>                                                                      
+                                                                    <!-- <caption>{{item.columns[1].value}}</caption>                                                                       -->
                                                                 <tr *ngFor="let defs of question.data.columnDefs.columns; let i = index">                                                                                                                                                                          
                                                                     <td>{{defs.value}}</td>                                      
-                                                                    <td *ngIf="isLink(question.data, defs.name); else elseTextBlock"><a href="{{item.columns[i+2].value}}" target="_blank">Забронировать</a></td>  
-                                                                    <ng-template #elseTextBlock><td>{{item.columns[i+2].value}}</td></ng-template>            
+                                                                    <td *ngIf="isLink(question.data, defs.name); else elseTextBlock"><a href="{{item.columns[i+1].value}}" target="_blank">Посмотреть</a></td>  
+                                                                    <ng-template #elseTextBlock><td>{{item.columns[i+1].value}}</td></ng-template>            
                                                                 </tr> 
                                                                 </table>
                                                         </div>
@@ -170,7 +170,7 @@
                                                                     <table>
                                                                     <tr *ngFor="let defs of question.data.columnDefs.columns; let i = index">                                       
                                                                         <td>{{defs.value}}</td>                                      
-                                                                        <td *ngIf="isLink(question.data, defs.name); else elseTextBlock"><a href="{{item.columns[i+1].value}}" target="_blank">Забронировать</a></td>  
+                                                                        <td *ngIf="isLink(question.data, defs.name); else elseTextBlock"><a href="{{item.columns[i+1].value}}" target="_blank">Посмотреть</a></td>  
                                                                         <ng-template #elseTextBlock><td>{{item.columns[i+1].value}}</td></ng-template>            
                                                                     </tr> 
                                                                     </table>
@@ -211,7 +211,7 @@
                                                                                     <td>{{defs.value}}</td>
                                                                                 </ng-template>                                      
                                                                                 <td *ngIf="isLink(question.data, defs.name); else elseTextBlock">
-                                                                                    <a href="{{item.columns[j+1].value}}" target="_blank">Забронировать</a>
+                                                                                    <a href="{{item.columns[j+1].value}}" target="_blank">Посмотреть</a>
                                                                                 </td>  
                                                                                 <ng-template #elseTextBlock>
                                                                                     <td *ngIf="item.columns[j+1].value == null; else elseColumnBlock" class="separator"></td>
@@ -251,7 +251,7 @@
                                                             <table>
                                                                 <tr *ngFor="let defs of question.data.columnDefs.columns; let i = index">                                       
                                                                     <td>{{defs.value}}</td>                                      
-                                                                    <td *ngIf="isLink(question.data, defs.name); else elseTextBlock"><a href="{{item.columns[i+1].value}}" target="_blank">Забронировать</a></td>  
+                                                                    <td *ngIf="isLink(question.data, defs.name); else elseTextBlock"><a href="{{item.columns[i+1].value}}" target="_blank">Посмотреть</a></td>  
                                                                     <ng-template #elseTextBlock><td>{{item.columns[i+1].value}}</td></ng-template>            
                                                                 </tr> 
                                                             </table>

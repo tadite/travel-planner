@@ -248,8 +248,7 @@
     margin-top: 10px;
     margin-bottom: 10px;
     width: 480px;
-    border-bottom-left-radius: 7px;
-    border-bottom-right-radius: 7px;
+    border-radius: 7px;    
     background-color: white;
     border: solid #6678b1 1px;
     border-collapse: separate;
