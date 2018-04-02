@@ -41,8 +41,9 @@ export class AuthService {
      }
 
     logout(){
-        this.cookieService.delete("token");
-        this.cookieService.delete("JSESSIONID");
+        this.cookieService.delete('token', '/');
+        this.cookieService.delete('JSESSIONID', '/');
+        this.cookieService.delete('login', '/');
         this.router.navigate(['/login']);        
     }
 

@@ -302,10 +302,11 @@ export class QuestionsComponent implements OnInit, AfterViewInit {
         }
         if (this.questions.twoWayFlight.flightFrom.transfers != null){
             for (var key in this.questions.twoWayFlight.flightFrom.transfers){
-                let transfer = JSON.parse(key);
+                var place_name = this.questions.twoWayFlight.flightFrom.transfers[key].placeName;
+                var place_code = this.questions.twoWayFlight.flightFrom.transfers[key].placeCode;
                 this.setLocationCoords(this.markers[i],
-                    transfer.placeName,
-                    transfer.placeName + ', ' + transfer.placeCode);
+                    place_name,
+                    place_name + ', ' + place_code);
                 i++;
             }
         }
@@ -373,7 +374,7 @@ export class QuestionsComponent implements OnInit, AfterViewInit {
     printPDF(){
         this.downloadPDF().subscribe((result: any) => {
             var fileUrl = URL.createObjectURL(result);
-            window.open(fileUrl);
+            window.open(fileUrl, this.questions.name);
         });
     }
 }

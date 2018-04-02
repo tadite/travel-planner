@@ -2,252 +2,270 @@ package edu.nc.travelplanner.converter.pdf;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
+import com.itextpdf.tool.xml.XMLWorker;
+import com.itextpdf.tool.xml.XMLWorkerHelper;
+import com.itextpdf.tool.xml.css.CssFile;
+import com.itextpdf.tool.xml.css.StyleAttrCSSResolver;
+import com.itextpdf.tool.xml.html.Tags;
+import com.itextpdf.tool.xml.parser.XMLParser;
+import com.itextpdf.tool.xml.pipeline.css.CSSResolver;
+import com.itextpdf.tool.xml.pipeline.css.CssResolverPipeline;
+import com.itextpdf.tool.xml.pipeline.end.PdfWriterPipeline;
+import com.itextpdf.tool.xml.pipeline.html.HtmlPipeline;
+import com.itextpdf.tool.xml.pipeline.html.HtmlPipelineContext;
 import edu.nc.travelplanner.dto.afterPickTree.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 @Component
 public class PdfFactory {
 
-    private final String FONT_PATH = System.getProperty("user.dir") + "/front_end/src/fonts/pt-sans-caption.ttf";
-    private final String IMAGE_PATH = System.getProperty("user.dir") + "/front_end/src/img/james-donaldson-365418-unsplash.jpg";
+    private final String FONT = System.getProperty("user.dir") + "/pdf/font/pt-sans-caption.ttf";
+    private final String IMAGE = System.getProperty("user.dir") + "/pdf/image/";
+    private final String TABLE_STYLE = System.getProperty("user.dir") + "/pdf/style/questions.component.css";
 
-    private PdfPCellEvent cellEvent;
     private BaseFont baseFont;
     private Font font;
 
     {
-        this.cellEvent = new RoundedCell();
         try{
-            this.baseFont = BaseFont.createFont(FONT_PATH, "cp1251", BaseFont.EMBEDDED);
+            this.baseFont = BaseFont.createFont(FONT, "cp1251", BaseFont.EMBEDDED);
             this.font = new Font(baseFont);
         } catch (IOException | DocumentException e){}
     }
 
     public byte[] createPdf(TravelDto travelDto) throws IOException, DocumentException{
         Document document = new Document();
+        document.setMargins(135, 30, 90, 30);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PdfWriter writer = PdfWriter.getInstance(document, baos);
+
+        String tableOpen = "<table>";
+        String tableClose = "</table>";
+
         document.open();
 
-        Image image = Image.getInstance(IMAGE_PATH);
+        Image image = Image.getInstance(IMAGE + "james-donaldson-365418-unsplash.jpg");
         image.scaleAbsolute(PageSize.A4);
         image.setAbsolutePosition(0, 0);
         writer.setPageEvent(new ImageBackgroundEvent(image));
 
-        PdfPTable outerTable = new PdfPTable(1);
+        Image navHeader = Image.getInstance(IMAGE + "navbar.jpg");
+        navHeader.setAbsolutePosition(0, 800);
+        writer.setPageEvent(new ImageBackgroundEvent(navHeader));
 
-        PdfPTable commonInfo = getCommonInfoTable(travelDto);
-        outerTable.addCell(getCell(commonInfo));
+        Image icon = Image.getInstance(IMAGE + "icon.png");
+        icon.scaleAbsolute(40, 40);
+        icon.setAbsolutePosition(20, 800);
+        writer.setPageEvent(new ImageBackgroundEvent(icon));
+
+        writer.setPageEvent(new CustomHeader(this.font));
+
+        StringBuilder table = new StringBuilder();
+        table.append("<div class=\"result-table-block\">");
+
+        table.append(tableOpen);
+        table.append(getCommonInfoTable(travelDto));
+        table.append(tableClose);
 
         if (travelDto.getHotel() != null){
-            PdfPTable hotel = getHotelsTable(travelDto.getHotel());
-            outerTable.addCell(getCell(hotel));
+            table.append(tableOpen);
+            table.append(getHotelsTable(travelDto.getHotel()));
+            table.append(tableClose);
         }
 
         if (travelDto.getTwoWayFlight() != null){
-            PdfPTable airTickets = new PdfPTable(1);
             FlightDto flightFrom = travelDto.getTwoWayFlight().getFlightFrom();
             FlightDto flightTo = travelDto.getTwoWayFlight().getFlightTo();
             if (flightFrom != null){
-                PdfPTable flightFromTable = getAirTicketsTable(flightFrom, "Путь туда");
-                airTickets.addCell(getCell(flightFromTable));
+                table.append(tableOpen);
+                table.append(getAirTicketsTable(flightFrom, "Путь туда"));
+                table.append(tableClose);
             }
             if (flightTo != null){
-                PdfPTable flightToTable = getAirTicketsTable(flightTo, "Путь обратно");
-                airTickets.addCell(getCell(flightToTable));
+                table.append(tableOpen);
+                table.append(getAirTicketsTable(flightTo, "Путь обратно"));
+                table.append(tableClose);
             }
-            PdfPTable priceTable = getAirTicketsPrice(travelDto.getTwoWayFlight());
-            airTickets.addCell(getCell(priceTable));
-            outerTable.addCell(getCell(airTickets));
+            table.append(tableOpen);
+            table.append(getAirTicketsPrice(travelDto.getTwoWayFlight()));
+            table.append(tableClose);
         }
 
         if (travelDto.getExcursions().size() != 0){
             int id = 0;
             for (ExcursionDto excursion: travelDto.getExcursions()){
                 id++;
-                PdfPTable excursionTable = getExcursionTable(excursion, id);
-                outerTable.addCell(getCell(excursionTable));
+                table.append(tableOpen);
+                table.append(getExcursionTable(excursion, id));
+                table.append(tableClose);
             }
         }
 
         if (travelDto.getCarRent() != null){
-            PdfPTable carTable = getCarTable(travelDto.getCarRent());
-            outerTable.addCell(getCell(carTable));
+            table.append(tableOpen);
+            table.append(getCarTable(travelDto.getCarRent()));
+            table.append(tableClose);
         }
+        table.append("</div>");
 
-        document.add(outerTable);
+        CSSResolver resolver = new StyleAttrCSSResolver();
+        CssFile cssFile = XMLWorkerHelper.getCSS(new FileInputStream(TABLE_STYLE));
+        resolver.addCss(cssFile);
+
+        HtmlPipelineContext htmlContext = new HtmlPipelineContext(null);
+        htmlContext.setTagFactory(Tags.getHtmlTagProcessorFactory());
+
+        PdfWriterPipeline pdf = new PdfWriterPipeline(document, writer);
+        HtmlPipeline html = new HtmlPipeline(htmlContext, pdf);
+        CssResolverPipeline css = new CssResolverPipeline(resolver, html);
+
+        XMLWorker worker = new XMLWorker(css, true);
+        XMLParser parser = new XMLParser(worker);
+        parser.parse(new ByteArrayInputStream(table.toString().getBytes()));
+
         document.close();
-        byte[] pdf = baos.toByteArray();
-        return pdf;
+        byte[] pdfFile = baos.toByteArray();
+        return pdfFile;
     }
 
-    private PdfPTable getCommonInfoTable(TravelDto travelDto){
-        PdfPTable table = new PdfPTable(2);
+    private StringBuffer getCommonInfoTable(TravelDto travelDto){
+        StringBuffer sb = new StringBuffer();
 
-        PdfPCell header = getCell("Общая информация");
-        header.setColspan(2);
-        header.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(header);
+        sb.append(wrapTrTag(wrapCaptionTag("Общая информация")));
+        sb.append(wrapTrTag(wrapTdTag("Название путешествия")
+                + wrapTdTag(travelDto.getName())));
+        sb.append(wrapTrTag(wrapTdTag("Страна отправления")
+                + wrapTdTag(travelDto.getFromCheckpoint().getCountryName())));
+        sb.append(wrapTrTag(wrapTdTag("Город отправления")
+                + wrapTdTag(travelDto.getFromCheckpoint().getCityName())));
+        sb.append(wrapTrTag(wrapTdTag("Страна назначения")
+                + wrapTdTag(travelDto.getToCheckpoint().getCountryName())));
+        sb.append(wrapTrTag(wrapTdTag("Город назначения")
+                + wrapTdTag(travelDto.getToCheckpoint().getCityName())));
+        sb.append(wrapTrTag(wrapTdTag("Дата отъезда")
+                + wrapTdTag(travelDto.getDateStart())));
+        sb.append(wrapTrTag(wrapTdTag("Дата приезда")
+                + wrapTdTag(travelDto.getDateEnd())));
+        sb.append(wrapTrTag(wrapTdTag("Количество человек")
+                + wrapTdTag(travelDto.getNumberOfPersons())));
+        sb.append(wrapTrTag(wrapTdTag("Бюджет")
+                + wrapTdTag(travelDto.getBudgetType())));
 
-        table.addCell(getCell("Название путешествия"));
-        table.addCell(getCell(travelDto.getName()));
-        table.addCell(getCell("Страна отправления"));
-        table.addCell(getCell(travelDto.getFromCheckpoint().getCountryName()));
-        table.addCell(getCell("Город отправления"));
-        table.addCell(getCell(travelDto.getFromCheckpoint().getCityName()));
-        table.addCell(getCell("Страна назначения"));
-        table.addCell(getCell(travelDto.getToCheckpoint().getCountryName()));
-        table.addCell(getCell("Город назначения"));
-        table.addCell(getCell(travelDto.getToCheckpoint().getCityName()));
-        table.addCell(getCell("Дата отъезда"));
-        table.addCell(getCell(travelDto.getDateStart()));
-        table.addCell(getCell("Дата приезда"));
-        table.addCell(getCell(travelDto.getDateEnd()));
-        table.addCell(getCell("Количество человек"));
-        table.addCell(getCell(travelDto.getNumberOfPersons()));
-        table.addCell(getCell("Бюджет"));
-        table.addCell(getCell(travelDto.getBudgetType()));
-
-        return table;
+        return sb;
     }
 
-    private PdfPTable getHotelsTable(HotelDto hotelDto){
-        PdfPTable table = new PdfPTable(2);
+    private StringBuffer getHotelsTable(HotelDto hotelDto){
+        StringBuffer sb = new StringBuffer();
 
-        PdfPCell header = getCell("Проживание");
-        header.setColspan(2);
-        header.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(header);
+        sb.append(wrapTrTag(wrapCaptionTag("Проживание")));
 
-        table.addCell(getCell("Отель"));
-        table.addCell(getCell(hotelDto.getName()));
-        table.addCell(getCell("Адрес"));
-        table.addCell(getCell(hotelDto.getAddress()));
-        table.addCell(getCell("Стоимость"));
-        table.addCell(getCell(hotelDto.getPrice()));
-        table.addCell(getCell("Период"));
-        table.addCell(getCell(hotelDto.getPricePeriod()));
-        table.addCell(getCell("Информация"));
-        table.addCell(getCell(hotelDto.getPriceInfo()));
+        sb.append(wrapTrTag(wrapTdTag("Отель")
+                + wrapTdTag(hotelDto.getName())));
+        sb.append(wrapTrTag(wrapTdTag("Адрес")
+                + wrapTdTag(hotelDto.getAddress())));
+        sb.append(wrapTrTag(wrapTdTag("Стоимость")
+                + wrapTdTag(hotelDto.getPrice())));
+        sb.append(wrapTrTag(wrapTdTag("Период")
+                + wrapTdTag(hotelDto.getPricePeriod())));
+        sb.append(wrapTrTag(wrapTdTag("Информация")
+                + wrapTdTag(hotelDto.getPriceInfo())));
 
-        return table;
+        return sb;
     }
 
-    private PdfPTable getAirTicketsTable(FlightDto flight, String header){
-        PdfPTable table = new PdfPTable(2);
+    private StringBuffer getAirTicketsTable(FlightDto flight, String header){
+        StringBuffer sb = new StringBuffer();
 
-        PdfPCell headerFrom = getCell(header);
-        headerFrom.setColspan(2);
-        headerFrom.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(headerFrom);
+        sb.append(wrapTrTag(wrapCaptionTag(header)));
 
-        table.addCell(getCell("Самолет"));
-        table.addCell(getCell(flight.getAircraft()));
-        table.addCell(getCell("Авиакомпания"));
-        table.addCell(getCell(flight.getCompanyName()));
-        table.addCell(getCell("Аэропорт вылета"));
-        table.addCell(getCell(flight.getDepartureName()));
-        table.addCell(getCell("Аэропорт прилета"));
-        table.addCell(getCell(flight.getArrivalName()));
-        table.addCell(getCell("Класс обслуживания"));
-        table.addCell(getCell(flight.getClassType()));
-        table.addCell(getCell("Дата вылета"));
-        table.addCell(getCell(flight.getDepartureDate()));
-        table.addCell(getCell("Время вылета"));
-        table.addCell(getCell(flight.getDepartureTime()));
-        table.addCell(getCell("Время в пути"));
-        table.addCell(getCell(flight.getTimeInPath()));
+        sb.append(wrapTrTag(wrapTdTag("Самолет")
+                + wrapTdTag(flight.getAircraft())));
+        sb.append(wrapTrTag(wrapTdTag("Авиакомпания")
+                + wrapTdTag(flight.getCompanyName())));
+        sb.append(wrapTrTag(wrapTdTag("Аэропорт вылета")
+                + wrapTdTag(flight.getDepartureName())));
+        sb.append(wrapTrTag(wrapTdTag("Аэропорт прилета")
+                + wrapTdTag(flight.getArrivalName())));
+        sb.append(wrapTrTag(wrapTdTag("Класс обслуживания")
+                + wrapTdTag(flight.getClassType())));
+        sb.append(wrapTrTag(wrapTdTag("Дата вылета")
+                + wrapTdTag(flight.getDepartureDate())));
+        sb.append(wrapTrTag(wrapTdTag("Время вылета")
+                + wrapTdTag(flight.getDepartureTime())));
+        sb.append(wrapTrTag(wrapTdTag("Время в пути")
+                + wrapTdTag(flight.getTimeInPath())));
 
-        return table;
+        return sb;
     }
 
-    private PdfPTable getAirTicketsPrice(TwoWayFlightDto ticket){
-        PdfPTable table = new PdfPTable(2);
+    private StringBuffer getAirTicketsPrice(TwoWayFlightDto ticket){
+        StringBuffer sb = new StringBuffer();
 
-        PdfPCell header = getCell("Билеты");
-        header.setColspan(2);
-        header.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(header);
+        sb.append(wrapTrTag(wrapCaptionTag("Билеты")));
 
-        table.addCell(getCell("Общая стоимость"));
-        table.addCell(getCell(ticket.getPrice()));
+        sb.append(wrapTrTag(wrapTdTag("Общая стоимость")
+                + wrapTdTag(ticket.getPrice())));
 
-        return table;
+        return sb;
     }
 
-    private PdfPTable getExcursionTable(ExcursionDto excursion, int id){
-        PdfPTable table = new PdfPTable(2);
+    private StringBuffer getExcursionTable(ExcursionDto excursion, int id){
+        StringBuffer sb = new StringBuffer();
 
-        PdfPCell header = getCell("Экскурсия №" + id);
-        header.setColspan(2);
-        header.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(header);
+        sb.append(wrapTrTag(wrapCaptionTag("Экскурсия №" + id)));
 
-        table.addCell(getCell("Название"));
-        table.addCell(getCell(excursion.getName()));
-        table.addCell(getCell("Описание"));
-        table.addCell(getCell(excursion.getDescription()));
-        table.addCell(getCell("Цена"));
-        table.addCell(getCell(excursion.getPrice()));
-        table.addCell(getCell("Продолжительность"));
-        table.addCell(getCell(excursion.getTime()));
+        sb.append(wrapTrTag(wrapTdTag("Название")
+                + wrapTdTag(excursion.getName())));
+        sb.append(wrapTrTag(wrapTdTag("Описание")
+                + wrapTdTag(excursion.getDescription())));
+        sb.append(wrapTrTag(wrapTdTag("Цена")
+                + wrapTdTag(excursion.getPrice())));
+        sb.append(wrapTrTag(wrapTdTag("Продолжительность")
+                + wrapTdTag(excursion.getTime())));
 
-        return table;
+        return sb;
     }
 
-    private PdfPTable getCarTable(CarRentDto car){
-        PdfPTable table = new PdfPTable(2);
+    private StringBuffer getCarTable(CarRentDto car){
+        StringBuffer sb = new StringBuffer();
 
-        PdfPCell header = getCell("Аренда автомобиля");
-        header.setColspan(2);
-        header.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(header);
+        sb.append(wrapTrTag(wrapCaptionTag("Аренда автомобиля")));
 
-        table.addCell(getCell("Марка авто"));
-        table.addCell(getCell(car.getName()));
-        table.addCell(getCell("Срок аренды"));
-        table.addCell(getCell(car.getPricePeriod()));
-        table.addCell(getCell("Стоимость"));
-        table.addCell(getCell(car.getPrice()));
-        table.addCell(getCell("Количество пассажиров"));
-        table.addCell(getCell(car.getSeats()));
-        table.addCell(getCell("Количество дверей"));
-        table.addCell(getCell(car.getDoors()));
-        table.addCell(getCell("Тип коробки передач"));
-        table.addCell(getCell(car.getTransmission()));
-        table.addCell(getCell("Класс"));
-        table.addCell(getCell(car.getClassType()));
-        table.addCell(getCell("Пробег"));
-        table.addCell(getCell(car.getMileage()));
+        sb.append(wrapTrTag(wrapTdTag("Марка авто")
+                + wrapTdTag(car.getName())));
+        sb.append(wrapTrTag(wrapTdTag("Срок аренды")
+                + wrapTdTag(car.getPricePeriod())));
+        sb.append(wrapTrTag(wrapTdTag("Стоимость")
+                + wrapTdTag(car.getPrice())));
+        sb.append(wrapTrTag(wrapTdTag("Количество пассажиров")
+                + wrapTdTag(car.getSeats())));
+        sb.append(wrapTrTag(wrapTdTag("Количество дверей")
+                + wrapTdTag(car.getDoors())));
+        sb.append(wrapTrTag(wrapTdTag("Тип коробки передач")
+                + wrapTdTag(car.getTransmission())));
+        sb.append(wrapTrTag(wrapTdTag("Класс")
+                + wrapTdTag(car.getClassType())));
+        sb.append(wrapTrTag(wrapTdTag("Пробег")
+                + wrapTdTag(car.getMileage())));
 
-        return table;
+        return sb;
     }
 
-    private PdfPCell getCell(String label){
-        PdfPCell cell = new PdfPCell(new Phrase(label, this.font));
-        cell.setUseVariableBorders(true);
-        cell.setBorderColorTop(new BaseColor(255, 255, 255));
-        cell.setBorderColorRight(new BaseColor(255, 255, 255));
-        cell.setBorderColorLeft(new BaseColor(255, 255, 255));
-        cell.setBorderColorBottom(BaseColor.GRAY);
-        cell.setBackgroundColor(BaseColor.WHITE);
-        cell.setNoWrap(false);
-        cell.setMinimumHeight(15f);
-        cell.setBorderWidth(1f);
-
-        return cell;
+    private String wrapCaptionTag(String label){
+        return "<td colspan=\"2\"><div class=\"caption\">" + label + "</div></td>";
     }
 
-    private PdfPCell getCell(PdfPTable table){
-        PdfPCell cell = new PdfPCell(table);
-        cell.setCellEvent(this.cellEvent);
-        //cell.setBorderColor(new BaseColor(102, 120, 177));
-        //cell.setBorderWidth(2f);
+    private String wrapTdTag(String label){
+        return "<td>" + label + "</td>";
+    }
 
-        return cell;
+    private String wrapTrTag(String label){
+        return "<tr>" + label + "</tr>";
     }
 }
