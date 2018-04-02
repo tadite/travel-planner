@@ -105,8 +105,8 @@ public class ActionTreeController {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    @PostMapping(path = "/action/saveToPdf")
-    public ResponseEntity<byte[]> saveToPdf(@RequestBody String travelName){
+    @GetMapping(path = "/action/saveToPdf")
+    public ResponseEntity<byte[]> saveToPdf(){
         byte[] pdf = null;
 
         try {
@@ -115,7 +115,7 @@ public class ActionTreeController {
             e.printStackTrace();
         }
 
-        String pdfName = travelName + ".pdf";
+        String pdfName = "My travel.pdf";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType("application/pdf"));
         headers.setContentDispositionFormData(pdfName, pdfName);

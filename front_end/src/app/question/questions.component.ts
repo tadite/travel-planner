@@ -358,21 +358,8 @@ export class QuestionsComponent implements OnInit, AfterViewInit {
         this.pagedItems = this.allItems.slice(this.pager.startIndex, this.pager.endIndex + 1);
     }
 
-    downloadPDF(): any{
-        let request = {
-            travelName: this.questions.name
-        }
-        return this.httpClient.post(this.actionUrl + "/saveToPdf", this.questions.name, {
-            headers:{'Content-Type': 'text/html; charset=utf-8'},
-            responseType: 'arraybuffer'
-        })
-            .map((result) => {
-                return new Blob([result], { type: 'application/pdf'});
-            });
-    }
-
     printPDF(){
-        this.downloadPDF().subscribe((result: any) => {
+        this.http.getPDF(this.actionUrl + "/saveToPdf").subscribe((result: any) => {
             var fileUrl = URL.createObjectURL(result);
             window.open(fileUrl, this.questions.name);
         });

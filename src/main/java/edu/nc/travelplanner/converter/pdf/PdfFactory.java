@@ -3,9 +3,12 @@ package edu.nc.travelplanner.converter.pdf;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import com.itextpdf.tool.xml.XMLWorker;
+import com.itextpdf.tool.xml.XMLWorkerFontProvider;
 import com.itextpdf.tool.xml.XMLWorkerHelper;
 import com.itextpdf.tool.xml.css.CssFile;
 import com.itextpdf.tool.xml.css.StyleAttrCSSResolver;
+import com.itextpdf.tool.xml.html.CssAppliers;
+import com.itextpdf.tool.xml.html.CssAppliersImpl;
 import com.itextpdf.tool.xml.html.Tags;
 import com.itextpdf.tool.xml.parser.XMLParser;
 import com.itextpdf.tool.xml.pipeline.css.CSSResolver;
@@ -21,6 +24,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.charset.Charset;
 
 @Component
 public class PdfFactory {
@@ -41,7 +45,7 @@ public class PdfFactory {
 
     public byte[] createPdf(TravelDto travelDto) throws IOException, DocumentException{
         Document document = new Document();
-        document.setMargins(135, 30, 90, 30);
+        document.setMargins(70, 30, 90, 30);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PdfWriter writer = PdfWriter.getInstance(document, baos);
 
@@ -118,7 +122,11 @@ public class PdfFactory {
         CssFile cssFile = XMLWorkerHelper.getCSS(new FileInputStream(TABLE_STYLE));
         resolver.addCss(cssFile);
 
-        HtmlPipelineContext htmlContext = new HtmlPipelineContext(null);
+        XMLWorkerFontProvider fontProvider = new XMLWorkerFontProvider(XMLWorkerFontProvider.DONTLOOKFORFONTS);
+        fontProvider.register(FONT);
+        CssAppliers cssAppliers = new CssAppliersImpl(fontProvider);
+
+        HtmlPipelineContext htmlContext = new HtmlPipelineContext(cssAppliers);
         htmlContext.setTagFactory(Tags.getHtmlTagProcessorFactory());
 
         PdfWriterPipeline pdf = new PdfWriterPipeline(document, writer);
@@ -126,7 +134,7 @@ public class PdfFactory {
         CssResolverPipeline css = new CssResolverPipeline(resolver, html);
 
         XMLWorker worker = new XMLWorker(css, true);
-        XMLParser parser = new XMLParser(worker);
+        XMLParser parser = new XMLParser(worker, Charset.forName("UTF-8"));
         parser.parse(new ByteArrayInputStream(table.toString().getBytes()));
 
         document.close();

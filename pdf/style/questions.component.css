@@ -122,7 +122,7 @@
 
   .result-table-block table {
     background: rgba(255, 255, 255, 0.8);
-    width: 75%;
+    width: 90%;
     border-collapse: separate;
     text-align: left;
     margin-bottom: 20px;
@@ -155,8 +155,7 @@
     color: #669;
     padding: 9px 8px;
     transition: .3s linear;
-    max-width: 250px;   
-    
+    max-width: 250px;
   }
   .result-table-block tr:hover td {background: #ffffff;}
   .caption{

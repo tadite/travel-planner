@@ -38,6 +38,16 @@ export class HttpService{
         return this.httpClient.delete(url);
     }
 
+    public getPDF(url: string): any{
+        return this.httpClient.get(url , {
+            headers:{'Content-Type': 'text/html; charset=utf-8'},
+            responseType: 'arraybuffer'
+        })
+            .map((result) => {
+                return new Blob([result], { type: 'application/pdf'});
+            });
+    }
+
     public getCityList(countryId: string, cityURL: string): Observable<any> {
       
       /* let params = new HttpParams();
