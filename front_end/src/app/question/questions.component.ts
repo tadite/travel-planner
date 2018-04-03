@@ -70,7 +70,7 @@ export class QuestionsComponent implements OnInit, AfterViewInit {
     result: boolean = false;
    
 
-    locations: Location[] = new Array();
+    locations: Array<Location> = [];
 
     numValue = '2';
     textValue = 'My best travel';
@@ -293,28 +293,28 @@ export class QuestionsComponent implements OnInit, AfterViewInit {
 
     buildRoute() {
         var i = 0;
-        if (this.questions.twoWayFlight.flightFrom.departureCode != null){
+        if (this.questions.twoWayFlight.flightTo.departureCode != null){
             this.setLocationCoords(this.markers[i],
-                this.questions.twoWayFlight.flightFrom.arrivalName,
-                this.questions.twoWayFlight.flightFrom.arrivalName + ', ' +
-                this.questions.twoWayFlight.flightFrom.arrivalCode);
+                this.questions.twoWayFlight.flightTo.departureName,
+                this.questions.twoWayFlight.flightTo.departureName + ', ' +
+                this.questions.twoWayFlight.flightTo.departureCode);
             i++;
         }
-        if (this.questions.twoWayFlight.flightFrom.transfers != null){
-            for (var key in this.questions.twoWayFlight.flightFrom.transfers){
-                var place_name = this.questions.twoWayFlight.flightFrom.transfers[key].placeName;
-                var place_code = this.questions.twoWayFlight.flightFrom.transfers[key].placeCode;
+        if (this.questions.twoWayFlight.flightTo.transfers != null){
+            for (var key in this.questions.twoWayFlight.flightTo.transfers){
+                var place_name = this.questions.twoWayFlight.flightTo.transfers[key].placeName;
+                var place_code = this.questions.twoWayFlight.flightTo.transfers[key].placeCode;
                 this.setLocationCoords(this.markers[i],
                     place_name,
                     place_name + ', ' + place_code);
                 i++;
             }
         }
-        if (this.questions.twoWayFlight.flightTo.departureCode != null){
+        if (this.questions.twoWayFlight.flightTo.arrivalCode != null){
             this.setLocationCoords(this.markers[i],
-                this.questions.twoWayFlight.flightFrom.departureName,
-                this.questions.twoWayFlight.flightFrom.departureName + ', ' +
-                this.questions.twoWayFlight.flightFrom.departureCode);
+                this.questions.twoWayFlight.flightTo.arrivalName,
+                this.questions.twoWayFlight.flightTo.arrivalName + ', ' +
+                this.questions.twoWayFlight.flightTo.arrivalCode);
             i++;
         }
         if (this.questions.hotel.address != null){
@@ -323,6 +323,16 @@ export class QuestionsComponent implements OnInit, AfterViewInit {
                 this.questions.hotel.address);
             i++;
         }
+
+        this.locations.sort(function (location1, location2) {
+            if (location1.marker < location2.marker){
+                return -1;
+            } else if (location1.marker > location2.marker){
+                return 1;
+            } else {
+                return 0;
+            }
+        });
     }
 
     setLocationCoords(marker: string, name: string, address: string){

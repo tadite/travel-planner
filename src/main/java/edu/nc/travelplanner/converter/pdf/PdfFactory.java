@@ -45,7 +45,7 @@ public class PdfFactory {
 
     public byte[] createPdf(TravelDto travelDto) throws IOException, DocumentException{
         Document document = new Document();
-        document.setMargins(70, 30, 90, 30);
+        document.setMargins(75, 30, 70, 30);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PdfWriter writer = PdfWriter.getInstance(document, baos);
 
@@ -54,10 +54,10 @@ public class PdfFactory {
 
         document.open();
 
-        Image image = Image.getInstance(IMAGE + "james-donaldson-365418-unsplash.jpg");
+        /*Image image = Image.getInstance(IMAGE + "james-donaldson-365418-unsplash.jpg");
         image.scaleAbsolute(PageSize.A4);
         image.setAbsolutePosition(0, 0);
-        writer.setPageEvent(new ImageBackgroundEvent(image));
+        writer.setPageEvent(new ImageBackgroundEvent(image));*/
 
         Image navHeader = Image.getInstance(IMAGE + "navbar.jpg");
         navHeader.setAbsolutePosition(0, 800);
@@ -86,14 +86,14 @@ public class PdfFactory {
         if (travelDto.getTwoWayFlight() != null){
             FlightDto flightFrom = travelDto.getTwoWayFlight().getFlightFrom();
             FlightDto flightTo = travelDto.getTwoWayFlight().getFlightTo();
-            if (flightFrom != null){
-                table.append(tableOpen);
-                table.append(getAirTicketsTable(flightFrom, "Путь туда"));
-                table.append(tableClose);
-            }
             if (flightTo != null){
                 table.append(tableOpen);
-                table.append(getAirTicketsTable(flightTo, "Путь обратно"));
+                table.append(getAirTicketsTable(flightTo, "Путь туда"));
+                table.append(tableClose);
+            }
+            if (flightFrom != null){
+                table.append(tableOpen);
+                table.append(getAirTicketsTable(flightFrom, "Путь обратно"));
                 table.append(tableClose);
             }
             table.append(tableOpen);
