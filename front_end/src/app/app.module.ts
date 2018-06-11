@@ -36,7 +36,7 @@ import { MyTravelsComponent }   from './myTravels/myTravels.component';
 import { PagerService } from './service/pager.service';
 import { TravelPagerService } from './service/travel.pager.service';
 import { AdminGuardService} from "./auth/admin-guard.service";
-import { AuthService} from "./auth/auth.service";
+import { AuthService} from "./auth/auth.service"; 
 
 
 // определение маршрутов
