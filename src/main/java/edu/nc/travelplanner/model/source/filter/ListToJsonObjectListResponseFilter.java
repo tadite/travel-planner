@@ -63,7 +63,12 @@ public class ListToJsonObjectListResponseFilter implements ResponseFilter {
     private Object getValueByPropertyPath(Map<String, Object> jsonObj, String[] propertyPathArray) {
         Object currentPropertyValue = jsonObj;
         for (String nextProperty : propertyPathArray) {
-            currentPropertyValue = ((Map<String, Object>) currentPropertyValue).get(nextProperty);
+            try {
+                currentPropertyValue = ((Map<String, Object>) currentPropertyValue).get(nextProperty);
+            }
+            catch (Exception e){
+                return " ";
+            }
         }
         return currentPropertyValue;
     }
