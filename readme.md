@@ -1,1 +1,2 @@
-[Component diagram](http://prntscr.com/mk6ni4)
+![Component](/image.png)
+Java application with angular 5 frontend which contains user and travel creating business logic
